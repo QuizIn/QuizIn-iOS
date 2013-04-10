@@ -27,6 +27,7 @@
 		881EAFC616FBD08B0041AD55 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881EAF9916FBD08B0041AD55 /* CoreData.framework */; };
 		881EAFCE16FBD08B0041AD55 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 881EAFCC16FBD08B0041AD55 /* InfoPlist.strings */; };
 		881EAFD116FBD08B0041AD55 /* QuizInTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 881EAFD016FBD08B0041AD55 /* QuizInTests.m */; };
+		9FBC9C5B17163062009BA34C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FBC9C5A17163062009BA34C /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		881EAFCD16FBD08B0041AD55 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		881EAFCF16FBD08B0041AD55 /* QuizInTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuizInTests.h; sourceTree = "<group>"; };
 		881EAFD016FBD08B0041AD55 /* QuizInTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuizInTests.m; sourceTree = "<group>"; };
+		9FBC9C5A17163062009BA34C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FBC9C5B17163062009BA34C /* QuartzCore.framework in Frameworks */,
 				881EAF9416FBD08B0041AD55 /* UIKit.framework in Frameworks */,
 				881EAF9616FBD08B0041AD55 /* Foundation.framework in Frameworks */,
 				881EAF9816FBD08B0041AD55 /* CoreGraphics.framework in Frameworks */,
@@ -182,6 +185,7 @@
 		881EAF9216FBD08B0041AD55 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9FBC9C5A17163062009BA34C /* QuartzCore.framework */,
 				881EAF9316FBD08B0041AD55 /* UIKit.framework */,
 				881EAF9516FBD08B0041AD55 /* Foundation.framework */,
 				881EAF9716FBD08B0041AD55 /* CoreGraphics.framework */,
