@@ -2,6 +2,7 @@
 #define __COCOA_PODS
 
 #define __POD_AFNetworking
+#define __POD_AuthKit
 #define __POD_CocoaLumberjack
 #define __POD_MagicalRecord
 #define __POD_Objection
