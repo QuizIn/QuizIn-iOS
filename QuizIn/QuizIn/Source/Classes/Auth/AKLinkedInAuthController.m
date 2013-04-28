@@ -3,7 +3,7 @@
 @implementation AKLinkedInAuthController
 
 - (NSString *)clientID {
-  return @"5se92tdnfz61";
+  return @"hrsfw0wa1l0x";
 }
 
 - (NSString *)accessTokenURLString {
@@ -15,15 +15,15 @@
 }
 
 - (NSString *)redirectURIString {
-  return @"http://www.apple.com/blah";
+  return @"http://www.linkedin.com/blah";
 }
 
 - (NSString *)clientSecret {
-  return @"GneNrlqv99QIZTTq";
+  return @"qbQ3Tr8zHe0vK8ot";
 }
 
 - (NSString *)keychainItemName {
-  return @"AuthKit: Linked In";
+  return @"Quizin: Linked In";
 }
 
 - (NSString *)scope {

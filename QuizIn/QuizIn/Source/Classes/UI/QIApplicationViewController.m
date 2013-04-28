@@ -1,13 +1,13 @@
 #import "QIApplicationViewController.h"
 
-#import <AuthKit/AKAuthControl.h>
-
+#import "AKLinkedInAuthController.h"
 #import "QIDrawerController.h"
 #import "QIHomeViewController.h"
 
-@interface QIApplicationViewController ()<AKAuthControl>
+@interface QIApplicationViewController ()<AKAuthHandler>
 @property(nonatomic, strong) QIDrawerController *drawerController;
 @property(nonatomic, strong) UIViewController *loginViewController;
+@property(nonatomic, strong) AKLinkedInAuthController *authController;
 @end
 
 @implementation QIApplicationViewController
@@ -15,7 +15,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-      // Custom initialization
+    _authController = [self newLinkedInAuthController];
   }
   return self;
 }
@@ -27,9 +27,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.drawerController = [self newDrawerController];
-  [self addChildViewController:self.drawerController];
-  [self.view addSubview:self.drawerController.view];
+  [self.authController beginAuthenticationAttempt];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,19 +39,7 @@
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
   self.drawerController.view.frame = self.view.bounds;
-}
-
-#pragma mark Factory Methods
-
-- (QIDrawerController *)newDrawerController {
-  QIDrawerController *drawerController = [[QIDrawerController alloc] init];
-  [drawerController updateViewControllers:@[[self newHomeViewController]]];
-  return drawerController;
-}
-
-- (QIHomeViewController *)newHomeViewController {
-  QIHomeViewController *homeViewController = [[QIHomeViewController alloc] init];
-  return homeViewController;
+  self.loginViewController.view.frame = self.view.bounds;
 }
 
 #pragma mark AKAuthHandler
@@ -70,22 +56,34 @@
   [self.loginViewController.view removeFromSuperview];
   [self.loginViewController removeFromParentViewController];
   
-  /*
-  self.linkedInViewController = [[MALinkedInViewController alloc] init];
-  self.linkedInViewController.authControl = self;
-  self.linkedInViewController.view.frame = self.view.bounds;
-  [self addChildViewController:self.linkedInViewController];
-  [self.view addSubview:self.linkedInViewController.view];
+  self.drawerController = [self newDrawerController];
+  [self addChildViewController:self.drawerController];
+  [self.view addSubview:self.drawerController.view];
 }
 
 - (void)authControllerAccount:(AKAccount *)account
             didUnauthenticate:(id<AKAuthControl>)authController {
-  [self.linkedInViewController.view removeFromSuperview];
-  [self.linkedInViewController removeFromParentViewController];
-  
-  [self addChildViewController:self.tourViewController];
-  [self.view addSubview:self.tourViewController.view];
-   */
+  [self.drawerController.view removeFromSuperview];
+  [self.drawerController removeFromParentViewController];
+}
+
+#pragma mark Factory Methods
+
+- (AKLinkedInAuthController *)newLinkedInAuthController {
+  AKLinkedInAuthController *authController = [[AKLinkedInAuthController alloc] init];
+  authController.authHandler = self;
+  return authController;
+}
+
+- (QIDrawerController *)newDrawerController {
+  QIDrawerController *drawerController = [[QIDrawerController alloc] init];
+  [drawerController updateViewControllers:@[[self newHomeViewController]]];
+  return drawerController;
+}
+
+- (QIHomeViewController *)newHomeViewController {
+  QIHomeViewController *homeViewController = [[QIHomeViewController alloc] init];
+  return homeViewController;
 }
 
 @end
