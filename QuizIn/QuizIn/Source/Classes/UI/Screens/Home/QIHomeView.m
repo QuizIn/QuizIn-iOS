@@ -1,7 +1,7 @@
 #import "QIHomeView.h"
 
 @interface QIHomeView ()
-@property(nonatomic, strong) UIButton *connectionsQuizButton;
+@property(nonatomic, strong, readwrite) UIButton *connectionsQuizButton;
 @end
 
 @implementation QIHomeView

@@ -43,6 +43,10 @@
 		88867995172D6AF800DCE3D0 /* LinkedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886798C172D6AF800DCE3D0 /* LinkedIn.m */; };
 		88867997172D6D1B00DCE3D0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88867996172D6D1B00DCE3D0 /* SystemConfiguration.framework */; };
 		88867999172D6D6C00DCE3D0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88867998172D6D6C00DCE3D0 /* MobileCoreServices.framework */; };
+		888679A1172DCDA700DCE3D0 /* QIQuizViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 888679A0172DCDA600DCE3D0 /* QIQuizViewController.m */; };
+		888679A4172DCE2800DCE3D0 /* QIQuizView.m in Sources */ = {isa = PBXBuildFile; fileRef = 888679A3172DCE2700DCE3D0 /* QIQuizView.m */; };
+		888679A8172DD5B000DCE3D0 /* QIMultipleChoiceQuizViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 888679A7172DD5B000DCE3D0 /* QIMultipleChoiceQuizViewController.m */; };
+		888679AB172DD5DA00DCE3D0 /* QIMultipleChoiceQuizView.m in Sources */ = {isa = PBXBuildFile; fileRef = 888679AA172DD5DA00DCE3D0 /* QIMultipleChoiceQuizView.m */; };
 		9FBC9C5B17163062009BA34C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FBC9C5A17163062009BA34C /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +118,14 @@
 		8886798C172D6AF800DCE3D0 /* LinkedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedIn.m; sourceTree = "<group>"; };
 		88867996172D6D1B00DCE3D0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		88867998172D6D6C00DCE3D0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		8886799F172DCDA600DCE3D0 /* QIQuizViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuizViewController.h; sourceTree = "<group>"; };
+		888679A0172DCDA600DCE3D0 /* QIQuizViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIQuizViewController.m; sourceTree = "<group>"; };
+		888679A2172DCE2700DCE3D0 /* QIQuizView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuizView.h; sourceTree = "<group>"; };
+		888679A3172DCE2700DCE3D0 /* QIQuizView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIQuizView.m; sourceTree = "<group>"; };
+		888679A6172DD5B000DCE3D0 /* QIMultipleChoiceQuizViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIMultipleChoiceQuizViewController.h; sourceTree = "<group>"; };
+		888679A7172DD5B000DCE3D0 /* QIMultipleChoiceQuizViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIMultipleChoiceQuizViewController.m; sourceTree = "<group>"; };
+		888679A9172DD5DA00DCE3D0 /* QIMultipleChoiceQuizView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIMultipleChoiceQuizView.h; sourceTree = "<group>"; };
+		888679AA172DD5DA00DCE3D0 /* QIMultipleChoiceQuizView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIMultipleChoiceQuizView.m; sourceTree = "<group>"; };
 		9FBC9C5A17163062009BA34C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -347,7 +359,12 @@
 		8886799A172DAFC700DCE3D0 /* Quizzes */ = {
 			isa = PBXGroup;
 			children = (
+				888679A5172DD57F00DCE3D0 /* MultipleChoice */,
 				8886799B172DAFC700DCE3D0 /* BusinessCard */,
+				8886799F172DCDA600DCE3D0 /* QIQuizViewController.h */,
+				888679A0172DCDA600DCE3D0 /* QIQuizViewController.m */,
+				888679A2172DCE2700DCE3D0 /* QIQuizView.h */,
+				888679A3172DCE2700DCE3D0 /* QIQuizView.m */,
 			);
 			path = Quizzes;
 			sourceTree = "<group>";
@@ -361,6 +378,17 @@
 				34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */,
 			);
 			path = BusinessCard;
+			sourceTree = "<group>";
+		};
+		888679A5172DD57F00DCE3D0 /* MultipleChoice */ = {
+			isa = PBXGroup;
+			children = (
+				888679A6172DD5B000DCE3D0 /* QIMultipleChoiceQuizViewController.h */,
+				888679A7172DD5B000DCE3D0 /* QIMultipleChoiceQuizViewController.m */,
+				888679A9172DD5DA00DCE3D0 /* QIMultipleChoiceQuizView.h */,
+				888679AA172DD5DA00DCE3D0 /* QIMultipleChoiceQuizView.m */,
+			);
+			path = MultipleChoice;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -507,6 +535,10 @@
 				88867995172D6AF800DCE3D0 /* LinkedIn.m in Sources */,
 				34F01A36172DB2F60056A76A /* QIBusinessCardQuizView.m in Sources */,
 				34F01A37172DB2F60056A76A /* QIBusinessCardViewController.m in Sources */,
+				888679A1172DCDA700DCE3D0 /* QIQuizViewController.m in Sources */,
+				888679A4172DCE2800DCE3D0 /* QIQuizView.m in Sources */,
+				888679A8172DD5B000DCE3D0 /* QIMultipleChoiceQuizViewController.m in Sources */,
+				888679AB172DD5DA00DCE3D0 /* QIMultipleChoiceQuizView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
