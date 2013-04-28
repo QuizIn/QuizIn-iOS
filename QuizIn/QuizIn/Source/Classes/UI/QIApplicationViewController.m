@@ -1,8 +1,13 @@
 #import "QIApplicationViewController.h"
 
+#import <AuthKit/AKAuthHandler.h>
+
 #import "AKLinkedInAuthController.h"
 #import "QIDrawerController.h"
 #import "QIHomeViewController.h"
+
+// TODO(rcacheaux):  Remove Temp Stuff.
+#import "LinkedIn.h"
 
 @interface QIApplicationViewController ()<AKAuthHandler>
 @property(nonatomic, strong) QIDrawerController *drawerController;
@@ -59,6 +64,11 @@
   self.drawerController = [self newDrawerController];
   [self addChildViewController:self.drawerController];
   [self.view addSubview:self.drawerController.view];
+  
+  [LinkedIn getPeopleCurrentConnectionsWithCompletionHandler:^(NSArray *connections,
+                                                               NSError *error) {
+    NSLog(@"Got Connections");
+  }];
 }
 
 - (void)authControllerAccount:(AKAccount *)account

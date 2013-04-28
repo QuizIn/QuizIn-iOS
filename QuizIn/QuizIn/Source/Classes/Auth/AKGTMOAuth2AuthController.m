@@ -1,13 +1,13 @@
 #import "AKGTMOAuth2AuthController.h"
 
 #import <AuthKit/AKAuthHandler.h>
-#import <AuthKit/AKAccountStore.h>
 #import <AuthKit/AKAccount.h>
 #import <gtm-oauth2/GTMOAuth2ViewControllerTouch.h>
 #import <gtm-oauth2/GTMOAuth2Authentication.h>
 #import <gtm-oauth2/GTMOAuth2SignIn.h>
 
 #import "AKGTMOAuth2Account.h"
+#import "QIAccountStore.h"
 
 typedef  void (^GTMOAuth2CompletionHandler)(GTMOAuth2ViewControllerTouch *viewController,
                                             GTMOAuth2Authentication *auth,
@@ -25,8 +25,8 @@ typedef  void (^GTMOAuth2CompletionHandler)(GTMOAuth2ViewControllerTouch *viewCo
   {
     if (!error) {
       AKGTMOAuth2Account *account =
-          (AKGTMOAuth2Account *)[[AKAccountStore sharedStore] newAccount];
-      [[AKAccountStore sharedStore] saveAccount:account];
+          (AKGTMOAuth2Account *)[[QIAccountStore sharedStore] newAccount];
+      [[QIAccountStore sharedStore] saveAccount:account];
       [weakSelf.authHandler authControllerAccount:account didAuthenticate:weakSelf];
     } else {
       // Log error.
@@ -50,7 +50,7 @@ typedef  void (^GTMOAuth2CompletionHandler)(GTMOAuth2ViewControllerTouch *viewCo
 }
 
 - (void)unauthenticateAccount:(AKAccount *)account {
-  [[[AKAccountStore sharedStore] authenticatedAccount] clearCredential];
+  [[[QIAccountStore sharedStore] authenticatedAccount] clearCredential];
   [self.authHandler authControllerAccount:account didUnauthenticate:self];
 }
 

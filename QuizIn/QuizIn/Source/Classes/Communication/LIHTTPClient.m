@@ -1,11 +1,11 @@
 #import "LIHTTPClient.h"
 
-#import <AuthKit/AKAccountStore.h>
 #import <AuthKit/AKAccount.h>
 #import <AFNetworking/AFJSONRequestOperation.h>
 
 #import "AKGTMOAuth2Account.h"
 #import "AKOAuth2AccountCredential.h"
+#import "QIAccountStore.h"
 
 static NSString * const kAFLinkedInAPIBaseURLString = @"https://api.linkedin.com/v1";
 
@@ -39,7 +39,7 @@ static NSString * const kAFLinkedInAPIBaseURLString = @"https://api.linkedin.com
   NSMutableDictionary *mutableParameters =
       [NSMutableDictionary dictionaryWithDictionary:parameters];
   AKGTMOAuth2Account *masterAccount =
-      (AKGTMOAuth2Account *)[[AKAccountStore sharedStore] authenticatedAccount];
+      (AKGTMOAuth2Account *)[[QIAccountStore sharedStore] authenticatedAccount];
   
   [mutableParameters setObject:masterAccount.OAuth2Credential.accessToken
                         forKey:@"oauth2_access_token"];

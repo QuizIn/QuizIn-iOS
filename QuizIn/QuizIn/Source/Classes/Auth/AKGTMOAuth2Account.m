@@ -5,6 +5,7 @@
 
 #import "AKOAuth2AccountCredential.h"
 #import "AKGTMOAuth2AuthController.h"
+#import "AKLinkedInAuthController.h"
 
 @implementation AKGTMOAuth2Account
 
@@ -39,8 +40,9 @@
 }
 
 - (BOOL)isAuthenticated {
+  // TODO(rcacheaux): Clean up. AK stuff is mixed in with QI stuff, need a cleaner line.
   AKGTMOAuth2AuthController *authController =
-      [AKGTMOAuth2AuthController sharedController];
+      [AKLinkedInAuthController sharedController];
   GTMOAuth2Authentication *auth = [authController newGTMOAuth2Authentication];
   if (!auth) {
     return NO;

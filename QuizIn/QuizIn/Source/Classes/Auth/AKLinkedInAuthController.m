@@ -27,7 +27,7 @@
 }
 
 - (NSString *)scope {
-  return @"r_fullprofile";
+  return @"r_fullprofile r_network";
 }
 
 - (NSString *)authCodeURLString {
