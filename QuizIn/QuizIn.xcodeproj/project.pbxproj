@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		12F4E77333594484A0C343D9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 634CC7A981E449658DD30D1E /* libPods.a */; };
+		34F01A36172DB2F60056A76A /* QIBusinessCardQuizView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */; };
+		34F01A37172DB2F60056A76A /* QIBusinessCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */; };
 		880870E216FBD31800D09848 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 880870DF16FBD31800D09848 /* InfoPlist.strings */; };
 		880870EC16FBD32200D09848 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 880870E616FBD32200D09848 /* Default-568h@2x.png */; };
 		880870ED16FBD32200D09848 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 880870E716FBD32200D09848 /* Default.png */; };
@@ -41,7 +43,6 @@
 		88867995172D6AF800DCE3D0 /* LinkedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886798C172D6AF800DCE3D0 /* LinkedIn.m */; };
 		88867997172D6D1B00DCE3D0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88867996172D6D1B00DCE3D0 /* SystemConfiguration.framework */; };
 		88867999172D6D6C00DCE3D0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88867998172D6D6C00DCE3D0 /* MobileCoreServices.framework */; };
-		8886799E172DAFDD00DCE3D0 /* QIBusinessCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886799D172DAFDD00DCE3D0 /* QIBusinessCardViewController.m */; };
 		9FBC9C5B17163062009BA34C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FBC9C5A17163062009BA34C /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		34F01A32172DB2F60056A76A /* QIBusinessCardQuizView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardQuizView.h; sourceTree = "<group>"; };
+		34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardQuizView.m; sourceTree = "<group>"; };
+		34F01A34172DB2F60056A76A /* QIBusinessCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardViewController.h; sourceTree = "<group>"; };
+		34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardViewController.m; sourceTree = "<group>"; };
 		634CC7A981E449658DD30D1E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F88557B297046AD9AF083B1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		880870E016FBD31800D09848 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -109,8 +114,6 @@
 		8886798C172D6AF800DCE3D0 /* LinkedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedIn.m; sourceTree = "<group>"; };
 		88867996172D6D1B00DCE3D0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		88867998172D6D6C00DCE3D0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		8886799C172DAFDD00DCE3D0 /* QIBusinessCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardViewController.h; sourceTree = "<group>"; };
-		8886799D172DAFDD00DCE3D0 /* QIBusinessCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardViewController.m; sourceTree = "<group>"; };
 		9FBC9C5A17163062009BA34C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -352,8 +355,10 @@
 		8886799B172DAFC700DCE3D0 /* BusinessCard */ = {
 			isa = PBXGroup;
 			children = (
-				8886799C172DAFDD00DCE3D0 /* QIBusinessCardViewController.h */,
-				8886799D172DAFDD00DCE3D0 /* QIBusinessCardViewController.m */,
+				34F01A32172DB2F60056A76A /* QIBusinessCardQuizView.h */,
+				34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */,
+				34F01A34172DB2F60056A76A /* QIBusinessCardViewController.h */,
+				34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */,
 			);
 			path = BusinessCard;
 			sourceTree = "<group>";
@@ -500,7 +505,8 @@
 				88867993172D6AF800DCE3D0 /* AKLinkedInAuthController.m in Sources */,
 				88867994172D6AF800DCE3D0 /* LIHTTPClient.m in Sources */,
 				88867995172D6AF800DCE3D0 /* LinkedIn.m in Sources */,
-				8886799E172DAFDD00DCE3D0 /* QIBusinessCardViewController.m in Sources */,
+				34F01A36172DB2F60056A76A /* QIBusinessCardQuizView.m in Sources */,
+				34F01A37172DB2F60056A76A /* QIBusinessCardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
