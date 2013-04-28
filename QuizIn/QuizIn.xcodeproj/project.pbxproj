@@ -147,6 +147,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		34EF1F94172DDB560019D6F7 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
 		880870DE16FBD31800D09848 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +175,7 @@
 		880870E516FBD32200D09848 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				34EF1F94172DDB560019D6F7 /* HomeView */,
 				880870E616FBD32200D09848 /* Default-568h@2x.png */,
 				880870E716FBD32200D09848 /* Default.png */,
 				880870E816FBD32200D09848 /* Default@2x.png */,
