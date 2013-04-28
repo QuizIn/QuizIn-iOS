@@ -291,19 +291,18 @@ objection_initializer(initWithMake:model:)
 ## TODO
 
 * ARCify for iOS
-* Pass along arguments to providers
 * Add a motivation section that speaks to _why_ Objection was created
 
 ## Installation
 
 ### Static Framework and Linkable Framework
 
-It can be downloaded [here](http://objection-framework.org/files/Objection-0.15.0.tar.gz)
+It can be downloaded [here](http://objection-framework.org/files/Objection-0.15.2.tar.gz)
 
 ### Building Static Framework
 
     git clone git://github.com/atomicobject/objection.git
-    git checkout 0.15.0
+    git checkout 0.15.2
     
 #### iOS
 
@@ -330,7 +329,7 @@ It can be downloaded [here](http://objection-framework.org/files/Objection-0.15.
 Edit your Pofile
 
     edit Podfile
-    pod 'Objection', '0.15.0'
+    pod 'Objection', '0.15.2'
 
 Now you can install Objection
     
@@ -355,6 +354,7 @@ One only has to [search GitHub](https://github.com/search?l=Objective-C&p=1&q=de
 
 ## Applications that use Objection
 
-* [Bubble Island](http://www.wooga.com/games/bubble-island/) and other [Wooga](http://wooga.com) games
+* [Bubble Island](http://www.wooga.com/games/bubble-island/)
+* [Monster World](http://www.wooga.com/games/monster-world/)
 * [SideReel](https://itunes.apple.com/us/app/sidereel/id417270961?mt=8)
 

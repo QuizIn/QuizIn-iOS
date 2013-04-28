@@ -129,6 +129,8 @@ static void InjectDependenciesIntoProperties(JSObjectionInjector *injector, Clas
                 @throw [NSException exceptionWithName:@"JSObjectionException"
                                                reason:[NSString stringWithFormat:@"Cannot find an instance that is bound to the protocol '%@' to assign to the property '%@'", NSStringFromProtocol(desiredClassOrProtocol), propertyName]
                                              userInfo:nil];
+            } else if (theObject == nil) {
+                theObject = [NSNull null];
             }
             
             [propertiesDictionary setObject:theObject forKey:propertyName];
