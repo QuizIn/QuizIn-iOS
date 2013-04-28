@@ -12,8 +12,7 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
 
 @implementation LinkedIn
 
-+ (void)getPeopleCurrentWithCompletionHandler:
-    (LIGetPeopleCurrentResponse)completionHandler {
++ (void)getPeopleCurrentWithCompletionHandler:(LIGetPeopleResponse)completionHandler {
   NSString *path = @"people/~";
   LIHTTPClient *httpClient = [LIHTTPClient sharedClient];
   AFHTTPRequestOperationSuccess success = ^(AFHTTPRequestOperation *requestOperation,
@@ -26,6 +25,25 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
     NSLog(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
     [[AKLinkedInAuthController sharedController]
         unauthenticateAccount:[[AKAccountStore sharedStore] authenticatedAccount]];
+  };
+  
+  [httpClient getPath:path parameters:nil success:success failure:failure];
+}
+
++ (void)getPeopleWithID:(NSString *)ID
+      completionHandler:(LIGetPeopleResponse)completionHandler {
+  NSString *path = [NSString stringWithFormat:@"people/id=%@:(positions)",
+                                              ID];
+  LIHTTPClient *httpClient = [LIHTTPClient sharedClient];
+  AFHTTPRequestOperationSuccess success = ^(AFHTTPRequestOperation *requestOperation,
+                                            NSDictionary *JSON){
+    completionHandler ? completionHandler(JSON, nil) : NULL;
+  };
+  AFHTTPRequestOperationFailure failure = ^(AFHTTPRequestOperation *requestOperation,
+                                            NSError *error){
+    NSLog(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
+    [[AKLinkedInAuthController sharedController]
+     unauthenticateAccount:[[AKAccountStore sharedStore] authenticatedAccount]];
   };
   
   [httpClient getPath:path parameters:nil success:success failure:failure];

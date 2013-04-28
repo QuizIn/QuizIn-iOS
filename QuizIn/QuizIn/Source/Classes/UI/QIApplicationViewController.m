@@ -68,6 +68,12 @@
   [LinkedIn getPeopleCurrentConnectionsWithCompletionHandler:^(NSArray *connections,
                                                                NSError *error) {
     NSLog(@"Got Connections");
+    for (NSDictionary *person in connections) {
+      [LinkedIn getPeopleWithID:person[@"id"] completionHandler:^(NSDictionary *profile,
+                                                                  NSError *error) {
+        NSLog(@"Company: %@", profile[@"positions"][@"values"][0][@"company"][@"name"]);
+      }];
+    }
   }];
 }
 
