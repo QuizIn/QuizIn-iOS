@@ -1,10 +1,13 @@
 #import "QIApplicationViewController.h"
 
+#import <AuthKit/AKAuthControl.h>
+
 #import "QIDrawerController.h"
 #import "QIHomeViewController.h"
 
-@interface QIApplicationViewController ()
+@interface QIApplicationViewController ()<AKAuthControl>
 @property(nonatomic, strong) QIDrawerController *drawerController;
+@property(nonatomic, strong) UIViewController *loginViewController;
 @end
 
 @implementation QIApplicationViewController
@@ -51,6 +54,38 @@
 - (QIHomeViewController *)newHomeViewController {
   QIHomeViewController *homeViewController = [[QIHomeViewController alloc] init];
   return homeViewController;
+}
+
+#pragma mark AKAuthHandler
+
+- (void)presentAKLoginViewController:(UIViewController *)viewController {
+  self.loginViewController = viewController;
+  [self addChildViewController:viewController];
+  [self.view addSubview:viewController.view];
+}
+
+- (void)authControllerAccount:(AKAccount *)account
+              didAuthenticate:(id<AKAuthControl>)authController {
+  // TODO(rcacheaux): Check if exists.
+  [self.loginViewController.view removeFromSuperview];
+  [self.loginViewController removeFromParentViewController];
+  
+  /*
+  self.linkedInViewController = [[MALinkedInViewController alloc] init];
+  self.linkedInViewController.authControl = self;
+  self.linkedInViewController.view.frame = self.view.bounds;
+  [self addChildViewController:self.linkedInViewController];
+  [self.view addSubview:self.linkedInViewController.view];
+}
+
+- (void)authControllerAccount:(AKAccount *)account
+            didUnauthenticate:(id<AKAuthControl>)authController {
+  [self.linkedInViewController.view removeFromSuperview];
+  [self.linkedInViewController removeFromParentViewController];
+  
+  [self addChildViewController:self.tourViewController];
+  [self.view addSubview:self.tourViewController.view];
+   */
 }
 
 @end
