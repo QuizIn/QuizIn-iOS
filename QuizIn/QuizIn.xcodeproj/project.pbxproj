@@ -506,6 +506,7 @@
 				GCC_PREFIX_HEADER = "QuizIn/Source/QuizIn-Prefix.pch";
 				INFOPLIST_FILE = "QuizIn/Supporting Files/QuizIn-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -518,6 +519,7 @@
 				GCC_PREFIX_HEADER = "QuizIn/Source/QuizIn-Prefix.pch";
 				INFOPLIST_FILE = "QuizIn/Supporting Files/QuizIn-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
