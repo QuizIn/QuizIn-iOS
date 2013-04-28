@@ -1,8 +1,10 @@
 #import "QIApplicationViewController.h"
 
+#import "QIDrawerController.h"
+#import "QIHomeViewController.h"
 
 @interface QIApplicationViewController ()
-
+@property(nonatomic, strong) QIDrawerController *drawerController;
 @end
 
 @implementation QIApplicationViewController
@@ -17,17 +19,38 @@
 
 - (void) loadView {
   self.view = [[UIView alloc] init];
-  self.view.backgroundColor = [UIColor lightGrayColor];
+  self.view.backgroundColor = [UIColor redColor];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-	// Do any additional setup after loading the view.
+  self.drawerController = [self newDrawerController];
+  [self addChildViewController:self.drawerController];
+  [self.view addSubview:self.drawerController.view];
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
+}
+
+#pragma mark Layout
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  self.drawerController.view.frame = self.view.bounds;
+}
+
+#pragma mark Factory Methods
+
+- (QIDrawerController *)newDrawerController {
+  QIDrawerController *drawerController = [[QIDrawerController alloc] init];
+  [drawerController updateViewControllers:@[[self newHomeViewController]]];
+  return drawerController;
+}
+
+- (QIHomeViewController *)newHomeViewController {
+  QIHomeViewController *homeViewController = [[QIHomeViewController alloc] init];
+  return homeViewController;
 }
 
 @end
