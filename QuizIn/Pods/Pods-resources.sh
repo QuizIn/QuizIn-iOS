@@ -25,3 +25,4 @@ install_resource()
       ;;
   esac
 }
+install_resource 'gtm-oauth2/Source/Touch/GTMOAuth2ViewTouch.xib'

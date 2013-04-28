@@ -2,13 +2,32 @@ PODS:
   - AFNetworking (1.2.1)
   - AuthKit (0.0.1)
   - CocoaLumberjack (1.6.2)
+  - gtm-oauth2 (0.0.1):
+    - gtm-oauth2/Core
+    - GTMHTTPFetcher
+    - SBJson
+  - gtm-oauth2/Core (0.0.1):
+    - gtm-oauth2/Core/Mac
+    - gtm-oauth2/Core/Touch
+    - GTMHTTPFetcher
+    - SBJson
+  - gtm-oauth2/Core/Mac (0.0.1):
+    - GTMHTTPFetcher
+    - SBJson
+  - gtm-oauth2/Core/Touch (0.0.1):
+    - GTMHTTPFetcher
+    - SBJson
+  - GTMHTTPFetcher (0.0.1):
+    - SBJson
   - MagicalRecord (2.1)
   - Objection (0.15.2)
+  - SBJson (3.2)
 
 DEPENDENCIES:
   - AFNetworking (>= 1.1.0)
   - AuthKit (from `../../AuthKit`)
   - CocoaLumberjack (>= 1.6)
+  - gtm-oauth2 (>= 0.0.1)
   - MagicalRecord (>= 2.1)
   - Objection (>= 0.15.1)
 
@@ -20,7 +39,10 @@ SPEC CHECKSUMS:
   AFNetworking: 616da0028916ce296f5c3cef74e5552eb4e10e13
   AuthKit: fc15e656eba449c52ae99fb18dc3e4db5e5c6c1e
   CocoaLumberjack: d73e1e317ced14ab930797dda6c17156ff17aaa1
+  gtm-oauth2: c4824003b569bc9b96446661fb92dbc681335499
+  GTMHTTPFetcher: 563425df0ff2127edba46985df62ef60acd441e5
   MagicalRecord: 64e7184c240087a45e9588a722eaf05b0ad837f7
   Objection: 9afb32da171ffca51a74321aeae3f8612da1570d
+  SBJson: 4971016670e7b3fa04a36d4e72ab0fb1ad3a9f69
 
 COCOAPODS: 0.18.1

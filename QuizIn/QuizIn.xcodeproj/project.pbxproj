@@ -30,6 +30,17 @@
 		8886796E172D540700DCE3D0 /* QIHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886796D172D540700DCE3D0 /* QIHomeView.m */; };
 		88867975172D572F00DCE3D0 /* QIDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88867974172D572F00DCE3D0 /* QIDrawerController.m */; };
 		88867978172D574C00DCE3D0 /* QIDrawerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88867977172D574C00DCE3D0 /* QIDrawerView.m */; };
+		8886798D172D6AF800DCE3D0 /* AKGTMOAuth2Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886797B172D6AF700DCE3D0 /* AKGTMOAuth2Account.m */; };
+		8886798E172D6AF800DCE3D0 /* AKGTMOAuth2AuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886797D172D6AF700DCE3D0 /* AKGTMOAuth2AuthController.m */; };
+		8886798F172D6AF800DCE3D0 /* AKOAuth2Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886797F172D6AF700DCE3D0 /* AKOAuth2Account.m */; };
+		88867990172D6AF800DCE3D0 /* AKOAuth2AccountCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 88867981172D6AF700DCE3D0 /* AKOAuth2AccountCredential.m */; };
+		88867991172D6AF800DCE3D0 /* QIAccountStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 88867983172D6AF700DCE3D0 /* QIAccountStore.m */; };
+		88867992172D6AF800DCE3D0 /* AKGoogleAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88867985172D6AF700DCE3D0 /* AKGoogleAuthController.m */; };
+		88867993172D6AF800DCE3D0 /* AKLinkedInAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88867987172D6AF700DCE3D0 /* AKLinkedInAuthController.m */; };
+		88867994172D6AF800DCE3D0 /* LIHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886798A172D6AF800DCE3D0 /* LIHTTPClient.m */; };
+		88867995172D6AF800DCE3D0 /* LinkedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886798C172D6AF800DCE3D0 /* LinkedIn.m */; };
+		88867997172D6D1B00DCE3D0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88867996172D6D1B00DCE3D0 /* SystemConfiguration.framework */; };
+		88867999172D6D6C00DCE3D0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88867998172D6D6C00DCE3D0 /* MobileCoreServices.framework */; };
 		9FBC9C5B17163062009BA34C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FBC9C5A17163062009BA34C /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +88,26 @@
 		88867974172D572F00DCE3D0 /* QIDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIDrawerController.m; sourceTree = "<group>"; };
 		88867976172D574C00DCE3D0 /* QIDrawerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIDrawerView.h; sourceTree = "<group>"; };
 		88867977172D574C00DCE3D0 /* QIDrawerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIDrawerView.m; sourceTree = "<group>"; };
+		8886797A172D6AF700DCE3D0 /* AKGTMOAuth2Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKGTMOAuth2Account.h; sourceTree = "<group>"; };
+		8886797B172D6AF700DCE3D0 /* AKGTMOAuth2Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKGTMOAuth2Account.m; sourceTree = "<group>"; };
+		8886797C172D6AF700DCE3D0 /* AKGTMOAuth2AuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKGTMOAuth2AuthController.h; sourceTree = "<group>"; };
+		8886797D172D6AF700DCE3D0 /* AKGTMOAuth2AuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKGTMOAuth2AuthController.m; sourceTree = "<group>"; };
+		8886797E172D6AF700DCE3D0 /* AKOAuth2Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKOAuth2Account.h; sourceTree = "<group>"; };
+		8886797F172D6AF700DCE3D0 /* AKOAuth2Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKOAuth2Account.m; sourceTree = "<group>"; };
+		88867980172D6AF700DCE3D0 /* AKOAuth2AccountCredential.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKOAuth2AccountCredential.h; sourceTree = "<group>"; };
+		88867981172D6AF700DCE3D0 /* AKOAuth2AccountCredential.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKOAuth2AccountCredential.m; sourceTree = "<group>"; };
+		88867982172D6AF700DCE3D0 /* QIAccountStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIAccountStore.h; sourceTree = "<group>"; };
+		88867983172D6AF700DCE3D0 /* QIAccountStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIAccountStore.m; sourceTree = "<group>"; };
+		88867984172D6AF700DCE3D0 /* AKGoogleAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKGoogleAuthController.h; sourceTree = "<group>"; };
+		88867985172D6AF700DCE3D0 /* AKGoogleAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKGoogleAuthController.m; sourceTree = "<group>"; };
+		88867986172D6AF700DCE3D0 /* AKLinkedInAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKLinkedInAuthController.h; sourceTree = "<group>"; };
+		88867987172D6AF700DCE3D0 /* AKLinkedInAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKLinkedInAuthController.m; sourceTree = "<group>"; };
+		88867989172D6AF800DCE3D0 /* LIHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIHTTPClient.h; sourceTree = "<group>"; };
+		8886798A172D6AF800DCE3D0 /* LIHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIHTTPClient.m; sourceTree = "<group>"; };
+		8886798B172D6AF800DCE3D0 /* LinkedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedIn.h; sourceTree = "<group>"; };
+		8886798C172D6AF800DCE3D0 /* LinkedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedIn.m; sourceTree = "<group>"; };
+		88867996172D6D1B00DCE3D0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		88867998172D6D6C00DCE3D0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		9FBC9C5A17163062009BA34C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -85,6 +116,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88867999172D6D6C00DCE3D0 /* MobileCoreServices.framework in Frameworks */,
+				88867997172D6D1B00DCE3D0 /* SystemConfiguration.framework in Frameworks */,
 				9FBC9C5B17163062009BA34C /* QuartzCore.framework in Frameworks */,
 				881EAF9416FBD08B0041AD55 /* UIKit.framework in Frameworks */,
 				881EAF9616FBD08B0041AD55 /* Foundation.framework in Frameworks */,
@@ -157,9 +190,11 @@
 		880870F116FBD32E00D09848 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				88867979172D6AF700DCE3D0 /* Auth */,
+				88867988172D6AF700DCE3D0 /* Communication */,
+				880870F416FBD32E00D09848 /* UI */,
 				880870F216FBD32E00D09848 /* QIAppDelegate.h */,
 				880870F316FBD32E00D09848 /* QIAppDelegate.m */,
-				880870F416FBD32E00D09848 /* UI */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -198,6 +233,8 @@
 		881EAF9216FBD08B0041AD55 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				88867998172D6D6C00DCE3D0 /* MobileCoreServices.framework */,
+				88867996172D6D1B00DCE3D0 /* SystemConfiguration.framework */,
 				9FBC9C5A17163062009BA34C /* QuartzCore.framework */,
 				881EAF9316FBD08B0041AD55 /* UIKit.framework */,
 				881EAF9516FBD08B0041AD55 /* Foundation.framework */,
@@ -266,6 +303,38 @@
 				88867977172D574C00DCE3D0 /* QIDrawerView.m */,
 			);
 			path = Drawer;
+			sourceTree = "<group>";
+		};
+		88867979172D6AF700DCE3D0 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				8886797A172D6AF700DCE3D0 /* AKGTMOAuth2Account.h */,
+				8886797B172D6AF700DCE3D0 /* AKGTMOAuth2Account.m */,
+				8886797C172D6AF700DCE3D0 /* AKGTMOAuth2AuthController.h */,
+				8886797D172D6AF700DCE3D0 /* AKGTMOAuth2AuthController.m */,
+				8886797E172D6AF700DCE3D0 /* AKOAuth2Account.h */,
+				8886797F172D6AF700DCE3D0 /* AKOAuth2Account.m */,
+				88867980172D6AF700DCE3D0 /* AKOAuth2AccountCredential.h */,
+				88867981172D6AF700DCE3D0 /* AKOAuth2AccountCredential.m */,
+				88867982172D6AF700DCE3D0 /* QIAccountStore.h */,
+				88867983172D6AF700DCE3D0 /* QIAccountStore.m */,
+				88867984172D6AF700DCE3D0 /* AKGoogleAuthController.h */,
+				88867985172D6AF700DCE3D0 /* AKGoogleAuthController.m */,
+				88867986172D6AF700DCE3D0 /* AKLinkedInAuthController.h */,
+				88867987172D6AF700DCE3D0 /* AKLinkedInAuthController.m */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		88867988172D6AF700DCE3D0 /* Communication */ = {
+			isa = PBXGroup;
+			children = (
+				88867989172D6AF800DCE3D0 /* LIHTTPClient.h */,
+				8886798A172D6AF800DCE3D0 /* LIHTTPClient.m */,
+				8886798B172D6AF800DCE3D0 /* LinkedIn.h */,
+				8886798C172D6AF800DCE3D0 /* LinkedIn.m */,
+			);
+			path = Communication;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -401,6 +470,15 @@
 				8886796E172D540700DCE3D0 /* QIHomeView.m in Sources */,
 				88867975172D572F00DCE3D0 /* QIDrawerController.m in Sources */,
 				88867978172D574C00DCE3D0 /* QIDrawerView.m in Sources */,
+				8886798D172D6AF800DCE3D0 /* AKGTMOAuth2Account.m in Sources */,
+				8886798E172D6AF800DCE3D0 /* AKGTMOAuth2AuthController.m in Sources */,
+				8886798F172D6AF800DCE3D0 /* AKOAuth2Account.m in Sources */,
+				88867990172D6AF800DCE3D0 /* AKOAuth2AccountCredential.m in Sources */,
+				88867991172D6AF800DCE3D0 /* QIAccountStore.m in Sources */,
+				88867992172D6AF800DCE3D0 /* AKGoogleAuthController.m in Sources */,
+				88867993172D6AF800DCE3D0 /* AKLinkedInAuthController.m in Sources */,
+				88867994172D6AF800DCE3D0 /* LIHTTPClient.m in Sources */,
+				88867995172D6AF800DCE3D0 /* LinkedIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
