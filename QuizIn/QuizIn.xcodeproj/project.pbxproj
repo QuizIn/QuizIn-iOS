@@ -41,6 +41,7 @@
 		88867995172D6AF800DCE3D0 /* LinkedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886798C172D6AF800DCE3D0 /* LinkedIn.m */; };
 		88867997172D6D1B00DCE3D0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88867996172D6D1B00DCE3D0 /* SystemConfiguration.framework */; };
 		88867999172D6D6C00DCE3D0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88867998172D6D6C00DCE3D0 /* MobileCoreServices.framework */; };
+		8886799E172DAFDD00DCE3D0 /* QIBusinessCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886799D172DAFDD00DCE3D0 /* QIBusinessCardViewController.m */; };
 		9FBC9C5B17163062009BA34C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FBC9C5A17163062009BA34C /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -108,6 +109,8 @@
 		8886798C172D6AF800DCE3D0 /* LinkedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedIn.m; sourceTree = "<group>"; };
 		88867996172D6D1B00DCE3D0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		88867998172D6D6C00DCE3D0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		8886799C172DAFDD00DCE3D0 /* QIBusinessCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardViewController.h; sourceTree = "<group>"; };
+		8886799D172DAFDD00DCE3D0 /* QIBusinessCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardViewController.m; sourceTree = "<group>"; };
 		9FBC9C5A17163062009BA34C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -278,6 +281,7 @@
 		88867961172D521C00DCE3D0 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				8886799A172DAFC700DCE3D0 /* Quizzes */,
 				88867968172D53F700DCE3D0 /* Home */,
 			);
 			path = Screens;
@@ -335,6 +339,23 @@
 				8886798C172D6AF800DCE3D0 /* LinkedIn.m */,
 			);
 			path = Communication;
+			sourceTree = "<group>";
+		};
+		8886799A172DAFC700DCE3D0 /* Quizzes */ = {
+			isa = PBXGroup;
+			children = (
+				8886799B172DAFC700DCE3D0 /* BusinessCard */,
+			);
+			path = Quizzes;
+			sourceTree = "<group>";
+		};
+		8886799B172DAFC700DCE3D0 /* BusinessCard */ = {
+			isa = PBXGroup;
+			children = (
+				8886799C172DAFDD00DCE3D0 /* QIBusinessCardViewController.h */,
+				8886799D172DAFDD00DCE3D0 /* QIBusinessCardViewController.m */,
+			);
+			path = BusinessCard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -479,6 +500,7 @@
 				88867993172D6AF800DCE3D0 /* AKLinkedInAuthController.m in Sources */,
 				88867994172D6AF800DCE3D0 /* LIHTTPClient.m in Sources */,
 				88867995172D6AF800DCE3D0 /* LinkedIn.m in Sources */,
+				8886799E172DAFDD00DCE3D0 /* QIBusinessCardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
