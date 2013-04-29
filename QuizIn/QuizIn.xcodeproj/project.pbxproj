@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		12F4E77333594484A0C343D9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 634CC7A981E449658DD30D1E /* libPods.a */; };
+		34EF1F99172E15D70019D6F7 /* connectionsquiz_paperstack.png in Resources */ = {isa = PBXBuildFile; fileRef = 34EF1F95172E15D70019D6F7 /* connectionsquiz_paperstack.png */; };
+		34EF1F9A172E15D70019D6F7 /* connectionsquiz_paperstack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34EF1F96172E15D70019D6F7 /* connectionsquiz_paperstack@2x.png */; };
+		34EF1F9B172E15D70019D6F7 /* connectionsquiz_takequiz_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 34EF1F97172E15D70019D6F7 /* connectionsquiz_takequiz_btn.png */; };
+		34EF1F9C172E15D70019D6F7 /* connectionsquiz_takequiz_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34EF1F98172E15D70019D6F7 /* connectionsquiz_takequiz_btn@2x.png */; };
+		34EF1F9E172E2DC80019D6F7 /* Scratch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34EF1F9D172E2DC80019D6F7 /* Scratch.xib */; };
 		34F01A36172DB2F60056A76A /* QIBusinessCardQuizView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */; };
 		34F01A37172DB2F60056A76A /* QIBusinessCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */; };
 		880870E216FBD31800D09848 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 880870DF16FBD31800D09848 /* InfoPlist.strings */; };
@@ -61,6 +66,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		34EF1F95172E15D70019D6F7 /* connectionsquiz_paperstack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connectionsquiz_paperstack.png; sourceTree = "<group>"; };
+		34EF1F96172E15D70019D6F7 /* connectionsquiz_paperstack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectionsquiz_paperstack@2x.png"; sourceTree = "<group>"; };
+		34EF1F97172E15D70019D6F7 /* connectionsquiz_takequiz_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connectionsquiz_takequiz_btn.png; sourceTree = "<group>"; };
+		34EF1F98172E15D70019D6F7 /* connectionsquiz_takequiz_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectionsquiz_takequiz_btn@2x.png"; sourceTree = "<group>"; };
+		34EF1F9D172E2DC80019D6F7 /* Scratch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Scratch.xib; sourceTree = "<group>"; };
 		34F01A32172DB2F60056A76A /* QIBusinessCardQuizView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardQuizView.h; sourceTree = "<group>"; };
 		34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardQuizView.m; sourceTree = "<group>"; };
 		34F01A34172DB2F60056A76A /* QIBusinessCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardViewController.h; sourceTree = "<group>"; };
@@ -162,6 +172,10 @@
 		34EF1F94172DDB560019D6F7 /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
+				34EF1F95172E15D70019D6F7 /* connectionsquiz_paperstack.png */,
+				34EF1F96172E15D70019D6F7 /* connectionsquiz_paperstack@2x.png */,
+				34EF1F97172E15D70019D6F7 /* connectionsquiz_takequiz_btn.png */,
+				34EF1F98172E15D70019D6F7 /* connectionsquiz_takequiz_btn@2x.png */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";
@@ -317,6 +331,7 @@
 				8886796A172D53F700DCE3D0 /* QIHomeViewController.m */,
 				8886796C172D540700DCE3D0 /* QIHomeView.h */,
 				8886796D172D540700DCE3D0 /* QIHomeView.m */,
+				34EF1F9D172E2DC80019D6F7 /* Scratch.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -476,6 +491,11 @@
 				880870EC16FBD32200D09848 /* Default-568h@2x.png in Resources */,
 				880870ED16FBD32200D09848 /* Default.png in Resources */,
 				880870EE16FBD32200D09848 /* Default@2x.png in Resources */,
+				34EF1F99172E15D70019D6F7 /* connectionsquiz_paperstack.png in Resources */,
+				34EF1F9A172E15D70019D6F7 /* connectionsquiz_paperstack@2x.png in Resources */,
+				34EF1F9B172E15D70019D6F7 /* connectionsquiz_takequiz_btn.png in Resources */,
+				34EF1F9C172E15D70019D6F7 /* connectionsquiz_takequiz_btn@2x.png in Resources */,
+				34EF1F9E172E2DC80019D6F7 /* Scratch.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -40,7 +40,7 @@
   
   // Construct Connections Quiz Start Area
   [self.connectionsQuizStartView addSubview:self.connectionsQuizPaperImage];
-  [self.connectionsQuizStartView addSubview:self.connectionsQuizBinderImage];
+  //[self.connectionsQuizStartView addSubview:self.connectionsQuizBinderImage];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizTitle];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizNumberOfConnectionsLabel];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizImagePreviewCollection];
@@ -54,12 +54,16 @@
   [super layoutSubviews];
   // TODO(rcacheaux): Use autolayout.
   CGPoint centerPoint = CGPointMake(CGRectGetMidX(self.bounds),CGRectGetMidY(self.bounds));
-  self.connectionsQuizStartView.frame = CGRectMake(20.0f, 20.0f, 280.0f, 200.0f);
-  self.connectionsQuizTitle.frame = CGRectMake(0.0f, 0.0f, 280.0f, 20.0f);
-  self.connectionsQuizNumberOfConnectionsLabel.frame = CGRectMake(0.0f, 20.0f, 280.0f, 40.0f);
-  self.connectionsQuizImagePreviewCollection.frame = CGRectMake(20.0f, 40.0f, 240.0f, 80.0f);
-  self.connectionsQuizButton.frame = CGRectMake(0.0f, 80.0f, 80.0f, 40.0f);
-  //self.connectionsQuizButton.bounds = CGRectMake(0.0f, 0.0f, 80.0f, 44.0f);
+  
+  float leftPadding = 25.0f;
+  float topPadding = 30.0f;
+  self.connectionsQuizStartView.frame = CGRectMake(0.0f, 10.0f, 320.0f, 200.0f);
+  self.connectionsQuizPaperImage.frame = CGRectMake(0.0f, 10.0f, 320.0f, 200.0f);
+  self.connectionsQuizTitle.frame = CGRectMake(leftPadding, topPadding, 280.0f, 20.0f);
+  self.connectionsQuizNumberOfConnectionsLabel.frame = CGRectMake(leftPadding, topPadding+20.0f, 280.0f, 20.0f);
+  self.connectionsQuizImagePreviewCollection.frame = CGRectMake(leftPadding+10.0f, topPadding+60.0f, 250.0f, 60.0f);
+  self.connectionsQuizButton.frame = CGRectMake(leftPadding+100, topPadding+130.0f, 150.0f, 52.0f);
+  
 }
 
 #pragma mark Factory Methods
@@ -67,21 +71,25 @@
 // Setup Connections Quiz Start Area
 
 - (UIImageView *)newConnectionsQuizPaperImage{
-  UIImageView *paperImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default"]];
+  UIImageView *paperImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"connectionsquiz_paperstack"]];
+  paperImage.contentMode = UIViewContentModeScaleAspectFill;
   return paperImage;
 }
 - (UIImageView *)newConnectionsQuizBinderImage{
-  UIImageView *binderImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default"]];
+  UIImageView *binderImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"connectionsquiz_paperstack"]];
   return binderImage;
 }
 - (UILabel *)newConnectionsQuizTitle{
   UILabel *quizTitle = [[UILabel alloc] init];
   quizTitle.text = @"Connections Quiz";
+  quizTitle.backgroundColor = [UIColor clearColor];
   return quizTitle;
 }
 - (UILabel *)newConnectionsQuizNumberOfConnectionsLabel{
   UILabel *quizConnections = [[UILabel alloc] init];
-  quizConnections.text = @"<number of Connections> Connections";
+  quizConnections.text = @"865 Connections";
+  quizConnections.backgroundColor = [UIColor clearColor];
+  quizConnections.textColor = [UIColor grayColor];
   return quizConnections;
 }
 - (UIView *)newConnectionsQuizImagePreviewCollection{
@@ -90,14 +98,15 @@
   return previewArea;
 }
 - (UIButton *)newConnectionsQuizButton {
-  UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setTitle:[self connectionsQuizButtonTitle] forState:UIControlStateNormal];
+  [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] forState:UIControlStateNormal];
+  button.backgroundColor = [UIColor clearColor];
   return button;
 }
 - (UIView *)newConnectionsQuizStartView{
   UIView *startView = [[UIView alloc] init];
   startView.backgroundColor = [UIColor clearColor];
-  startView.clipsToBounds = YES;
   return startView;
 }
 
