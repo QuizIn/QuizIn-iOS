@@ -3,14 +3,23 @@
 
 @interface QIStatsTracker : NSObject
 
-typedef enum QuizType : NSInteger QuizType;
+typedef enum QuestionType : NSInteger QuestionType;
 
-enum QuizType : NSInteger {
+enum QuestionType : NSInteger {
   MultipleChoice,
   BusinessCard,
   Matching
 };
 
-+ (void)updateStatsWithID:(NSString *)ID quizType:(QuizType *)quizType correct:(BOOL)correct;
++ (void)updateStatsWithID:(NSString *)loggedInUserID
+            questionType:(NSString *)ID
+            questionType:(QuestionType *)questionType
+            correct:(BOOL)correct;
+
++ (void)startQuiz:(NSString *)loggedInUserID;
++ (void)endQuiz:(NSString *)loggedInUserID scorePercent:(float)scorePercent;
++ (NSArray *)getPeopleKnowledgeStats:(NSString *)loggedInUser;
+
+
 
 @end
