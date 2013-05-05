@@ -9,9 +9,14 @@
 @property(nonatomic, strong) UILabel *questionLabel;
 @property(nonatomic, strong) NSArray *answerButtons;
 @property(nonatomic, strong) UIButton *nextQuestionButton;
+@property(nonatomic, strong) NSMutableArray *constraints;
 @end
 
 @implementation QIMultipleChoiceQuizView
+
++ (BOOL)requiresConstraintBasedLayout {
+  return YES;
+}
 
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -95,14 +100,50 @@
 
 #pragma mark Layout
 
+
 - (void)layoutSubviews {
   [super layoutSubviews];
-  self.progressLabel.frame = CGRectMake(20.0f, 10.0f, 40.0f, 20.0f);
-  self.progressView.frame = CGRectMake(65.0f, 12.0f, 200.0f, 20.0f);
-  self.exitButton.frame = CGRectMake(270.0f, 10.0f, 44.0f, 44.0f);
+//  self.progressLabel.frame = CGRectMake(20.0f, 10.0f, 40.0f, 20.0f);
+//  self.progressView.frame = CGRectMake(65.0f, 12.0f, 200.0f, 20.0f);
+//  self.exitButton.frame = CGRectMake(270.0f, 10.0f, 44.0f, 44.0f);
   self.profileImageView.frame = CGRectMake(80.0f, 60.0f, 100.0f, 150.0f);
   self.questionLabel.frame = CGRectMake(0.0f, 180.0f, 320.0f, 40.0f);
   self.nextQuestionButton.frame = CGRectMake(440.0f, 200.0f, 100.0f, 44.0f);
+}
+
+
+- (void)updateConstraints {
+  [super updateConstraints];
+  if (!self.constraints) {
+    self.constraints = [NSMutableArray array];
+    /*
+    NSLayoutConstraint *centerProgressView =
+        [NSLayoutConstraint constraintWithItem:self.progressView
+                                     attribute:NSLayoutAttributeCenterX
+                                     relatedBy:NSLayoutRelationEqual
+                                        toItem:self
+                                     attribute:NSLayoutAttributeCenterX
+                                    multiplier:1.0f
+                                      constant:0.0f];*/
+    NSString *quizProgressHorizontal =
+        @"H:|-30-[_progressLabel]-8-[_progressView]-8-[_exitButton(==44)]-10-|";
+    NSDictionary *quizProgressViews =
+        NSDictionaryOfVariableBindings(_progressLabel, _progressView, _exitButton);
+    NSArray *quizProgressHorizontalConstraints =
+        [NSLayoutConstraint constraintsWithVisualFormat:quizProgressHorizontal
+                                                options:NSLayoutFormatAlignAllCenterY
+                                                metrics:nil
+                                                  views:quizProgressViews];
+    NSString *quizProgressVertical = @"V:|-10-[_exitButton(==44)]";
+    NSArray *quizProgressVerticalConstraints =
+        [NSLayoutConstraint constraintsWithVisualFormat:quizProgressVertical
+                                                options:0
+                                                metrics:nil
+                                                  views:quizProgressViews];
+    [self.constraints addObjectsFromArray:quizProgressHorizontalConstraints];
+    [self.constraints addObjectsFromArray:quizProgressVerticalConstraints];
+    [self addConstraints:self.constraints];
+  }
 }
 
 #pragma mark Strings
@@ -134,17 +175,20 @@
 
 - (UILabel *)newProgressLabel {
   UILabel *progressLabel = [[UILabel alloc] init];
+  [progressLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   return progressLabel;
 }
 
 - (UIProgressView *)newProgressView {
   UIProgressView *progressView = [[UIProgressView alloc] init];
+  [progressView setTranslatesAutoresizingMaskIntoConstraints:NO];
   return progressView;
 }
 
 - (UIButton *)newExitButton {
   UIButton *exitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
   [exitButton setTitle:[self exitButtonText] forState:UIControlStateNormal];
+  [exitButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   return exitButton;
 }
 
