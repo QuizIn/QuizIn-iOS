@@ -116,15 +116,6 @@
   [super updateConstraints];
   if (!self.constraints) {
     self.constraints = [NSMutableArray array];
-    /*
-    NSLayoutConstraint *centerProgressView =
-        [NSLayoutConstraint constraintWithItem:self.progressView
-                                     attribute:NSLayoutAttributeCenterX
-                                     relatedBy:NSLayoutRelationEqual
-                                        toItem:self
-                                     attribute:NSLayoutAttributeCenterX
-                                    multiplier:1.0f
-                                      constant:0.0f];*/
     NSString *quizProgressHorizontal =
         @"H:|-30-[_progressLabel]-8-[_progressView]-8-[_exitButton(==44)]-10-|";
     NSDictionary *quizProgressViews =

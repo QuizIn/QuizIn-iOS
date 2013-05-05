@@ -16,6 +16,23 @@ typedef  void (^GTMOAuth2CompletionHandler)(GTMOAuth2ViewControllerTouch *viewCo
 @implementation AKGTMOAuth2AuthController
 
 - (void)beginAuthenticationAttempt {
+  GTMOAuth2Authentication *auth = [self newGTMOAuth2Authentication];
+  if (!auth) {
+    // TODO(rcacheaux): Handle this case.
+    return;
+  }
+  
+  BOOL isAuthenticated =
+      [GTMOAuth2ViewControllerTouch authorizeFromKeychainForName:self.keychainItemName
+                                                  authentication:auth];
+  if (isAuthenticated) {
+    AKGTMOAuth2Account *account =
+          (AKGTMOAuth2Account *)[[QIAccountStore sharedStore] newAccount];
+    [[QIAccountStore sharedStore] saveAccount:account];
+    [self.authHandler authControllerAccount:account didAuthenticate:self];
+    return;
+  }
+  
   AKGTMOAuth2AuthController __weak *weakSelf = self;
   
   GTMOAuth2CompletionHandler completionHandler =
@@ -33,7 +50,7 @@ typedef  void (^GTMOAuth2CompletionHandler)(GTMOAuth2ViewControllerTouch *viewCo
     }
   };
   
-  GTMOAuth2Authentication *auth = [self newGTMOAuth2Authentication];
+  auth = [self newGTMOAuth2Authentication];
   NSURL *authURL =
       [NSURL URLWithString:self.authCodeURLString];
   GTMOAuth2ViewControllerTouch *googleOAuth2WebViewController =
