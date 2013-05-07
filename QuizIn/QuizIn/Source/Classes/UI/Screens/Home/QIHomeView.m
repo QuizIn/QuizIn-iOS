@@ -93,20 +93,43 @@
                                             options:NSLayoutFormatAlignAllLeft
                                             metrics:nil
                                               views:connectionQuizViews];
-    NSArray *hConstraintsConnectionsQuizViews =
+    
+    NSArray *hConstraintsConnectionsQuizViewsPaperImage =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizPaperImage]-|"
                                             options:0
                                             metrics:nil
                                               views:connectionQuizViews];
-    /*
-    NSArray *vConstraintsConnectionsQuizViews =
-    [NSLayoutConstraint constraintsWithVisualFormat:primaryVertical
-                                            options:NSLayoutFormatAlignAllLeft
+    
+    NSArray *hConstraintsConnectionsQuizViewsTitle =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizTitle]-|"
+                                            options:0
                                             metrics:nil
                                               views:connectionQuizViews];
-    */
+    
+    NSArray *hConstraintsConnectionsQuizViewsConnectionsLabel =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizNumberOfConnectionsLabel]-|"
+                                            options:0
+                                            metrics:nil
+                                              views:connectionQuizViews];
+    
+    NSArray *hConstraintsConnectionsQuizViewsImagePreview =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizImagePreviewCollection]-|"
+                                            options:0
+                                            metrics:nil
+                                              views:connectionQuizViews];
+    
+    NSArray *hConstraintsConnectionsQuizViewsQuizButton =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizButton]-|"
+                                            options:0
+                                            metrics:nil
+                                              views:connectionQuizViews];
+
     self.constraintsForConnectionsQuizStartView = [NSMutableArray array];
-    //[self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViews];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsPaperImage];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsTitle];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsConnectionsLabel];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsImagePreview];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsQuizButton];
     [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:vConstraintsConnectionsQuizViews];
     [_connectionsQuizStartView addConstraints:self.constraintsForConnectionsQuizStartView];
     
