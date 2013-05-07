@@ -60,8 +60,9 @@
 #pragma mark Layout
 - (void)updateConstraints {
   [super updateConstraints];
-  if (!self.constraints) {
-    //SuperView Constraints
+  if (!self.constraintsForConnectionsQuizStartView) {
+    
+    //TopLevelView Constraints
     NSDictionary *topLevelViews = NSDictionaryOfVariableBindings(_connectionsQuizStartView);
     
     NSArray *hConstraintsTopLevelViews =
@@ -70,19 +71,45 @@
                                             metrics:nil
                                               views:topLevelViews];
     NSArray *vConstraintsTopLevelViews =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-30-[_connectionsQuizStartView]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-30-[_connectionsQuizStartView(==250)]-|"
                                             options:NSLayoutFormatAlignAllBaseline
                                             metrics:nil
                                               views:topLevelViews];
     
+    self.constraintsForTopLevelViews = [NSMutableArray array];
     [self.constraintsForTopLevelViews  addObjectsFromArray:hConstraintsTopLevelViews];
     [self.constraintsForTopLevelViews  addObjectsFromArray:vConstraintsTopLevelViews];
     [self addConstraints:self.constraintsForTopLevelViews];
-
+    
+    
+    
     //ConnectionsQuizStartView Constraints
-    NSDictionary *views = NSDictionaryOfVariableBindings(_connectionsQuizPaperImage,_connectionsQuizBinderImage,_connectionsQuizTitle,_connectionsQuizNumberOfConnectionsLabel,_connectionsQuizImagePreviewCollection,_connectionsQuizButton);
-
-    self.constraintsForTopLevelViews = [NSMutableArray array];
+    
+    NSDictionary *connectionQuizViews = NSDictionaryOfVariableBindings(_connectionsQuizPaperImage,_connectionsQuizBinderImage,_connectionsQuizTitle,_connectionsQuizNumberOfConnectionsLabel,_connectionsQuizImagePreviewCollection,_connectionsQuizButton);
+    NSString *primaryVertical = @"V:|-[_connectionsQuizPaperImage]-[_connectionsQuizTitle]-[_connectionsQuizNumberOfConnectionsLabel]-[_connectionsQuizImagePreviewCollection(==30)]-[_connectionsQuizButton]-|";
+    
+    NSArray *vConstraintsConnectionsQuizViews =
+    [NSLayoutConstraint constraintsWithVisualFormat:primaryVertical
+                                            options:NSLayoutFormatAlignAllLeft
+                                            metrics:nil
+                                              views:connectionQuizViews];
+    NSArray *hConstraintsConnectionsQuizViews =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizPaperImage]-|"
+                                            options:0
+                                            metrics:nil
+                                              views:connectionQuizViews];
+    /*
+    NSArray *vConstraintsConnectionsQuizViews =
+    [NSLayoutConstraint constraintsWithVisualFormat:primaryVertical
+                                            options:NSLayoutFormatAlignAllLeft
+                                            metrics:nil
+                                              views:connectionQuizViews];
+    */
+    self.constraintsForConnectionsQuizStartView = [NSMutableArray array];
+    //[self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViews];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:vConstraintsConnectionsQuizViews];
+    [_connectionsQuizStartView addConstraints:self.constraintsForConnectionsQuizStartView];
+    
     //[self.constraints addObjectsFromArray:@[cn,cn2]];
     
   }
@@ -111,17 +138,19 @@
 
 - (UIImageView *)newConnectionsQuizPaperImage{
   UIImageView *paperImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"connectionsquiz_paperstack"]];
-  paperImage.contentMode = UIViewContentModeScaleAspectFill;
+  [paperImage setTranslatesAutoresizingMaskIntoConstraints:NO];
   return paperImage;
 }
 - (UIImageView *)newConnectionsQuizBinderImage{
   UIImageView *binderImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"connectionsquiz_paperstack"]];
+  [binderImage setTranslatesAutoresizingMaskIntoConstraints:NO];
   return binderImage;
 }
 - (UILabel *)newConnectionsQuizTitle{
   UILabel *quizTitle = [[UILabel alloc] init];
   quizTitle.text = @"Connections Quiz";
   quizTitle.backgroundColor = [UIColor clearColor];
+  [quizTitle setTranslatesAutoresizingMaskIntoConstraints:NO];
   return quizTitle;
 }
 - (UILabel *)newConnectionsQuizNumberOfConnectionsLabel{
@@ -129,23 +158,27 @@
   quizConnections.text = @"865 Connections";
   quizConnections.backgroundColor = [UIColor clearColor];
   quizConnections.textColor = [UIColor grayColor];
+  [quizConnections setTranslatesAutoresizingMaskIntoConstraints:NO];
   return quizConnections;
 }
 - (UIView *)newConnectionsQuizImagePreviewCollection{
   UIView *previewArea = [[UIView alloc] init];
   previewArea.backgroundColor = [UIColor grayColor];
+  [previewArea setTranslatesAutoresizingMaskIntoConstraints:NO];
   return previewArea;
 }
 - (UIButton *)newConnectionsQuizButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setTitle:[self connectionsQuizButtonTitle] forState:UIControlStateNormal];
   [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] forState:UIControlStateNormal];
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   button.backgroundColor = [UIColor clearColor];
   return button;
 }
 - (UIView *)newConnectionsQuizStartView{
   UIView *startView = [[UIView alloc] init];
-  startView.backgroundColor = [UIColor clearColor];
+  startView.backgroundColor = [UIColor lightGrayColor];
+  [startView setTranslatesAutoresizingMaskIntoConstraints:NO];
   return startView;
 }
 
