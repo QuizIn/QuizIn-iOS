@@ -66,7 +66,7 @@
     NSDictionary *topLevelViews = NSDictionaryOfVariableBindings(_connectionsQuizStartView);
     
     NSArray *hConstraintsTopLevelViews =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizStartView]-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-25-[_connectionsQuizStartView]-25-|"
                                             options:NSLayoutFormatAlignAllBaseline
                                             metrics:nil
                                               views:topLevelViews];
