@@ -40,6 +40,7 @@
 
 - (UINavigationBar *)newNavigationBar {
   UINavigationBar *navigationBar = [[UINavigationBar alloc] init];
+  navigationBar.tintColor = [UIColor blackColor];
   return navigationBar;
 }
 

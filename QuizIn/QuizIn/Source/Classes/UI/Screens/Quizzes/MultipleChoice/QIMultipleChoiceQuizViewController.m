@@ -24,6 +24,7 @@
   self.multipleChoiceView.quizProgress = 1;
   self.multipleChoiceView.numberOfQuestions = 10;
   self.multipleChoiceView.question = @"Where do I work?";
+  self.multipleChoiceView.answers = @[@"National Instruments",@"Invodo",@"Mutual Mobile",@"Google"];
 }
 
 - (void)didReceiveMemoryWarning {

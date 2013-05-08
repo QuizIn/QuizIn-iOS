@@ -29,7 +29,7 @@
   self = [super initWithFrame:frame];
   if (self) {
     self.backgroundColor = [UIColor whiteColor];
-    
+    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     //Connections Quiz Start Area Init
     
     _connectionsQuizPaperImage = [self newConnectionsQuizPaperImage];
@@ -66,12 +66,12 @@
     NSDictionary *topLevelViews = NSDictionaryOfVariableBindings(_connectionsQuizStartView);
     
     NSArray *hConstraintsTopLevelViews =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-25-[_connectionsQuizStartView]-25-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-25-[_connectionsQuizStartView(>=200)]-25-|"
                                             options:NSLayoutFormatAlignAllBaseline
                                             metrics:nil
                                               views:topLevelViews];
     NSArray *vConstraintsTopLevelViews =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-30-[_connectionsQuizStartView(==250)]-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_connectionsQuizStartView(==250)]-|"
                                             options:NSLayoutFormatAlignAllBaseline
                                             metrics:nil
                                               views:topLevelViews];
@@ -86,7 +86,23 @@
     //ConnectionsQuizStartView Constraints
     
     NSDictionary *connectionQuizViews = NSDictionaryOfVariableBindings(_connectionsQuizPaperImage,_connectionsQuizBinderImage,_connectionsQuizTitle,_connectionsQuizNumberOfConnectionsLabel,_connectionsQuizImagePreviewCollection,_connectionsQuizButton);
-    NSString *primaryVertical = @"V:|-[_connectionsQuizPaperImage]-[_connectionsQuizTitle]-[_connectionsQuizNumberOfConnectionsLabel]-[_connectionsQuizImagePreviewCollection(==30)]-[_connectionsQuizButton]-|";
+    NSString *primaryVertical = @"V:|-30-[_connectionsQuizTitle][_connectionsQuizNumberOfConnectionsLabel]-[_connectionsQuizImagePreviewCollection(==60)]";
+    
+    NSArray *vConstraintsConnectionsQuizPaperImageBottom =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_connectionsQuizPaperImage]|"
+                                            options:NSLayoutFormatAlignAllLeft
+                                            metrics:nil
+                                              views:connectionQuizViews];
+    
+    NSLayoutConstraint *vConstraintsConnectionsQuizPaperImageTop =
+    [NSLayoutConstraint constraintWithItem:_connectionsQuizPaperImage attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_connectionsQuizStartView attribute:NSLayoutAttributeTop multiplier:1.0 constant:-50.0];
+     
+    
+    NSArray *vConstraintsConnectionsQuizButton =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_connectionsQuizButton]-20-|"
+                                            options:NSLayoutFormatAlignAllLeft
+                                            metrics:nil
+                                              views:connectionQuizViews];
     
     NSArray *vConstraintsConnectionsQuizViews =
     [NSLayoutConstraint constraintsWithVisualFormat:primaryVertical
@@ -95,31 +111,31 @@
                                               views:connectionQuizViews];
     
     NSArray *hConstraintsConnectionsQuizViewsPaperImage =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizPaperImage]-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_connectionsQuizPaperImage]|"
                                             options:0
                                             metrics:nil
                                               views:connectionQuizViews];
     
     NSArray *hConstraintsConnectionsQuizViewsTitle =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizTitle]-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizTitle]"
                                             options:0
                                             metrics:nil
                                               views:connectionQuizViews];
     
     NSArray *hConstraintsConnectionsQuizViewsConnectionsLabel =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizNumberOfConnectionsLabel]-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizNumberOfConnectionsLabel]"
                                             options:0
                                             metrics:nil
                                               views:connectionQuizViews];
     
     NSArray *hConstraintsConnectionsQuizViewsImagePreview =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizImagePreviewCollection]-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizImagePreviewCollection(>=150)]-|"
                                             options:0
                                             metrics:nil
                                               views:connectionQuizViews];
     
     NSArray *hConstraintsConnectionsQuizViewsQuizButton =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizButton]-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_connectionsQuizButton(>=150)]-30-|"
                                             options:0
                                             metrics:nil
                                               views:connectionQuizViews];
@@ -131,6 +147,9 @@
     [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsImagePreview];
     [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsQuizButton];
     [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:vConstraintsConnectionsQuizViews];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:vConstraintsConnectionsQuizPaperImageBottom];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:@[vConstraintsConnectionsQuizPaperImageTop]];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:vConstraintsConnectionsQuizButton];
     [_connectionsQuizStartView addConstraints:self.constraintsForConnectionsQuizStartView];
     
     //[self.constraints addObjectsFromArray:@[cn,cn2]];

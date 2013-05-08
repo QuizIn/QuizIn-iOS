@@ -106,9 +106,9 @@
 //  self.progressLabel.frame = CGRectMake(20.0f, 10.0f, 40.0f, 20.0f);
 //  self.progressView.frame = CGRectMake(65.0f, 12.0f, 200.0f, 20.0f);
 //  self.exitButton.frame = CGRectMake(270.0f, 10.0f, 44.0f, 44.0f);
-  self.profileImageView.frame = CGRectMake(80.0f, 60.0f, 100.0f, 150.0f);
-  self.questionLabel.frame = CGRectMake(0.0f, 180.0f, 320.0f, 40.0f);
-  self.nextQuestionButton.frame = CGRectMake(440.0f, 200.0f, 100.0f, 44.0f);
+//  self.profileImageView.frame = CGRectMake(80.0f, 60.0f, 100.0f, 150.0f);
+//  self.questionLabel.frame = CGRectMake(0.0f, 180.0f, 320.0f, 40.0f);
+//  self.nextQuestionButton.frame = CGRectMake(440.0f, 200.0f, 100.0f, 44.0f);
 }
 
 
@@ -116,22 +116,35 @@
   [super updateConstraints];
   if (!self.constraints) {
     self.constraints = [NSMutableArray array];
-    NSString *quizProgressHorizontal =
-        @"H:|-30-[_progressLabel]-8-[_progressView]-8-[_exitButton(==44)]-10-|";
+    NSString *quizProgressHorizontalFromLeft =
+        @"H:|-30-[_progressLabel]-8-[_progressView(>=150)]-[_exitButton]";
     NSDictionary *quizProgressViews =
         NSDictionaryOfVariableBindings(_progressLabel, _progressView, _exitButton);
-    NSArray *quizProgressHorizontalConstraints =
-        [NSLayoutConstraint constraintsWithVisualFormat:quizProgressHorizontal
+    NSArray *quizProgressHorizontalConstraintsLeft =
+        [NSLayoutConstraint constraintsWithVisualFormat:quizProgressHorizontalFromLeft
                                                 options:NSLayoutFormatAlignAllCenterY
                                                 metrics:nil
                                                   views:quizProgressViews];
+    NSString *quizProgressHorizontalFromRight =
+        @"H:[_exitButton(==44)]-10-|";
+    NSArray *quizProgressHorizontalConstraintsRight =
+    [NSLayoutConstraint constraintsWithVisualFormat:quizProgressHorizontalFromRight
+                                            options:NSLayoutFormatAlignAllCenterY
+                                            metrics:nil
+                                              views:quizProgressViews];
+    
+    NSLayoutConstraint *alignCentersY =
+    [NSLayoutConstraint constraintWithItem:_exitButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_progressView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
+    
     NSString *quizProgressVertical = @"V:|-10-[_exitButton(==44)]";
     NSArray *quizProgressVerticalConstraints =
         [NSLayoutConstraint constraintsWithVisualFormat:quizProgressVertical
                                                 options:0
                                                 metrics:nil
                                                   views:quizProgressViews];
-    [self.constraints addObjectsFromArray:quizProgressHorizontalConstraints];
+    [self.constraints addObjectsFromArray:quizProgressHorizontalConstraintsLeft];
+    [self.constraints addObjectsFromArray:quizProgressHorizontalConstraintsRight];
+    [self.constraints addObjectsFromArray:@[alignCentersY]];
     [self.constraints addObjectsFromArray:quizProgressVerticalConstraints];
     [self addConstraints:self.constraints];
   }
@@ -185,23 +198,27 @@
 
 - (UIImageView *)newProfileImageView {
   UIImageView *profileImageView = [[UIImageView alloc] init];
+  [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   return profileImageView;
 }
 
 - (UILabel *)newQuestionLabel {
   UILabel *questionLabel = [[UILabel alloc] init];
   questionLabel.textAlignment = NSTextAlignmentCenter;
+  [questionLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   return questionLabel;
 }
 
 - (UIButton *)newAnswerButtonWithTitle:(NSString *)title {
   UIButton *answerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
   [answerButton setTitle:title forState:UIControlStateNormal];
+  [answerButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   return answerButton;
 }
 
 - (UIButton *)newNextQuestionButton {
   UIButton *nextQuestionButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  [nextQuestionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   return nextQuestionButton;
 }
 
