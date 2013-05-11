@@ -1,11 +1,12 @@
 #import "QIMultipleChoiceQuizView.h"
 #import "AsyncImageView.h"
 
+
 @interface QIMultipleChoiceQuizView ()
 // TODO(rcacheaux): Encapsulate into own view.
 @property(nonatomic, strong) UILabel *progressLabel;
 @property(nonatomic, strong) UIProgressView *progressView;
-@property(nonatomic, strong) UIButton *exitButton;
+@property(nonatomic, strong,readwrite) UIButton *exitButton;
 @property(nonatomic, strong) AsyncImageView *profileImageView;
 @property(nonatomic, strong) UILabel *questionLabel;
 @property(nonatomic, strong) NSArray *answerButtons;

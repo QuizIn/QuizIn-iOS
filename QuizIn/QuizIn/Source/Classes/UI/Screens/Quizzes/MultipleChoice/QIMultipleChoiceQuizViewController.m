@@ -1,5 +1,4 @@
 #import "QIMultipleChoiceQuizViewController.h"
-
 #import "QIMultipleChoiceQuizView.h"
 
 @interface QIMultipleChoiceQuizViewController ()
@@ -25,10 +24,17 @@
   self.multipleChoiceView.numberOfQuestions = 10;
   self.multipleChoiceView.question = @"Where do I work?";
   self.multipleChoiceView.answers = @[@"National Instruments",@"Invodo",@"Mutual Mobile",@"Google"];
+  [self.multipleChoiceView.exitButton addTarget:self
+                                         action:@selector(userDidCloseQuiz)
+                               forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
+}
+#pragma mark Actions
+- (void)userDidCloseQuiz{
+  NSLog(@"User Closed Quiz");
 }
 
 #pragma mark Properties

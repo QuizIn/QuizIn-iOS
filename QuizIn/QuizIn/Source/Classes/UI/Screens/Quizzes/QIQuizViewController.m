@@ -38,6 +38,9 @@
   [super didReceiveMemoryWarning];
 }
 
+#pragma mark Actions
+
+
 #pragma mark Properties
 
 - (QIQuizView *)quizView {
