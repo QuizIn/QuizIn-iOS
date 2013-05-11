@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		12F4E77333594484A0C343D9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 634CC7A981E449658DD30D1E /* libPods.a */; };
+		3478FF99173ED3DB002B29DB /* placeholderHead.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FF97173ED3DB002B29DB /* placeholderHead.png */; };
+		3478FF9A173ED3DB002B29DB /* placeholderHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FF98173ED3DB002B29DB /* placeholderHead@2x.png */; };
 		349248191733603D000AE6D1 /* QIStatsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 349248181733603D000AE6D1 /* QIStatsTracker.m */; };
 		34EF1F99172E15D70019D6F7 /* connectionsquiz_paperstack.png in Resources */ = {isa = PBXBuildFile; fileRef = 34EF1F95172E15D70019D6F7 /* connectionsquiz_paperstack.png */; };
 		34EF1F9A172E15D70019D6F7 /* connectionsquiz_paperstack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34EF1F96172E15D70019D6F7 /* connectionsquiz_paperstack@2x.png */; };
@@ -67,6 +69,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3478FF97173ED3DB002B29DB /* placeholderHead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = placeholderHead.png; path = QuizIn/Resources/Images/MultipleChoiceView/placeholderHead.png; sourceTree = SOURCE_ROOT; };
+		3478FF98173ED3DB002B29DB /* placeholderHead@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "placeholderHead@2x.png"; path = "QuizIn/Resources/Images/MultipleChoiceView/placeholderHead@2x.png"; sourceTree = SOURCE_ROOT; };
 		349248171733603D000AE6D1 /* QIStatsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsTracker.h; sourceTree = "<group>"; };
 		349248181733603D000AE6D1 /* QIStatsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsTracker.m; sourceTree = "<group>"; };
 		34EF1F95172E15D70019D6F7 /* connectionsquiz_paperstack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connectionsquiz_paperstack.png; sourceTree = "<group>"; };
@@ -172,6 +176,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3478FF94173ED336002B29DB /* MultipleChoiceView */ = {
+			isa = PBXGroup;
+			children = (
+				3478FF97173ED3DB002B29DB /* placeholderHead.png */,
+				3478FF98173ED3DB002B29DB /* placeholderHead@2x.png */,
+			);
+			name = MultipleChoiceView;
+			path = multipleChoiceView;
+			sourceTree = "<group>";
+		};
 		3492481617335FCC000AE6D1 /* StatTracker */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,6 +227,7 @@
 		880870E516FBD32200D09848 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				3478FF94173ED336002B29DB /* MultipleChoiceView */,
 				34EF1F94172DDB560019D6F7 /* HomeView */,
 				880870E616FBD32200D09848 /* Default-568h@2x.png */,
 				880870E716FBD32200D09848 /* Default.png */,
@@ -509,6 +524,8 @@
 				34EF1F9B172E15D70019D6F7 /* connectionsquiz_takequiz_btn.png in Resources */,
 				34EF1F9C172E15D70019D6F7 /* connectionsquiz_takequiz_btn@2x.png in Resources */,
 				34EF1F9E172E2DC80019D6F7 /* Scratch.xib in Resources */,
+				3478FF99173ED3DB002B29DB /* placeholderHead.png in Resources */,
+				3478FF9A173ED3DB002B29DB /* placeholderHead@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,7 +9,8 @@
 @property(nonatomic, strong) UILabel *questionLabel;
 @property(nonatomic, strong) NSArray *answerButtons;
 @property(nonatomic, strong) UIButton *nextQuestionButton;
-@property(nonatomic, strong) NSMutableArray *constraints;
+@property(nonatomic, strong) NSMutableArray *progressViewConstraints;
+@property(nonatomic, strong) NSMutableArray *multipleChoiceConstraints; 
 @end
 
 @implementation QIMultipleChoiceQuizView
@@ -31,6 +32,11 @@
     _questionLabel = [self newQuestionLabel];
     _answerButtons = @[];
     _nextQuestionButton = [self newNextQuestionButton];
+    
+    //TODO rkuhlman not sure if this shoudl stay here. 
+    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    
     [self constructViewHierarchy];
   }
   return self;
@@ -114,27 +120,44 @@
 
 - (void)updateConstraints {
   [super updateConstraints];
-  if (!self.constraints) {
-    self.constraints = [NSMutableArray array];
-    NSString *quizProgressHorizontalFromLeft =
-        @"H:|-30-[_progressLabel]-8-[_progressView(>=150)]-[_exitButton]";
+  
+  // --------------TODO rkuhlman : This probably doesn't go here.-----------
+
+  NSDictionary *selfConstraintView =NSDictionaryOfVariableBindings(self);
+  
+  NSArray *hSelf =
+  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|"
+                                          options:NSLayoutFormatAlignAllBaseline
+                                          metrics:nil
+                                            views:selfConstraintView];
+  
+  NSArray *vSelf =
+  [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self]|"
+                                          options:0
+                                          metrics:nil
+                                            views:selfConstraintView];
+  
+  NSMutableArray *selfConstraints = [NSMutableArray array];
+  [selfConstraints addObjectsFromArray:hSelf];
+  [selfConstraints addObjectsFromArray:vSelf];
+  [self.superview addConstraints:selfConstraints];
+  //---------------  end doesn't go here -----------------------
+  
+  
+  if (!self.progressViewConstraints) {
+    
+    //ProgressView Constraints
+    self.progressViewConstraints = [NSMutableArray array];
     NSDictionary *quizProgressViews =
-        NSDictionaryOfVariableBindings(_progressLabel, _progressView, _exitButton);
+    NSDictionaryOfVariableBindings(_progressLabel, _progressView, _exitButton);
+    
+    NSString *quizProgressHorizontalFromLeft =
+        @"H:|-30-[_progressLabel(==50)]-8-[_progressView]-8-[_exitButton(==44)]-10-|";
     NSArray *quizProgressHorizontalConstraintsLeft =
         [NSLayoutConstraint constraintsWithVisualFormat:quizProgressHorizontalFromLeft
                                                 options:NSLayoutFormatAlignAllCenterY
                                                 metrics:nil
                                                   views:quizProgressViews];
-    NSString *quizProgressHorizontalFromRight =
-        @"H:[_exitButton(==44)]-10-|";
-    NSArray *quizProgressHorizontalConstraintsRight =
-    [NSLayoutConstraint constraintsWithVisualFormat:quizProgressHorizontalFromRight
-                                            options:NSLayoutFormatAlignAllCenterY
-                                            metrics:nil
-                                              views:quizProgressViews];
-    
-    NSLayoutConstraint *alignCentersY =
-    [NSLayoutConstraint constraintWithItem:_exitButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_progressView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
     
     NSString *quizProgressVertical = @"V:|-10-[_exitButton(==44)]";
     NSArray *quizProgressVerticalConstraints =
@@ -142,11 +165,46 @@
                                                 options:0
                                                 metrics:nil
                                                   views:quizProgressViews];
-    [self.constraints addObjectsFromArray:quizProgressHorizontalConstraintsLeft];
-    [self.constraints addObjectsFromArray:quizProgressHorizontalConstraintsRight];
-    [self.constraints addObjectsFromArray:@[alignCentersY]];
-    [self.constraints addObjectsFromArray:quizProgressVerticalConstraints];
-    [self addConstraints:self.constraints];
+    [self.progressViewConstraints addObjectsFromArray:quizProgressHorizontalConstraintsLeft];
+    [self.progressViewConstraints addObjectsFromArray:quizProgressVerticalConstraints];
+    [self addConstraints:self.progressViewConstraints];
+    
+    //Multiple Choice View
+    self.multipleChoiceConstraints = [NSMutableArray array];
+    NSDictionary *multipleChoiceViews = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         _profileImageView,   @"_profileImageView",
+                                         _questionLabel,      @"_questionLabel",
+                                         _nextQuestionButton, @"_nextQuestionButton",
+                                         _answerButtons[0],   @"_answerButtons0",
+                                         _answerButtons[1],   @"_answerButtons1",
+                                         _answerButtons[2],   @"_answerButtons2",
+                                         _answerButtons[3],   @"_answerButtons3",
+                                         nil];
+    
+    NSLayoutConstraint *centerImageX = [NSLayoutConstraint constraintWithItem:_profileImageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+    
+    NSLayoutConstraint *centerQuestionX = [NSLayoutConstraint constraintWithItem:_questionLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+   
+    NSMutableArray *choiceButtonConstraints = [NSMutableArray array];
+    for (UIButton *button in self.answerButtons){
+      [choiceButtonConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+      [choiceButtonConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:200.0f]];
+    }
+    
+    NSLayoutConstraint *hNextButton = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0f constant:-20.0f];
+    
+    NSString *quizChoiceVertical = @"V:|-50-[_profileImageView(==100)]-[_questionLabel]-[_answerButtons0]-[_answerButtons1(==_answerButtons0)]-[_answerButtons2(==_answerButtons0)]-[_answerButtons3(==_answerButtons0)]-[_nextQuestionButton]-|";
+    NSArray *quizChoiceVerticalConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:quizChoiceVertical
+                                            options:0
+                                            metrics:nil
+                                              views:multipleChoiceViews];
+    
+    [self.multipleChoiceConstraints addObjectsFromArray:@[centerImageX,centerQuestionX,hNextButton]];
+    [self.multipleChoiceConstraints addObjectsFromArray:choiceButtonConstraints];
+    [self.multipleChoiceConstraints addObjectsFromArray:quizChoiceVerticalConstraints];
+    [self addConstraints:self.multipleChoiceConstraints];
+    
   }
 }
 
@@ -154,6 +212,10 @@
 
 - (NSString *)exitButtonText {
   return @"x";
+}
+
+- (NSString *)nextQuestionButtonText {
+  return @"Next Question >";
 }
 
 #pragma mark Data Display
@@ -199,6 +261,7 @@
 - (UIImageView *)newProfileImageView {
   UIImageView *profileImageView = [[UIImageView alloc] init];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [profileImageView setImage:[UIImage imageNamed:@"placeholderHead"]];
   return profileImageView;
 }
 
@@ -218,6 +281,7 @@
 
 - (UIButton *)newNextQuestionButton {
   UIButton *nextQuestionButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  [nextQuestionButton setTitle:[self nextQuestionButtonText] forState:UIControlStateNormal];
   [nextQuestionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   return nextQuestionButton;
 }
