@@ -1,11 +1,12 @@
 #import "QIMultipleChoiceQuizView.h"
+#import "AsyncImageView.h"
 
 @interface QIMultipleChoiceQuizView ()
 // TODO(rcacheaux): Encapsulate into own view.
 @property(nonatomic, strong) UILabel *progressLabel;
 @property(nonatomic, strong) UIProgressView *progressView;
 @property(nonatomic, strong) UIButton *exitButton;
-@property(nonatomic, strong) UIImageView *profileImageView;
+@property(nonatomic, strong) AsyncImageView *profileImageView;
 @property(nonatomic, strong) UILabel *questionLabel;
 @property(nonatomic, strong) NSArray *answerButtons;
 @property(nonatomic, strong) UIButton *nextQuestionButton;
@@ -152,12 +153,13 @@
     NSDictionaryOfVariableBindings(_progressLabel, _progressView, _exitButton);
     
     NSString *quizProgressHorizontalFromLeft =
-        @"H:|-30-[_progressLabel(==50)]-8-[_progressView]-8-[_exitButton(==44)]-10-|";
+        @"H:|-10-[_progressLabel]-8-[_progressView]-8-[_exitButton(==44)]-10-|";
     NSArray *quizProgressHorizontalConstraintsLeft =
         [NSLayoutConstraint constraintsWithVisualFormat:quizProgressHorizontalFromLeft
                                                 options:NSLayoutFormatAlignAllCenterY
                                                 metrics:nil
                                                   views:quizProgressViews];
+    NSLayoutConstraint *centerProgressBar = [NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
     
     NSString *quizProgressVertical = @"V:|-10-[_exitButton(==44)]";
     NSArray *quizProgressVerticalConstraints =
@@ -165,6 +167,7 @@
                                                 options:0
                                                 metrics:nil
                                                   views:quizProgressViews];
+    [self.progressViewConstraints addObjectsFromArray:@[centerProgressBar]];
     [self.progressViewConstraints addObjectsFromArray:quizProgressHorizontalConstraintsLeft];
     [self.progressViewConstraints addObjectsFromArray:quizProgressVerticalConstraints];
     [self addConstraints:self.progressViewConstraints];
@@ -183,6 +186,8 @@
     
     NSLayoutConstraint *centerImageX = [NSLayoutConstraint constraintWithItem:_profileImageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
     
+    NSLayoutConstraint *imageWidth = [NSLayoutConstraint constraintWithItem:_profileImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_profileImageView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0];
+    
     NSLayoutConstraint *centerQuestionX = [NSLayoutConstraint constraintWithItem:_questionLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
    
     NSMutableArray *choiceButtonConstraints = [NSMutableArray array];
@@ -193,14 +198,14 @@
     
     NSLayoutConstraint *hNextButton = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0f constant:-20.0f];
     
-    NSString *quizChoiceVertical = @"V:|-50-[_profileImageView(==100)]-[_questionLabel]-[_answerButtons0]-[_answerButtons1(==_answerButtons0)]-[_answerButtons2(==_answerButtons0)]-[_answerButtons3(==_answerButtons0)]-[_nextQuestionButton]-|";
+    NSString *quizChoiceVertical = @"V:|-50-[_profileImageView(==120)]-[_questionLabel]-[_answerButtons0]-[_answerButtons1(==_answerButtons0)]-[_answerButtons2(==_answerButtons0)]-[_answerButtons3(==_answerButtons0)]-[_nextQuestionButton]-|";
     NSArray *quizChoiceVerticalConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:quizChoiceVertical
                                             options:0
                                             metrics:nil
                                               views:multipleChoiceViews];
     
-    [self.multipleChoiceConstraints addObjectsFromArray:@[centerImageX,centerQuestionX,hNextButton]];
+    [self.multipleChoiceConstraints addObjectsFromArray:@[centerImageX,imageWidth,centerQuestionX,hNextButton]];
     [self.multipleChoiceConstraints addObjectsFromArray:choiceButtonConstraints];
     [self.multipleChoiceConstraints addObjectsFromArray:quizChoiceVerticalConstraints];
     [self addConstraints:self.multipleChoiceConstraints];
@@ -258,10 +263,12 @@
   return exitButton;
 }
 
-- (UIImageView *)newProfileImageView {
-  UIImageView *profileImageView = [[UIImageView alloc] init];
+- (AsyncImageView *)newProfileImageView {
+  AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [profileImageView setImage:[UIImage imageNamed:@"placeholderHead"]];
+  //profileImageView.image = [UIImage imageNamed:@"placeholderHead"];
+  profileImageView.contentMode = UIViewContentModeScaleAspectFit;
+  profileImageView.imageURL = [NSURL URLWithString:@"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-1GoRs4ppiKY3Ta53ROlRJPt6osaXKdBTflGKXf0fT3XT433d"];
   return profileImageView;
 }
 
