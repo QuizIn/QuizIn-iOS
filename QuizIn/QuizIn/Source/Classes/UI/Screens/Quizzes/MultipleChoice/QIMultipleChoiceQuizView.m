@@ -268,7 +268,13 @@
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   //profileImageView.image = [UIImage imageNamed:@"placeholderHead"];
   profileImageView.contentMode = UIViewContentModeScaleAspectFit;
-  profileImageView.imageURL = [NSURL URLWithString:@"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-1GoRs4ppiKY3Ta53ROlRJPt6osaXKdBTflGKXf0fT3XT433d"];
+  profileImageView.showActivityIndicator = YES;
+  profileImageView.crossfadeDuration = 0.3f;
+  profileImageView.crossfadeImages = YES;
+  //super large test image
+  profileImageView.imageURL = [NSURL URLWithString:@"http://cdn.urbanislandz.com/wp-content/uploads/2011/10/MMSposter-large.jpg"];
+  // rick image (realiztic size)
+  //profileImageView.imageURL = [NSURL URLWithString:@"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-1GoRs4ppiKY3Ta53ROlRJPt6osaXKdBTflGKXf0fT3XT433d"];
   return profileImageView;
 }
 
