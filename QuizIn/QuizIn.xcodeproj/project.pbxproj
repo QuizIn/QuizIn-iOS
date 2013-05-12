@@ -12,6 +12,7 @@
 		3478FF9A173ED3DB002B29DB /* placeholderHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FF98173ED3DB002B29DB /* placeholderHead@2x.png */; };
 		3478FF9F173EE237002B29DB /* High-level diagram.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3478FF9E173EE237002B29DB /* High-level diagram.pdf */; };
 		3478FFA4173EE7CD002B29DB /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFA3173EE7CD002B29DB /* AsyncImageView.m */; };
+		3478FFA8173FD747002B29DB /* QIProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFA7173FD747002B29DB /* QIProgressView.m */; };
 		349248191733603D000AE6D1 /* QIStatsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 349248181733603D000AE6D1 /* QIStatsTracker.m */; };
 		34EF1F99172E15D70019D6F7 /* connectionsquiz_paperstack.png in Resources */ = {isa = PBXBuildFile; fileRef = 34EF1F95172E15D70019D6F7 /* connectionsquiz_paperstack.png */; };
 		34EF1F9A172E15D70019D6F7 /* connectionsquiz_paperstack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34EF1F96172E15D70019D6F7 /* connectionsquiz_paperstack@2x.png */; };
@@ -76,6 +77,8 @@
 		3478FF9E173EE237002B29DB /* High-level diagram.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "High-level diagram.pdf"; sourceTree = "<group>"; };
 		3478FFA2173EE7CD002B29DB /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		3478FFA3173EE7CD002B29DB /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
+		3478FFA6173FD747002B29DB /* QIProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIProgressView.h; sourceTree = "<group>"; };
+		3478FFA7173FD747002B29DB /* QIProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIProgressView.m; sourceTree = "<group>"; };
 		349248171733603D000AE6D1 /* QIStatsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsTracker.h; sourceTree = "<group>"; };
 		349248181733603D000AE6D1 /* QIStatsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsTracker.m; sourceTree = "<group>"; };
 		34EF1F95172E15D70019D6F7 /* connectionsquiz_paperstack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connectionsquiz_paperstack.png; sourceTree = "<group>"; };
@@ -214,6 +217,15 @@
 				3478FFA3173EE7CD002B29DB /* AsyncImageView.m */,
 			);
 			path = AsyncImageView;
+			sourceTree = "<group>";
+		};
+		3478FFA5173FD6BF002B29DB /* ProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				3478FFA6173FD747002B29DB /* QIProgressView.h */,
+				3478FFA7173FD747002B29DB /* QIProgressView.m */,
+			);
+			path = ProgressView;
 			sourceTree = "<group>";
 		};
 		3492481617335FCC000AE6D1 /* StatTracker */ = {
@@ -442,6 +454,7 @@
 		8886799A172DAFC700DCE3D0 /* Quizzes */ = {
 			isa = PBXGroup;
 			children = (
+				3478FFA5173FD6BF002B29DB /* ProgressView */,
 				888679A5172DD57F00DCE3D0 /* MultipleChoice */,
 				8886799B172DAFC700DCE3D0 /* BusinessCard */,
 				8886799F172DCDA600DCE3D0 /* QIQuizViewController.h */,
@@ -455,10 +468,10 @@
 		8886799B172DAFC700DCE3D0 /* BusinessCard */ = {
 			isa = PBXGroup;
 			children = (
-				34F01A32172DB2F60056A76A /* QIBusinessCardQuizView.h */,
-				34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */,
 				34F01A34172DB2F60056A76A /* QIBusinessCardViewController.h */,
 				34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */,
+				34F01A32172DB2F60056A76A /* QIBusinessCardQuizView.h */,
+				34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */,
 			);
 			path = BusinessCard;
 			sourceTree = "<group>";
@@ -632,6 +645,7 @@
 				888679AB172DD5DA00DCE3D0 /* QIMultipleChoiceQuizView.m in Sources */,
 				349248191733603D000AE6D1 /* QIStatsTracker.m in Sources */,
 				3478FFA4173EE7CD002B29DB /* AsyncImageView.m in Sources */,
+				3478FFA8173FD747002B29DB /* QIProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -32,6 +32,7 @@
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
 }
+
 #pragma mark Actions
 - (void)userDidCloseQuiz{
   NSLog(@"User Closed Quiz");
