@@ -24,20 +24,12 @@
       _progressLabel = [self newProgressLabel];
       _progressView = [self newProgressView];
       _exitButton = [self newExitButton];
-      
-      //TODO rkuhlman
-      _quizProgress = 1;
-      _numberOfQuestions = 11;
-      
       [self constructViewHierarchy];
     }
     return self;
 }
 
-- (void)updateProgress {
-  self.progressLabel.text = [NSString stringWithFormat:@"%d/%d",
-                             self.quizProgress, self.numberOfQuestions];
-}
+
 
 #pragma mark Properties
 
@@ -49,6 +41,13 @@
 - (void)setNumberOfQuestions:(NSUInteger)numberOfQuestions {
   _numberOfQuestions = numberOfQuestions;
   [self updateProgress];
+}
+
+- (void)setExitButton:(UIButton *)exitButton{
+  if ([exitButton isEqual:_exitButton]) {
+    return;
+  }
+  _exitButton = exitButton;
 }
 
 #pragma mark View Hierarchy
@@ -65,6 +64,25 @@
   [super updateConstraints];
   
   if (!self.progressViewConstraints) {
+    
+    NSDictionary *selfConstraintView = NSDictionaryOfVariableBindings(self);
+    
+    NSArray *hSelf =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|"
+                                            options:NSLayoutFormatAlignAllTop
+                                            metrics:nil
+                                              views:selfConstraintView];
+    
+    NSArray *vSelf =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self(==50)]"
+                                            options:0
+                                            metrics:nil
+                                              views:selfConstraintView];
+    
+    NSMutableArray *selfConstraints = [NSMutableArray array];
+    [selfConstraints addObjectsFromArray:hSelf];
+    [selfConstraints addObjectsFromArray:vSelf];
+    [self.superview addConstraints:selfConstraints];
     
     //ProgressView Constraints
     self.progressViewConstraints = [NSMutableArray array];
@@ -94,6 +112,17 @@
   
 }
 
+#pragma mark Actions
+
+- (void)updateProgress {
+  self.progressLabel.text = [NSString stringWithFormat:@"%d/%d",
+                             self.quizProgress, self.numberOfQuestions];
+  if (self.numberOfQuestions > 0){
+    float progressValue = (float)self.quizProgress/(float)self.numberOfQuestions;
+    self.progressView.progress = progressValue;
+  }
+}
+ 
 #pragma mark Strings
 
 - (NSString *)exitButtonText {

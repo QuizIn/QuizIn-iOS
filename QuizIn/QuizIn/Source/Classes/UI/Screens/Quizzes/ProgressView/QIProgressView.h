@@ -5,5 +5,6 @@
 
 @property(nonatomic, assign) NSUInteger quizProgress;
 @property(nonatomic, assign) NSUInteger numberOfQuestions;
+@property(nonatomic, strong, readonly) UIButton *exitButton;
 
 @end
