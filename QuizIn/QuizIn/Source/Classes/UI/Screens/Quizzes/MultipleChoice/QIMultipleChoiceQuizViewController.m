@@ -29,6 +29,10 @@
   [self.multipleChoiceView.progressView.exitButton addTarget:self
                                                       action:@selector(userDidCloseQuiz)
                                             forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.multipleChoiceView.nextQuestionButton addTarget:self
+                                                 action:@selector(userDidPressNext)
+                                       forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,6 +42,9 @@
 #pragma mark Actions
 - (void)userDidCloseQuiz{
   NSLog(@"User Closed Quiz");
+}
+- (void)userDidPressNext{
+  NSLog(@"Next Button From Multiple Choice");
 }
 
 #pragma mark Properties

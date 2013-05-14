@@ -1,4 +1,5 @@
 #import "QIBusinessCardViewController.h"
+#import "QIBusinessCardQuizView.h"
 
 @interface QIBusinessCardViewController ()
 
@@ -15,6 +16,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  self.view = [[QIBusinessCardQuizView alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {

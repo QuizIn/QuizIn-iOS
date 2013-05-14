@@ -9,4 +9,5 @@
 @property(nonatomic, copy) NSString *question;
 @property(nonatomic, strong) UIImage *profileImage;
 @property(nonatomic, copy) NSArray *answers;
+@property(nonatomic, strong) UIButton *nextQuestionButton;
 @end

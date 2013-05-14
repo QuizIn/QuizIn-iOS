@@ -159,19 +159,6 @@
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  // TODO(rcacheaux): Use autolayout.
-  
-  CGPoint centerPoint = CGPointMake(CGRectGetMidX(self.bounds),CGRectGetMidY(self.bounds));
-  
-  float leftPadding = 25.0f;
-  float topPadding = 30.0f;
-  //self.connectionsQuizStartView.frame = CGRectMake(0.0f, 10.0f, 320.0f, 200.0f);
-  //self.connectionsQuizPaperImage.frame = CGRectMake(0.0f, 10.0f, 320.0f, 200.0f);
-  //self.connectionsQuizTitle.frame = CGRectMake(leftPadding, topPadding, 280.0f, 20.0f);
-  //self.connectionsQuizNumberOfConnectionsLabel.frame = CGRectMake(leftPadding, topPadding+20.0f, 280.0f, 20.0f);
-  //self.connectionsQuizImagePreviewCollection.frame = CGRectMake(leftPadding+10.0f, topPadding+60.0f, 250.0f, 60.0f);
-  //self.connectionsQuizButton.frame = CGRectMake(leftPadding+100, topPadding+130.0f, 150.0f, 52.0f);
-
 }
 
 #pragma mark Factory Methods

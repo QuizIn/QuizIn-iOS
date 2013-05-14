@@ -5,11 +5,10 @@
 
 @interface QIMultipleChoiceQuizView ()
 
-//@property(nonatomic, strong) QIProgressView *progressView;
 @property(nonatomic, strong) AsyncImageView *profileImageView;
 @property(nonatomic, strong) UILabel *questionLabel;
 @property(nonatomic, strong) NSArray *answerButtons;
-@property(nonatomic, strong) UIButton *nextQuestionButton;
+
 @property(nonatomic, strong) NSMutableArray *progressViewConstraints;
 @property(nonatomic, strong) NSMutableArray *multipleChoiceConstraints; 
 @end
@@ -34,7 +33,6 @@
     
     //TODO rkuhlman not sure if this shoudl stay here. 
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
     
     [self constructViewHierarchy];
   }
@@ -111,7 +109,7 @@
 - (void)updateConstraints {
   [super updateConstraints];
     
-  if (!self.progressViewConstraints) {
+  if (!self.multipleChoiceConstraints) {
     // --------------TODO rkuhlman : This probably doesn't go here.-----------
     
     NSDictionary *selfConstraintView =NSDictionaryOfVariableBindings(self);
