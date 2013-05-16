@@ -2,6 +2,7 @@
 #import "QIBusinessCardQuizView.h"
 
 @interface QIBusinessCardViewController ()
+@property(nonatomic, strong, readonly) QIBusinessCardQuizView *businessCardQuizView;
 
 @end
 
@@ -13,14 +14,21 @@
   }
   return self;
 }
-
+- (void)loadView{
+  self.view = [[QIBusinessCardQuizView alloc] init];
+}
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.view = [[QIBusinessCardQuizView alloc] init];
+  self.businessCardQuizView.numberOfQuestions = 10;
+  self.businessCardQuizView.quizProgress = 4;
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
+}
+
+- (QIBusinessCardQuizView *)businessCardQuizView {
+  return (QIBusinessCardQuizView *)self.view;
 }
 
 @end

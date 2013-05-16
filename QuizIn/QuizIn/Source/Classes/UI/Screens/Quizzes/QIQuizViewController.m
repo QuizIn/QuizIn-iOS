@@ -28,15 +28,14 @@
   // TODO(rcacheaux): Clean up.
   
   // switch to the other view to test other view (rkuhlman)
-/*
   self.businessCardController = [[QIBusinessCardViewController alloc] init];
   [self addChildViewController:self.businessCardController];
   [self.view addSubview:self.businessCardController.view];
-*/  
+/*
   self.multipleChoiceController = [[QIMultipleChoiceQuizViewController alloc] init];
   [self addChildViewController:self.multipleChoiceController];
   [self.view addSubview:self.multipleChoiceController.view];
-
+*/
 }
 
 
