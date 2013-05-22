@@ -5,8 +5,8 @@
 
 @property(nonatomic, strong) NSArray *questionButtons;
 @property(nonatomic, strong) NSArray *answerButtons;
-
 @property(nonatomic, strong) UIButton *nextQuestionButton;
+
 @property(nonatomic, strong) NSMutableArray *progressViewConstraints;
 @property(nonatomic, strong) NSMutableArray *questionConstraints;
 @property(nonatomic, strong) NSMutableArray *answerConstraints;
@@ -134,6 +134,7 @@
     [selfConstraints addObjectsFromArray:hSelf];
     [selfConstraints addObjectsFromArray:vSelf];
     [self.superview addConstraints:selfConstraints];
+    
     //---------------  end doesn't go here -----------------------
     
     self.progressViewConstraints = [NSMutableArray array];
@@ -160,6 +161,7 @@
     
     
     NSDictionary *buttonViews = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 _progressView,         @"_progressView",
                                  _questionButtons[0],   @"_questionButtons0",
                                  _questionButtons[1],   @"_questionButtons1",
                                  _questionButtons[2],   @"_questionButtons2",
@@ -168,87 +170,48 @@
                                  _answerButtons[1],   @"_answerButtons1",
                                  _answerButtons[2],   @"_answerButtons2",
                                  _answerButtons[3],   @"_answerButtons3",
+                                 _nextQuestionButton, @"_nextQuestionButton",
                                          nil];
-    /*
-    NSString *hBusinessCardView = @"H:|[_businessCardView]|";
-    NSArray *hBusinessCardViewConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:hBusinessCardView
-                                            options:NSLayoutFormatAlignAllTop
-                                            metrics:nil
-                                              views:businessCardView];
-    
-    NSString *vBusinessCardView = @"V:|[_progressView]-[_businessCardView(==220)]";
-    NSArray *vBusinessCardViewConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:vBusinessCardView
-                                            options:NSLayoutFormatAlignAllCenterX
-                                            metrics:nil
-                                              views:businessCardView];
-    
-    [self.questionConstraints addObjectsFromArray:vBusinessCardViewConstraints];
-    [self.questionConstraints addObjectsFromArray:hBusinessCardViewConstraints];
-    
-    NSDictionary *cardViewBackgroundImage = NSDictionaryOfVariableBindings(_businessCardBackground);
-    
-    
-    NSString *hBusinessCardBackground = @"H:|-[_businessCardBackground]-|";
-    NSArray *hBusinessCardBackgroundConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:hBusinessCardBackground
-                                            options:0
-                                            metrics:nil
-                                              views:cardViewBackgroundImage ];
-    
-    NSString *vBusinessCardBackground = @"V:|-[_businessCardBackground]-|";
-    NSArray *vBusinessCardBackgroundConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:vBusinessCardBackground
-                                            options:NSLayoutFormatAlignAllCenterX
-                                            metrics:nil
-                                              views:cardViewBackgroundImage];
-    
-    [self.questionConstraints addObjectsFromArray:hBusinessCardBackgroundConstraints];
-    [self.questionConstraints addObjectsFromArray:vBusinessCardBackgroundConstraints];
-    
-    NSDictionary *cardViews = NSDictionaryOfVariableBindings();
-    
-    NSString *vCard = @"V:|-[_profileImageView][_cardNameLabel][_cardTitleLabel][_cardCompanyLabel][_cardName][_cardTitle][_cardCompany]-|";
-    
-    NSArray *vCardConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:vCard
-                                            options:NSLayoutFormatAlignAllCenterX
-                                            metrics:nil
-                                              views:cardViews];
-    NSLayoutConstraint *hCardCenter =
-    [NSLayoutConstraint constraintWithItem:_profileImageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_businessCardBackground attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
-    
-    [self.cardConstraints addObjectsFromArray:@[hCardCenter]];
-    [self.cardConstraints addObjectsFromArray:vCardConstraints];
     
     self.answerConstraints = [NSMutableArray array];
-    NSDictionary *answerViews = NSDictionaryOfVariableBindings(_businessCardView,
-                                                               _answerName,
-                                                               _answerTitle,
-                                                               _answerCompany,
-                                                               _nextQuestionButton);
     
-    NSString *vAnswerViews = @"V:[_businessCardView]-[_answerName]-[_answerTitle(==_answerName)]-[_answerCompany(==_answerName)]-[_nextQuestionButton(==_answerName)]|";
-    
-    NSArray *vAnswerViewContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:vAnswerViews
-                                            options:NSLayoutFormatAlignAllCenterX
-                                            metrics:nil
-                                              views:answerViews];
-    NSArray *groupedAnswerConstraintViews = [NSArray arrayWithObjects:_answerName, _answerCompany, _answerTitle, nil];
-    
-    NSMutableArray *choiceButtonConstraints = [NSMutableArray array];
-    for (UIView *view in groupedAnswerConstraintViews){
-      [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-      [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
+    for (UIButton *button in self.answerButtons){
+      [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+      
+      [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
     }
     
-    [self.answerConstraints addObjectsFromArray:vAnswerViewContraints];
-    */
+    self.questionConstraints = [NSMutableArray array];
+    
+    for (UIButton *button in self.questionButtons){
+      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+      
+      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
+    }
+    
+    NSString *vButtonsView = @"V:[_progressView]-[_questionButtons0]-[_questionButtons1(==_questionButtons0)]-[_questionButtons2(==_questionButtons0)]-[_questionButtons3(==_questionButtons0)]-[_answerButtons0(==_questionButtons0)]-[_answerButtons1(==_questionButtons0)]-[_answerButtons2(==_questionButtons0)]-[_answerButtons3(==_questionButtons0)]-[_nextQuestionButton(==_questionButtons0)]-|";
+    
+    NSArray *vButtonConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:vButtonsView
+                                            options:0
+                                            metrics:nil
+                                              views:buttonViews];
+    
+    [self.questionConstraints addObjectsFromArray:vButtonConstraints];
+    
+    NSArray *hNextButtonConstraint =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"[_nextQuestionButton]-|"
+                                            options:NSLayoutFormatAlignAllBaseline
+                                            metrics:nil
+                                              views:buttonViews];
+
+    
+    [self.answerConstraints addObjectsFromArray:hNextButtonConstraint];
+
     
     [self addConstraints:self.progressViewConstraints];
-    //[self addConstraints:self.answerConstraints];
+    [self addConstraints:self.answerConstraints];
+    [self addConstraints:self.questionConstraints];
   }
 }
 
