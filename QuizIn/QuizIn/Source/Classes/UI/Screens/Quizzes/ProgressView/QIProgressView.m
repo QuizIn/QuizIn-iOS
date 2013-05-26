@@ -74,7 +74,7 @@
                                               views:selfConstraintView];
     
     NSArray *vSelf =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self(==50)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self(==36)]"
                                             options:0
                                             metrics:nil
                                               views:selfConstraintView];
@@ -90,21 +90,25 @@
     NSDictionaryOfVariableBindings(_progressLabel, _progressView, _exitButton);
     
     NSString *quizProgressHorizontalFromLeft =
-    @"H:|-10-[_progressLabel]-8-[_progressView]-8-[_exitButton(==44)]-10-|";
+    @"H:|-10-[_progressLabel(==28)]-[_progressView]-[_exitButton(==28)]-10-|";
     NSArray *quizProgressHorizontalConstraintsLeft =
     [NSLayoutConstraint constraintsWithVisualFormat:quizProgressHorizontalFromLeft
                                             options:NSLayoutFormatAlignAllCenterY
                                             metrics:nil
                                               views:quizProgressViews];
-    NSLayoutConstraint *centerProgressBar = [NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
     
-    NSString *quizProgressVertical = @"V:|-10-[_exitButton(==44)]";
+    NSLayoutConstraint *hCenterProgressBar = [NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+    
+    NSLayoutConstraint *vCenterProgressBar = [NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f];
+    
+    NSString *quizProgressVertical = @"V:[_exitButton(==20)]";
     NSArray *quizProgressVerticalConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:quizProgressVertical
                                             options:0
                                             metrics:nil
                                               views:quizProgressViews];
-    [self.progressViewConstraints addObjectsFromArray:@[centerProgressBar]];
+    
+    [self.progressViewConstraints addObjectsFromArray:@[hCenterProgressBar,vCenterProgressBar]];
     [self.progressViewConstraints addObjectsFromArray:quizProgressHorizontalConstraintsLeft];
     [self.progressViewConstraints addObjectsFromArray:quizProgressVerticalConstraints];
     [self addConstraints:self.progressViewConstraints];
@@ -125,27 +129,37 @@
  
 #pragma mark Strings
 
-- (NSString *)exitButtonText {
-  return @"x";
-}
 
 #pragma mark Factory Methods
 
 - (UILabel *)newProgressLabel {
   UILabel *progressLabel = [[UILabel alloc] init];
   [progressLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [progressLabel setBackgroundColor:[UIColor clearColor]];
+  progressLabel.font = [UIFont fontWithName:@"Tahoma-Bold" size:10.0f];
+  progressLabel.textColor = [UIColor colorWithWhite:0.33f alpha:1.0f];
+  progressLabel.adjustsFontSizeToFitWidth = YES;
+  [progressLabel setAdjustsFontSizeToFitWidth:YES];
   return progressLabel;
 }
 
 - (UIProgressView *)newProgressView {
   UIProgressView *progressView = [[UIProgressView alloc] init];
   [progressView setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+  UIImage *track = [[UIImage imageNamed:@"progressView_tracker"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 40, 0, 40)];
+  UIImage *progress = [[UIImage imageNamed:@"progressView_progress"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 40, 0, 40)];
+  
+  [progressView setTrackImage:track];
+  [progressView setProgressImage:progress];
+  [progressView setProgressViewStyle:UIProgressViewStyleDefault];
   return progressView;
 }
 
 - (UIButton *)newExitButton {
   UIButton *exitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-  [exitButton setTitle:[self exitButtonText] forState:UIControlStateNormal];
+  [exitButton setImage:[UIImage imageNamed:@"quizin_exit_btn"] forState:UIControlStateNormal];
+  [exitButton setAlpha:0.8f];
   [exitButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   return exitButton;
 }

@@ -36,11 +36,11 @@
 
   self.multipleChoiceController = [[QIMultipleChoiceQuizViewController alloc] init];
   [self addChildViewController:self.multipleChoiceController];
-  //[self.view addSubview:self.multipleChoiceController.view];
+  [self.view addSubview:self.multipleChoiceController.view];
   
   self.matchingController = [[QIMatchingQuizViewController alloc] init];
   [self addChildViewController:self.matchingController];
-  [self.view addSubview:self.matchingController.view];
+  //[self.view addSubview:self.matchingController.view];
 }
 
 

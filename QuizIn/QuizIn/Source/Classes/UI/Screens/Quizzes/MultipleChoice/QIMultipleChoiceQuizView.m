@@ -5,6 +5,10 @@
 
 @interface QIMultipleChoiceQuizView ()
 
+@property(nonatomic, strong) UIImageView *viewBackground;
+@property(nonatomic, strong) UIImageView *divider;
+@property(nonatomic, strong) UIImageView *profileImageBackground;
+
 @property(nonatomic, strong) AsyncImageView *profileImageView;
 @property(nonatomic, strong) UILabel *questionLabel;
 @property(nonatomic, strong) NSArray *answerButtons;
@@ -25,12 +29,18 @@
     _question = @"";
     _answers = @[];
     
+    _viewBackground = [self newViewBackground];
+    _divider = [self newDivider];
+    _profileImageBackground = [self newProfileImageBackground];
+    
     _progressView = [self newProgressView];
     _profileImageView = [self newProfileImageView];
     _questionLabel = [self newQuestionLabel];
     _answerButtons = @[];
     _nextQuestionButton = [self newNextQuestionButton];
     
+    
+  
     //TODO rkuhlman not sure if this shoudl stay here. 
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     
@@ -87,10 +97,13 @@
 #pragma mark View Hierarchy
 
 - (void)constructViewHierarchy {
+  [self addSubview:self.viewBackground];
+  [self addSubview:self.profileImageBackground];
   [self addSubview:self.profileImageView];
+  [self addSubview:self.progressView];
   [self addSubview:self.questionLabel];
   [self addSubview:self.nextQuestionButton];
-  [self addSubview:self.progressView];
+  [self addSubview:self.divider];
 }
 
 - (void)loadAnswerButtons {
@@ -135,6 +148,7 @@
     //Multiple Choice View
     self.multipleChoiceConstraints = [NSMutableArray array];
     NSDictionary *multipleChoiceViews = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         _progressView,       @"progressView",
                                          _profileImageView,   @"_profileImageView",
                                          _questionLabel,      @"_questionLabel",
                                          _nextQuestionButton, @"_nextQuestionButton",
@@ -153,12 +167,12 @@
     NSMutableArray *choiceButtonConstraints = [NSMutableArray array];
     for (UIButton *button in self.answerButtons){
       [choiceButtonConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-      [choiceButtonConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:200.0f]];
+      [choiceButtonConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:283.0f]];
     }
     
     NSLayoutConstraint *hNextButton = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0f constant:-20.0f];
     
-    NSString *quizChoiceVertical = @"V:|-50-[_profileImageView(==120)]-[_questionLabel]-[_answerButtons0]-[_answerButtons1(==_answerButtons0)]-[_answerButtons2(==_answerButtons0)]-[_answerButtons3(==_answerButtons0)]-[_nextQuestionButton]-|";
+    NSString *quizChoiceVertical = @"V:|-50-[_profileImageView(==120)]-[_questionLabel]-[_answerButtons0(==55)]-[_answerButtons1(==_answerButtons0)]-[_answerButtons2(==_answerButtons0)]-[_answerButtons3(==_answerButtons0)]-[_nextQuestionButton]-|";
     NSArray *quizChoiceVerticalConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:quizChoiceVertical
                                             options:0
@@ -199,6 +213,17 @@
   self.answerButtons = [answerButtons copy];
 }
 
+- (void)answerButtonPressed:(id)sender{
+  UIButton *pressedButton = (UIButton *)sender;
+  if (pressedButton.selected == NO){
+    for (UIButton *button in self.answerButtons){
+      button.selected = NO;
+    }
+    pressedButton.selected = YES;
+  }
+}
+
+
 #pragma mark Factory Methods
 
 - (QIProgressView *)newProgressView{  //progressView
@@ -209,6 +234,19 @@
   return progressView;
 }
 
+- (UIImageView *)newViewBackground{
+  UIImageView *background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"quizin_bg"]];
+  return background;
+}
+- (UIImageView *)newDivider{
+  UIImageView *divider = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"quizin_divider"]];
+  return divider;
+}
+- (UIImageView *)newProfileImageBackground{
+  UIImageView *profileBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"multiplechoice_pictureholder"]];
+  return profileBackground;
+}
+
 - (AsyncImageView *)newProfileImageView {
   AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -217,9 +255,11 @@
   profileImageView.showActivityIndicator = YES;
   profileImageView.crossfadeDuration = 0.3f;
   profileImageView.crossfadeImages = YES;
+ 
   //super large test image
   profileImageView.imageURL = [NSURL URLWithString:@"http://cdn.urbanislandz.com/wp-content/uploads/2011/10/MMSposter-large.jpg"];
-  // rick image (realiztic size)
+ 
+  // rick image (realistic size)
   //profileImageView.imageURL = [NSURL URLWithString:@"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-1GoRs4ppiKY3Ta53ROlRJPt6osaXKdBTflGKXf0fT3XT433d"];
   return profileImageView;
 }
@@ -232,9 +272,22 @@
 }
 
 - (UIButton *)newAnswerButtonWithTitle:(NSString *)title {
-  UIButton *answerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  UIButton *answerButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [answerButton setTitle:title forState:UIControlStateNormal];
+  answerButton.titleLabel.font = [UIFont fontWithName:@"Tahoma-Bold" size:15.0f];
+  answerButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+  answerButton.titleLabel.adjustsLetterSpacingToFitWidth = YES;
+  answerButton.titleLabel.textColor = [UIColor colorWithWhite:0.33f alpha:1.0f];
+  [answerButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, 40.0f, 0.0f, 40.0f)];
+  [answerButton setBackgroundImage:[UIImage imageNamed:@"multiplechoice_answer_btn"] forState:UIControlStateNormal];
+  [answerButton setBackgroundImage:[UIImage imageNamed:@"multiplechoice_answer_btn_pressed"] forState:UIControlStateSelected];
+  [answerButton setBackgroundImage:[UIImage imageNamed:@"multiplechoice_answer_btn_pressed"] forState:UIControlStateSelected | UIControlStateHighlighted];
   [answerButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [answerButton setAdjustsImageWhenHighlighted:NO];
+  [answerButton setReversesTitleShadowWhenHighlighted:NO];
+  
+  [answerButton addTarget:self action:@selector(answerButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+  
   return answerButton;
 }
 

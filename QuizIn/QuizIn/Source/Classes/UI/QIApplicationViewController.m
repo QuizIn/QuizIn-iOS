@@ -32,7 +32,8 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self.authController beginAuthenticationAttempt];
+  //[self.authController beginAuthenticationAttempt];
+  [self authControllerAccount:nil didAuthenticate:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,7 +65,7 @@
   self.drawerController = [self newDrawerController];
   [self addChildViewController:self.drawerController];
   [self.view addSubview:self.drawerController.view];
-  
+ /*
   [LinkedIn getPeopleCurrentConnectionsWithCompletionHandler:^(NSArray *connections,
                                                                NSError *error) {
     NSLog(@"Got Connections");
@@ -75,6 +76,7 @@
       }];
     }
   }];
+  */
 }
 
 - (void)authControllerAccount:(AKAccount *)account
