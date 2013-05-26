@@ -29,21 +29,19 @@
   [super viewDidLoad];
   // TODO(rcacheaux): Clean up.
   
-  // switch to the other view to test other view (rkuhlman)
-  self.businessCardController = [[QIBusinessCardViewController alloc] init];
-  [self addChildViewController:self.businessCardController];
-  //[self.view addSubview:self.businessCardController.view];
-
+  
   self.multipleChoiceController = [[QIMultipleChoiceQuizViewController alloc] init];
   [self addChildViewController:self.multipleChoiceController];
-  [self.view addSubview:self.multipleChoiceController.view];
+  //[self.view addSubview:self.multipleChoiceController.view];
   
   self.matchingController = [[QIMatchingQuizViewController alloc] init];
   [self addChildViewController:self.matchingController];
   //[self.view addSubview:self.matchingController.view];
+  
+  self.businessCardController = [[QIBusinessCardViewController alloc] init];
+  [self addChildViewController:self.businessCardController];
+  [self.view addSubview:self.businessCardController.view];
 }
-
-
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];

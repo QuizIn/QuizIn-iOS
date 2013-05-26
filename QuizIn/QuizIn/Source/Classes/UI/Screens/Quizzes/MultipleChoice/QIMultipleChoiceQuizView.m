@@ -192,7 +192,7 @@
     
     NSLayoutConstraint *hNextButton = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0f constant:-10.0f];
     
-    NSString *quizChoiceVertical = @"V:|[_progressView]-3-[_profileImageView(==144)]-12-[_dividerTop][_questionLabel][_dividerBottom][_answerButtons0][_answerButtons1(==_answerButtons0)][_answerButtons2(==_answerButtons0)][_answerButtons3(==_answerButtons0)][_nextQuestionButton(==53)]-3-|";
+    NSString *quizChoiceVertical = @"V:|[_progressView]-3-[_profileImageView(==144)]-12-[_dividerTop(==2)][_questionLabel(>=28)][_dividerBottom(==2)][_answerButtons0(>=44)][_answerButtons1(==_answerButtons0)][_answerButtons2(==_answerButtons0)][_answerButtons3(==_answerButtons0)][_nextQuestionButton(>=40)]-3-|";
     
     NSArray *quizChoiceVerticalConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:quizChoiceVertical
@@ -328,7 +328,9 @@
 - (UIButton *)newNextQuestionButton {
   UIButton *nextQuestionButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [nextQuestionButton setTitle:[self nextQuestionButtonText] forState:UIControlStateNormal];
-  [nextQuestionButton setBackgroundImage:[[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 74, 0, 74)] forState:UIControlStateNormal];
+  //[nextQuestionButton setBackgroundImage:[[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 74, 0, 74)] forState:UIControlStateNormal];
+  [nextQuestionButton setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] forState:UIControlStateNormal];
+
   [nextQuestionButton.titleLabel setFont:[UIFont fontWithName:@"Tahoma" size:16.0f]];
   [nextQuestionButton setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
   [nextQuestionButton setTranslatesAutoresizingMaskIntoConstraints:NO];

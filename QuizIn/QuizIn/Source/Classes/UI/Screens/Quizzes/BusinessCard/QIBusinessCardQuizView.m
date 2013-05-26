@@ -120,8 +120,8 @@
   [super updateConstraints];
   
   if (!self.cardConstraints) {
-    // --------------TODO rkuhlman : This probably doesn't go here.-----------
     
+    //Self Constraints
     NSDictionary *selfConstraintView =NSDictionaryOfVariableBindings(self);
     
     NSArray *hSelf =
@@ -140,10 +140,9 @@
     [selfConstraints addObjectsFromArray:hSelf];
     [selfConstraints addObjectsFromArray:vSelf];
     [self.superview addConstraints:selfConstraints];
-    //---------------  end doesn't go here -----------------------
     
+    //Progress View
     self.cardConstraints = [NSMutableArray array];
-    
     
     NSDictionary *progressView = NSDictionaryOfVariableBindings(_progressView);
     
@@ -163,9 +162,8 @@
     
     [self.cardConstraints addObjectsFromArray:vProgressViewConstraints];
     [self.cardConstraints addObjectsFromArray:hProgressViewConstraints];
-
     
-
+    //Business Card Container View
     NSDictionary *businessCardView = NSDictionaryOfVariableBindings(_businessCardView,_progressView);
     
     NSString *hBusinessCardView = @"H:|[_businessCardView]|";
@@ -175,7 +173,7 @@
                                             metrics:nil
                                               views:businessCardView];
     
-    NSString *vBusinessCardView = @"V:|[_progressView]-[_businessCardView(==220)]";
+    NSString *vBusinessCardView = @"V:|[_progressView][_businessCardView(==220)]";
     NSArray *vBusinessCardViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vBusinessCardView
                                             options:NSLayoutFormatAlignAllCenterX
@@ -185,35 +183,44 @@
     [self.cardConstraints addObjectsFromArray:vBusinessCardViewConstraints];
     [self.cardConstraints addObjectsFromArray:hBusinessCardViewConstraints];
 
-    NSDictionary *cardViewBackgroundImage = NSDictionaryOfVariableBindings(_businessCardBackground);
+    //Business Card Background Image
     
+    NSLayoutConstraint *hCardBackgroundCenter =
+    [NSLayoutConstraint constraintWithItem:_businessCardBackground attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_businessCardView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
     
-    NSString *hBusinessCardBackground = @"H:|-[_businessCardBackground]-|";
-    NSArray *hBusinessCardBackgroundConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:hBusinessCardBackground
-                                            options:0
-                                            metrics:nil
-                                              views:cardViewBackgroundImage ];
+    NSLayoutConstraint *vCardBackgroundCenter =
+    [NSLayoutConstraint constraintWithItem:_businessCardBackground attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_businessCardView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f];
     
-    NSString *vBusinessCardBackground = @"V:|-[_businessCardBackground]-|";
-    NSArray *vBusinessCardBackgroundConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:vBusinessCardBackground
-                                            options:NSLayoutFormatAlignAllCenterX
-                                            metrics:nil
-                                              views:cardViewBackgroundImage];
+    NSLayoutConstraint *CardBackgroundWidth =
+    [NSLayoutConstraint constraintWithItem:_businessCardBackground attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:283.0f];
     
-    [self.cardConstraints addObjectsFromArray:hBusinessCardBackgroundConstraints];
-    [self.cardConstraints addObjectsFromArray:vBusinessCardBackgroundConstraints];
+    NSLayoutConstraint *CardBackgroundHeight =
+    [NSLayoutConstraint constraintWithItem:_businessCardBackground attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:180.0f];
     
-    NSDictionary *cardViews = NSDictionaryOfVariableBindings(_profileImageView,
+    [self.cardConstraints addObjectsFromArray:@[hCardBackgroundCenter,vCardBackgroundCenter,CardBackgroundHeight,CardBackgroundWidth]];
+    
+    //Business Card Elements
+    NSDictionary *cardViews = NSDictionaryOfVariableBindings(_businessCardBackground,
+                                                             _profileImageView,
                                                              _cardNameLabel,
                                                              _cardTitleLabel,
                                                              _cardCompanyLabel,
                                                              _cardName,
                                                              _cardTitle,
                                                              _cardCompany);
+    NSArray *hProfileImageConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-38-[_profileImageView(==93)]"
+                                            options:0
+                                            metrics:nil
+                                              views:cardViews];
     
-    NSString *vCard = @"V:|-[_profileImageView][_cardNameLabel][_cardTitleLabel][_cardCompanyLabel][_cardName][_cardTitle][_cardCompany]-|";
+    NSArray *vProfileImageConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-40-[_profileImageView(==93)]"
+                                            options:0
+                                            metrics:nil
+                                              views:cardViews];
+
+    NSString *vCard = @"V:|-[_cardNameLabel][_cardTitleLabel][_cardCompanyLabel][_cardName][_cardTitle][_cardCompany]-|";
     
     NSArray *vCardConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vCard
@@ -221,9 +228,11 @@
                                             metrics:nil
                                               views:cardViews];
     NSLayoutConstraint *hCardCenter =
-    [NSLayoutConstraint constraintWithItem:_profileImageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_businessCardBackground attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+    [NSLayoutConstraint constraintWithItem:_cardNameLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_businessCardBackground attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
     
     [self.cardConstraints addObjectsFromArray:@[hCardCenter]];
+    [self.cardConstraints addObjectsFromArray:hProfileImageConstraints];
+    [self.cardConstraints addObjectsFromArray:vProfileImageConstraints];
     [self.cardConstraints addObjectsFromArray:vCardConstraints];
     
     self.answerConstraints = [NSMutableArray array];
@@ -283,20 +292,19 @@
   [progressView setTranslatesAutoresizingMaskIntoConstraints:NO];
   progressView.numberOfQuestions = _numberOfQuestions;
   progressView.quizProgress = _quizProgress;
+  [progressView setBackgroundColor:[UIColor lightGrayColor]];
   return progressView;
 }
 
 -(UIView *) newBusinessCardView{
   UIView *businessCardView = [[UIView alloc] init];
-  [businessCardView setBackgroundColor:[UIColor grayColor]];
   [businessCardView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [businessCardView setBackgroundColor:[UIColor grayColor]];
   return businessCardView; 
 
 }
 -(UIImageView *)newBusinessCardBackground{
-  //test Image ---- UIImageView *businessCardBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"connectionsquiz_paperstack"]];
-  UIImageView *businessCardBackground = [[UIImageView alloc] init];
-  [businessCardBackground setBackgroundColor:[UIColor lightGrayColor]];
+  UIImageView *businessCardBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cardquiz_businesscard"]];
   [businessCardBackground setTranslatesAutoresizingMaskIntoConstraints:NO];
   return businessCardBackground;
 }

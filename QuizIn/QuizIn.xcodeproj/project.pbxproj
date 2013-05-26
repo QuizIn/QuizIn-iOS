@@ -20,8 +20,6 @@
 		347800081750EFC1002B29DB /* cardquiz_businesscard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFB41750EFC1002B29DB /* cardquiz_businesscard@2x.png */; };
 		347800091750EFC1002B29DB /* cardquiz_reference.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFB51750EFC1002B29DB /* cardquiz_reference.png */; };
 		3478000A1750EFC1002B29DB /* cardquiz_reference@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFB61750EFC1002B29DB /* cardquiz_reference@2x.png */; };
-		3478000B1750EFC1002B29DB /* cardquiz_tracker.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFB71750EFC1002B29DB /* cardquiz_tracker.png */; };
-		3478000C1750EFC1002B29DB /* cardquiz_tracker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFB81750EFC1002B29DB /* cardquiz_tracker@2x.png */; };
 		3478000E1750EFC1002B29DB /* calendar_datebar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFBB1750EFC1002B29DB /* calendar_datebar.png */; };
 		3478000F1750EFC1002B29DB /* calendar_datebar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFBC1750EFC1002B29DB /* calendar_datebar@2x.png */; };
 		347800101750EFC1002B29DB /* calendar_expand_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFBD1750EFC1002B29DB /* calendar_expand_btn.png */; };
@@ -165,8 +163,6 @@
 		3478FFB41750EFC1002B29DB /* cardquiz_businesscard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardquiz_businesscard@2x.png"; sourceTree = "<group>"; };
 		3478FFB51750EFC1002B29DB /* cardquiz_reference.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardquiz_reference.png; sourceTree = "<group>"; };
 		3478FFB61750EFC1002B29DB /* cardquiz_reference@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardquiz_reference@2x.png"; sourceTree = "<group>"; };
-		3478FFB71750EFC1002B29DB /* cardquiz_tracker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardquiz_tracker.png; sourceTree = "<group>"; };
-		3478FFB81750EFC1002B29DB /* cardquiz_tracker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardquiz_tracker@2x.png"; sourceTree = "<group>"; };
 		3478FFBB1750EFC1002B29DB /* calendar_datebar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_datebar.png; sourceTree = "<group>"; };
 		3478FFBC1750EFC1002B29DB /* calendar_datebar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_datebar@2x.png"; sourceTree = "<group>"; };
 		3478FFBD1750EFC1002B29DB /* calendar_expand_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_expand_btn.png; sourceTree = "<group>"; };
@@ -383,8 +379,6 @@
 				3478FFB41750EFC1002B29DB /* cardquiz_businesscard@2x.png */,
 				3478FFB51750EFC1002B29DB /* cardquiz_reference.png */,
 				3478FFB61750EFC1002B29DB /* cardquiz_reference@2x.png */,
-				3478FFB71750EFC1002B29DB /* cardquiz_tracker.png */,
-				3478FFB81750EFC1002B29DB /* cardquiz_tracker@2x.png */,
 			);
 			path = "BusinessCard Quiz";
 			sourceTree = "<group>";
@@ -837,8 +831,6 @@
 				347800081750EFC1002B29DB /* cardquiz_businesscard@2x.png in Resources */,
 				347800091750EFC1002B29DB /* cardquiz_reference.png in Resources */,
 				3478000A1750EFC1002B29DB /* cardquiz_reference@2x.png in Resources */,
-				3478000B1750EFC1002B29DB /* cardquiz_tracker.png in Resources */,
-				3478000C1750EFC1002B29DB /* cardquiz_tracker@2x.png in Resources */,
 				3478000E1750EFC1002B29DB /* calendar_datebar.png in Resources */,
 				3478000F1750EFC1002B29DB /* calendar_datebar@2x.png in Resources */,
 				347800101750EFC1002B29DB /* calendar_expand_btn.png in Resources */,
