@@ -6,7 +6,8 @@
 @interface QIMultipleChoiceQuizView ()
 
 @property(nonatomic, strong) UIImageView *viewBackground;
-@property(nonatomic, strong) UIImageView *divider;
+@property(nonatomic, strong) UIImageView *dividerTop;
+@property(nonatomic, strong) UIImageView *dividerBottom;
 @property(nonatomic, strong) UIImageView *profileImageBackground;
 
 @property(nonatomic, strong) AsyncImageView *profileImageView;
@@ -30,7 +31,8 @@
     _answers = @[];
     
     _viewBackground = [self newViewBackground];
-    _divider = [self newDivider];
+    _dividerTop = [self newDivider];
+    _dividerBottom = [self newDivider];
     _profileImageBackground = [self newProfileImageBackground];
     
     _progressView = [self newProgressView];
@@ -103,7 +105,8 @@
   [self addSubview:self.progressView];
   [self addSubview:self.questionLabel];
   [self addSubview:self.nextQuestionButton];
-  [self addSubview:self.divider];
+  [self addSubview:self.dividerTop];
+  [self addSubview:self.dividerBottom];
 }
 
 - (void)loadAnswerButtons {
@@ -123,8 +126,8 @@
   [super updateConstraints];
     
   if (!self.multipleChoiceConstraints) {
-    // --------------TODO rkuhlman : This probably doesn't go here.-----------
     
+    // Constrain Self
     NSDictionary *selfConstraintView =NSDictionaryOfVariableBindings(self);
     
     NSArray *hSelf =
@@ -143,12 +146,28 @@
     [selfConstraints addObjectsFromArray:hSelf];
     [selfConstraints addObjectsFromArray:vSelf];
     [self.superview addConstraints:selfConstraints];
-    //---------------  end doesn't go here -----------------------
     
-    //Multiple Choice View
+    //Constrain Background Image
     self.multipleChoiceConstraints = [NSMutableArray array];
+  
+    NSDictionary *backgroundImageConstraintView = NSDictionaryOfVariableBindings(_viewBackground);
+    
+    NSArray *hBackgroundContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_viewBackground]|"
+                                            options:NSLayoutFormatAlignAllTop
+                                            metrics:nil
+                                              views:backgroundImageConstraintView];
+    NSArray *vBackgroundContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_viewBackground]|"
+                                            options:NSLayoutFormatAlignAllLeft
+                                            metrics:nil
+                                              views:backgroundImageConstraintView];
+    [self.multipleChoiceConstraints addObjectsFromArray:hBackgroundContraints];
+    [self.multipleChoiceConstraints addObjectsFromArray:vBackgroundContraints];
+    
+    //Constrain View Elements
     NSDictionary *multipleChoiceViews = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         _progressView,       @"progressView",
+                                         _progressView,       @"_progressView",
                                          _profileImageView,   @"_profileImageView",
                                          _questionLabel,      @"_questionLabel",
                                          _nextQuestionButton, @"_nextQuestionButton",
@@ -172,18 +191,22 @@
     
     NSLayoutConstraint *hNextButton = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0f constant:-20.0f];
     
-    NSString *quizChoiceVertical = @"V:|-50-[_profileImageView(==120)]-[_questionLabel]-[_answerButtons0(==55)]-[_answerButtons1(==_answerButtons0)]-[_answerButtons2(==_answerButtons0)]-[_answerButtons3(==_answerButtons0)]-[_nextQuestionButton]-|";
+    NSString *quizChoiceVertical = @"V:|[_progressView][_profileImageView(==120)]-[_questionLabel]-[_answerButtons0(==55)]-[_answerButtons1(==_answerButtons0)]-[_answerButtons2(==_answerButtons0)]-[_answerButtons3(==_answerButtons0)]-[_nextQuestionButton]-|";
     NSArray *quizChoiceVerticalConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:quizChoiceVertical
                                             options:0
                                             metrics:nil
                                               views:multipleChoiceViews];
     
+    
     [self.multipleChoiceConstraints addObjectsFromArray:@[centerImageX,imageWidth,centerQuestionX,hNextButton]];
     [self.multipleChoiceConstraints addObjectsFromArray:choiceButtonConstraints];
     [self.multipleChoiceConstraints addObjectsFromArray:quizChoiceVerticalConstraints];
-    [self addConstraints:self.multipleChoiceConstraints];
     
+    //Constrain Profile Image Holder
+    NSDictionary *profileImageConstraintView = NSDictionaryOfVariableBindings(_profileImageBackground);
+    
+    [self addConstraints:self.multipleChoiceConstraints];
   }
 }
 
@@ -236,14 +259,17 @@
 
 - (UIImageView *)newViewBackground{
   UIImageView *background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"quizin_bg"]];
+  [background setTranslatesAutoresizingMaskIntoConstraints:NO];
   return background;
 }
 - (UIImageView *)newDivider{
   UIImageView *divider = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"quizin_divider"]];
+  [divider setTranslatesAutoresizingMaskIntoConstraints:NO];
   return divider;
 }
 - (UIImageView *)newProfileImageBackground{
   UIImageView *profileBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"multiplechoice_pictureholder"]];
+  [profileBackground setTranslatesAutoresizingMaskIntoConstraints:NO];
   return profileBackground;
 }
 
@@ -267,6 +293,7 @@
 - (UILabel *)newQuestionLabel {
   UILabel *questionLabel = [[UILabel alloc] init];
   questionLabel.textAlignment = NSTextAlignmentCenter;
+  questionLabel.backgroundColor = [UIColor clearColor];
   [questionLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   return questionLabel;
 }
