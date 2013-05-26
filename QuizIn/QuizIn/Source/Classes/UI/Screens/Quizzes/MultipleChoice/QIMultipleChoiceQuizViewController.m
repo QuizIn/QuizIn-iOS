@@ -22,8 +22,8 @@
   [super viewDidLoad];
   
   //TODO Cleanup hardcoded test values
-  self.multipleChoiceView.numberOfQuestions = 10;
-  self.multipleChoiceView.quizProgress = 3;
+  self.multipleChoiceView.numberOfQuestions = 11;
+  self.multipleChoiceView.quizProgress = 10;
   self.multipleChoiceView.question = @"Where do I work?";
   self.multipleChoiceView.answers = @[@"National QInstruments",@"Invodo",@"Mutual Mobile",@"Google"];
   [self.multipleChoiceView.progressView.exitButton addTarget:self

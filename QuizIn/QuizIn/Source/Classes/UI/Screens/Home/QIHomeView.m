@@ -3,7 +3,6 @@
 @interface QIHomeView ()
 
 //Connections Quiz Start Area
-
 @property(nonatomic, strong) UIView *connectionsQuizStartView;
 @property(nonatomic, strong) UIImageView *connectionsQuizPaperImage;
 @property(nonatomic, strong) UIImageView *connectionsQuizBinderImage;
@@ -49,7 +48,6 @@
   
   // Construct Connections Quiz Start Area
   [self.connectionsQuizStartView addSubview:self.connectionsQuizPaperImage];
-  //[self.connectionsQuizStartView addSubview:self.connectionsQuizBinderImage];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizTitle];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizNumberOfConnectionsLabel];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizImagePreviewCollection];
@@ -151,9 +149,7 @@
     [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:@[vConstraintsConnectionsQuizPaperImageTop]];
     [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:vConstraintsConnectionsQuizButton];
     [_connectionsQuizStartView addConstraints:self.constraintsForConnectionsQuizStartView];
-    
-    //[self.constraints addObjectsFromArray:@[cn,cn2]];
-    
+
   }
 }
 
@@ -186,7 +182,6 @@
   UILabel *quizConnections = [[UILabel alloc] init];
   quizConnections.text = @"865 Connections";
   quizConnections.backgroundColor = [UIColor clearColor];
-  quizConnections.textColor = [UIColor grayColor];
   [quizConnections setTranslatesAutoresizingMaskIntoConstraints:NO];
   return quizConnections;
 }
@@ -199,14 +194,13 @@
 - (UIButton *)newConnectionsQuizButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setTitle:[self connectionsQuizButtonTitle] forState:UIControlStateNormal];
-  [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] forState:UIControlStateNormal];
+  [button setBackgroundImage:[[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 74, 0, 74)] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   button.backgroundColor = [UIColor clearColor];
   return button;
 }
 - (UIView *)newConnectionsQuizStartView{
   UIView *startView = [[UIView alloc] init];
-  startView.backgroundColor = [UIColor lightGrayColor];
   [startView setTranslatesAutoresizingMaskIntoConstraints:NO];
   return startView;
 }

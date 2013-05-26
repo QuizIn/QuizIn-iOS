@@ -74,7 +74,7 @@
                                               views:selfConstraintView];
     
     NSArray *vSelf =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self(==36)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self(==31)]"
                                             options:0
                                             metrics:nil
                                               views:selfConstraintView];
