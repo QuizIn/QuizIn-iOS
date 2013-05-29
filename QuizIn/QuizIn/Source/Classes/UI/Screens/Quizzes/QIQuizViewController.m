@@ -37,7 +37,6 @@
 
   self.businessCardController = [[QIBusinessCardViewController alloc] init];
   [self addChildViewController:self.businessCardController];
-  
   [self.businessCardController.businessCardQuizView.nextQuestionButton addTarget:self action:@selector(nextPressed1) forControlEvents:UIControlEventTouchUpInside];
   
   [self.view addSubview:self.multipleChoiceController.view];

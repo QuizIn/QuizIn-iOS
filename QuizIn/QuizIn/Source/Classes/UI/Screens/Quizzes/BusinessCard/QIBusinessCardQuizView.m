@@ -16,6 +16,7 @@
 @property(nonatomic, strong) QIBusinessCardAnswerView *answerName;
 @property(nonatomic, strong) QIBusinessCardAnswerView *answerTitle;
 @property(nonatomic, strong) QIBusinessCardAnswerView *answerCompany;
+
 @property(nonatomic, strong) NSMutableArray *cardConstraints;
 @property(nonatomic, strong) NSMutableArray *answerConstraints;
 
@@ -83,6 +84,7 @@
   [self addSubview:self.answerName];
   [self addSubview:self.answerTitle];
   [self addSubview:self.answerCompany];
+  
   [self addSubview:self.nextQuestionButton];
 }
 
