@@ -29,18 +29,31 @@
   [super viewDidLoad];
   // TODO(rcacheaux): Clean up.
   
-  
   self.multipleChoiceController = [[QIMultipleChoiceQuizViewController alloc] init];
   [self addChildViewController:self.multipleChoiceController];
-  //[self.view addSubview:self.multipleChoiceController.view];
-  
+    
   self.matchingController = [[QIMatchingQuizViewController alloc] init];
   [self addChildViewController:self.matchingController];
-  //[self.view addSubview:self.matchingController.view];
-  
+
   self.businessCardController = [[QIBusinessCardViewController alloc] init];
   [self addChildViewController:self.businessCardController];
+  
+  [self.businessCardController.businessCardQuizView.nextQuestionButton addTarget:self action:@selector(nextPressed1) forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.view addSubview:self.multipleChoiceController.view];
+  [self.multipleChoiceController.multipleChoiceView.nextQuestionButton addTarget:self action:@selector(nextPressed) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)nextPressed{
+  [self.multipleChoiceController.view removeFromSuperview];
+  [self.multipleChoiceController removeFromParentViewController];
   [self.view addSubview:self.businessCardController.view];
+}
+
+- (void)nextPressed1{
+  [self.businessCardController.view removeFromSuperview];
+  [self.businessCardController removeFromParentViewController];
+  [self.view addSubview:self.matchingController.view];
 }
 
 - (void)viewWillLayoutSubviews {

@@ -1,5 +1,6 @@
 #import "QIMultipleChoiceQuizView.h"
 #import "AsyncImageView.h"
+#import "QIFontProvider.h"
 
 @interface QIMultipleChoiceQuizView ()
 
@@ -299,7 +300,7 @@
   UILabel *questionLabel = [[UILabel alloc] init];
   questionLabel.textAlignment = NSTextAlignmentCenter;
   questionLabel.backgroundColor = [UIColor clearColor];
-  questionLabel.font = [UIFont fontWithName:@"Tahoma-Bold" size:15.0f];
+  questionLabel.font = [QIFontProvider fontWithSize:15.0f style:Bold];
   questionLabel.adjustsFontSizeToFitWidth = YES;
   questionLabel.textColor = [UIColor colorWithWhite:0.33f alpha:1.0f];
   [questionLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -309,7 +310,7 @@
 - (UIButton *)newAnswerButtonWithTitle:(NSString *)title {
   UIButton *answerButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [answerButton setTitle:title forState:UIControlStateNormal];
-  answerButton.titleLabel.font = [UIFont fontWithName:@"Tahoma-Bold" size:18.0f];
+  answerButton.titleLabel.font = [QIFontProvider fontWithSize:16.0f style:Bold];
   answerButton.titleLabel.adjustsFontSizeToFitWidth = YES;
   answerButton.titleLabel.adjustsLetterSpacingToFitWidth = YES;
   [answerButton setTitleColor:[UIColor colorWithWhite:0.33f alpha:1.0f] forState:UIControlStateNormal];
@@ -331,7 +332,7 @@
   //[nextQuestionButton setBackgroundImage:[[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 74, 0, 74)] forState:UIControlStateNormal];
   [nextQuestionButton setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] forState:UIControlStateNormal];
 
-  [nextQuestionButton.titleLabel setFont:[UIFont fontWithName:@"Tahoma" size:16.0f]];
+  [nextQuestionButton.titleLabel setFont:[QIFontProvider fontWithSize:16.0f style:Regular]];
   [nextQuestionButton setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
   [nextQuestionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   return nextQuestionButton;

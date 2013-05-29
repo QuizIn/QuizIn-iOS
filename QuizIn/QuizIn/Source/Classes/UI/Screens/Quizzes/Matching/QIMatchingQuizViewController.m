@@ -7,11 +7,9 @@
 //
 
 #import "QIMatchingQuizViewController.h"
-#import "QIMatchingQuizView.h"
-
 
 @interface QIMatchingQuizViewController ()
-@property(nonatomic, strong, readonly) QIMatchingQuizView *matchingQuizView;
+
 @end
 
 @implementation QIMatchingQuizViewController

@@ -3,7 +3,9 @@
 
 @interface QIMatchingQuizView ()
 
+@property(nonatomic, strong) UIView *questionView;
 @property(nonatomic, strong) NSArray *questionButtons;
+@property(nonatomic, strong) UIView *answerView;
 @property(nonatomic, strong) NSArray *answerButtons;
 @property(nonatomic, strong) UIButton *nextQuestionButton;
 
@@ -25,6 +27,8 @@
   if (self) {
     
     _progressView = [self newProgressView];
+    _questionView = [self newQuestionView];
+    _answerView = [self newAnswerView];
     _answerButtons = @[];
     _questionButtons = @[];
     _nextQuestionButton = [self newNextQuestionButton];
@@ -88,20 +92,24 @@
 - (void)constructViewHierarchy {
   
   [self addSubview:_progressView];
+  [self addSubview:_answerView];
+  [self addSubview:_questionView];
+ 
   [self addSubview:self.nextQuestionButton];
-}
-
-- (void)loadAnswerButtons{
-  for (UIButton *button in self.answerButtons) {
-    [self addSubview:button];
-  }
 }
 
 - (void)loadQuestionButtons{
   for (UIButton *button in self.questionButtons) {
-    [self addSubview:button];
+    [_questionView addSubview:button];
   }
 }
+
+- (void)loadAnswerButtons{
+  for (UIButton *button in self.answerButtons) {
+    [_answerView addSubview:button];
+  }
+}
+
 
 #pragma mark Layout
 
@@ -114,8 +122,8 @@
   [super updateConstraints];
   
   if (!self.questionConstraints) {
-    // --------------TODO rkuhlman : This probably doesn't go here.-----------
-    
+   
+    //Constrain Self
     NSDictionary *selfConstraintView = NSDictionaryOfVariableBindings(self);
     
     NSArray *hSelf =
@@ -135,10 +143,8 @@
     [selfConstraints addObjectsFromArray:vSelf];
     [self.superview addConstraints:selfConstraints];
     
-    //---------------  end doesn't go here -----------------------
-    
+    //Constrain Progress View
     self.progressViewConstraints = [NSMutableArray array];
-    
     
     NSDictionary *progressView = NSDictionaryOfVariableBindings(_progressView);
     
@@ -159,29 +165,45 @@
     [self.progressViewConstraints addObjectsFromArray:vProgressViewConstraints];
     [self.progressViewConstraints addObjectsFromArray:hProgressViewConstraints];
     
+    //Constrain Question and Answer Container Views
+    self.questionConstraints = [NSMutableArray array];
+    self.answerConstraints = [NSMutableArray array];
     
-    NSDictionary *buttonViews = [NSDictionary dictionaryWithObjectsAndKeys:
+    NSDictionary *questionAnswerViews = NSDictionaryOfVariableBindings(_progressView,_questionView,_answerView);
+    
+    NSString *hQuestionView = @"H:|[_questionView]|";
+    NSArray *hQuestionViewConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:hQuestionView
+                                            options:NSLayoutFormatAlignAllTop
+                                            metrics:nil
+                                              views:questionAnswerViews];
+    
+    NSString *hAnswerView = @"H:|[_answerView]|";
+    NSArray *hAnswerViewConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:hAnswerView
+                                            options:NSLayoutFormatAlignAllBaseline
+                                            metrics:nil
+                                              views:questionAnswerViews];
+    
+    NSString *vQuestionAnswerView = @"V:[_progressView][_questionView][_answerView(==_questionView)]|";
+    NSArray *vQuestionAnswerViewConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:vQuestionAnswerView
+                                            options:0
+                                            metrics:nil
+                                              views:questionAnswerViews];
+    
+    [self.questionConstraints addObjectsFromArray:hQuestionViewConstraints];
+    [self.answerConstraints addObjectsFromArray:hAnswerViewConstraints];
+    [self.answerConstraints addObjectsFromArray:vQuestionAnswerViewConstraints];
+   
+    //Constrain Question View
+    NSDictionary *questionButtonViews = [NSDictionary dictionaryWithObjectsAndKeys:
                                  _progressView,         @"_progressView",
                                  _questionButtons[0],   @"_questionButtons0",
                                  _questionButtons[1],   @"_questionButtons1",
                                  _questionButtons[2],   @"_questionButtons2",
                                  _questionButtons[3],   @"_questionButtons3",
-                                 _answerButtons[0],   @"_answerButtons0",
-                                 _answerButtons[1],   @"_answerButtons1",
-                                 _answerButtons[2],   @"_answerButtons2",
-                                 _answerButtons[3],   @"_answerButtons3",
-                                 _nextQuestionButton, @"_nextQuestionButton",
                                          nil];
-    
-    self.answerConstraints = [NSMutableArray array];
-    
-    for (UIButton *button in self.answerButtons){
-      [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-      
-      [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
-    }
-    
-    self.questionConstraints = [NSMutableArray array];
     
     for (UIButton *button in self.questionButtons){
       [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
@@ -189,26 +211,50 @@
       [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
     }
     
-    NSString *vButtonsView = @"V:[_progressView]-[_questionButtons0]-[_questionButtons1(==_questionButtons0)]-[_questionButtons2(==_questionButtons0)]-[_questionButtons3(==_questionButtons0)]-[_answerButtons0(==_questionButtons0)]-[_answerButtons1(==_questionButtons0)]-[_answerButtons2(==_questionButtons0)]-[_answerButtons3(==_questionButtons0)]-[_nextQuestionButton(==_questionButtons0)]-|";
+    NSString *vQuestionButtonsView = @"V:|-[_questionButtons0]-[_questionButtons1(==_questionButtons0)]-[_questionButtons2(==_questionButtons0)]-[_questionButtons3(==_questionButtons0)]-|";
     
-    NSArray *vButtonConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:vButtonsView
+    NSArray *vQuestionButtonsConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:vQuestionButtonsView
                                             options:0
                                             metrics:nil
-                                              views:buttonViews];
+                                              views:questionButtonViews];
     
-    [self.questionConstraints addObjectsFromArray:vButtonConstraints];
+    [self.questionConstraints addObjectsFromArray:vQuestionButtonsConstraints];
+    
+    //Constrain Answer View
+    NSDictionary *answerButtonViews = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         _answerButtons[0],   @"_answerButtons0",
+                                         _answerButtons[1],   @"_answerButtons1",
+                                         _answerButtons[2],   @"_answerButtons2",
+                                         _answerButtons[3],   @"_answerButtons3",
+                                         _nextQuestionButton, @"_nextQuestionButton",
+                                         nil];
+
+    for (UIButton *button in self.answerButtons){
+      [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+      
+      [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
+    }
+    
+    NSString *vAnswerButtonsView = @"V:|-[_answerButtons0(==_answerButtons0)]-[_answerButtons1(==_answerButtons0)]-[_answerButtons2(==_answerButtons0)]-[_answerButtons3(==_answerButtons0)]-[_nextQuestionButton(==_answerButtons0)]-|";
+    
+    NSArray *vAnswerButtonConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:vAnswerButtonsView
+                                            options:0
+                                            metrics:nil
+                                              views:answerButtonViews];
+    
+    [self.answerConstraints addObjectsFromArray:vAnswerButtonConstraints];
     
     NSArray *hNextButtonConstraint =
     [NSLayoutConstraint constraintsWithVisualFormat:@"[_nextQuestionButton]-|"
                                             options:NSLayoutFormatAlignAllBaseline
                                             metrics:nil
-                                              views:buttonViews];
+                                              views:answerButtonViews];
 
     
     [self.answerConstraints addObjectsFromArray:hNextButtonConstraint];
 
-    
     [self addConstraints:self.progressViewConstraints];
     [self addConstraints:self.answerConstraints];
     [self addConstraints:self.questionConstraints];
@@ -259,6 +305,20 @@
   progressView.numberOfQuestions = _numberOfQuestions;
   progressView.quizProgress = _quizProgress;
   return progressView;
+}
+
+- (UIView *)newQuestionView{
+  UIView *questionView = [[UIView alloc] init];
+  [questionView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [questionView setBackgroundColor:[UIColor grayColor]];
+  return questionView;
+}
+
+- (UIView *)newAnswerView{
+  UIView *answerView = [[UIView alloc] init];
+  [answerView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [answerView setBackgroundColor:[UIColor lightGrayColor]];
+  return answerView;
 }
 
 - (AsyncImageView *)newProfileImageView {

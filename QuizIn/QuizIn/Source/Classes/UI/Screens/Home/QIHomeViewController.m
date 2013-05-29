@@ -40,7 +40,8 @@
 #pragma mark Actions
 
 - (void)startConnectionsQuiz:(id)sender {
-  [self presentViewController:[self newQuizViewController] animated:YES completion:nil];
+  QIQuizViewController *quizViewController = [self newQuizViewController];
+  [self presentViewController:quizViewController animated:YES completion:nil];
 }
 
 #pragma mark Strings

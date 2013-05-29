@@ -28,6 +28,7 @@
 	<array>
 		<string>Tahoma.ttf</string>
 		<string>tahomabd.ttf</string>
+		<string>Tahoma Faux Italic.ttf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

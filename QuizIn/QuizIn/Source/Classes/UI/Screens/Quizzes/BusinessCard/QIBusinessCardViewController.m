@@ -1,8 +1,7 @@
 #import "QIBusinessCardViewController.h"
-#import "QIBusinessCardQuizView.h"
+
 
 @interface QIBusinessCardViewController ()
-@property(nonatomic, strong, readonly) QIBusinessCardQuizView *businessCardQuizView;
 
 @end
 

@@ -1,8 +1,7 @@
 #import "QIMultipleChoiceQuizViewController.h"
-#import "QIMultipleChoiceQuizView.h"
 
 @interface QIMultipleChoiceQuizViewController ()
-@property(nonatomic, strong, readonly) QIMultipleChoiceQuizView *multipleChoiceView;
+
 @end
 
 @implementation QIMultipleChoiceQuizViewController
@@ -44,7 +43,7 @@
   NSLog(@"User Closed Quiz");
 }
 - (void)userDidPressNext{
-   NSLog(@"User hit next");
+  NSLog(@"userHit Next");
 }
 
 #pragma mark Properties

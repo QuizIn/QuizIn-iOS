@@ -24,6 +24,7 @@
       _progressLabel = [self newProgressLabel];
       _progressView = [self newProgressView];
       _exitButton = [self newExitButton];
+      //[self setBackgroundColor:[UIColor colorWithWhite:.90f alpha:1.0]];
       [self constructViewHierarchy];
     }
     return self;

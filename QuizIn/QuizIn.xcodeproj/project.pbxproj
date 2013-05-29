@@ -14,6 +14,9 @@
 		340896BE1751712900398230 /* progressView_tracker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 340896BC1751712500398230 /* progressView_tracker@2x.png */; };
 		340896C1175175ED00398230 /* progressView_progress.png in Resources */ = {isa = PBXBuildFile; fileRef = 340896BF175175EC00398230 /* progressView_progress.png */; };
 		340896C2175175ED00398230 /* progressView_progress@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 340896C0175175EC00398230 /* progressView_progress@2x.png */; };
+		3429135C1753AAC60056ACCD /* Tahoma Faux Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3429135B1753AAC60056ACCD /* Tahoma Faux Italic.ttf */; };
+		342913601753AC780056ACCD /* QIFontProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 3429135F1753AC780056ACCD /* QIFontProvider.m */; };
+		342913641753E5340056ACCD /* QIBusinessCardAnswerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342913631753E5340056ACCD /* QIBusinessCardAnswerView.m */; };
 		347800051750EFC1002B29DB /* cardquiz_answerholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFB11750EFC1002B29DB /* cardquiz_answerholder.png */; };
 		347800061750EFC1002B29DB /* cardquiz_answerholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFB21750EFC1002B29DB /* cardquiz_answerholder@2x.png */; };
 		347800071750EFC1002B29DB /* cardquiz_businesscard.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFB31750EFC1002B29DB /* cardquiz_businesscard.png */; };
@@ -143,6 +146,11 @@
 		340896BC1751712500398230 /* progressView_tracker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progressView_tracker@2x.png"; sourceTree = "<group>"; };
 		340896BF175175EC00398230 /* progressView_progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressView_progress.png; sourceTree = "<group>"; };
 		340896C0175175EC00398230 /* progressView_progress@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progressView_progress@2x.png"; sourceTree = "<group>"; };
+		3429135B1753AAC60056ACCD /* Tahoma Faux Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tahoma Faux Italic.ttf"; sourceTree = "<group>"; };
+		3429135E1753AC780056ACCD /* QIFontProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIFontProvider.h; sourceTree = "<group>"; };
+		3429135F1753AC780056ACCD /* QIFontProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIFontProvider.m; sourceTree = "<group>"; };
+		342913621753E5340056ACCD /* QIBusinessCardAnswerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardAnswerView.h; sourceTree = "<group>"; };
+		342913631753E5340056ACCD /* QIBusinessCardAnswerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardAnswerView.m; sourceTree = "<group>"; };
 		347800001750EFC1002B29DB /* quizin_divider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quizin_divider@2x.png"; sourceTree = "<group>"; };
 		347800011750EFC1002B29DB /* quizin_exit_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quizin_exit_btn.png; sourceTree = "<group>"; };
 		347800021750EFC1002B29DB /* quizin_exit_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quizin_exit_btn@2x.png"; sourceTree = "<group>"; };
@@ -319,10 +327,29 @@
 		340896B617513D4D00398230 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				3429135B1753AAC60056ACCD /* Tahoma Faux Italic.ttf */,
 				340896B91751443800398230 /* tahomabd.ttf */,
 				340896B717513D4D00398230 /* Tahoma.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		3429135D1753AC580056ACCD /* FontProvider */ = {
+			isa = PBXGroup;
+			children = (
+				3429135E1753AC780056ACCD /* QIFontProvider.h */,
+				3429135F1753AC780056ACCD /* QIFontProvider.m */,
+			);
+			path = FontProvider;
+			sourceTree = "<group>";
+		};
+		342913611753E4BF0056ACCD /* BusinessCardAnswer */ = {
+			isa = PBXGroup;
+			children = (
+				342913621753E5340056ACCD /* QIBusinessCardAnswerView.h */,
+				342913631753E5340056ACCD /* QIBusinessCardAnswerView.m */,
+			);
+			path = BusinessCardAnswer;
 			sourceTree = "<group>";
 		};
 		3478FF9B173EE193002B29DB /* Documents */ = {
@@ -336,6 +363,7 @@
 		3478FFA0173EE7CC002B29DB /* Helper Functions */ = {
 			isa = PBXGroup;
 			children = (
+				3429135D1753AC580056ACCD /* FontProvider */,
 				3478FFA1173EE7CD002B29DB /* AsyncImageView */,
 			);
 			path = "Helper Functions";
@@ -730,6 +758,7 @@
 		8886799B172DAFC700DCE3D0 /* BusinessCard */ = {
 			isa = PBXGroup;
 			children = (
+				342913611753E4BF0056ACCD /* BusinessCardAnswer */,
 				34F01A34172DB2F60056A76A /* QIBusinessCardViewController.h */,
 				34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */,
 				34F01A32172DB2F60056A76A /* QIBusinessCardQuizView.h */,
@@ -897,6 +926,7 @@
 				340896BE1751712900398230 /* progressView_tracker@2x.png in Resources */,
 				340896C1175175ED00398230 /* progressView_progress.png in Resources */,
 				340896C2175175ED00398230 /* progressView_progress@2x.png in Resources */,
+				3429135C1753AAC60056ACCD /* Tahoma Faux Italic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -973,6 +1003,8 @@
 				3478FFA8173FD747002B29DB /* QIProgressView.m in Sources */,
 				3478FFAC1747C19D002B29DB /* QIMatchingQuizViewController.m in Sources */,
 				3478FFAF1747C1C7002B29DB /* QIMatchingQuizView.m in Sources */,
+				342913601753AC780056ACCD /* QIFontProvider.m in Sources */,
+				342913641753E5340056ACCD /* QIBusinessCardAnswerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

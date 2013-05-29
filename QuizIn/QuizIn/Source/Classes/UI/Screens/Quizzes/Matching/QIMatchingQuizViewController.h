@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QIMatchingQuizView.h"
 
 @interface QIMatchingQuizViewController : UIViewController
+
+@property(nonatomic, strong, readonly) QIMatchingQuizView *matchingQuizView;
 
 @end
