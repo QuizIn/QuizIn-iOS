@@ -159,7 +159,7 @@
 
     [self.scrollViewConstraints addObjectsFromArray:@[vAnswerWidth,vAnswer1Width,vAnswer2Width]];
     
-    float widthMultiplierSpacers = 56.0f / 566.0f;
+    float widthMultiplierSpacers = 57.0f / 566.0f;
     
     for (UIView *spacer in self.spacers){
       [self.scrollViewConstraints addObject:[NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeWidth multiplier:widthMultiplierSpacers constant:0.0f]];
@@ -218,8 +218,8 @@
   UILabel *answer = [[UILabel alloc] init];
   [answer setTranslatesAutoresizingMaskIntoConstraints:NO];
   [answer setBackgroundColor:[UIColor clearColor]];
-  [answer setFont:[QIFontProvider fontWithSize:20.0f style:Regular]];
-  [answer setTextColor:[UIColor colorWithWhite:.50f alpha:1.0f]];
+  [answer setFont:[QIFontProvider fontWithSize:20.0f style:Bold]];
+  [answer setTextColor:[UIColor colorWithWhite:.33f alpha:1.0f]];
   
   //NSAttributedString *string = [[NSAttributedString alloc] initWithString:@"trest" attributes:<#(NSDictionary *)#>
   [answer setAdjustsLetterSpacingToFitWidth:YES];
