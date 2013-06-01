@@ -1,6 +1,5 @@
 #import "QIBusinessCardQuizView.h"
 #import "AsyncImageView.h"
-#import "BusinessCardAnswer/QIBusinessCardAnswerView.h"
 #import "QIFontProvider.h"
 
 @interface QIBusinessCardQuizView ()
@@ -13,9 +12,6 @@
 @property(nonatomic, strong) UILabel *cardLastName;
 @property(nonatomic, strong) UILabel *cardTitle;
 @property(nonatomic, strong) UILabel *cardCompany;
-@property(nonatomic, strong) QIBusinessCardAnswerView *answerName;
-@property(nonatomic, strong) QIBusinessCardAnswerView *answerTitle;
-@property(nonatomic, strong) QIBusinessCardAnswerView *answerCompany;
 
 @property(nonatomic, strong) NSMutableArray *cardConstraints;
 @property(nonatomic, strong) NSMutableArray *answerConstraints;
@@ -302,7 +298,7 @@
       [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
     }
     
-    NSString *vNextButton = @"V:[_answerCompany][_nextQuestionButton(>=40)]-3-|";
+    NSString *vNextButton = @"V:[_nextQuestionButton(>=40)]-3-|";
     NSArray *vNextButtonConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vNextButton
                                             options:0

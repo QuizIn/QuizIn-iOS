@@ -10,4 +10,6 @@
 
 @interface QIBusinessCardAnswerView : UIView
 
+- (void)reconstrainScrollView;
+
 @end
