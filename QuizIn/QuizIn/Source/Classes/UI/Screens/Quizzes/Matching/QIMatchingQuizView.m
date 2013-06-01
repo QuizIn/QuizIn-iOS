@@ -205,21 +205,44 @@
                                  _questionButtons[3],   @"_questionButtons3",
                                          nil];
     
-    for (UIButton *button in self.questionButtons){
+    /*for (UIButton *button in self.questionButtons){
       [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
       
       [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
-    }
+    }*/
     
-    NSString *vQuestionButtonsView = @"V:|-[_questionButtons0]-[_questionButtons1(==_questionButtons0)]-[_questionButtons2(==_questionButtons0)]-[_questionButtons3(==_questionButtons0)]-|";
-    
-    NSArray *vQuestionButtonsConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:vQuestionButtonsView
-                                            options:0
+    NSString *vLeftQuestionButtonsView = @"V:|-[_questionButtons0]-[_questionButtons2(==_questionButtons0)]-|";
+    NSArray *vLeftQuestionButtonsConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:vLeftQuestionButtonsView
+                                            options:NSLayoutFormatAlignAllLeft
                                             metrics:nil
                                               views:questionButtonViews];
     
-    [self.questionConstraints addObjectsFromArray:vQuestionButtonsConstraints];
+    NSString *vRightQuestionButtonsView = @"V:|-[_questionButtons1]-[_questionButtons3(==_questionButtons0)]-|";
+    NSArray *vRightQuestionButtonsConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:vRightQuestionButtonsView
+                                            options:NSLayoutFormatAlignAllRight
+                                            metrics:nil
+                                              views:questionButtonViews];
+    
+    NSString *vTopQuestionButtonsView = @"H:|-[_questionButtons0]-[_questionButtons1(==_questionButtons0)]-|";
+    NSArray *vTopQuestionButtonsConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:vTopQuestionButtonsView
+                                            options:NSLayoutFormatAlignAllTop
+                                            metrics:nil
+                                              views:questionButtonViews];
+    
+    NSString *vBottomQuestionButtonsView = @"H:|-[_questionButtons2]-[_questionButtons3(==_questionButtons0)]-|";
+    NSArray *vBottomQuestionButtonsConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:vBottomQuestionButtonsView
+                                            options:NSLayoutFormatAlignAllBaseline
+                                            metrics:nil
+                                              views:questionButtonViews];
+    
+    [self.questionConstraints addObjectsFromArray:vLeftQuestionButtonsConstraints];
+    [self.questionConstraints addObjectsFromArray:vRightQuestionButtonsConstraints];
+    [self.questionConstraints addObjectsFromArray:vTopQuestionButtonsConstraints];
+    [self.questionConstraints addObjectsFromArray:vBottomQuestionButtonsConstraints];
     
     //Constrain Answer View
     NSDictionary *answerButtonViews = [NSDictionary dictionaryWithObjectsAndKeys:

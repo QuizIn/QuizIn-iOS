@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface QIBusinessCardAnswerView : UIView
+@property(nonatomic, copy) NSArray *answers;
 
 - (void)reconstrainScrollView;
 

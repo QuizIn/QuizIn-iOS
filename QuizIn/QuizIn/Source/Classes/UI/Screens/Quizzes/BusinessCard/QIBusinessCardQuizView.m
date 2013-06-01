@@ -8,6 +8,7 @@
 @property(nonatomic, strong) UIView *businessCardView;
 @property(nonatomic, strong) UIImageView *businessCardBackground;
 @property(nonatomic, strong) AsyncImageView *profileImageView;
+@property(nonatomic, strong) UIView *answerSuperView;
 @property(nonatomic, strong) UILabel *cardFirstName;
 @property(nonatomic, strong) UILabel *cardLastName;
 @property(nonatomic, strong) UILabel *cardTitle;
@@ -38,6 +39,7 @@
     _cardLastName = [self newCardLastName];
     _cardTitle = [self newCardTitle];
     _cardCompany = [self newCardCompany];
+    _answerSuperView = [self newAnswerSuperView];
     _answerName = [self newAnswerView];
     _answerTitle = [self newAnswerView];
     _answerCompany = [self newAnswerView];
@@ -77,10 +79,12 @@
   [_businessCardView addSubview:self.cardCompany];
   
   [self addSubview:_businessCardView];
-  [self addSubview:self.answerName];
-  [self addSubview:self.answerTitle];
-  [self addSubview:self.answerCompany];
   
+  [_answerSuperView addSubview:self.answerName];
+  [_answerSuperView addSubview:self.answerTitle];
+  [_answerSuperView addSubview:self.answerCompany];
+  
+  [self addSubview:self.answerSuperView];
   [self addSubview:self.nextQuestionButton];
 }
 
@@ -196,7 +200,7 @@
     
     [self.cardConstraints addObjectsFromArray:@[hCardBackgroundCenter,vCardBackgroundCenter,CardBackgroundHeight,CardBackgroundWidth]];
     
-    //Business Card Elements
+    //Constrain Business Card Elements
     NSDictionary *cardViews = NSDictionaryOfVariableBindings(_businessCardBackground,
                                                              _profileImageView,
                                                              _cardFirstName,
@@ -278,14 +282,30 @@
     [self.cardConstraints addObjectsFromArray:vCardTitleConstraints];
     [self.cardConstraints addObjectsFromArray:hCardTitleConstraints];
     
+    //Constrain Answers
     self.answerConstraints = [NSMutableArray array];
     NSDictionary *answerViews = NSDictionaryOfVariableBindings(_businessCardView,
+                                                               _answerSuperView,
                                                                _answerName,
                                                                _answerTitle,
                                                                _answerCompany,
                                                                _nextQuestionButton);
-
-    NSString *vAnswerViews = @"V:[_businessCardView][_answerName]-[_answerTitle(==_answerName)]-[_answerCompany(==_answerName)]";
+    
+    NSString *vAnswerSuperView = @"V:[_businessCardView][_answerSuperView][_nextQuestionButton]";
+    NSArray *vAnswerSuperViewConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:vAnswerSuperView
+                                            options:0
+                                            metrics:nil
+                                              views:answerViews];
+    
+    NSString *hAnswerSuperView = @"H:|[_answerSuperView]|";
+    NSArray *hAnswerSuperViewConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:hAnswerSuperView
+                                            options:0
+                                            metrics:nil
+                                              views:answerViews];
+    
+    NSString *vAnswerViews = @"V:|[_answerName]-[_answerTitle(==_answerName)]-[_answerCompany(==_answerName)]|";
     NSArray *vAnswerViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vAnswerViews
                                             options:NSLayoutFormatAlignAllCenterX
@@ -298,7 +318,7 @@
       [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
     }
     
-    NSString *vNextButton = @"V:[_nextQuestionButton(>=40)]-3-|";
+    NSString *vNextButton = @"V:[_nextQuestionButton(==54)]-3-|";
     NSArray *vNextButtonConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vNextButton
                                             options:0
@@ -307,9 +327,13 @@
 
     NSLayoutConstraint *hNextButton = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0f constant:-10.0f];
     
+    NSLayoutConstraint *nextButtonWidth = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0f constant:150.0f];
+    
+    [self.answerConstraints addObjectsFromArray:vAnswerSuperViewConstraints];
+    [self.answerConstraints addObjectsFromArray:hAnswerSuperViewConstraints];
     [self.answerConstraints addObjectsFromArray:vAnswerViewConstraints];
     [self.answerConstraints addObjectsFromArray:vNextButtonConstraints];
-    [self.answerConstraints addObjectsFromArray:@[hNextButton]];
+    [self.answerConstraints addObjectsFromArray:@[hNextButton,nextButtonWidth]];
   
     [self addConstraints:self.cardConstraints];
     [self addConstraints:self.answerConstraints];
@@ -409,7 +433,6 @@
   [cardTitle setAdjustsFontSizeToFitWidth:YES];
   [cardTitle setMinimumScaleFactor:.8f];
   [cardTitle setLineBreakMode:NSLineBreakByTruncatingMiddle];
-
   return cardTitle;
 }
 -(UILabel *)newCardCompany{
@@ -425,6 +448,13 @@
   [cardCompany setLineBreakMode:NSLineBreakByTruncatingMiddle];
   return cardCompany;
 }
+
+-(UIView *)newAnswerSuperView{
+  UIView *answerView = [[UIView alloc] init];
+  [answerView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return answerView;
+}
+
 -(QIBusinessCardAnswerView *)newAnswerView{
   QIBusinessCardAnswerView *answerView = [[QIBusinessCardAnswerView alloc] init];
   //[answerName setBackgroundColor:[UIColor grayColor]];

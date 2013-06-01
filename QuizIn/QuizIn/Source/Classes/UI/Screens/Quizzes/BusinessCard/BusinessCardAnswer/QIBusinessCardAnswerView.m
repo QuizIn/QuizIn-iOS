@@ -13,9 +13,11 @@
 
 @property(nonatomic, strong) UIImageView *answerHolder;
 @property(nonatomic, strong) UIScrollView *answerScrollView;
-@property(nonatomic, strong) UILabel *answers;
-@property(nonatomic, strong) UILabel *answers1;
-@property(nonatomic, strong) UILabel *answers2;
+@property(nonatomic, strong) UILabel *answer;
+@property(nonatomic, strong) UILabel *answer1;
+@property(nonatomic, strong) UILabel *answer2;
+@property(nonatomic, strong) NSArray *spacers;
+
 @property(nonatomic, strong) NSMutableArray *answerViewConstraints;
 @property(nonatomic, strong) NSMutableArray *scrollViewConstraints;
 
@@ -33,32 +35,37 @@
   if (self) {
     _answerHolder = [self newAnswerHolder];
     _answerScrollView = [self newAnswerScrollView];
-    _answers = [self newAnswers];
-    _answers1 = [self newAnswers];
-    _answers2 = [self newAnswers];
-    //[self setBackgroundColor:[UIColor colorWithWhite:.90f alpha:1.0]];
+    _answer = [self newAnswer];
+    _answer1 = [self newAnswer];
+    _answer2 = [self newAnswer];
+    _spacers = [self newSpacers];
     [self constructViewHierarchy];
   }
   return self;
 }
 
 #pragma mark Properties
-/*
-- (void)setQuizProgress:(NSUInteger)quizProgress {
-  _quizProgress = quizProgress;
-  [self updateProgress];
+
+- (void)setAnswers:(NSArray *)answers {
+  if ([answers isEqualToArray:_answers]) {
+    return;
+  }
+  _answers = [answers copy];
+  [self updateAnswers];
 }
-*/
 
 #pragma mark View Hierarchy
 
 - (void)constructViewHierarchy {
-  [_answerScrollView addSubview:_answers];
-  [_answerScrollView addSubview:_answers1];
-  [_answerScrollView addSubview:_answers2];
+  [_answerScrollView addSubview:_answer];
+  [_answerScrollView addSubview:_answer1];
+  [_answerScrollView addSubview:_answer2];
+  
+  for (UIView *spacer in self.spacers){
+    [_answerScrollView addSubview:spacer];
+  }
   [self addSubview:self.answerScrollView];
   [self addSubview:self.answerHolder];
-  
 }
 
 #pragma mark Layout
@@ -68,7 +75,21 @@
   if (!self.answerViewConstraints){
     
     self.answerViewConstraints = [NSMutableArray array];
-    NSDictionary *answerHolderConstraintViews = NSDictionaryOfVariableBindings(_answerHolder,_answerScrollView,_answers,_answers1,_answers2);
+    
+    NSDictionary *answerHolderConstraintViews  = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         _answerHolder,       @"_answerHolder",
+                                         _answerScrollView,   @"_answerScrollView",
+                                         _answer,             @"_answer",
+                                         _answer1,            @"_answer1",
+                                         _answer2,            @"_answer2",
+                                         _spacers[0],         @"_spacers0",
+                                         _spacers[1],         @"_spacers1",
+                                         _spacers[2],         @"_spacers2",
+                                         _spacers[3],         @"_spacers3",
+                                         _spacers[4],         @"_spacers4",
+                                         _spacers[5],         @"_spacers5",
+                                         nil];
+   // NSDictionary *answerHolderConstraintViews = NSDictionaryOfVariableBindings(_answerHolder,_answerScrollView,_answer,_answer1,_answer2);
     
     //Constrain answer holder image
     NSArray *hAnswerHolder =
@@ -87,7 +108,7 @@
     [self.answerViewConstraints addObjectsFromArray:vAnswerHolder];
     
     //Constrain answer Scroll View
-    float widthMultiplier = 546.0f / 566.0f;
+    float widthMultiplier = 544.0f / 566.0f;
     float heightMultiplier = 96.0f / 136.0f;
     
     NSLayoutConstraint *widthScrollView =
@@ -107,41 +128,66 @@
     //Constrain Answers
     self.scrollViewConstraints = [NSMutableArray array];
     
-    NSLayoutConstraint *vAnswers =
-    [NSLayoutConstraint constraintWithItem:_answers attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *vAnswer =
+    [NSLayoutConstraint constraintWithItem:_answer attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
     
-    NSLayoutConstraint *vAnswers1 =
-    [NSLayoutConstraint constraintWithItem:_answers1 attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *vAnswer1 =
+    [NSLayoutConstraint constraintWithItem:_answer1 attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
 
-    NSLayoutConstraint *vAnswers2 =
-    [NSLayoutConstraint constraintWithItem:_answers2 attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *vAnswer2 =
+    [NSLayoutConstraint constraintWithItem:_answer2 attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
     
-    NSLayoutConstraint *vAnswersHeight =
-    [NSLayoutConstraint constraintWithItem:_answers attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *vAnswerHeight =
+    [NSLayoutConstraint constraintWithItem:_answer attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f];
     
-    NSLayoutConstraint *vAnswers1Height =
-    [NSLayoutConstraint constraintWithItem:_answers1 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *vAnswer1Height =
+    [NSLayoutConstraint constraintWithItem:_answer1 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f];
     
-    NSLayoutConstraint *vAnswers2Height =
-    [NSLayoutConstraint constraintWithItem:_answers2 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *vAnswer2Height =
+    [NSLayoutConstraint constraintWithItem:_answer2 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f];
 
+    float widthMultiplierLabels = 454.0f / 566.0f;
+   
+    NSLayoutConstraint *vAnswerWidth =
+    [NSLayoutConstraint constraintWithItem:_answer attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeWidth multiplier:widthMultiplierLabels constant:0.0f];
+    
+    NSLayoutConstraint *vAnswer1Width =
+    [NSLayoutConstraint constraintWithItem:_answer1 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeWidth multiplier:widthMultiplierLabels constant:0.0f];
+    
+    NSLayoutConstraint *vAnswer2Width =
+    [NSLayoutConstraint constraintWithItem:_answer2 attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeWidth multiplier:widthMultiplierLabels constant:0.0f];
+
+    [self.scrollViewConstraints addObjectsFromArray:@[vAnswerWidth,vAnswer1Width,vAnswer2Width]];
+    
+    float widthMultiplierSpacers = 56.0f / 566.0f;
+    
+    for (UIView *spacer in self.spacers){
+      [self.scrollViewConstraints addObject:[NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeWidth multiplier:widthMultiplierSpacers constant:0.0f]];
+    }
+  
     NSArray *hNames =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_answers(==_answerScrollView)][_answers1(==_answers)][_answers2(==_answers)]|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_spacers0][_answer][_spacers1][_spacers2][_answer1][_spacers3][_spacers4][_answer2][_spacers5]|"
                                             options:NSLayoutFormatAlignAllTop
                                             metrics:nil
                                               views:answerHolderConstraintViews];
     
-    [self.scrollViewConstraints addObjectsFromArray:@[vAnswers,vAnswers1,vAnswers2,vAnswersHeight,vAnswers1Height,vAnswers2Height]];
+    [self.scrollViewConstraints addObjectsFromArray:@[vAnswer,vAnswer1,vAnswer2,vAnswerHeight,vAnswer1Height,vAnswer2Height]];
     [self.scrollViewConstraints addObjectsFromArray:hNames];
     
     [_answerScrollView addConstraints:self.scrollViewConstraints];
-    
     [self addConstraints:self.answerViewConstraints];
   }
 }
 
 #pragma mark Actions
-
+- (void)updateAnswers {
+  if ([self.answers count] == 0) {
+    return;
+  }
+  _answer.text = _answers[0];
+  _answer1.text = _answers[1];
+  _answer2.text = _answers[2];
+}
 #pragma mark Strings
 
 #pragma mark Factory Methods
@@ -168,19 +214,35 @@
   return answerView;
 }
 
--(UILabel *)newAnswers{
+-(UILabel *)newAnswer{
   UILabel *answer = [[UILabel alloc] init];
-  answer.text = @"Rick Kuhlman";
   [answer setTranslatesAutoresizingMaskIntoConstraints:NO];
   [answer setBackgroundColor:[UIColor clearColor]];
-  [answer setFont:[QIFontProvider fontWithSize:25.0f style:Regular]];
+  [answer setFont:[QIFontProvider fontWithSize:20.0f style:Regular]];
   [answer setTextColor:[UIColor colorWithWhite:.50f alpha:1.0f]];
+  
+  //NSAttributedString *string = [[NSAttributedString alloc] initWithString:@"trest" attributes:<#(NSDictionary *)#>
   [answer setAdjustsLetterSpacingToFitWidth:YES];
   [answer setAdjustsFontSizeToFitWidth:YES];
   [answer setMinimumScaleFactor:.8f];
+  
+  //[answer setAttributedText:string];
+  //[answer setNumberOfLines:2];
   [answer setLineBreakMode:NSLineBreakByTruncatingMiddle];
   [answer setTextAlignment:NSTextAlignmentCenter];
   return answer;
+}
+
+-(NSArray *)newSpacers{
+  NSMutableArray *spacerTemp= [[NSMutableArray alloc] init];
+  for (int i=0;i<6;i++){
+    UIView *spacerView = [[UIView alloc] init];
+    [spacerView setBackgroundColor:[UIColor blackColor]];
+    [spacerView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [spacerTemp addObject:spacerView];
+  }
+  NSArray *spacers = [spacerTemp copy];
+  return spacers;
 }
 
 @end
