@@ -8,6 +8,7 @@
 
 #import "QIBusinessCardAnswerView.h"
 #import "QIFontProvider.h"
+#import "QIBusinessCardQuizView.h"
 
 @interface QIBusinessCardAnswerView ()
 
@@ -54,6 +55,21 @@
   [self updateAnswers];
 }
 
+- (void)updateCurrentAnswer{
+  int page = self.answerScrollView.contentOffset.x / self.answerScrollView.frame.size.width;
+  //int page = rand() % 2;
+  _currentAnswer = self.answers[page];
+  [self updateBusinessCard];
+}
+- (id)delegate {
+  return delegate;
+}
+
+- (void)setDelegate:(id)newDelegate {
+  delegate = newDelegate;
+}
+
+
 #pragma mark View Hierarchy
 
 - (void)constructViewHierarchy {
@@ -72,6 +88,7 @@
 
 - (void)updateConstraints {
   [super updateConstraints];
+  
   if (!self.answerViewConstraints){
     
     self.answerViewConstraints = [NSMutableArray array];
@@ -108,11 +125,10 @@
     [self.answerViewConstraints addObjectsFromArray:vAnswerHolder];
     
     //Constrain answer Scroll View
-    float widthMultiplier = 544.0f / 566.0f;
     float heightMultiplier = 96.0f / 136.0f;
     
     NSLayoutConstraint *widthScrollView =
-    [NSLayoutConstraint constraintWithItem:_answerScrollView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_answerHolder attribute:NSLayoutAttributeWidth multiplier:widthMultiplier constant:0];
+    [NSLayoutConstraint constraintWithItem:_answerScrollView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_answerHolder attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0];
     
     NSLayoutConstraint *heightScrollView =
     [NSLayoutConstraint constraintWithItem:_answerScrollView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_answerHolder attribute:NSLayoutAttributeHeight multiplier:heightMultiplier constant:0];
@@ -159,7 +175,7 @@
 
     [self.scrollViewConstraints addObjectsFromArray:@[vAnswerWidth,vAnswer1Width,vAnswer2Width]];
     
-    float widthMultiplierSpacers = 57.0f / 566.0f;
+    float widthMultiplierSpacers = 56.0f / 566.0f;
     
     for (UIView *spacer in self.spacers){
       [self.scrollViewConstraints addObject:[NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeWidth multiplier:widthMultiplierSpacers constant:0.0f]];
@@ -171,6 +187,9 @@
                                             metrics:nil
                                               views:answerHolderConstraintViews];
     
+    //[self.answerViewConstraints addObjectsFromArray:@[vAnswer,vAnswer1,vAnswer2,vAnswerHeight,vAnswer1Height,vAnswer2Height]];
+    //[self.answerViewConstraints addObjectsFromArray:hNames];
+
     [self.scrollViewConstraints addObjectsFromArray:@[vAnswer,vAnswer1,vAnswer2,vAnswerHeight,vAnswer1Height,vAnswer2Height]];
     [self.scrollViewConstraints addObjectsFromArray:hNames];
     
@@ -188,6 +207,17 @@
   _answer1.text = _answers[1];
   _answer2.text = _answers[2];
 }
+
+-(void)updateBusinessCard{
+  [delegate answerDidChange];
+}
+
+#pragma mark UIScrollViewDelegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+  [self updateCurrentAnswer];
+}
+
+
 #pragma mark Strings
 
 #pragma mark Factory Methods
@@ -201,6 +231,7 @@
 
 -(UIScrollView *)newAnswerScrollView{
   UIScrollView *answerView = [[UIScrollView alloc] init];
+  [answerView setDelegate:self];
   [answerView setBackgroundColor:[UIColor colorWithWhite:.8f alpha:1.0f]];
   [answerView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [answerView setPagingEnabled:YES];

@@ -8,9 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QIBusinessCardAnswerView : UIView
-@property(nonatomic, copy) NSArray *answers;
+id delegate;
+@interface QIBusinessCardAnswerView : UIView <UIScrollViewDelegate>
 
-- (void)reconstrainScrollView;
+@property(nonatomic, copy) NSArray *answers;
+@property(nonatomic, readonly)NSString *currentAnswer;
+
+- (id)delegate;
+- (void)setDelegate:(id)newDelegate;
+
+@end
+
+
+@protocol QIBusinessCardQuizViewDelegate <NSObject>
+
+-(void)answerDidChange;
 
 @end

@@ -13,7 +13,6 @@
 @property(nonatomic, strong) UILabel *cardLastName;
 @property(nonatomic, strong) UILabel *cardTitle;
 @property(nonatomic, strong) UILabel *cardCompany;
-
 @property(nonatomic, strong) NSMutableArray *cardConstraints;
 @property(nonatomic, strong) NSMutableArray *answerConstraints;
 
@@ -353,6 +352,12 @@
   self.progressView.quizProgress = _quizProgress;
 }
 
+#pragma mark QIBusinessCardAnswerViewDelegate Functions
+
+-(void)answerDidChange{
+  self.cardFirstName.text = self.answerName.currentAnswer;
+}
+
 #pragma mark Factory Methods
 
 - (QIProgressView *)newProgressView{  
@@ -457,8 +462,8 @@
 
 -(QIBusinessCardAnswerView *)newAnswerView{
   QIBusinessCardAnswerView *answerView = [[QIBusinessCardAnswerView alloc] init];
-  //[answerName setBackgroundColor:[UIColor grayColor]];
   [answerView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [answerView setDelegate:self];
   return answerView;
 }
 
