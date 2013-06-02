@@ -7,6 +7,7 @@
 @property(nonatomic, strong) UIImageView *viewBackground;
 @property(nonatomic, strong) UIView *businessCardView;
 @property(nonatomic, strong) UIImageView *businessCardBackground;
+@property(nonatomic, strong) UIImageView *divider;
 @property(nonatomic, strong) AsyncImageView *profileImageView;
 @property(nonatomic, strong) UIView *answerSuperView;
 @property(nonatomic, strong) UILabel *cardFirstName;
@@ -42,6 +43,7 @@
     _cardLastName = [self newCardLastName];
     _cardTitle = [self newCardTitle];
     _cardCompany = [self newCardCompany];
+    _divider = [self newDivider];
     _answerSuperView = [self newAnswerSuperView];
     _answerName = [self newAnswerView];
     _answerTitle = [self newAnswerView];
@@ -113,6 +115,7 @@
   [_businessCardView addSubview:self.cardCompany];
   
   [self addSubview:_businessCardView];
+  [self addSubview:_divider];
   
   [_answerSuperView addSubview:self.answerName];
   [_answerSuperView addSubview:self.answerTitle];
@@ -319,19 +322,27 @@
     //Constrain Answers
     self.answerConstraints = [NSMutableArray array];
     NSDictionary *answerViews = NSDictionaryOfVariableBindings(_businessCardView,
+                                                               _divider,
                                                                _answerSuperView,
                                                                _answerName,
                                                                _answerTitle,
                                                                _answerCompany,
                                                                _nextQuestionButton);
     
-    NSString *vAnswerSuperView = @"V:[_businessCardView][_answerSuperView][_nextQuestionButton]";
+    NSString *vAnswerSuperView = @"V:[_businessCardView][_divider(==2)][_answerSuperView][_nextQuestionButton]";
     NSArray *vAnswerSuperViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vAnswerSuperView
                                             options:0
                                             metrics:nil
                                               views:answerViews];
     
+    NSString *hDivider = @"H:|-[_divider]-|";
+    NSArray *hDividerConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:hDivider
+                                            options:0
+                                            metrics:nil
+                                              views:answerViews];
+
     NSString *hAnswerSuperView = @"H:|[_answerSuperView]|";
     NSArray *hAnswerSuperViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:hAnswerSuperView
@@ -339,7 +350,7 @@
                                             metrics:nil
                                               views:answerViews];
     
-    NSString *vAnswerViews = @"V:|[_answerName]-[_answerCompany(==_answerName)]-[_answerTitle(==_answerName)]|";
+    NSString *vAnswerViews = @"V:|[_answerName(<=100,>=60)][_answerCompany(==_answerName)][_answerTitle(==_answerName)]|";
     NSArray *vAnswerViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vAnswerViews
                                             options:NSLayoutFormatAlignAllCenterX
@@ -347,6 +358,8 @@
                                               views:answerViews];
     NSArray *groupedAnswerConstraintViews = [NSArray arrayWithObjects:_answerName, _answerCompany, _answerTitle, nil];
     
+    NSLayoutConstraint *centerAnswers = [NSLayoutConstraint constraintWithItem:_answerCompany attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_answerSuperView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f];
+
     for (UIView *view in groupedAnswerConstraintViews){
       [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
       [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
@@ -363,11 +376,12 @@
     
     NSLayoutConstraint *nextButtonWidth = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0f constant:150.0f];
     
+    [self.answerConstraints addObjectsFromArray:hDividerConstraints];
     [self.answerConstraints addObjectsFromArray:vAnswerSuperViewConstraints];
     [self.answerConstraints addObjectsFromArray:hAnswerSuperViewConstraints];
     [self.answerConstraints addObjectsFromArray:vAnswerViewConstraints];
     [self.answerConstraints addObjectsFromArray:vNextButtonConstraints];
-    [self.answerConstraints addObjectsFromArray:@[hNextButton,nextButtonWidth]];
+    [self.answerConstraints addObjectsFromArray:@[hNextButton,nextButtonWidth,centerAnswers]];
   
     [self addConstraints:self.cardConstraints];
     [self addConstraints:self.answerConstraints];
@@ -519,6 +533,11 @@
   [cardCompany setMinimumScaleFactor:.8f];
   [cardCompany setLineBreakMode:NSLineBreakByTruncatingMiddle];
   return cardCompany;
+}
+- (UIImageView *)newDivider{
+  UIImageView *divider = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"quizin_divider"]];
+  [divider setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return divider;
 }
 
 -(UIView *)newAnswerSuperView{

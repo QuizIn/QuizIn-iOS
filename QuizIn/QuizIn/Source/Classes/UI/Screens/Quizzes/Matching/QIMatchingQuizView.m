@@ -1,5 +1,6 @@
 #import "QIMatchingQuizView.h"
 #import "AsyncImageView.h"
+#import "QIFontProvider.h"
 
 @interface QIMatchingQuizView ()
 
@@ -366,11 +367,23 @@
 }
 
 - (UIButton *)newAnswerButtonWithTitle:(NSString *)title {
-  UIButton *answerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  UIButton *answerButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [answerButton setTitle:title forState:UIControlStateNormal];
+  answerButton.titleLabel.font = [QIFontProvider fontWithSize:16.0f style:Bold];
+  answerButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+  answerButton.titleLabel.adjustsLetterSpacingToFitWidth = YES;
+  [answerButton setTitleColor:[UIColor colorWithWhite:0.33f alpha:1.0f] forState:UIControlStateNormal];
+  [answerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+  [answerButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, 40.0f, 0.0f, 40.0f)];
+  [answerButton setBackgroundImage:[UIImage imageNamed:@"multiplechoice_answer_btn"] forState:UIControlStateNormal];
+  [answerButton setBackgroundImage:[UIImage imageNamed:@"multiplechoice_answer_btn_pressed"] forState:UIControlStateSelected];
+  [answerButton setBackgroundImage:[UIImage imageNamed:@"multiplechoice_answer_btn_pressed"] forState:UIControlStateSelected | UIControlStateHighlighted];
   [answerButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [answerButton setAdjustsImageWhenHighlighted:NO];
+  [answerButton setReversesTitleShadowWhenHighlighted:NO];
   return answerButton;
 }
+
 
 -(UIButton *)newNextQuestionButton;{
   UIButton *nextQuestionButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
