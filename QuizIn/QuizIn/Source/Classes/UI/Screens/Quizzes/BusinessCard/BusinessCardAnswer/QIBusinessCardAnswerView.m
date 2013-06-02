@@ -40,6 +40,7 @@
     _answer1 = [self newAnswer];
     _answer2 = [self newAnswer];
     _spacers = [self newSpacers];
+    _selectedAnswer = 0;
     [self constructViewHierarchy];
   }
   return self;
@@ -55,12 +56,13 @@
   [self updateAnswers];
 }
 
-- (void)updateCurrentAnswer{
-  int page = self.answerScrollView.contentOffset.x / self.answerScrollView.frame.size.width;
-  //int page = rand() % 2;
-  _currentAnswer = self.answers[page];
-  [self updateBusinessCard];
+- (void)setSelectedAnswer:(int)selectedAnswer{
+  if (selectedAnswer == _selectedAnswer) {
+    return;
+  }
+  _selectedAnswer = selectedAnswer;
 }
+
 - (id)delegate {
   return delegate;
 }
@@ -162,7 +164,7 @@
     NSLayoutConstraint *vAnswer2Height =
     [NSLayoutConstraint constraintWithItem:_answer2 attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f];
 
-    float widthMultiplierLabels = 454.0f / 566.0f;
+    float widthMultiplierLabels = 430.0f / 564.0f;
    
     NSLayoutConstraint *vAnswerWidth =
     [NSLayoutConstraint constraintWithItem:_answer attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeWidth multiplier:widthMultiplierLabels constant:0.0f];
@@ -175,7 +177,7 @@
 
     [self.scrollViewConstraints addObjectsFromArray:@[vAnswerWidth,vAnswer1Width,vAnswer2Width]];
     
-    float widthMultiplierSpacers = 56.0f / 566.0f;
+    float widthMultiplierSpacers = 67.0f / 564.0f;
     
     for (UIView *spacer in self.spacers){
       [self.scrollViewConstraints addObject:[NSLayoutConstraint constraintWithItem:spacer attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_answerScrollView attribute:NSLayoutAttributeWidth multiplier:widthMultiplierSpacers constant:0.0f]];
@@ -208,8 +210,10 @@
   _answer2.text = _answers[2];
 }
 
--(void)updateBusinessCard{
-  [delegate answerDidChange];
+- (void)updateCurrentAnswer{
+  int page = floorf(self.answerScrollView.contentOffset.x / self.answerScrollView.frame.size.width + 0.5f);
+  _selectedAnswer = page;
+  [delegate answerDidChange:self];
 }
 
 #pragma mark UIScrollViewDelegate
@@ -247,18 +251,14 @@
 
 -(UILabel *)newAnswer{
   UILabel *answer = [[UILabel alloc] init];
+  //TODO Use Attributed Text to make this a 2-line centered UILabel
   [answer setTranslatesAutoresizingMaskIntoConstraints:NO];
   [answer setBackgroundColor:[UIColor clearColor]];
   [answer setFont:[QIFontProvider fontWithSize:20.0f style:Bold]];
   [answer setTextColor:[UIColor colorWithWhite:.33f alpha:1.0f]];
-  
-  //NSAttributedString *string = [[NSAttributedString alloc] initWithString:@"trest" attributes:<#(NSDictionary *)#>
   [answer setAdjustsLetterSpacingToFitWidth:YES];
   [answer setAdjustsFontSizeToFitWidth:YES];
-  [answer setMinimumScaleFactor:.8f];
-  
-  //[answer setAttributedText:string];
-  //[answer setNumberOfLines:2];
+  [answer setMinimumScaleFactor:.7f];
   [answer setLineBreakMode:NSLineBreakByTruncatingMiddle];
   [answer setTextAlignment:NSTextAlignmentCenter];
   return answer;

@@ -12,7 +12,7 @@ id delegate;
 @interface QIBusinessCardAnswerView : UIView <UIScrollViewDelegate>
 
 @property(nonatomic, copy) NSArray *answers;
-@property(nonatomic, readonly)NSString *currentAnswer;
+@property(nonatomic, readonly)int selectedAnswer;
 
 - (id)delegate;
 - (void)setDelegate:(id)newDelegate;
@@ -22,6 +22,6 @@ id delegate;
 
 @protocol QIBusinessCardQuizViewDelegate <NSObject>
 
--(void)answerDidChange;
+-(void)answerDidChange:(id)sender;
 
 @end

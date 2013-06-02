@@ -5,9 +5,10 @@
 @interface QIBusinessCardQuizView : UIView
 
 @property(nonatomic, strong) QIProgressView *progressView;
-@property(nonatomic, strong) QIBusinessCardAnswerView *answerName;
-@property(nonatomic, strong) QIBusinessCardAnswerView *answerTitle;
-@property(nonatomic, strong) QIBusinessCardAnswerView *answerCompany;
+@property(nonatomic, strong) NSArray *answerFirstNames;
+@property(nonatomic, strong) NSArray *answerLastNames;
+@property(nonatomic, strong) NSArray *answerCompanies;
+@property(nonatomic, strong) NSArray *answerTitles;
 @property(nonatomic, assign) NSUInteger quizProgress;
 @property(nonatomic, assign) NSUInteger numberOfQuestions;
 @property(nonatomic, strong,readonly) UIButton *nextQuestionButton;
