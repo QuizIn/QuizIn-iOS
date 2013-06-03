@@ -211,7 +211,7 @@
 }
 
 - (void)updateCurrentAnswer{
-  int page = floorf(self.answerScrollView.contentOffset.x / self.answerScrollView.frame.size.width + 0.5f);
+  int page = floorf(self.answerScrollView.contentOffset.x / self.answerScrollView.frame.size.width + 0.1f);
   _selectedAnswer = page;
   [delegate answerDidChange:self];
 }

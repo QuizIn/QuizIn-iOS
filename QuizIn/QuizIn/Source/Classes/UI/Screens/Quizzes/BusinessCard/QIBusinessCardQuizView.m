@@ -350,7 +350,7 @@
                                             metrics:nil
                                               views:answerViews];
     
-    NSString *vAnswerViews = @"V:|[_answerName(<=100,>=60)][_answerCompany(==_answerName)][_answerTitle(==_answerName)]|";
+    NSString *vAnswerViews = @"V:|[_answerName(<=100,>=60)][_answerCompany(==_answerName)][_answerTitle(==_answerName)]";
     NSArray *vAnswerViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vAnswerViews
                                             options:NSLayoutFormatAlignAllCenterX
@@ -412,18 +412,42 @@
 
 -(void)updateAnswerNames{
   self.answerName.answers = self.answerFullNames;
-  self.cardFirstName.text = self.answerFirstNames[self.answerName.selectedAnswer];
-  self.cardLastName.text = self.answerLastNames[self.answerName.selectedAnswer];
+  
+  if (![self.cardFirstName.text isEqualToString:self.answerFirstNames[self.answerName.selectedAnswer]]) {
+    self.cardFirstName.text = self.answerFirstNames[self.answerName.selectedAnswer];
+    self.cardLastName.text = self.answerLastNames[self.answerName.selectedAnswer];
+    self.cardFirstName.alpha = 0;
+    self.cardLastName.alpha = 0;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:.5];
+    self.cardFirstName.alpha = 1;
+    self.cardLastName.alpha = 1;
+    [UIView commitAnimations];
+  }
 }
 
 -(void)updateAnswerCompanies{
   self.answerCompany.answers = self.answerCompanies;
-  self.cardCompany.text = self.answerCompanies[self.answerCompany.selectedAnswer];
+  if (![self.cardCompany.text isEqualToString:self.answerCompanies[self.answerCompany.selectedAnswer]]) {
+    self.cardCompany.text = self.answerCompanies[self.answerCompany.selectedAnswer];
+    self.cardCompany.alpha = 0;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:.5];
+    self.cardCompany.alpha = 1;
+    [UIView commitAnimations];
+  }
 }
 
 -(void)updateAnswerTitles{
   self.answerTitle.answers = self.answerTitles;
-  self.cardTitle.text = self.answerTitles[self.answerTitle.selectedAnswer];
+  if (![self.cardTitle.text isEqualToString:self.answerTitles[self.answerTitle.selectedAnswer]]){
+    self.cardTitle.text = self.answerTitles[self.answerTitle.selectedAnswer];
+    self.cardTitle.alpha = 0;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:.5];
+    self.cardTitle.alpha = 1;
+    [UIView commitAnimations];
+  }
 }
 
 #pragma mark QIBusinessCardAnswerViewDelegate Functions
