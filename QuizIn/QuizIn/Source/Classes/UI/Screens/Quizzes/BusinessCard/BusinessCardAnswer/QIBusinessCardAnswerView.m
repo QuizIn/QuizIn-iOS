@@ -221,7 +221,6 @@
   [self updateCurrentAnswer];
 }
 
-
 #pragma mark Strings
 
 #pragma mark Factory Methods

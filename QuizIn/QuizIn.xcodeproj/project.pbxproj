@@ -17,6 +17,10 @@
 		3429135C1753AAC60056ACCD /* Tahoma Faux Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3429135B1753AAC60056ACCD /* Tahoma Faux Italic.ttf */; };
 		342913601753AC780056ACCD /* QIFontProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 3429135F1753AC780056ACCD /* QIFontProvider.m */; };
 		342913641753E5340056ACCD /* QIBusinessCardAnswerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342913631753E5340056ACCD /* QIBusinessCardAnswerView.m */; };
+		345E7AB1176218C30020600A /* multiplechoice_pictureholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AAF176218C30020600A /* multiplechoice_pictureholder.png */; };
+		345E7AB2176218C30020600A /* multiplechoice_pictureholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AB0176218C30020600A /* multiplechoice_pictureholder@2x.png */; };
+		345E7AB5176219010020600A /* multiplechoice_tape.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AB3176219010020600A /* multiplechoice_tape.png */; };
+		345E7AB6176219010020600A /* multiplechoice_tape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AB4176219010020600A /* multiplechoice_tape@2x.png */; };
 		347800051750EFC1002B29DB /* cardquiz_answerholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFB11750EFC1002B29DB /* cardquiz_answerholder.png */; };
 		347800061750EFC1002B29DB /* cardquiz_answerholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFB21750EFC1002B29DB /* cardquiz_answerholder@2x.png */; };
 		347800071750EFC1002B29DB /* cardquiz_businesscard.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFB31750EFC1002B29DB /* cardquiz_businesscard.png */; };
@@ -62,8 +66,6 @@
 		347800381750EFC1002B29DB /* multiplechoice_answer_btn_@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFE91750EFC1002B29DB /* multiplechoice_answer_btn_@2x.png */; };
 		347800391750EFC1002B29DB /* multiplechoice_answer_btn_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFEA1750EFC1002B29DB /* multiplechoice_answer_btn_pressed.png */; };
 		3478003A1750EFC1002B29DB /* multiplechoice_answer_btn_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFEB1750EFC1002B29DB /* multiplechoice_answer_btn_pressed@2x.png */; };
-		3478003B1750EFC1002B29DB /* multiplechoice_pictureholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFEC1750EFC1002B29DB /* multiplechoice_pictureholder.png */; };
-		3478003C1750EFC1002B29DB /* multiplechoice_pictureholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFED1750EFC1002B29DB /* multiplechoice_pictureholder@2x.png */; };
 		3478003D1750EFC1002B29DB /* multiplechoice_reference.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFEE1750EFC1002B29DB /* multiplechoice_reference.png */; };
 		3478003E1750EFC1002B29DB /* multiplechoice_reference@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFEF1750EFC1002B29DB /* multiplechoice_reference@2x.png */; };
 		347800411750EFC1002B29DB /* placeholderHead.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFF21750EFC1002B29DB /* placeholderHead.png */; };
@@ -151,6 +153,10 @@
 		3429135F1753AC780056ACCD /* QIFontProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIFontProvider.m; sourceTree = "<group>"; };
 		342913621753E5340056ACCD /* QIBusinessCardAnswerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardAnswerView.h; sourceTree = "<group>"; };
 		342913631753E5340056ACCD /* QIBusinessCardAnswerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardAnswerView.m; sourceTree = "<group>"; };
+		345E7AAF176218C30020600A /* multiplechoice_pictureholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplechoice_pictureholder.png; sourceTree = "<group>"; };
+		345E7AB0176218C30020600A /* multiplechoice_pictureholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "multiplechoice_pictureholder@2x.png"; sourceTree = "<group>"; };
+		345E7AB3176219010020600A /* multiplechoice_tape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplechoice_tape.png; sourceTree = "<group>"; };
+		345E7AB4176219010020600A /* multiplechoice_tape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "multiplechoice_tape@2x.png"; sourceTree = "<group>"; };
 		347800001750EFC1002B29DB /* quizin_divider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quizin_divider@2x.png"; sourceTree = "<group>"; };
 		347800011750EFC1002B29DB /* quizin_exit_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quizin_exit_btn.png; sourceTree = "<group>"; };
 		347800021750EFC1002B29DB /* quizin_exit_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quizin_exit_btn@2x.png"; sourceTree = "<group>"; };
@@ -210,8 +216,6 @@
 		3478FFE91750EFC1002B29DB /* multiplechoice_answer_btn_@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "multiplechoice_answer_btn_@2x.png"; sourceTree = "<group>"; };
 		3478FFEA1750EFC1002B29DB /* multiplechoice_answer_btn_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplechoice_answer_btn_pressed.png; sourceTree = "<group>"; };
 		3478FFEB1750EFC1002B29DB /* multiplechoice_answer_btn_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "multiplechoice_answer_btn_pressed@2x.png"; sourceTree = "<group>"; };
-		3478FFEC1750EFC1002B29DB /* multiplechoice_pictureholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplechoice_pictureholder.png; sourceTree = "<group>"; };
-		3478FFED1750EFC1002B29DB /* multiplechoice_pictureholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "multiplechoice_pictureholder@2x.png"; sourceTree = "<group>"; };
 		3478FFEE1750EFC1002B29DB /* multiplechoice_reference.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplechoice_reference.png; sourceTree = "<group>"; };
 		3478FFEF1750EFC1002B29DB /* multiplechoice_reference@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "multiplechoice_reference@2x.png"; sourceTree = "<group>"; };
 		3478FFF21750EFC1002B29DB /* placeholderHead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholderHead.png; sourceTree = "<group>"; };
@@ -474,12 +478,14 @@
 		3478FFE61750EFC1002B29DB /* Multiple Choice */ = {
 			isa = PBXGroup;
 			children = (
+				345E7AB3176219010020600A /* multiplechoice_tape.png */,
+				345E7AB4176219010020600A /* multiplechoice_tape@2x.png */,
+				345E7AAF176218C30020600A /* multiplechoice_pictureholder.png */,
+				345E7AB0176218C30020600A /* multiplechoice_pictureholder@2x.png */,
 				3478FFE81750EFC1002B29DB /* multiplechoice_answer_btn.png */,
 				3478FFE91750EFC1002B29DB /* multiplechoice_answer_btn_@2x.png */,
 				3478FFEA1750EFC1002B29DB /* multiplechoice_answer_btn_pressed.png */,
 				3478FFEB1750EFC1002B29DB /* multiplechoice_answer_btn_pressed@2x.png */,
-				3478FFEC1750EFC1002B29DB /* multiplechoice_pictureholder.png */,
-				3478FFED1750EFC1002B29DB /* multiplechoice_pictureholder@2x.png */,
 				3478FFEE1750EFC1002B29DB /* multiplechoice_reference.png */,
 				3478FFEF1750EFC1002B29DB /* multiplechoice_reference@2x.png */,
 				3478FFF21750EFC1002B29DB /* placeholderHead.png */,
@@ -899,8 +905,6 @@
 				347800381750EFC1002B29DB /* multiplechoice_answer_btn_@2x.png in Resources */,
 				347800391750EFC1002B29DB /* multiplechoice_answer_btn_pressed.png in Resources */,
 				3478003A1750EFC1002B29DB /* multiplechoice_answer_btn_pressed@2x.png in Resources */,
-				3478003B1750EFC1002B29DB /* multiplechoice_pictureholder.png in Resources */,
-				3478003C1750EFC1002B29DB /* multiplechoice_pictureholder@2x.png in Resources */,
 				3478003D1750EFC1002B29DB /* multiplechoice_reference.png in Resources */,
 				3478003E1750EFC1002B29DB /* multiplechoice_reference@2x.png in Resources */,
 				347800411750EFC1002B29DB /* placeholderHead.png in Resources */,
@@ -927,6 +931,10 @@
 				340896C1175175ED00398230 /* progressView_progress.png in Resources */,
 				340896C2175175ED00398230 /* progressView_progress@2x.png in Resources */,
 				3429135C1753AAC60056ACCD /* Tahoma Faux Italic.ttf in Resources */,
+				345E7AB1176218C30020600A /* multiplechoice_pictureholder.png in Resources */,
+				345E7AB2176218C30020600A /* multiplechoice_pictureholder@2x.png in Resources */,
+				345E7AB5176219010020600A /* multiplechoice_tape.png in Resources */,
+				345E7AB6176219010020600A /* multiplechoice_tape@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
