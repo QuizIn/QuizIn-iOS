@@ -365,7 +365,7 @@
       [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
     }
     
-    NSString *vNextButton = @"V:[_nextQuestionButton(==54)]-3-|";
+    NSString *vNextButton = @"V:[_nextQuestionButton(==40)]-3-|";
     NSArray *vNextButtonConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vNextButton
                                             options:0
@@ -374,7 +374,7 @@
 
     NSLayoutConstraint *hNextButton = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0f constant:-10.0f];
     
-    NSLayoutConstraint *nextButtonWidth = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0f constant:150.0f];
+    NSLayoutConstraint *nextButtonWidth = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0f constant:125.0f];
     
     [self.answerConstraints addObjectsFromArray:hDividerConstraints];
     [self.answerConstraints addObjectsFromArray:vAnswerSuperViewConstraints];
@@ -586,11 +586,12 @@
   UIButton *nextQuestionButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [nextQuestionButton setTitle:[self nextQuestionButtonText] forState:UIControlStateNormal];
   [nextQuestionButton setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] forState:UIControlStateNormal];
-  [nextQuestionButton.titleLabel setFont:[QIFontProvider fontWithSize:16.0f style:Regular]];
+  [nextQuestionButton.titleLabel setFont:[QIFontProvider fontWithSize:14.0f style:Regular]];
   [nextQuestionButton setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
   [nextQuestionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   return nextQuestionButton;
 }
+
 @end
 
 

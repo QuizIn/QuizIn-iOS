@@ -32,7 +32,7 @@
   self.matchingQuizView.numberOfQuestions = 10;
   self.matchingQuizView.quizProgress = 4;
   self.matchingQuizView.questions = @[@"Rick Kuhlman",@"Rene Cacheaux",@"Tim Dredge",@"George Bush"];
-  self.matchingQuizView.answers = @[@"National Instruments",@"Invodo",@"Mutual Mobile",@"Google"];
+  self.matchingQuizView.answers = @[@"Knoxville Fellows",@"Invodo",@"Mutual Mobile",@"Google"];
 
 }
 

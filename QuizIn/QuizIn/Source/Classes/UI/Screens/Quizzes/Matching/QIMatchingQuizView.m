@@ -4,10 +4,16 @@
 
 @interface QIMatchingQuizView ()
 
+@property(nonatomic, strong) UIImageView *viewBackground;
+@property(nonatomic, strong) UIImageView *divider;
 @property(nonatomic, strong) UIView *questionView;
 @property(nonatomic, strong) NSArray *questionButtons;
+@property(nonatomic, strong) NSArray *questionButtonImages;
+@property(nonatomic, strong) NSMutableArray *questionColorImages;
+@property(nonatomic, strong) NSArray *questionButtonTapes;
 @property(nonatomic, strong) UIView *answerView;
 @property(nonatomic, strong) NSArray *answerButtons;
+@property(nonatomic, strong) NSMutableArray *answerColorImages;
 @property(nonatomic, strong) UIButton *nextQuestionButton;
 
 @property(nonatomic, strong) NSMutableArray *progressViewConstraints;
@@ -27,11 +33,17 @@
   self = [super initWithFrame:frame];
   if (self) {
     
+    _viewBackground = [self newViewBackground];
+    _divider = [self newDivider];
     _progressView = [self newProgressView];
     _questionView = [self newQuestionView];
     _answerView = [self newAnswerView];
     _answerButtons = @[];
     _questionButtons = @[];
+    _questionButtonImages = @[];
+    _questionButtonTapes = @[];
+    _questionColorImages = [self newQuestionColorImages];
+    _answerColorImages = [self newAnswerColorImages];
     _nextQuestionButton = [self newNextQuestionButton];
     
     //TODO rkuhlman not sure if this should stay here.
@@ -91,17 +103,23 @@
 #pragma mark View Hierarchy
 
 - (void)constructViewHierarchy {
-  
+  [self addSubview:_viewBackground];
+  [self addSubview:_divider];
   [self addSubview:_progressView];
   [self addSubview:_answerView];
   [self addSubview:_questionView];
- 
+  [self loadQuestionButtons];
+  [self loadAnswerButtons];
   [self addSubview:self.nextQuestionButton];
 }
 
 - (void)loadQuestionButtons{
+  int i=0;
   for (UIButton *button in self.questionButtons) {
+    [button addSubview:_questionButtonImages[i]];
     [_questionView addSubview:button];
+    [_questionView addSubview:_questionButtonTapes[i]];
+    i++;
   }
 }
 
@@ -144,6 +162,25 @@
     [selfConstraints addObjectsFromArray:vSelf];
     [self.superview addConstraints:selfConstraints];
     
+    //Constrain Background
+    NSDictionary *backgroundImageConstraintView = NSDictionaryOfVariableBindings(_viewBackground);
+    
+    NSArray *hBackgroundContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_viewBackground]|"
+                                            options:NSLayoutFormatAlignAllTop
+                                            metrics:nil
+                                              views:backgroundImageConstraintView];
+    NSArray *vBackgroundContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_viewBackground]|"
+                                            options:NSLayoutFormatAlignAllLeft
+                                            metrics:nil
+                                              views:backgroundImageConstraintView];
+    
+    NSMutableArray *backgroundConstraints = [NSMutableArray array];
+    [backgroundConstraints addObjectsFromArray:hBackgroundContraints];
+    [backgroundConstraints addObjectsFromArray:vBackgroundContraints];
+    [self addConstraints:backgroundConstraints];
+    
     //Constrain Progress View
     self.progressViewConstraints = [NSMutableArray array];
     
@@ -170,14 +207,8 @@
     self.questionConstraints = [NSMutableArray array];
     self.answerConstraints = [NSMutableArray array];
     
-    NSDictionary *questionAnswerViews = NSDictionaryOfVariableBindings(_progressView,_questionView,_answerView);
+    NSDictionary *questionAnswerViews = NSDictionaryOfVariableBindings(_progressView,_questionView,_answerView,_divider);
     
-    NSString *hQuestionView = @"H:|[_questionView]|";
-    NSArray *hQuestionViewConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:hQuestionView
-                                            options:NSLayoutFormatAlignAllTop
-                                            metrics:nil
-                                              views:questionAnswerViews];
     
     NSString *hAnswerView = @"H:|[_answerView]|";
     NSArray *hAnswerViewConstraints =
@@ -186,64 +217,78 @@
                                             metrics:nil
                                               views:questionAnswerViews];
     
-    NSString *vQuestionAnswerView = @"V:[_progressView][_questionView][_answerView(==_questionView)]|";
+    [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_questionView attribute:NSLayoutAttributeTop multiplier:1.0f constant:10.0f]];
+    
+    NSString *vQuestionAnswerView = @"V:[_questionView(<=240)]-2-[_divider(==2)][_answerView(>=220)]|";
     NSArray *vQuestionAnswerViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vQuestionAnswerView
-                                            options:0
+                                            options:NSLayoutFormatAlignAllCenterX
                                             metrics:nil
                                               views:questionAnswerViews];
     
-    [self.questionConstraints addObjectsFromArray:hQuestionViewConstraints];
     [self.answerConstraints addObjectsFromArray:hAnswerViewConstraints];
     [self.answerConstraints addObjectsFromArray:vQuestionAnswerViewConstraints];
    
     //Constrain Question View
     NSDictionary *questionButtonViews = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 _progressView,         @"_progressView",
-                                 _questionButtons[0],   @"_questionButtons0",
-                                 _questionButtons[1],   @"_questionButtons1",
-                                 _questionButtons[2],   @"_questionButtons2",
-                                 _questionButtons[3],   @"_questionButtons3",
+                                         _progressView,             @"_progressView",
+                                         _questionButtons[0],       @"_questionButtons0",
+                                         _questionButtons[1],       @"_questionButtons1",
+                                         _questionButtons[2],       @"_questionButtons2",
+                                         _questionButtons[3],       @"_questionButtons3",
                                          nil];
     
-    /*for (UIButton *button in self.questionButtons){
-      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-      
-      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
-    }*/
+    for (int i=0;i<[_questionButtonImages count];i++){
+      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonImages[i] attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_questionButtons[i] attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonImages[i] attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_questionButtons[i] attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonImages[i] attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_questionButtons[i] attribute:NSLayoutAttributeWidth multiplier:0.795f constant:0.0f]];
+      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonImages[i] attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_questionButtons[i] attribute:NSLayoutAttributeHeight multiplier:0.795f constant:0.0f]];
+      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonTapes[i] attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_questionButtons[i] attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonTapes[i] attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_questionButtons[i] attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
+      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonTapes[i] attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_questionButtonImages[i] attribute:NSLayoutAttributeTop multiplier:1.0f constant:5.0f]];
+    }
+
+    for (UIButton *button in self.questionButtons){
+      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:button attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f]];
+    }
     
-    NSString *vLeftQuestionButtonsView = @"V:|-[_questionButtons0]-[_questionButtons2(==_questionButtons0)]-|";
-    NSArray *vLeftQuestionButtonsConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:vLeftQuestionButtonsView
+    [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtons[0] attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:0.5f constant:0.0f]];
+    
+    [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtons[0] attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationLessThanOrEqual toItem:_questionView attribute:NSLayoutAttributeHeight multiplier:0.5f constant:0.0f]];
+   
+    NSString *vTopLeftQuestionButtonsView = @"V:|[_questionButtons0][_questionButtons2(==_questionButtons0)]|";
+    NSArray *vTopLeftQuestionButtonsConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:vTopLeftQuestionButtonsView
                                             options:NSLayoutFormatAlignAllLeft
                                             metrics:nil
                                               views:questionButtonViews];
     
-    NSString *vRightQuestionButtonsView = @"V:|-[_questionButtons1]-[_questionButtons3(==_questionButtons0)]-|";
-    NSArray *vRightQuestionButtonsConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:vRightQuestionButtonsView
+    NSString *vTopRightQuestionButtonsView = @"V:|[_questionButtons1(==_questionButtons0)][_questionButtons3(==_questionButtons0)]|";
+    NSArray *vTopRightQuestionButtonsConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:vTopRightQuestionButtonsView
                                             options:NSLayoutFormatAlignAllRight
                                             metrics:nil
                                               views:questionButtonViews];
     
-    NSString *vTopQuestionButtonsView = @"H:|-[_questionButtons0]-[_questionButtons1(==_questionButtons0)]-|";
-    NSArray *vTopQuestionButtonsConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:vTopQuestionButtonsView
+    NSString *hTopLeftQuestionButtonsView = @"H:|[_questionButtons0][_questionButtons1(==_questionButtons0)]|";
+    NSArray *hTopLeftQuestionButtonsConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:hTopLeftQuestionButtonsView
                                             options:NSLayoutFormatAlignAllTop
                                             metrics:nil
                                               views:questionButtonViews];
     
-    NSString *vBottomQuestionButtonsView = @"H:|-[_questionButtons2]-[_questionButtons3(==_questionButtons0)]-|";
-    NSArray *vBottomQuestionButtonsConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:vBottomQuestionButtonsView
-                                            options:NSLayoutFormatAlignAllBaseline
+    NSString *hBottomLeftQuestionButtonsView = @"H:|[_questionButtons2(==_questionButtons0)][_questionButtons3(==_questionButtons0)]|";
+    NSArray *hBottomLeftQuestionButtonsConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:hBottomLeftQuestionButtonsView
+                                            options:NSLayoutFormatAlignAllBottom
                                             metrics:nil
                                               views:questionButtonViews];
     
-    [self.questionConstraints addObjectsFromArray:vLeftQuestionButtonsConstraints];
-    [self.questionConstraints addObjectsFromArray:vRightQuestionButtonsConstraints];
-    [self.questionConstraints addObjectsFromArray:vTopQuestionButtonsConstraints];
-    [self.questionConstraints addObjectsFromArray:vBottomQuestionButtonsConstraints];
+    [self.questionConstraints addObjectsFromArray:vTopLeftQuestionButtonsConstraints];
+    [self.questionConstraints addObjectsFromArray:vTopRightQuestionButtonsConstraints];
+    [self.questionConstraints addObjectsFromArray:hTopLeftQuestionButtonsConstraints];
+    [self.questionConstraints addObjectsFromArray:hBottomLeftQuestionButtonsConstraints];
+
     
     //Constrain Answer View
     NSDictionary *answerButtonViews = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -260,7 +305,7 @@
       [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
     }
     
-    NSString *vAnswerButtonsView = @"V:|-[_answerButtons0(==_answerButtons0)]-[_answerButtons1(==_answerButtons0)]-[_answerButtons2(==_answerButtons0)]-[_answerButtons3(==_answerButtons0)]-[_nextQuestionButton(==_answerButtons0)]-|";
+    NSString *vAnswerButtonsView = @"V:|[_answerButtons0(==_answerButtons0)][_answerButtons1(==_answerButtons0)][_answerButtons2(==_answerButtons0)][_answerButtons3(==_answerButtons0)][_nextQuestionButton]";
     
     NSArray *vAnswerButtonConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vAnswerButtonsView
@@ -270,14 +315,19 @@
     
     [self.answerConstraints addObjectsFromArray:vAnswerButtonConstraints];
     
-    NSArray *hNextButtonConstraint =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"[_nextQuestionButton]-|"
-                                            options:NSLayoutFormatAlignAllBaseline
+    //Constrian Next Buttong
+    NSArray *vNextButtonConstraint =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nextQuestionButton(==40)]-3-|"
+                                            options:0
                                             metrics:nil
                                               views:answerButtonViews];
 
+    NSLayoutConstraint *hNextButton = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0f constant:-10.0f];
     
-    [self.answerConstraints addObjectsFromArray:hNextButtonConstraint];
+    NSLayoutConstraint *nextButtonWidth = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0f constant:125.0f];
+    
+    [self.answerConstraints addObjectsFromArray:vNextButtonConstraint];
+    [self.answerConstraints addObjectsFromArray:@[hNextButton,nextButtonWidth]];
 
     [self addConstraints:self.progressViewConstraints];
     [self addConstraints:self.answerConstraints];
@@ -287,7 +337,7 @@
 
 #pragma mark Strings
 - (NSString *)nextQuestionButtonText {
-  return @"Next Question >";
+  return @"Next Question";
 }
 
 #pragma mark Data Display
@@ -314,15 +364,53 @@
     return;
   }
   NSMutableArray *questionButtons = [NSMutableArray arrayWithCapacity:[self.questions count]];
+  NSMutableArray *questionButtonImages = [NSMutableArray arrayWithCapacity:[self.questions count]];
+  NSMutableArray *questionButtonTapes = [NSMutableArray arrayWithCapacity:[self.questions count]];
+  
   for (NSString *questions in self.questions) {
-    UIButton *questionButton = [self newQuestionButtonWithTitle:questions];
+    UIButton *questionButton = [self newQuestionButton];
     [questionButtons addObject:questionButton];
+    AsyncImageView *questionImage = [self newQuestionButtonImage];
+    [questionButtonImages addObject:questionImage];
+    UIImageView *tape = [self newQuestionButtonTape];
+    [questionButtonTapes addObject:tape];
   }
+  
+  _questionButtonImages = [questionButtonImages copy];
+  _questionButtonTapes = [questionButtonTapes copy];
   self.questionButtons = [questionButtons copy];
+
+  return;
+}
+
+-(UIImage *)dequeueQuestionColorImage{
+  UIImage *lastImage = [self.questionColorImages lastObject];
+  [self.questionColorImages removeLastObject];
+  return lastImage;
+}
+
+-(UIImage *)dequeueAnswerColorImage{
+  UIImage *lastImage = [self.answerColorImages lastObject];
+  [self.answerColorImages removeLastObject];
+  return lastImage;
+}
+
+- (void)questionButtonPressed:(id)sender{
+  UIButton *pressedButton = (UIButton *)sender;
+  UIImage *questionColorImage = [self dequeueQuestionColorImage];
+  [pressedButton setBackgroundImage:questionColorImage forState:UIControlStateSelected];
+  [pressedButton setBackgroundImage:questionColorImage forState:UIControlStateSelected | UIControlStateHighlighted];
+  pressedButton.selected = YES;
+}
+- (void)answerButtonPressed:(id)sender{
+  UIButton *pressedButton = (UIButton *)sender;
+  UIImage *answerColorImage = [self dequeueAnswerColorImage];
+  [pressedButton setBackgroundImage:answerColorImage forState:UIControlStateSelected];
+  [pressedButton setBackgroundImage:answerColorImage forState:UIControlStateSelected | UIControlStateHighlighted];
+    pressedButton.selected = YES;
 }
 
 #pragma mark Factory Methods
-
 - (QIProgressView *)newProgressView{
   QIProgressView *progressView = [[QIProgressView alloc] init];
   [progressView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -331,39 +419,75 @@
   return progressView;
 }
 
+- (UIImageView *)newViewBackground{
+  UIImageView *background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"quizin_bg"]];
+  [background setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return background;
+}
+
 - (UIView *)newQuestionView{
   UIView *questionView = [[UIView alloc] init];
   [questionView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [questionView setBackgroundColor:[UIColor grayColor]];
   return questionView;
 }
 
 - (UIView *)newAnswerView{
   UIView *answerView = [[UIView alloc] init];
   [answerView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [answerView setBackgroundColor:[UIColor lightGrayColor]];
   return answerView;
 }
 
-- (AsyncImageView *)newProfileImageView {
+- (UIImageView *)newDivider{
+  UIImageView *divider = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"quizin_divider"]];
+  [divider setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return divider;
+}
+
+- (UIButton *)newQuestionButton{
+  UIButton *questionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  [questionButton setBackgroundImage:[UIImage imageNamed:@"match_pictureholder"] forState:UIControlStateNormal];
+  [questionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [questionButton addTarget:self action:@selector(questionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+  return questionButton;
+}
+
+- (AsyncImageView *)newQuestionButtonImage{
   AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  //profileImageView.image = [UIImage imageNamed:@"placeholderHead"];
   profileImageView.contentMode = UIViewContentModeScaleAspectFit;
   profileImageView.showActivityIndicator = YES;
   profileImageView.crossfadeDuration = 0.3f;
   profileImageView.crossfadeImages = YES;
-  //super large test image
-  //profileImageView.imageURL = [NSURL URLWithString:@"http://cdn.urbanislandz.com/wp-content/uploads/2011/10/MMSposter-large.jpg"];
-  // rick image (realiztic size)
-  profileImageView.imageURL = [NSURL URLWithString:@"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-1GoRs4ppiKY3Ta53ROlRJPt6osaXKdBTflGKXf0fT3XT433d"];
+  //profileImageView.imageURL = [NSURL URLWithString:@"http://www.awesomeannie.com/annie-wersching-pictures/cache/misc/headshots/annie-wersching-blonde-headshot-01_144_cw144_ch144_thumb.jpg"];
+  profileImageView.imageURL = [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/3/000/00d/248/1c9f8fa.jpg"];
   return profileImageView;
 }
-- (UIButton *)newQuestionButtonWithTitle:(NSString *)title {
-  UIButton *questionButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-  [questionButton setTitle:title forState:UIControlStateNormal];
-  [questionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  return questionButton;
+
+- (UIImageView *)newQuestionButtonTape{
+  UIImageView *profileTape = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"multiplechoice_tape"]];
+  [profileTape setContentMode:UIViewContentModeScaleToFill];
+  [profileTape setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return profileTape;
+}
+
+-(NSMutableArray *)newQuestionColorImages{
+  UIEdgeInsets insets = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
+  return [NSMutableArray arrayWithObjects:
+          [UIImage imageNamed:@"match_pictureholder_blue"],
+          [UIImage imageNamed:@"match_pictureholder_green"],
+          [UIImage imageNamed:@"match_pictureholder_red"],
+          [UIImage imageNamed:@"match_pictureholder_yellow"],
+          nil];
+}
+
+-(NSMutableArray *)newAnswerColorImages{
+  UIEdgeInsets insets = UIEdgeInsetsMake(15.0f, 18.0f, 15.0f, 18.0f);
+  return [NSMutableArray arrayWithObjects:
+          [[UIImage imageNamed:@"match_answerbox_blue"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_answerbox_green"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_answerbox_red"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_answerbox_yellow"] resizableImageWithCapInsets:insets],
+          nil];
 }
 
 - (UIButton *)newAnswerButtonWithTitle:(NSString *)title {
@@ -372,25 +496,28 @@
   answerButton.titleLabel.font = [QIFontProvider fontWithSize:16.0f style:Bold];
   answerButton.titleLabel.adjustsFontSizeToFitWidth = YES;
   answerButton.titleLabel.adjustsLetterSpacingToFitWidth = YES;
+  [answerButton setBackgroundImage:[[UIImage imageNamed:@"match_answerbox_std"] resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 18.0f, 15.0f, 18.0f)]  forState:UIControlStateNormal];
   [answerButton setTitleColor:[UIColor colorWithWhite:0.33f alpha:1.0f] forState:UIControlStateNormal];
   [answerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-  [answerButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, 40.0f, 0.0f, 40.0f)];
-  [answerButton setBackgroundImage:[UIImage imageNamed:@"multiplechoice_answer_btn"] forState:UIControlStateNormal];
-  [answerButton setBackgroundImage:[UIImage imageNamed:@"multiplechoice_answer_btn_pressed"] forState:UIControlStateSelected];
-  [answerButton setBackgroundImage:[UIImage imageNamed:@"multiplechoice_answer_btn_pressed"] forState:UIControlStateSelected | UIControlStateHighlighted];
+  [answerButton setTitleEdgeInsets:UIEdgeInsetsMake(15.0f, 18.0f, 15.0f, 18.0f)];
   [answerButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [answerButton setAdjustsImageWhenHighlighted:NO];
   [answerButton setReversesTitleShadowWhenHighlighted:NO];
+  [answerButton addTarget:self action:@selector(answerButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
   return answerButton;
 }
 
-
 -(UIButton *)newNextQuestionButton;{
-  UIButton *nextQuestionButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  UIButton *nextQuestionButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [nextQuestionButton setTitle:[self nextQuestionButtonText] forState:UIControlStateNormal];
+  [nextQuestionButton setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] forState:UIControlStateNormal];
+  [nextQuestionButton.titleLabel setFont:[QIFontProvider fontWithSize:14.0f style:Regular]];
+  [nextQuestionButton setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
   [nextQuestionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   return nextQuestionButton;
 }
+
+
 
 @end
 

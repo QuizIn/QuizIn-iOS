@@ -194,9 +194,7 @@
       [choiceButtonConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:283.0f]];
     }
     
-    NSLayoutConstraint *hNextButton = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0f constant:-10.0f];
-    
-    NSString *quizChoiceVertical = @"V:|[_progressView]-3-[_profileImageView(==144)]-12-[_dividerTop(==2)][_questionLabel(>=28)][_dividerBottom(==2)][_answerButtons0(>=44)][_answerButtons1(==_answerButtons0)][_answerButtons2(==_answerButtons0)][_answerButtons3(==_answerButtons0)][_nextQuestionButton(>=40)]-3-|";
+    NSString *quizChoiceVertical = @"V:|[_progressView]-3-[_profileImageView(==144)]-12-[_dividerTop(==2)][_questionLabel(>=28)][_dividerBottom(==2)][_answerButtons0(>=44)][_answerButtons1(==_answerButtons0)][_answerButtons2(==_answerButtons0)][_answerButtons3(==_answerButtons0)][_nextQuestionButton(==40)]-3-|";
     
     NSArray *quizChoiceVerticalConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:quizChoiceVertical
@@ -204,8 +202,11 @@
                                             metrics:nil
                                               views:multipleChoiceViews];
     
+    NSLayoutConstraint *hNextButton = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0f constant:-10.0f];
     
-    [self.multipleChoiceConstraints addObjectsFromArray:@[centerImageX,imageWidth,centerQuestionX,centerDividerTopX,centerDividerBottomX,hNextButton]];
+    NSLayoutConstraint *nextButtonWidth = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0f constant:125.0f];
+    
+    [self.multipleChoiceConstraints addObjectsFromArray:@[centerImageX,imageWidth,centerQuestionX,centerDividerTopX,centerDividerBottomX,hNextButton,nextButtonWidth]];
     [self.multipleChoiceConstraints addObjectsFromArray:choiceButtonConstraints];
     [self.multipleChoiceConstraints addObjectsFromArray:quizChoiceVerticalConstraints];
     
@@ -221,7 +222,6 @@
     
     NSLayoutConstraint *centerTapeX = [NSLayoutConstraint constraintWithItem:_profileImageTape attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_profileImageView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
     NSLayoutConstraint *tapeY = [NSLayoutConstraint constraintWithItem:_profileImageTape attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_profileImageView attribute:NSLayoutAttributeTop multiplier:1.0f constant:-11.0f];
-
     
     [self.multipleChoiceConstraints addObjectsFromArray:@[centerImageBackgroundX,centerImageBackgroundY,widthImageBackground,heightImageBackground,centerTapeX,tapeY]];
     
@@ -330,9 +330,9 @@
   [answerButton setTitleColor:[UIColor colorWithWhite:0.33f alpha:1.0f] forState:UIControlStateNormal];
   [answerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
   [answerButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, 40.0f, 0.0f, 40.0f)];
-  [answerButton setBackgroundImage:[UIImage imageNamed:@"multiplechoice_answer_btn"] forState:UIControlStateNormal];
-  [answerButton setBackgroundImage:[UIImage imageNamed:@"multiplechoice_answer_btn_pressed"] forState:UIControlStateSelected];
-  [answerButton setBackgroundImage:[UIImage imageNamed:@"multiplechoice_answer_btn_pressed"] forState:UIControlStateSelected | UIControlStateHighlighted];
+  [answerButton setBackgroundImage:[[UIImage imageNamed:@"multiplechoice_answer_btn"] resizableImageWithCapInsets:UIEdgeInsetsMake(13, 32, 13, 32)] forState:UIControlStateNormal];
+  [answerButton setBackgroundImage:[[UIImage imageNamed:@"multiplechoice_answer_btn_pressed"] resizableImageWithCapInsets:UIEdgeInsetsMake(13, 32, 13, 32)] forState:UIControlStateSelected];
+  [answerButton setBackgroundImage:[[UIImage imageNamed:@"multiplechoice_answer_btn_pressed"] resizableImageWithCapInsets:UIEdgeInsetsMake(13, 32, 13, 32)] forState:UIControlStateSelected | UIControlStateHighlighted];
   [answerButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [answerButton setAdjustsImageWhenHighlighted:NO];
   [answerButton setReversesTitleShadowWhenHighlighted:NO];
@@ -346,7 +346,7 @@
   //[nextQuestionButton setBackgroundImage:[[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 74, 0, 74)] forState:UIControlStateNormal];
   [nextQuestionButton setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] forState:UIControlStateNormal];
 
-  [nextQuestionButton.titleLabel setFont:[QIFontProvider fontWithSize:16.0f style:Regular]];
+  [nextQuestionButton.titleLabel setFont:[QIFontProvider fontWithSize:14.0f style:Regular]];
   [nextQuestionButton setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
   [nextQuestionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   return nextQuestionButton;
