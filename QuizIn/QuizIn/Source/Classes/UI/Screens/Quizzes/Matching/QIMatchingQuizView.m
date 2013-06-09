@@ -9,11 +9,14 @@
 @property(nonatomic, strong) UIView *questionView;
 @property(nonatomic, strong) NSArray *questionButtons;
 @property(nonatomic, strong) NSArray *questionButtonImages;
+@property(nonatomic, strong) NSMutableArray *questionColorImagesQueue;
 @property(nonatomic, strong) NSMutableArray *questionColorImages;
 @property(nonatomic, strong) NSArray *questionButtonTapes;
 @property(nonatomic, strong) UIView *answerView;
 @property(nonatomic, strong) NSArray *answerButtons;
+@property(nonatomic, strong) NSMutableArray *answerColorImagesQueue;
 @property(nonatomic, strong) NSMutableArray *answerColorImages;
+@property(nonatomic) BOOL matchOpen;
 @property(nonatomic, strong) UIButton *nextQuestionButton;
 
 @property(nonatomic, strong) NSMutableArray *progressViewConstraints;
@@ -42,9 +45,12 @@
     _questionButtons = @[];
     _questionButtonImages = @[];
     _questionButtonTapes = @[];
-    _questionColorImages = [self newQuestionColorImages];
-    _answerColorImages = [self newAnswerColorImages];
+    _questionColorImagesQueue = [self newQuestionColorImages];
+    _answerColorImagesQueue = [self newAnswerColorImages];
+    _questionColorImages = [_questionColorImagesQueue copy];
+    _answerColorImages = [_answerColorImagesQueue copy];
     _nextQuestionButton = [self newNextQuestionButton];
+    _matchOpen = YES; 
     
     //TODO rkuhlman not sure if this should stay here.
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -379,35 +385,60 @@
   _questionButtonImages = [questionButtonImages copy];
   _questionButtonTapes = [questionButtonTapes copy];
   self.questionButtons = [questionButtons copy];
-
   return;
 }
 
+#pragma mark actions
+
 -(UIImage *)dequeueQuestionColorImage{
-  UIImage *lastImage = [self.questionColorImages lastObject];
-  [self.questionColorImages removeLastObject];
+  UIImage *lastImage = [self.questionColorImagesQueue lastObject];
+  [self.questionColorImagesQueue removeLastObject];
   return lastImage;
 }
 
 -(UIImage *)dequeueAnswerColorImage{
-  UIImage *lastImage = [self.answerColorImages lastObject];
-  [self.answerColorImages removeLastObject];
+  UIImage *lastImage = [self.answerColorImagesQueue lastObject];
+  [self.answerColorImagesQueue removeLastObject];
   return lastImage;
 }
 
 - (void)questionButtonPressed:(id)sender{
   UIButton *pressedButton = (UIButton *)sender;
-  UIImage *questionColorImage = [self dequeueQuestionColorImage];
-  [pressedButton setBackgroundImage:questionColorImage forState:UIControlStateSelected];
-  [pressedButton setBackgroundImage:questionColorImage forState:UIControlStateSelected | UIControlStateHighlighted];
+
+    if (!pressedButton.selected) {
+      UIImage *questionColorImage = [self dequeueQuestionColorImage];
+      [pressedButton setBackgroundImage:questionColorImage forState:UIControlStateSelected];
+    }
+    else{
+      NSInteger index = [self.questionColorImages indexOfObjectIdenticalTo:[pressedButton backgroundImageForState:UIControlStateSelected]];
+      [self.answerColorImagesQueue addObject:self.answerColorImages[index]];
+    }
+  
   pressedButton.selected = YES;
+  for (UIButton *button in self.questionButtons) {
+    [button setUserInteractionEnabled:NO];
+  }
+  for (UIButton *button in self.answerButtons) {
+    [button setUserInteractionEnabled:YES];
+  }
 }
+
 - (void)answerButtonPressed:(id)sender{
   UIButton *pressedButton = (UIButton *)sender;
   UIImage *answerColorImage = [self dequeueAnswerColorImage];
   [pressedButton setBackgroundImage:answerColorImage forState:UIControlStateSelected];
   [pressedButton setBackgroundImage:answerColorImage forState:UIControlStateSelected | UIControlStateHighlighted];
-    pressedButton.selected = YES;
+  pressedButton.selected = YES;
+  for (UIButton *button in self.answerButtons) {
+    [button setUserInteractionEnabled:NO];
+    if (pressedButton == button) {}
+    else if ([[button backgroundImageForState:UIControlStateSelected] isEqual:answerColorImage]){
+      button.selected = NO;
+    }
+  }
+  for (UIButton *button in self.questionButtons) {
+    [button setUserInteractionEnabled:YES];
+  }
 }
 
 #pragma mark Factory Methods
