@@ -20,6 +20,7 @@
   [super viewDidLoad];
   self.businessCardQuizView.numberOfQuestions = 10;
   self.businessCardQuizView.quizProgress = 4;
+  self.businessCardQuizView.questionImageURL = [NSURL URLWithString:@"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-1GoRs4ppiKY3Ta53ROlRJPt6osaXKdBTflGKXf0fT3XT433d"];
   self.businessCardQuizView.answerFirstNames = @[@"Rick",@"Rene",@"Tim"];
   self.businessCardQuizView.answerLastNames = @[@"Kuhlman",@"Cacheaux",@"Dredge"];
   self.businessCardQuizView.answerCompanies = @[@"National Instruments",@"Mutual Mobile",@"Invodo Inc."];

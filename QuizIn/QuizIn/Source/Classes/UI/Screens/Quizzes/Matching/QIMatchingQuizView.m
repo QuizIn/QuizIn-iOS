@@ -18,13 +18,10 @@
 @property(nonatomic, strong) NSMutableArray *answerColorImages;
 @property(nonatomic, strong) UIButton *nextQuestionButton;
 @property(nonatomic) BOOL overwriteSelection;
-
 @property(nonatomic, strong) NSMutableArray *progressViewConstraints;
 @property(nonatomic, strong) NSMutableArray *questionConstraints;
 @property(nonatomic, strong) NSMutableArray *answerConstraints;
-
 @end
-
 
 @implementation QIMatchingQuizView
 
@@ -61,13 +58,11 @@
 
 
 #pragma mark Properties
-
- 
-- (void)setQuestions:(NSArray *)questions {
-  if ([questions isEqualToArray:_questions]) {
+- (void)setQuestionImageURLs:(NSArray *)questionImageURLs{
+  if ([questionImageURLs isEqualToArray:_questionImageURLs]) {
     return;
   }
-  _questions = [questions copy];;
+  _questionImageURLs = [questionImageURLs copy];;
   [self updateQuestionButtons];
 }
 
@@ -346,7 +341,6 @@
 }
 
 #pragma mark Data Display
-
 -(void)updateProgress{
   self.progressView.numberOfQuestions = _numberOfQuestions;
   self.progressView.quizProgress = _quizProgress;
@@ -365,17 +359,17 @@
 }
 
 - (void)updateQuestionButtons {
-  if ([self.questions count] == 0) {
+  if ([self.questionImageURLs count] == 0) {
     return;
   }
-  NSMutableArray *questionButtons = [NSMutableArray arrayWithCapacity:[self.questions count]];
-  NSMutableArray *questionButtonImages = [NSMutableArray arrayWithCapacity:[self.questions count]];
-  NSMutableArray *questionButtonTapes = [NSMutableArray arrayWithCapacity:[self.questions count]];
+  NSMutableArray *questionButtons = [NSMutableArray arrayWithCapacity:[self.questionImageURLs count]];
+  NSMutableArray *questionButtonImages = [NSMutableArray arrayWithCapacity:[self.questionImageURLs count]];
+  NSMutableArray *questionButtonTapes = [NSMutableArray arrayWithCapacity:[self.questionImageURLs count]];
   
-  for (NSString *questions in self.questions) {
+  for (NSURL *questionImageURL in self.questionImageURLs) {
     UIButton *questionButton = [self newQuestionButton];
     [questionButtons addObject:questionButton];
-    AsyncImageView *questionImage = [self newQuestionButtonImage];
+    AsyncImageView *questionImage = [self newQuestionButtonImageWithURL:questionImageURL];
     [questionButtonImages addObject:questionImage];
     UIImageView *tape = [self newQuestionButtonTape];
     [questionButtonTapes addObject:tape];
@@ -388,7 +382,6 @@
 }
 
 #pragma mark actions
-
 -(NSNumber *)dequeueQuestionColorImage{
   NSNumber *lastImageIndex = [self.questionColorImagesQueue lastObject];
   [self.questionColorImagesQueue removeLastObject];
@@ -400,7 +393,6 @@
   [self.answerColorImagesQueue removeLastObject];
   return lastImageIndex;
 }
-
 
 - (void)questionButtonPressed:(id)sender{
   UIButton *pressedButton = (UIButton *)sender;
@@ -424,10 +416,8 @@
       self.overwriteSelection = YES;
     }
   }
-
   [UIView beginAnimations:nil context:NULL];
   [UIView setAnimationDuration:.4];
-  
   pressedButton.selected = YES;
   for (UIButton *button in self.questionButtons) {
     if (pressedButton != button & button.tag == questionColorImageIndex){
@@ -525,15 +515,14 @@
   return questionButton;
 }
 
-- (AsyncImageView *)newQuestionButtonImage{
+- (AsyncImageView *)newQuestionButtonImageWithURL:(NSURL *)imageURL{
   AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   profileImageView.contentMode = UIViewContentModeScaleAspectFit;
   profileImageView.showActivityIndicator = YES;
   profileImageView.crossfadeDuration = 0.3f;
   profileImageView.crossfadeImages = YES;
-  //profileImageView.imageURL = [NSURL URLWithString:@"http://www.awesomeannie.com/annie-wersching-pictures/cache/misc/headshots/annie-wersching-blonde-headshot-01_144_cw144_ch144_thumb.jpg"];
-  profileImageView.imageURL = [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/3/000/00d/248/1c9f8fa.jpg"];
+  profileImageView.imageURL = imageURL;
   return profileImageView;
 }
 

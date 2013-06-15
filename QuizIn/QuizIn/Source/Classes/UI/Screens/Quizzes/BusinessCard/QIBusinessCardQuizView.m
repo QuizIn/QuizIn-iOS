@@ -70,6 +70,11 @@
   [self updateProgress];
 }
 
+- (void)setQuestionImageURL:(NSURL *)questionImageURL{
+  _questionImageURL = questionImageURL;
+  [self updateQuestionImage];
+}
+
 - (void)setAnswerFirstNames:(NSArray *)answerFirstNames {
   if ([answerFirstNames isEqualToArray:_answerFirstNames]) {
     return;
@@ -395,6 +400,9 @@
 }
 
 #pragma mark Data Display
+-(void)updateQuestionImage{
+  self.profileImageView.imageURL = self.questionImageURL;
+}
 
 -(void)updateProgress{
   self.progressView.numberOfQuestions = _numberOfQuestions;
@@ -520,8 +528,6 @@
   profileImageView.showActivityIndicator = YES;
   profileImageView.crossfadeDuration = 0.3f;
   profileImageView.crossfadeImages = YES;
-  //profileImageView.imageURL = [NSURL URLWithString:@"http://cdn.urbanislandz.com/wp-content/uploads/2011/10/MMSposter-large.jpg"];
-  profileImageView.imageURL = [NSURL URLWithString:@"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-1GoRs4ppiKY3Ta53ROlRJPt6osaXKdBTflGKXf0fT3XT433d"];
   return profileImageView;
 }
 

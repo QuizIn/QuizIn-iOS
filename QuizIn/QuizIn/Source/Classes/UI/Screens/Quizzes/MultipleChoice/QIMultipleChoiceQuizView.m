@@ -69,12 +69,9 @@
   self.questionLabel.text = _question;
 }
 
-- (void)setProfileImage:(UIImage *)profileImage {
-  if ([profileImage isEqual:_profileImage]) {
-    return;
-  }
-  _profileImage = profileImage;
-  self.profileImageView.image = _profileImage;
+- (void)setProfileImageURL:(NSURL *)profileImageURL{
+  _profileImageURL = profileImageURL;
+  [self updateProfileImage];
 }
 
 - (void)setAnswers:(NSArray *)answers {
@@ -242,6 +239,9 @@
   self.progressView.quizProgress = _quizProgress;
 }
 
+-(void)updateProfileImage{
+  self.profileImageView.imageURL = self.profileImageURL;
+}
 
 - (void)updateAnswerButtons {
   if ([self.answers count] == 0) {
@@ -306,7 +306,6 @@
   profileImageView.showActivityIndicator = YES;
   profileImageView.crossfadeDuration = 0.3f;
   profileImageView.crossfadeImages = YES;
-  profileImageView.imageURL = [NSURL URLWithString:@"http://www.awesomeannie.com/annie-wersching-pictures/cache/misc/headshots/annie-wersching-blonde-headshot-01_144_cw144_ch144_thumb.jpg"];
   return profileImageView;
 }
 

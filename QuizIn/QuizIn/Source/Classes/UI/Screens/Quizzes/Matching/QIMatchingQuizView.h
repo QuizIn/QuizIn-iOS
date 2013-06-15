@@ -7,7 +7,7 @@
 @property(nonatomic, assign) NSUInteger quizProgress;
 @property(nonatomic, assign) NSUInteger numberOfQuestions;
 
-@property(nonatomic, copy) NSArray *questions;
+@property(nonatomic, copy) NSArray *questionImageURLs;
 @property(nonatomic, copy) NSArray *answers;
 
 

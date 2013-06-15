@@ -25,6 +25,7 @@
   self.multipleChoiceView.quizProgress = 10;
   self.multipleChoiceView.question = @"Where do I work?";
   self.multipleChoiceView.answers = @[@"National Instruments",@"Invodo",@"Mutual Mobile",@"Google"];
+  self.multipleChoiceView.profileImageURL = [NSURL URLWithString:@"http://www.awesomeannie.com/annie-wersching-pictures/cache/misc/headshots/annie-wersching-blonde-headshot-01_144_cw144_ch144_thumb.jpg"];
   [self.multipleChoiceView.progressView.exitButton addTarget:self
                                                       action:@selector(userDidCloseQuiz)
                                             forControlEvents:UIControlEventTouchUpInside];

@@ -31,7 +31,10 @@
   [super viewDidLoad];
   self.matchingQuizView.numberOfQuestions = 10;
   self.matchingQuizView.quizProgress = 4;
-  self.matchingQuizView.questions = @[@"Rick Kuhlman",@"Rene Cacheaux",@"Tim Dredge",@"George Bush"];
+  self.matchingQuizView.questionImageURLs = @[[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/3/000/00d/248/1c9f8fa.jpg"],
+                                              [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/6/000/1f0/39b/3ae80b5.jpg"],
+                                              [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/1/000/095/3e4/142853e.jpg"],
+                                              [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/1/000/080/035/28eea75.jpg"]];
   self.matchingQuizView.answers = @[@"Knoxville Fellows",@"Invodo",@"Mutual Mobile",@"Google"];
 
 }
