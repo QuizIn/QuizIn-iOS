@@ -9,12 +9,10 @@
 @property(nonatomic, strong) UILabel *connectionsQuizTitle;
 @property(nonatomic, strong) UILabel *connectionsQuizNumberOfConnectionsLabel;
 @property(nonatomic, strong) UIView *connectionsQuizImagePreviewCollection;
-@property(nonatomic, strong, readwrite) UIButton *connectionsQuizButton;
 
 //constraints
 @property(nonatomic, strong) NSMutableArray *constraintsForTopLevelViews;
 @property(nonatomic, strong) NSMutableArray *constraintsForConnectionsQuizStartView;
-
 
 @end
 
@@ -38,6 +36,7 @@
     _connectionsQuizImagePreviewCollection = [self newConnectionsQuizImagePreviewCollection];
     _connectionsQuizButton = [self newConnectionsQuizButton];
     _connectionsQuizStartView = [self newConnectionsQuizStartView];
+    _calendarPickerButton = [self newCalendarPickerButton];
     
     [self constructViewHierachy];
   }
@@ -47,12 +46,14 @@
 - (void)constructViewHierachy {
   
   // Construct Connections Quiz Start Area
+  [self addSubview:self.calendarPickerButton];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizPaperImage];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizTitle];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizNumberOfConnectionsLabel];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizImagePreviewCollection];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizButton];
   [self addSubview:self.connectionsQuizStartView];
+
 }
 
 #pragma mark Layout
@@ -78,8 +79,6 @@
     [self.constraintsForTopLevelViews  addObjectsFromArray:hConstraintsTopLevelViews];
     [self.constraintsForTopLevelViews  addObjectsFromArray:vConstraintsTopLevelViews];
     [self addConstraints:self.constraintsForTopLevelViews];
-    
-    
     
     //ConnectionsQuizStartView Constraints
     
@@ -148,8 +147,26 @@
     [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:vConstraintsConnectionsQuizPaperImageBottom];
     [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:@[vConstraintsConnectionsQuizPaperImageTop]];
     [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:vConstraintsConnectionsQuizButton];
-    [_connectionsQuizStartView addConstraints:self.constraintsForConnectionsQuizStartView];
-
+    [self.connectionsQuizStartView addConstraints:self.constraintsForConnectionsQuizStartView];
+    
+    //Constrain calendar Picker Button
+    NSDictionary *calendarPickerButtonViews = NSDictionaryOfVariableBindings(_connectionsQuizStartView,_calendarPickerButton);
+    
+    NSArray *hConstraintsCalendarPickerButton =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_calendarPickerButton]-30-|"
+                                            options:0
+                                            metrics:nil
+                                              views:calendarPickerButtonViews];
+    NSArray *vConstraintsCalendarPickerButton =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_connectionsQuizStartView]-[_calendarPickerButton]"
+                                            options:0
+                                            metrics:nil
+                                              views:calendarPickerButtonViews];
+    
+    [self addConstraints:hConstraintsCalendarPickerButton];
+    [self addConstraints:vConstraintsCalendarPickerButton];
+    
+    //add Calendar Picker Button TEST
   }
 }
 
@@ -204,11 +221,21 @@
   [startView setTranslatesAutoresizingMaskIntoConstraints:NO];
   return startView;
 }
+-(UIButton *)newCalendarPickerButton{
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setTitle:[self calendarPickerButtonTitle] forState:UIControlStateNormal];
+  [button setBackgroundImage:[[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 74, 0, 74)] forState:UIControlStateNormal];
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  button.backgroundColor = [UIColor clearColor];
+  return button;
+}
 
 #pragma mark Strings
 
 - (NSString *)connectionsQuizButtonTitle {
   return @"Take Quiz";
 }
-
+- (NSString *)calendarPickerButtonTitle {
+  return @"Calendar Quiz";
+}
 @end

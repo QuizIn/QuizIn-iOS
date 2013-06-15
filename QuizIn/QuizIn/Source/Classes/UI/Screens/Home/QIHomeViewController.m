@@ -2,6 +2,7 @@
 
 #import "QIHomeView.h"
 #import "QIQuizViewController.h"
+#import "QICalendarPickerViewController.h"
 
 @interface QIHomeViewController ()
 @property(nonatomic, strong, readonly) QIHomeView *homeView;
@@ -31,6 +32,10 @@
   [self.homeView.connectionsQuizButton addTarget:self
                                           action:@selector(startConnectionsQuiz:)
                                 forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.homeView.calendarPickerButton addTarget:self
+                                         action:@selector(calendarPicker:)
+                               forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -44,6 +49,10 @@
   [self presentViewController:quizViewController animated:YES completion:nil];
 }
 
+- (void)calendarPicker:(id)sender {
+  QICalendarPickerViewController *calendarPickerViewController = [self newCalendarPickerViewController];
+  [self presentViewController:calendarPickerViewController animated:YES completion:nil];
+}
 #pragma mark Strings
 
 - (NSString *)homeScreenTitle {
@@ -65,4 +74,10 @@
   return quizViewController;
 }
 
+- (QICalendarPickerViewController *)newCalendarPickerViewController {
+  QICalendarPickerViewController *calendarPickerViewController = [[QICalendarPickerViewController alloc] init];
+  calendarPickerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+  calendarPickerViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+  return calendarPickerViewController;
+}
 @end
