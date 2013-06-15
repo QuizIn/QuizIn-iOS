@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>95B04D2C-638C-487B-91E9-32DEA5B3A70B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>QuizIn</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>620C48E4-1D57-470B-973C-9ED38140C8BF</key>
+		<string>https://github.com/RCacheaux/AuthKit.git</string>
+		<key>8C946651-64B0-4CF6-9EE2-2638F1BF5C83</key>
+		<string>https://github.com/RCacheaux/QuizIn-iOS.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>QuizIn/QuizIn.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>620C48E4-1D57-470B-973C-9ED38140C8BF</key>
+		<string>../../../AuthKit</string>
+		<key>8C946651-64B0-4CF6-9EE2-2638F1BF5C83</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/RCacheaux/QuizIn-iOS.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8C946651-64B0-4CF6-9EE2-2638F1BF5C83</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8C946651-64B0-4CF6-9EE2-2638F1BF5C83</string>
+			<key>IDESourceControlWCCName</key>
+			<string>QuizIn-iOS</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>620C48E4-1D57-470B-973C-9ED38140C8BF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>AuthKit</string>
+		</dict>
+	</array>
+</dict>
+</plist>

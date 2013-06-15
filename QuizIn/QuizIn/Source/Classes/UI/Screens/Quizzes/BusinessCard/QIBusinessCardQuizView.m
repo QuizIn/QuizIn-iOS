@@ -391,7 +391,7 @@
 #pragma mark Strings
 
 - (NSString *)nextQuestionButtonText {
-  return @"Next Question";
+  return @"Check Answers";
 }
 
 #pragma mark Data Display
@@ -486,7 +486,29 @@
 }
 
 -(UIImageView *)newBusinessCardBackground{
-  UIImageView *businessCardBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cardquiz_businesscard"]];
+  int imagePicker = arc4random_uniform(5);
+  NSLog(@"%d",imagePicker);
+  NSString *imageName = @"";
+  switch (imagePicker) {
+    case 0:
+      imageName = @"cardquiz_businesscard";
+      break;
+    case 1:
+      imageName = @"cardquiz_businesscard_v1";
+      break;
+    case 2:
+      imageName = @"cardquiz_businesscard_v2";
+      break;
+    case 3:
+      imageName = @"cardquiz_businesscard_v3";
+      break;
+    case 4:
+      imageName = @"cardquiz_businesscard_v4";
+      break;
+    default:
+      break;
+  }
+  UIImageView *businessCardBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
   [businessCardBackground setTranslatesAutoresizingMaskIntoConstraints:NO];
   return businessCardBackground;
 }
@@ -494,14 +516,11 @@
 - (AsyncImageView *)newProfileImageView {
   AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  //profileImageView.image = [UIImage imageNamed:@"placeholderHead"];
   profileImageView.contentMode = UIViewContentModeScaleAspectFit;
   profileImageView.showActivityIndicator = YES;
   profileImageView.crossfadeDuration = 0.3f;
   profileImageView.crossfadeImages = YES;
-  //super large test image
   //profileImageView.imageURL = [NSURL URLWithString:@"http://cdn.urbanislandz.com/wp-content/uploads/2011/10/MMSposter-large.jpg"];
-  // rick image (realiztic size)
   profileImageView.imageURL = [NSURL URLWithString:@"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-1GoRs4ppiKY3Ta53ROlRJPt6osaXKdBTflGKXf0fT3XT433d"];
   return profileImageView;
 }

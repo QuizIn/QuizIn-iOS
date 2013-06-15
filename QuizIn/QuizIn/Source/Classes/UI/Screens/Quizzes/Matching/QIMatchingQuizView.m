@@ -16,8 +16,8 @@
 @property(nonatomic, strong) NSArray *answerButtons;
 @property(nonatomic, strong) NSMutableArray *answerColorImagesQueue;
 @property(nonatomic, strong) NSMutableArray *answerColorImages;
-@property(nonatomic) BOOL matchOpen;
 @property(nonatomic, strong) UIButton *nextQuestionButton;
+@property(nonatomic) BOOL overwriteSelection;
 
 @property(nonatomic, strong) NSMutableArray *progressViewConstraints;
 @property(nonatomic, strong) NSMutableArray *questionConstraints;
@@ -45,16 +45,15 @@
     _questionButtons = @[];
     _questionButtonImages = @[];
     _questionButtonTapes = @[];
-    _questionColorImagesQueue = [self newQuestionColorImages];
-    _answerColorImagesQueue = [self newAnswerColorImages];
-    _questionColorImages = [_questionColorImagesQueue copy];
-    _answerColorImages = [_answerColorImagesQueue copy];
+    _questionColorImagesQueue = [self newQueue];
+    _answerColorImagesQueue = [self newQueue];
+    _questionColorImages = [self newQuestionColorImages];
+    _answerColorImages = [self newAnswerColorImages];
+    _overwriteSelection = NO; 
     _nextQuestionButton = [self newNextQuestionButton];
-    _matchOpen = YES; 
     
-    //TODO rkuhlman not sure if this should stay here.
-    [self setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
+
+    [self setTranslatesAutoresizingMaskIntoConstraints:NO];    
     [self constructViewHierarchy];
   }
   return self;
@@ -215,7 +214,6 @@
     
     NSDictionary *questionAnswerViews = NSDictionaryOfVariableBindings(_progressView,_questionView,_answerView,_divider);
     
-    
     NSString *hAnswerView = @"H:|[_answerView]|";
     NSArray *hAnswerViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:hAnswerView
@@ -252,6 +250,7 @@
       [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonTapes[i] attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_questionButtons[i] attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
       [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonTapes[i] attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_questionButtons[i] attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
       [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonTapes[i] attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_questionButtonImages[i] attribute:NSLayoutAttributeTop multiplier:1.0f constant:5.0f]];
+      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonTapes[i] attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:47.0f]];
     }
 
     for (UIButton *button in self.questionButtons){
@@ -343,7 +342,7 @@
 
 #pragma mark Strings
 - (NSString *)nextQuestionButtonText {
-  return @"Next Question";
+  return @"Check Answers";
 }
 
 #pragma mark Data Display
@@ -390,57 +389,100 @@
 
 #pragma mark actions
 
--(UIImage *)dequeueQuestionColorImage{
-  UIImage *lastImage = [self.questionColorImagesQueue lastObject];
+-(NSNumber *)dequeueQuestionColorImage{
+  NSNumber *lastImageIndex = [self.questionColorImagesQueue lastObject];
   [self.questionColorImagesQueue removeLastObject];
-  return lastImage;
+  return lastImageIndex;
 }
 
--(UIImage *)dequeueAnswerColorImage{
-  UIImage *lastImage = [self.answerColorImagesQueue lastObject];
+-(NSNumber *)dequeueAnswerColorImage{
+  NSNumber *lastImageIndex = [self.answerColorImagesQueue lastObject];
   [self.answerColorImagesQueue removeLastObject];
-  return lastImage;
+  return lastImageIndex;
 }
+
 
 - (void)questionButtonPressed:(id)sender{
   UIButton *pressedButton = (UIButton *)sender;
+  int questionColorImageIndex  = 0;
+  if (!pressedButton.selected) {
+    questionColorImageIndex = [[self dequeueQuestionColorImage] integerValue];
+    [pressedButton setBackgroundImage:self.questionColorImages[questionColorImageIndex] forState:UIControlStateSelected];
+    pressedButton.tag = questionColorImageIndex;
+    self.overwriteSelection = !self.overwriteSelection;
+  }
+  else {
+    if (self.overwriteSelection){
+      questionColorImageIndex = [[self dequeueQuestionColorImage] integerValue];
+      [pressedButton setBackgroundImage:self.questionColorImages[questionColorImageIndex] forState:UIControlStateSelected];
+      self.overwriteSelection = NO;
+      pressedButton.tag = questionColorImageIndex; 
+    }
+    else {
+      questionColorImageIndex = [self.questionColorImages indexOfObjectIdenticalTo:[pressedButton backgroundImageForState:UIControlStateSelected]];
+      [self.answerColorImagesQueue addObject:[NSNumber numberWithInt:questionColorImageIndex]];
+      self.overwriteSelection = YES;
+    }
+  }
 
-    if (!pressedButton.selected) {
-      UIImage *questionColorImage = [self dequeueQuestionColorImage];
-      [pressedButton setBackgroundImage:questionColorImage forState:UIControlStateSelected];
-    }
-    else{
-      NSInteger index = [self.questionColorImages indexOfObjectIdenticalTo:[pressedButton backgroundImageForState:UIControlStateSelected]];
-      [self.answerColorImagesQueue addObject:self.answerColorImages[index]];
-    }
+  [UIView beginAnimations:nil context:NULL];
+  [UIView setAnimationDuration:.4];
   
   pressedButton.selected = YES;
   for (UIButton *button in self.questionButtons) {
+    if (pressedButton != button & button.tag == questionColorImageIndex){
+      button.selected = NO;
+    }
     [button setUserInteractionEnabled:NO];
+    [button setAlpha:0.4f];
   }
   for (UIButton *button in self.answerButtons) {
     [button setUserInteractionEnabled:YES];
+    [button setAlpha:1.0f];
   }
+  [UIView commitAnimations];
 }
 
 - (void)answerButtonPressed:(id)sender{
   UIButton *pressedButton = (UIButton *)sender;
-  UIImage *answerColorImage = [self dequeueAnswerColorImage];
-  [pressedButton setBackgroundImage:answerColorImage forState:UIControlStateSelected];
-  [pressedButton setBackgroundImage:answerColorImage forState:UIControlStateSelected | UIControlStateHighlighted];
+  int answerColorImageIndex = 0;
+  if (!pressedButton.selected) {
+    answerColorImageIndex = [[self dequeueAnswerColorImage] integerValue];
+    [pressedButton setBackgroundImage:self.answerColorImages[answerColorImageIndex] forState:UIControlStateSelected];
+    pressedButton.tag = answerColorImageIndex;
+    self.overwriteSelection = !self.overwriteSelection;
+  }
+  else {
+    if (self.overwriteSelection){
+      answerColorImageIndex = [[self dequeueAnswerColorImage] integerValue];
+      [pressedButton setBackgroundImage:self.answerColorImages[answerColorImageIndex] forState:UIControlStateSelected];
+      pressedButton.tag = answerColorImageIndex;
+      self.overwriteSelection = NO;
+    }
+    else {
+      answerColorImageIndex = [self.answerColorImages indexOfObjectIdenticalTo:[pressedButton backgroundImageForState:UIControlStateSelected]];
+      [self.questionColorImagesQueue addObject:[NSNumber numberWithInt:answerColorImageIndex]];
+      self.overwriteSelection = YES;
+    }
+  }
+
   pressedButton.selected = YES;
+  [UIView beginAnimations:nil context:NULL];
+  [UIView setAnimationDuration:.4];
   for (UIButton *button in self.answerButtons) {
-    [button setUserInteractionEnabled:NO];
-    if (pressedButton == button) {}
-    else if ([[button backgroundImageForState:UIControlStateSelected] isEqual:answerColorImage]){
+    if (pressedButton != button & button.tag == answerColorImageIndex){
       button.selected = NO;
     }
+    [button setUserInteractionEnabled:NO];
+    [button setAlpha:0.4f];
   }
   for (UIButton *button in self.questionButtons) {
     [button setUserInteractionEnabled:YES];
+    [button setAlpha:1.0f];
   }
+  [UIView commitAnimations];
 }
-
+                                     
 #pragma mark Factory Methods
 - (QIProgressView *)newProgressView{
   QIProgressView *progressView = [[QIProgressView alloc] init];
@@ -476,8 +518,9 @@
 
 - (UIButton *)newQuestionButton{
   UIButton *questionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  [questionButton setBackgroundImage:[UIImage imageNamed:@"match_pictureholder"] forState:UIControlStateNormal];
+  [questionButton setBackgroundImage:[[UIImage imageNamed:@"match_pictureholder"] resizableImageWithCapInsets:UIEdgeInsetsMake(16,16,16,16)] forState:UIControlStateNormal];
   [questionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [questionButton setTag:99];
   [questionButton addTarget:self action:@selector(questionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
   return questionButton;
 }
@@ -500,14 +543,22 @@
   [profileTape setTranslatesAutoresizingMaskIntoConstraints:NO];
   return profileTape;
 }
+-(NSMutableArray *)newQueue{
+  return [NSMutableArray arrayWithObjects:
+          [NSNumber numberWithInt:0],
+          [NSNumber numberWithInt:1],
+          [NSNumber numberWithInt:2],
+          [NSNumber numberWithInt:3],
+          nil];
+}
 
 -(NSMutableArray *)newQuestionColorImages{
-  UIEdgeInsets insets = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
+  UIEdgeInsets insets = UIEdgeInsetsMake(16.0f, 16.0f, 16.0f, 16.0f);
   return [NSMutableArray arrayWithObjects:
-          [UIImage imageNamed:@"match_pictureholder_blue"],
-          [UIImage imageNamed:@"match_pictureholder_green"],
-          [UIImage imageNamed:@"match_pictureholder_red"],
-          [UIImage imageNamed:@"match_pictureholder_yellow"],
+          [[UIImage imageNamed:@"match_pictureholder_blue"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_pictureholder_green"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_pictureholder_red"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_pictureholder_yellow"] resizableImageWithCapInsets:insets],
           nil];
 }
 
@@ -534,7 +585,9 @@
   [answerButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [answerButton setAdjustsImageWhenHighlighted:NO];
   [answerButton setReversesTitleShadowWhenHighlighted:NO];
+  [answerButton setTag:99];
   [answerButton addTarget:self action:@selector(answerButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+  
   return answerButton;
 }
 

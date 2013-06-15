@@ -232,7 +232,7 @@
 #pragma mark Strings
 
 - (NSString *)nextQuestionButtonText {
-  return @"Next Question";
+  return @"Check Answers";
 }
 
 #pragma mark Data Display
