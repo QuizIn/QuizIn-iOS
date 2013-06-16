@@ -25,6 +25,7 @@
 		34519799176C06EE0061E459 /* cardquiz_businesscard_v4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34519793176C06EE0061E459 /* cardquiz_businesscard_v4@2x.png */; };
 		3451979F176CF0420061E459 /* QICalendarPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3451979E176CF0420061E459 /* QICalendarPickerViewController.m */; };
 		345197A2176CF0580061E459 /* QICalendarPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 345197A1176CF0580061E459 /* QICalendarPickerView.m */; };
+		345197A5176DFC8E0061E459 /* QICalendarCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 345197A4176DFC8E0061E459 /* QICalendarCellView.m */; };
 		345E7AB1176218C30020600A /* multiplechoice_pictureholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AAF176218C30020600A /* multiplechoice_pictureholder.png */; };
 		345E7AB2176218C30020600A /* multiplechoice_pictureholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AB0176218C30020600A /* multiplechoice_pictureholder@2x.png */; };
 		345E7AB5176219010020600A /* multiplechoice_tape.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AB3176219010020600A /* multiplechoice_tape.png */; };
@@ -188,6 +189,8 @@
 		3451979E176CF0420061E459 /* QICalendarPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarPickerViewController.m; sourceTree = "<group>"; };
 		345197A0176CF0580061E459 /* QICalendarPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarPickerView.h; sourceTree = "<group>"; };
 		345197A1176CF0580061E459 /* QICalendarPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarPickerView.m; sourceTree = "<group>"; };
+		345197A3176DFC8D0061E459 /* QICalendarCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarCellView.h; sourceTree = "<group>"; };
+		345197A4176DFC8E0061E459 /* QICalendarCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarCellView.m; sourceTree = "<group>"; };
 		345E7AAF176218C30020600A /* multiplechoice_pictureholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplechoice_pictureholder.png; sourceTree = "<group>"; };
 		345E7AB0176218C30020600A /* multiplechoice_pictureholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "multiplechoice_pictureholder@2x.png"; sourceTree = "<group>"; };
 		345E7AB3176219010020600A /* multiplechoice_tape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplechoice_tape.png; sourceTree = "<group>"; };
@@ -416,6 +419,8 @@
 				3451979E176CF0420061E459 /* QICalendarPickerViewController.m */,
 				345197A0176CF0580061E459 /* QICalendarPickerView.h */,
 				345197A1176CF0580061E459 /* QICalendarPickerView.m */,
+				345197A3176DFC8D0061E459 /* QICalendarCellView.h */,
+				345197A4176DFC8E0061E459 /* QICalendarCellView.m */,
 			);
 			path = CalendarPicker;
 			sourceTree = "<group>";
@@ -1143,6 +1148,7 @@
 				34E9774C1764FAC900086673 /* QI_QuizBuilder.m in Sources */,
 				3451979F176CF0420061E459 /* QICalendarPickerViewController.m in Sources */,
 				345197A2176CF0580061E459 /* QICalendarPickerView.m in Sources */,
+				345197A5176DFC8E0061E459 /* QICalendarCellView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

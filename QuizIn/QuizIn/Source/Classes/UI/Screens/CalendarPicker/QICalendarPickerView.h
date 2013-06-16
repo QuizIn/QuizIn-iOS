@@ -1,13 +1,14 @@
-//
-//  QICalendarPickerView.h
-//  QuizIn
-//
-//  Created by Rick Kuhlman on 6/15/13.
-//  Copyright (c) 2013 Kuhlmanation LLC. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 
-@interface QICalendarPickerView : UIView
+@interface QICalendarPickerView : UIView <UITableViewDataSource, UIGestureRecognizerDelegate,
+UIScrollViewDelegate>
+
+@property (nonatomic, strong) NSMutableArray *calendarContent;
+@property (nonatomic) float openCellLastTX;
+@property (nonatomic, strong) NSIndexPath *openCellIndexPath;
+- (void)handlePan:(UIPanGestureRecognizer *)panGestureRecognizer;
+- (void)snapView:(UIView *)view toX:(float)x animated:(BOOL)animated;
+
 
 @end
