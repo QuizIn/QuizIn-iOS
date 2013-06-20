@@ -10,7 +10,9 @@
 
 @interface QICalendarCellView ()
 @property (nonatomic,strong) NSMutableArray *backViewConstraints;
+@property (nonatomic,strong) NSMutableArray *frontViewSelfConstraints;
 @property (nonatomic,strong) NSMutableArray *frontViewConstraints;
+@property (nonatomic,strong) UIImageView *meetingTabImage;
 
 @end
 
@@ -22,6 +24,7 @@
     if (self) {
       _frontView = [self newFrontView];
       _backView = [self newBackView];
+      _meetingTabImage = [self newMeetingTabImage];
       [self constructViewHierarchy];
     }
     return self;
@@ -36,6 +39,7 @@
 
 #pragma mark View Hierarchy
 - (void)constructViewHierarchy {
+  [self.frontView addSubview:self.meetingTabImage];
   [self.backView addSubview:self.frontView];
   [self.contentView addSubview:self.backView];
   [self setNeedsUpdateConstraints];
@@ -82,11 +86,31 @@
                                             metrics:nil
                                               views:cellFrontViews];
     
-    self.frontViewConstraints = [NSMutableArray array];
-    [self.frontViewConstraints addObjectsFromArray:hFrontViewConstraints];
-    [self.frontViewConstraints addObjectsFromArray:vFrontViewContraints];
+    self.frontViewSelfConstraints = [NSMutableArray array];
+    [self.frontViewSelfConstraints addObjectsFromArray:hFrontViewConstraints];
+    [self.frontViewSelfConstraints addObjectsFromArray:vFrontViewContraints];
     
-    [self.backView addConstraints:self.frontViewConstraints];
+    [self.backView addConstraints:self.frontViewSelfConstraints];
+    
+    //Constrain FrontView
+    NSDictionary *cellBackgroundViews = NSDictionaryOfVariableBindings(_meetingTabImage);
+    
+    NSArray *hBackgroundConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_meetingTabImage]|"
+                                            options:NSLayoutFormatAlignAllTop
+                                            metrics:nil
+                                              views:cellBackgroundViews];
+    NSArray *vBackgroundContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_meetingTabImage]|"
+                                            options:0
+                                            metrics:nil
+                                              views:cellBackgroundViews];
+    
+    self.frontViewConstraints = [NSMutableArray array];
+    [self.frontViewConstraints addObjectsFromArray:hBackgroundConstraints];
+    [self.frontViewConstraints addObjectsFromArray:vBackgroundContraints];
+    
+    [self.frontView addConstraints:self.frontViewConstraints];
   }
 }
 
@@ -105,5 +129,12 @@
   [frontView setBackgroundColor:[UIColor blueColor]];
   [frontView setTranslatesAutoresizingMaskIntoConstraints:NO];
   return frontView;
+}
+
+-(UIImageView *)newMeetingTabImage{
+  UIImageView *tab = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"calendar_meetingtab"] resizableImageWithCapInsets:UIEdgeInsetsMake(5,55, 5, 19) ]];
+  [tab setContentMode:UIViewContentModeScaleToFill];
+  [tab setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return tab;
 }
 @end
