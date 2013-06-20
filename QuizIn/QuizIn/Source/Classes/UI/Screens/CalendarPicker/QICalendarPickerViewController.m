@@ -19,16 +19,19 @@
     return self;
 }
 -(void)loadView{
-  self.view = [[QICalendarPickerView alloc] init];
-
+  //self.view = [[QICalendarPickerView alloc] init];
+  self.view = [[QICalendarPickerView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
   [super viewDidLoad];
-  self.calendarPickerView.backgroundColor = [UIColor whiteColor];
+  //self.calendarPickerView.backgroundColor = [UIColor whiteColor];
   self.calendarPickerView.calendarContent = [NSMutableArray arrayWithObjects:@"Meeting",@"AnotherMeeting",@"A Crazy Meeting", @"More meetings", nil];
-  }
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+}
 
 - (void)didReceiveMemoryWarning
 {

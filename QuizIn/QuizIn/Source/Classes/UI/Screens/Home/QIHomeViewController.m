@@ -78,6 +78,7 @@
   QICalendarPickerViewController *calendarPickerViewController = [[QICalendarPickerViewController alloc] init];
   calendarPickerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
   calendarPickerViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+  calendarPickerViewController.view.frame = self.view.bounds;
   return calendarPickerViewController;
 }
 @end
