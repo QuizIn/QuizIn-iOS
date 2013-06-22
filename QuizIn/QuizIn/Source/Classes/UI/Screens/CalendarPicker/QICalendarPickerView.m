@@ -126,9 +126,7 @@
     
     [self addConstraints:self.viewConstraints];
   }
-  
 }
-
 
 #pragma Factory Methods
 
@@ -138,6 +136,7 @@
   [tableView setBackgroundColor:[UIColor colorWithRed:80.0f/255.0f green:125.0f/255.0f blue:144.0f/255.0f alpha:.3f]];
   [tableView setSeparatorColor:[UIColor colorWithWhite:.8f alpha:1.0f]];
   tableView.rowHeight = 94;
+  tableView.sectionHeaderHeight = 25;
   tableView.dataSource = self;
   return tableView;
 }
@@ -170,14 +169,20 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-  return 1;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+  return 2;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{ 
-  return 30;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{ 
+  return 10;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+  if(section == 0)
+    return @"Today";
+  if(section == 1)
+    return @"Tommorrow";
+  return @"Section 3";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -189,6 +194,21 @@
     cell = [[QICalendarCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     [cell.backView setBackgroundColor:[UIColor colorWithRed:80.0f/255.0f green:125.0f/255.0f blue:144.0f/255.0f alpha:1.0f]];
+    [cell setImageURLs:@[[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/3/000/00d/248/1c9f8fa.jpg"],
+     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/6/000/1f0/39b/3ae80b5.jpg"],
+     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/1/000/095/3e4/142853e.jpg"],
+     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/1/000/080/035/28eea75.jpg"],
+     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/3/000/00d/248/1c9f8fa.jpg"],
+     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/6/000/1f0/39b/3ae80b5.jpg"],
+     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/1/000/095/3e4/142853e.jpg"]]];
+     
+    /*[cell setImageURLs:@[[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/3/000/00d/248/1c9f8fa.jpg"],
+     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/6/000/1f0/39b/3ae80b5.jpg"],
+     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/1/000/095/3e4/142853e.jpg"]]];
+     */
+    [cell setMeetingTitle:@"This is a test Meeting Title"];
+    [cell setMeetingLocation:@"Conference Room ABC"];
+    [cell setMeetingTime:@"22:22am"];
   }
   
   if ([[self.selectedTableRows objectAtIndex:indexPath.row] boolValue]){
@@ -272,7 +292,6 @@
 
 -(void)snapView:(UIView *)view toX:(float)x animated:(BOOL)animated
 {
-  
   if (animated) {
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
