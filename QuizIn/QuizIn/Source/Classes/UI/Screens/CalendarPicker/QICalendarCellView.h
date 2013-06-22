@@ -12,5 +12,9 @@
 
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) UIView *frontView;
+@property (nonatomic,strong) UILabel *meetingTitle;
+@property (nonatomic,strong) UILabel *meetingLocation;
+@property (nonatomic,strong) UILabel *meetingTime;
+@property (nonatomic,strong) NSArray *imageURLs;
 
 @end

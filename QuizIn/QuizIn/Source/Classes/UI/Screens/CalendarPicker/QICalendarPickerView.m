@@ -5,7 +5,7 @@
 #define FAST_ANIMATION_DURATION 0.35
 #define SLOW_ANIMATION_DURATION 0.75
 #define PAN_CLOSED_X 0
-#define PAN_OPEN_X -50
+#define PAN_OPEN_X -90
 
 @interface QICalendarPickerView ()
 
@@ -14,13 +14,13 @@
 @property (nonatomic, strong) UIImageView *topSlit;
 @property (nonatomic, strong) UIImageView *bottomSlit;
 @property (nonatomic, strong) UIImageView *viewBackground;
-@property (nonatomic, strong) NSMutableArray *viewConstraints; 
+@property (nonatomic, strong) NSMutableArray *viewConstraints;
 
 @end
 
 @implementation QICalendarPickerView
 
-@synthesize tableView=_tableView;
+//@synthesize tableView=_tableView;
 @synthesize openCellLastTX, openCellIndexPath;
 
 + (BOOL)requiresConstraintBasedLayout {
@@ -94,7 +94,7 @@
     NSDictionary *mainViews = NSDictionaryOfVariableBindings(_topSlit,_tableView,_bottomSlit);
     
     NSArray *vMainViews =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-50-[_topSlit(==8)][_tableView][_bottomSlit(==8)]-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-50-[_topSlit(==8)]-(-5)-[_tableView]-(-5)-[_bottomSlit(==8)]-|"
                                             options:0
                                             metrics:0
                                               views:mainViews];
@@ -106,7 +106,7 @@
     
 
     NSArray *hTableView =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-30-[_tableView]-30-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_tableView]-15-|"
                                             options:0
                                             metrics:0
                                               views:mainViews];
@@ -135,6 +135,9 @@
 -(UITableView *)newCalendarTable{
   UITableView *tableView = [[UITableView alloc] init];
   [tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [tableView setBackgroundColor:[UIColor colorWithRed:80.0f/255.0f green:125.0f/255.0f blue:144.0f/255.0f alpha:.3f]];
+  [tableView setSeparatorColor:[UIColor colorWithWhite:.8f alpha:1.0f]];
+  tableView.rowHeight = 94;
   tableView.dataSource = self;
   return tableView;
 }
@@ -177,11 +180,6 @@
   return 30;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  return 94;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   static NSString *CellIdentifier = @"CustomCell";
@@ -190,6 +188,7 @@
   if (cell == nil){
     cell = [[QICalendarCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    [cell.backView setBackgroundColor:[UIColor colorWithRed:80.0f/255.0f green:125.0f/255.0f blue:144.0f/255.0f alpha:1.0f]];
   }
   
   if ([[self.selectedTableRows objectAtIndex:indexPath.row] boolValue]){
@@ -222,7 +221,6 @@
   float vX = 0.0;
   float compare;
   float finalX;
-  float alphaTrim; 
   NSIndexPath *indexPath = [self.tableView indexPathForCell:(QICalendarCellView *)[panGestureRecognizer view] ];
   UIView *view = ((QICalendarCellView *)panGestureRecognizer.view).frontView;
   
@@ -232,9 +230,9 @@
         [self setOpenCellIndexPath:nil];
         [self setOpenCellLastTX:0];
       }
-      alphaTrim = 0;
       break;
     case UIGestureRecognizerStateEnded:
+       NSLog(@"ENDED");
       vX = (FAST_ANIMATION_DURATION/2.0)*[panGestureRecognizer velocityInView:self].x;
       compare = view.transform.tx + vX;
       if (compare > threshold) {
@@ -247,7 +245,6 @@
         [self.selectedTableRows replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:YES]];
       }
       [self snapView:view toX:finalX animated:YES];
-      alphaTrim = finalX/PAN_OPEN_X;
       if (finalX == PAN_CLOSED_X) {
         [self setOpenCellIndexPath:nil];
       }
@@ -257,6 +254,7 @@
       
       break;
     case UIGestureRecognizerStateChanged:
+      NSLog(@"CHANGED");
       compare = self.openCellLastTX+[panGestureRecognizer translationInView:self].x;
       if (compare > MAX(PAN_OPEN_X,PAN_CLOSED_X)){
         compare = MAX(PAN_OPEN_X,PAN_CLOSED_X);
@@ -265,15 +263,11 @@
         compare = MIN(PAN_OPEN_X,PAN_CLOSED_X);
       }
       [view setTransform:CGAffineTransformMakeTranslation(compare, 0)];
-      alphaTrim = compare/PAN_OPEN_X;
       break;
     default:
       compare = 0;
-      alphaTrim = 0;
       break;
   }
-
-  view.superview.backgroundColor = [UIColor colorWithWhite:0.1 alpha:alphaTrim];
 }
 
 -(void)snapView:(UIView *)view toX:(float)x animated:(BOOL)animated
@@ -286,7 +280,6 @@
   }
   
   [view setTransform:CGAffineTransformMakeTranslation(x, 0)];
-  view.superview.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1];
   
   if (animated) {
     [UIView commitAnimations];

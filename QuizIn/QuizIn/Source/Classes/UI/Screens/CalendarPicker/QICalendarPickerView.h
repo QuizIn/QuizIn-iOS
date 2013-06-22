@@ -2,7 +2,7 @@
 #import <UIKit/UIKit.h>
 
 @interface QICalendarPickerView : UIView <UITableViewDataSource, UIGestureRecognizerDelegate,
-UIScrollViewDelegate>
+UIScrollViewDelegate,UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *calendarContent;
 @property (nonatomic) float openCellLastTX;
