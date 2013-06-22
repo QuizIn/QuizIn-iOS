@@ -1,11 +1,12 @@
 
 #import "QICalendarPickerView.h"
 #import "QICalendarCellView.h"
+#import "QICalendarTableHeaderView.h"
 
 #define FAST_ANIMATION_DURATION 0.35
 #define SLOW_ANIMATION_DURATION 0.75
 #define PAN_CLOSED_X 0
-#define PAN_OPEN_X -90
+#define PAN_OPEN_X -94
 
 @interface QICalendarPickerView ()
 
@@ -36,6 +37,7 @@
       _topSlit = [self newTopSlit];
       _bottomSlit = [self newBottomSlit];
       _viewBackground = [self newViewBackground];
+      _quizButton = [self newQuizButton];
       
       //[self setTranslatesAutoresizingMaskIntoConstraints:NO];
       [self constructViewHierarchy];
@@ -57,6 +59,7 @@
   [self addSubview:self.tableView];
   [self addSubview:self.topSlit];
   [self addSubview:self.bottomSlit];
+  [self addSubview:self.quizButton];
 }
 #pragma Data Display
 
@@ -91,44 +94,49 @@
  
     
     //Constrain Main View Elements
-    NSDictionary *mainViews = NSDictionaryOfVariableBindings(_topSlit,_tableView,_bottomSlit);
+    NSDictionary *mainViews = NSDictionaryOfVariableBindings(_topSlit,_tableView,_bottomSlit,_quizButton);
     
-    NSArray *vMainViews =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-50-[_topSlit(==8)]-(-5)-[_tableView]-(-5)-[_bottomSlit(==8)]-|"
+    NSArray *vMainViewsConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[_topSlit(==8)]-(-5)-[_tableView]-(-5)-[_bottomSlit(==8)]-[_quizButton(==54)]-6-|"
                                             options:0
                                             metrics:0
                                               views:mainViews];
-    NSArray *hTopSlit =
+    NSArray *hTopSlitConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[_topSlit]-8-|"
                                             options:0
                                             metrics:0
                                               views:mainViews];
-    
-
-    NSArray *hTableView =
+    NSArray *hTableViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_tableView]-15-|"
                                             options:0
                                             metrics:0
                                               views:mainViews];
-    
-
-    NSArray *hBottomSlit =
+    NSArray *hBottomSlitConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[_bottomSlit]-8-|"
                                             options:0
                                             metrics:0
                                               views:mainViews];
-
+    NSArray *hButtonConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_quizButton]-14-|"
+                                            options:0
+                                            metrics:0
+                                              views:mainViews];
     
-    [self.viewConstraints addObjectsFromArray:hTopSlit];
-    [self.viewConstraints addObjectsFromArray:hTableView];
-    [self.viewConstraints addObjectsFromArray:hBottomSlit];
-    [self.viewConstraints addObjectsFromArray:vMainViews];
+    [self.viewConstraints addObjectsFromArray:hTopSlitConstraints];
+    [self.viewConstraints addObjectsFromArray:hTableViewConstraints];
+    [self.viewConstraints addObjectsFromArray:hBottomSlitConstraints];
+    [self.viewConstraints addObjectsFromArray:vMainViewsConstraints];
+    [self.viewConstraints addObjectsFromArray:hButtonConstraints];
     
     [self addConstraints:self.viewConstraints];
   }
 }
 
-#pragma Factory Methods
+#pragma mark Strings
+-(NSString *)quizButtonTitle{
+  return @"Take Quiz";
+}
+#pragma mark Factory Methods
 
 -(UITableView *)newCalendarTable{
   UITableView *tableView = [[UITableView alloc] init];
@@ -138,6 +146,7 @@
   tableView.rowHeight = 94;
   tableView.sectionHeaderHeight = 25;
   tableView.dataSource = self;
+  tableView.delegate = self; 
   return tableView;
 }
 
@@ -167,6 +176,17 @@
   return background;
 }
 
+
+- (UIButton *)newQuizButton {
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setTitle:[self quizButtonTitle] forState:UIControlStateNormal];
+  [button setBackgroundImage:[[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 74, 0, 74)] forState:UIControlStateNormal];
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  button.backgroundColor = [UIColor clearColor];
+  return button;
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -175,14 +195,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{ 
   return 10;
-}
+} 
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-  if(section == 0)
-    return @"Today";
-  if(section == 1)
-    return @"Tommorrow";
-  return @"Section 3";
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+  QICalendarTableHeaderView *headerView = [[QICalendarTableHeaderView alloc] init];
+  headerView.backgroundColor = [UIColor colorWithWhite:.3f alpha:.8f];
+  headerView.sectionTitle = @"Tomorrow";
+  return headerView;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -252,7 +272,6 @@
       }
       break;
     case UIGestureRecognizerStateEnded:
-       NSLog(@"ENDED");
       vX = (FAST_ANIMATION_DURATION/2.0)*[panGestureRecognizer velocityInView:self].x;
       compare = view.transform.tx + vX;
       if (compare > threshold) {
@@ -271,10 +290,8 @@
       else {
         [self setOpenCellIndexPath:[self.tableView indexPathForCell:(QICalendarCellView *)panGestureRecognizer.view]];
       }
-      
       break;
     case UIGestureRecognizerStateChanged:
-      NSLog(@"CHANGED");
       compare = self.openCellLastTX+[panGestureRecognizer translationInView:self].x;
       if (compare > MAX(PAN_OPEN_X,PAN_CLOSED_X)){
         compare = MAX(PAN_OPEN_X,PAN_CLOSED_X);

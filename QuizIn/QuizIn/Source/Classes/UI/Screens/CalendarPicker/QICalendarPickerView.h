@@ -10,5 +10,6 @@ UIScrollViewDelegate,UITableViewDelegate>
 - (void)handlePan:(UIPanGestureRecognizer *)panGestureRecognizer;
 - (void)snapView:(UIView *)view toX:(float)x animated:(BOOL)animated;
 
+@property(nonatomic, strong, readonly) UIButton *quizButton;
 
 @end

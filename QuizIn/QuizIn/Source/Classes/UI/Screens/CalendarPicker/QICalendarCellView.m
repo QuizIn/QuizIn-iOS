@@ -137,6 +137,9 @@
 }
 
 #pragma mark Layout
+- (void)layoutSubviews {
+  [super layoutSubviews];
+}
 
 - (void)updateConstraints {
   [super updateConstraints];
@@ -255,7 +258,7 @@
   }
 }
 
-#pragma Factory Methods
+#pragma mark Factory Methods
 
 -(UIView *)newFrontView{
   UIView *frontView = [[UIView alloc] init];
@@ -339,6 +342,5 @@
   profileImageView.crossfadeImages = YES;
   return profileImageView;
 }
-
        
 @end
