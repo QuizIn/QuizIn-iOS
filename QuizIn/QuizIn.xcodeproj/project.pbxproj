@@ -114,6 +114,8 @@
 		3478FFA8173FD747002B29DB /* QIProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFA7173FD747002B29DB /* QIProgressView.m */; };
 		3478FFAC1747C19D002B29DB /* QIMatchingQuizViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFAB1747C19D002B29DB /* QIMatchingQuizViewController.m */; };
 		3478FFAF1747C1C7002B29DB /* QIMatchingQuizView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFAE1747C1C7002B29DB /* QIMatchingQuizView.m */; };
+		3489011F177A75B40004F604 /* QICalendarData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3489011E177A75B40004F604 /* QICalendarData.m */; };
+		34890121177A76D10004F604 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34890120177A76D10004F604 /* EventKit.framework */; };
 		349248191733603D000AE6D1 /* QIStatsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 349248181733603D000AE6D1 /* QIStatsTracker.m */; };
 		34B1D24B176958D300D38EF2 /* cardquiz_businesscard_v3.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B1D249176958D300D38EF2 /* cardquiz_businesscard_v3.png */; };
 		34B1D24C176958D300D38EF2 /* cardquiz_businesscard_v3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B1D24A176958D300D38EF2 /* cardquiz_businesscard_v3@2x.png */; };
@@ -285,6 +287,9 @@
 		3478FFFD1750EFC1002B29DB /* quizin_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quizin_bg.png; sourceTree = "<group>"; };
 		3478FFFE1750EFC1002B29DB /* quizin_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quizin_bg@2x.png"; sourceTree = "<group>"; };
 		3478FFFF1750EFC1002B29DB /* quizin_divider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quizin_divider.png; sourceTree = "<group>"; };
+		3489011D177A75B40004F604 /* QICalendarData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarData.h; sourceTree = "<group>"; };
+		3489011E177A75B40004F604 /* QICalendarData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarData.m; sourceTree = "<group>"; };
+		34890120177A76D10004F604 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		349248171733603D000AE6D1 /* QIStatsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsTracker.h; sourceTree = "<group>"; };
 		349248181733603D000AE6D1 /* QIStatsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsTracker.m; sourceTree = "<group>"; };
 		34B1D249176958D300D38EF2 /* cardquiz_businesscard_v3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardquiz_businesscard_v3.png; sourceTree = "<group>"; };
@@ -362,6 +367,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34890121177A76D10004F604 /* EventKit.framework in Frameworks */,
 				88867999172D6D6C00DCE3D0 /* MobileCoreServices.framework in Frameworks */,
 				88867997172D6D1B00DCE3D0 /* SystemConfiguration.framework in Frameworks */,
 				9FBC9C5B17163062009BA34C /* QuartzCore.framework in Frameworks */,
@@ -426,6 +432,8 @@
 				345197A4176DFC8E0061E459 /* QICalendarCellView.m */,
 				345A075117762530005FD37D /* QICalendarTableHeaderView.h */,
 				345A075217762530005FD37D /* QICalendarTableHeaderView.m */,
+				3489011D177A75B40004F604 /* QICalendarData.h */,
+				3489011E177A75B40004F604 /* QICalendarData.m */,
 			);
 			path = CalendarPicker;
 			sourceTree = "<group>";
@@ -752,6 +760,7 @@
 		881EAF9216FBD08B0041AD55 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				34890120177A76D10004F604 /* EventKit.framework */,
 				88867998172D6D6C00DCE3D0 /* MobileCoreServices.framework */,
 				88867996172D6D1B00DCE3D0 /* SystemConfiguration.framework */,
 				9FBC9C5A17163062009BA34C /* QuartzCore.framework */,
@@ -1155,6 +1164,7 @@
 				345197A2176CF0580061E459 /* QICalendarPickerView.m in Sources */,
 				345197A5176DFC8E0061E459 /* QICalendarCellView.m in Sources */,
 				345A075317762530005FD37D /* QICalendarTableHeaderView.m in Sources */,
+				3489011F177A75B40004F604 /* QICalendarData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

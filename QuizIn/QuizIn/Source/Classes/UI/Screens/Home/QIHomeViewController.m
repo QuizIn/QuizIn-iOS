@@ -50,7 +50,42 @@
 }
 
 - (void)calendarPicker:(id)sender {
+  EKEventStore *store = [[EKEventStore alloc] init];
+  EKAuthorizationStatus authorizationStatus = [EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent];
+  BOOL needsToRequestAccessToEventStore = (authorizationStatus == (EKAuthorizationStatusNotDetermined | EKAuthorizationStatusDenied));
+  
+  if (needsToRequestAccessToEventStore) {
+    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+      if (granted) {
+        NSLog(@"ACCESS");
+        [self performSelectorOnMainThread:
+         @selector(calendarViewControllerWithEventStore:)
+                               withObject:store
+                            waitUntilDone:NO];
+      } else {
+        NSLog(@"ACCESS DENIED");
+        // Remove
+        [self performSelectorOnMainThread:
+         @selector(calendarViewControllerWithEventStore:)
+                               withObject:store
+                            waitUntilDone:NO];
+      }
+    }];
+  } else {
+    BOOL granted = (authorizationStatus == EKAuthorizationStatusAuthorized);
+    if (granted) {
+      NSLog(@"Already had ACCESS");
+      [self calendarViewControllerWithEventStore:store];
+    } else {
+      NSLog(@"ACCESS DENIED PREVIOUSLY");
+      [self calendarViewControllerWithEventStore:store];
+    }
+  }
+}
+
+- (void)calendarViewControllerWithEventStore:(EKEventStore *)store{
   QICalendarPickerViewController *calendarPickerViewController = [self newCalendarPickerViewController];
+  calendarPickerViewController.eventStore = store; 
   [self presentViewController:calendarPickerViewController animated:YES completion:nil];
 }
 #pragma mark Strings

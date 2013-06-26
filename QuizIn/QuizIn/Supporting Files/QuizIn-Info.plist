@@ -24,6 +24,8 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCalendarsUsageDescription</key>
+	<string>This allows us to create quizzes from your upcoming calendar events. </string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Tahoma.ttf</string>

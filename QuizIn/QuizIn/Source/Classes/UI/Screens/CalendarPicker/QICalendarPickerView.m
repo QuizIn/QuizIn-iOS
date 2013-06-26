@@ -190,18 +190,19 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-  return 2;
+  return [self.calendarContent count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{ 
-  return 10;
+  NSMutableArray *day = [self.calendarContent objectAtIndex:section];
+  return [day count]-1;
 } 
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
   QICalendarTableHeaderView *headerView = [[QICalendarTableHeaderView alloc] init];
   headerView.backgroundColor = [UIColor colorWithWhite:.3f alpha:.8f];
-  headerView.sectionTitle = @"Tomorrow";
+  headerView.sectionTitle = [[self.calendarContent objectAtIndex:section] objectAtIndex:0];
   return headerView;
 }
 
@@ -226,9 +227,9 @@
      [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/6/000/1f0/39b/3ae80b5.jpg"],
      [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/1/000/095/3e4/142853e.jpg"]]];
      */
-    [cell setMeetingTitle:@"This is a test Meeting Title"];
-    [cell setMeetingLocation:@"Conference Room ABC"];
-    [cell setMeetingTime:@"22:22am"];
+    [cell setMeetingTitle:[[[self.calendarContent objectAtIndex:indexPath.section] objectAtIndex:indexPath.row+1] objectForKey:@"title"]];
+    [cell setMeetingLocation:[[[self.calendarContent objectAtIndex:indexPath.section] objectAtIndex:indexPath.row+1] objectForKey:@"location"]];
+    [cell setMeetingTime:[[[self.calendarContent objectAtIndex:indexPath.section] objectAtIndex:indexPath.row+1] objectForKey:@"time"]];
   }
   
   if ([[self.selectedTableRows objectAtIndex:indexPath.row] boolValue]){

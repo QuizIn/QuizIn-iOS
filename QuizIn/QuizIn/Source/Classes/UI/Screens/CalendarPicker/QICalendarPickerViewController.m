@@ -18,6 +18,11 @@
           }
     return self;
 }
+
+-(void)setEventStore:(EKEventStore *)eventStore{
+  _eventStore = self.eventStore;
+}
+
 -(void)loadView{
   //self.view = [[QICalendarPickerView alloc] init];
   self.view = [[QICalendarPickerView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -26,7 +31,7 @@
 - (void)viewDidLoad{
   [super viewDidLoad];
   //self.calendarPickerView.backgroundColor = [UIColor whiteColor];
-  self.calendarPickerView.calendarContent = [NSMutableArray arrayWithObjects:@"Meeting",@"AnotherMeeting",@"A Crazy Meeting", @"More meetings", nil];
+  self.calendarPickerView.calendarContent = [QICalendarData getCalendarDataWithStartDate:[NSDate date] withEventStore:self.eventStore];  
 }
 
 - (void)viewWillLayoutSubviews {
