@@ -1,4 +1,3 @@
-
 #import "QICalendarPickerView.h"
 #import "QICalendarCellView.h"
 #import "QICalendarTableHeaderView.h"
@@ -11,7 +10,6 @@
 @interface QICalendarPickerView ()
 
 @property (nonatomic, retain) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *selectedTableRows;
 @property (nonatomic, strong) UIImageView *topSlit;
 @property (nonatomic, strong) UIImageView *bottomSlit;
 @property (nonatomic, strong) UIImageView *viewBackground;
@@ -33,7 +31,6 @@
     self = [super initWithFrame:frame];
     if (self) {
       _tableView = [self newCalendarTable];
-      _selectedTableRows = [self newSelectionArray];
       _topSlit = [self newTopSlit];
       _bottomSlit = [self newBottomSlit];
       _viewBackground = [self newViewBackground];
@@ -143,19 +140,12 @@
   [tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [tableView setBackgroundColor:[UIColor colorWithRed:80.0f/255.0f green:125.0f/255.0f blue:144.0f/255.0f alpha:.3f]];
   [tableView setSeparatorColor:[UIColor colorWithWhite:.8f alpha:1.0f]];
+  [tableView setShowsVerticalScrollIndicator:NO];
   tableView.rowHeight = 94;
   tableView.sectionHeaderHeight = 25;
   tableView.dataSource = self;
   tableView.delegate = self; 
   return tableView;
-}
-
-- (NSMutableArray *)newSelectionArray{
-  NSMutableArray *selection = [NSMutableArray array];
-  for (int i = 0; i<30 ; i++){
-    [selection addObject:[NSNumber numberWithBool:NO]];
-  }
-  return [selection mutableCopy];
 }
 
 -(UIImageView *)newTopSlit{
@@ -186,7 +176,6 @@
   return button;
 }
 
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -208,41 +197,29 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  static NSString *CellIdentifier = @"CustomCell";
-  
-  QICalendarCellView *cell = (QICalendarCellView *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+  static NSString *cellIdentifier = @"CustomCell";
+  QICalendarCellView *cell = (QICalendarCellView *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
   if (cell == nil){
-    cell = [[QICalendarCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    cell = [[QICalendarCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     [cell.backView setBackgroundColor:[UIColor colorWithRed:80.0f/255.0f green:125.0f/255.0f blue:144.0f/255.0f alpha:1.0f]];
-    [cell setImageURLs:@[[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/3/000/00d/248/1c9f8fa.jpg"],
-     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/6/000/1f0/39b/3ae80b5.jpg"],
-     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/1/000/095/3e4/142853e.jpg"],
-     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/1/000/080/035/28eea75.jpg"],
-     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/3/000/00d/248/1c9f8fa.jpg"],
-     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/6/000/1f0/39b/3ae80b5.jpg"],
-     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/1/000/095/3e4/142853e.jpg"]]];
-     
-    /*[cell setImageURLs:@[[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/3/000/00d/248/1c9f8fa.jpg"],
-     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/6/000/1f0/39b/3ae80b5.jpg"],
-     [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/1/000/095/3e4/142853e.jpg"]]];
-     */
+    [cell setImageURLs:[[[self.calendarContent objectAtIndex:indexPath.section] objectAtIndex:indexPath.row+1] objectForKey:@"images"]];
     [cell setMeetingTitle:[[[self.calendarContent objectAtIndex:indexPath.section] objectAtIndex:indexPath.row+1] objectForKey:@"title"]];
     [cell setMeetingLocation:[[[self.calendarContent objectAtIndex:indexPath.section] objectAtIndex:indexPath.row+1] objectForKey:@"location"]];
     [cell setMeetingTime:[[[self.calendarContent objectAtIndex:indexPath.section] objectAtIndex:indexPath.row+1] objectForKey:@"time"]];
   }
   
-  if ([[self.selectedTableRows objectAtIndex:indexPath.row] boolValue]){
+  BOOL selected = [[[[self.calendarContent objectAtIndex:indexPath.section] objectAtIndex:indexPath.row+1] objectForKey:@"selected"] boolValue];
+  if (selected){
     [self snapView:cell.frontView toX:PAN_OPEN_X animated:NO];
   }
   else{
     [self snapView:cell.frontView toX:PAN_CLOSED_X animated:NO];
   }
-
+  
   UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
   [panGestureRecognizer setDelegate:self];
   [cell addGestureRecognizer:panGestureRecognizer];
-  
   return cell;
 }
 
@@ -278,11 +255,11 @@
       if (compare > threshold) {
         finalX = MAX(PAN_OPEN_X,PAN_CLOSED_X);
         [self setOpenCellLastTX:0];
-        [self.selectedTableRows replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:NO]];
+        [[[self.calendarContent objectAtIndex:indexPath.section] objectAtIndex:indexPath.row+1] setObject:@NO forKey:@"selected"];
       } else {
         finalX = MIN(PAN_OPEN_X,PAN_CLOSED_X);
         [self setOpenCellLastTX:view.transform.tx];
-        [self.selectedTableRows replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:YES]];
+        [[[self.calendarContent objectAtIndex:indexPath.section] objectAtIndex:indexPath.row+1] setObject:@YES forKey:@"selected"];
       }
       [self snapView:view toX:finalX animated:YES];
       if (finalX == PAN_CLOSED_X) {
@@ -322,7 +299,5 @@
     [UIView commitAnimations];
   }
 }
-
-
 
 @end
