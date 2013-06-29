@@ -8,7 +8,7 @@
 + (NSMutableArray *)getCalendarDataWithStartDate:(NSDate *)date withEventStore:(EKEventStore *)eventStore{
     
   if (USE_TEST_DATA){
-    NSMutableArray *calendarData = [[self grabTestData] copy];
+    NSMutableArray *calendarData = [[self grabTestData] mutableCopy];
     return calendarData;
   }
   else {

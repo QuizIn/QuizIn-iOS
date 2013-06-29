@@ -1,10 +1,3 @@
-//
-//  QICalendarTableHeaderView.m
-//  QuizIn
-//
-//  Created by Rick Kuhlman on 6/22/13.
-//  Copyright (c) 2013 Kuhlmanation LLC. All rights reserved.
-//
 
 #import "QICalendarTableHeaderView.h"
 #import "QIFontProvider.h"
@@ -19,6 +12,11 @@
 @end
 
 @implementation QICalendarTableHeaderView
+
+
++ (BOOL)requiresConstraintBasedLayout {
+  return YES;
+}
 
 - (id)initWithFrame:(CGRect)frame
 {

@@ -1,6 +1,8 @@
 #import "QICalendarPickerView.h"
 #import "QICalendarCellView.h"
+#import "QICalendarData.h"
 #import "QICalendarTableHeaderView.h"
+#import "QICalendarTableFooterView.h"
 
 #define FAST_ANIMATION_DURATION 0.35
 #define SLOW_ANIMATION_DURATION 0.75
@@ -14,6 +16,7 @@
 @property (nonatomic, strong) UIImageView *bottomSlit;
 @property (nonatomic, strong) UIImageView *viewBackground;
 @property (nonatomic, strong) NSMutableArray *viewConstraints;
+@property (nonatomic, strong) QICalendarTableFooterView *footerViewLoading;
 
 @end
 
@@ -30,6 +33,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+      _footerViewLoading = [self newFooterViewLoading];
       _tableView = [self newCalendarTable];
       _topSlit = [self newTopSlit];
       _bottomSlit = [self newBottomSlit];
@@ -48,7 +52,6 @@
     return;
   }
   _calendarContent = calendarContent;
-  //[self loadCalendarData];
 }
 #pragma mark View Hierarchy
 - (void)constructViewHierarchy {
@@ -57,6 +60,7 @@
   [self addSubview:self.topSlit];
   [self addSubview:self.bottomSlit];
   [self addSubview:self.quizButton];
+  [self.tableView setTableFooterView:self.footerViewLoading];
 }
 #pragma Data Display
 
@@ -166,6 +170,14 @@
   return background;
 }
 
+-(QICalendarTableFooterView *)newFooterViewLoading{
+  QICalendarTableFooterView *footer = [[QICalendarTableFooterView alloc] initWithFrame:CGRectMake(0, 0, 100, 24)];
+  //QICalendarTableFooterView *footer = [[QICalendarTableFooterView alloc] init];
+  //[footer setTranslatesAutoresizingMaskIntoConstraints:NO];
+  //[footer setBackgroundColor:[UIColor blackColor]];
+  return footer;
+}
+
 
 - (UIButton *)newQuizButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -187,8 +199,7 @@
   return [day count]-1;
 } 
 
-- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
   QICalendarTableHeaderView *headerView = [[QICalendarTableHeaderView alloc] init];
   headerView.backgroundColor = [UIColor colorWithWhite:.3f alpha:.8f];
   headerView.sectionTitle = [[self.calendarContent objectAtIndex:section] objectAtIndex:0];
@@ -197,6 +208,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+  
   static NSString *cellIdentifier = @"CustomCell";
   QICalendarCellView *cell = (QICalendarCellView *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
   if (cell == nil){
@@ -221,6 +233,18 @@
   [panGestureRecognizer setDelegate:self];
   [cell addGestureRecognizer:panGestureRecognizer];
   return cell;
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)aScrollView
+{
+  NSArray *visibleRows = [self.tableView visibleCells];
+  UITableViewCell *lastVisibleCell = [visibleRows lastObject];
+  NSIndexPath *path = [self.tableView indexPathForCell:lastVisibleCell];
+  if(path.section == [self.calendarContent count]-1 && path.row == [[self.calendarContent objectAtIndex:path.section] count]-2)
+  {
+    [self.calendarContent addObjectsFromArray:[QICalendarData getCalendarDataWithStartDate:[NSDate date] withEventStore:self.eventStore]];
+    [self.tableView reloadData];
+  }
 }
 
 #pragma mark - Gesture recognizer delegate

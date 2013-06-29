@@ -9,8 +9,6 @@
 
 @implementation QICalendarPickerViewController
 
-
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -31,7 +29,9 @@
 - (void)viewDidLoad{
   [super viewDidLoad];
   //self.calendarPickerView.backgroundColor = [UIColor whiteColor];
-  self.calendarPickerView.calendarContent = [QICalendarData getCalendarDataWithStartDate:[NSDate date] withEventStore:self.eventStore];  
+  self.calendarPickerView.eventStore = self.eventStore;
+  NSMutableArray *calendarContent = [QICalendarData getCalendarDataWithStartDate:[NSDate date] withEventStore:self.eventStore];
+  self.calendarPickerView.calendarContent = calendarContent; 
 }
 
 - (void)viewWillLayoutSubviews {
