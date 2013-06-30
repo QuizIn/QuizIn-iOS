@@ -9,4 +9,13 @@
   return location;
 }
 
+- (NSString *)description {
+  NSMutableString *description = [[super description] mutableCopy];
+  
+  [description appendFormat:@" name:%@ ", self.name];
+  [description appendFormat:@"countryCode:%@ ", self.countryCode];
+  
+  return [description copy];
+}
+
 @end

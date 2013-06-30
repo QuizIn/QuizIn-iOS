@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-@interface QICompany : NSObject
+@interface QICompany : NSObject<NSCopying>
 
 @property(nonatomic, copy) NSString *companyID;
 @property(nonatomic, copy) NSString *industry;

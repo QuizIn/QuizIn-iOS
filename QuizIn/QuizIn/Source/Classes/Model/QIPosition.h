@@ -2,7 +2,7 @@
 
 @class QICompany;
 
-@interface QIPosition : NSObject
+@interface QIPosition : NSObject<NSCopying>
 
 @property(nonatomic, copy) NSString *positionID;
 @property(nonatomic, copy) QICompany *company;

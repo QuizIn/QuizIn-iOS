@@ -8,6 +8,7 @@
 
 // TODO(rcacheaux):  Remove Temp Stuff.
 #import "LinkedIn.h"
+#import "QIConnections.h"
 
 @interface QIApplicationViewController ()<AKAuthHandler>
 @property(nonatomic, strong) QIDrawerController *drawerController;
@@ -32,8 +33,8 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  //[self.authController beginAuthenticationAttempt];
-  [self authControllerAccount:nil didAuthenticate:nil];
+  [self.authController beginAuthenticationAttempt];
+//  [self authControllerAccount:nil didAuthenticate:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -65,6 +66,15 @@
   self.drawerController = [self newDrawerController];
   [self addChildViewController:self.drawerController];
   [self.view addSubview:self.drawerController.view];
+  
+  
+  [LinkedIn getPeopleConnectionsWithStartIndex:0 count:10 onSuccess:^(QIConnections *connections) {
+    NSLog(@"Connections: %@", connections.people);
+  } onFailure:^(NSError *error) {
+    NSLog(@"Error: %@", error);
+  }];
+  
+  
  /*
   [LinkedIn getPeopleCurrentConnectionsWithCompletionHandler:^(NSArray *connections,
                                                                NSError *error) {
