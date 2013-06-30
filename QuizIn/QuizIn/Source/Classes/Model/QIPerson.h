@@ -2,7 +2,7 @@
 
 @class QILocation;
 
-@interface QIPerson : NSObject
+@interface QIPerson : NSObject<NSCopying>
 
 @property(nonatomic, copy) NSString *personID;
 @property(nonatomic, copy) NSString *firstName;

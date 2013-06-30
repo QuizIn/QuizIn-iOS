@@ -8,8 +8,11 @@ typedef void (^LIGetPeopleCurrentConnectionsResponse)(NSArray *connections,
 
 @interface LinkedIn : NSObject
 
-+ (void)getPeopleCurrentWithCompletionHandler:
++ (void)getPeopleCurrentUserWithCompletionHandler:
     (LIGetPeopleResponse)completionHandler;
+
++ (void)getPeopleCurrentUserConnectionsCountWithOnSuccess:(void (^)(NSInteger numberOfConnections))onSuccess
+                                                onFailure:(void (^)(NSError *error))onFailure;
 
 + (void)getPeopleWithID:(NSString *)ID
       completionHandler:(LIGetPeopleResponse)completionHandler;

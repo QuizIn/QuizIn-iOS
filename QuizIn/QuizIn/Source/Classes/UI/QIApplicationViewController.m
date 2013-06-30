@@ -9,6 +9,8 @@
 // TODO(rcacheaux):  Remove Temp Stuff.
 #import "LinkedIn.h"
 #import "QIConnections.h"
+#import "QIQuizBuilder.h"
+#import "QIQuiz.h"
 
 @interface QIApplicationViewController ()<AKAuthHandler>
 @property(nonatomic, strong) QIDrawerController *drawerController;
@@ -68,11 +70,22 @@
   [self.view addSubview:self.drawerController.view];
   
   
+  QIQuiz *quiz = [QIQuizBuilder quizFromRandomConnections];
+  NSLog(@"%@", quiz);
+  
+  /*
+  [LinkedIn getPeopleCurrentUserConnectionsCountWithOnSuccess:^(NSInteger numberOfConnections) {
+    NSLog(@"Number of Connections: %d", numberOfConnections);
+  } onFailure:^(NSError *error) {
+    NSLog(@"Error: %@", error);
+  }];*/
+  
+  /*
   [LinkedIn getPeopleConnectionsWithStartIndex:0 count:10 onSuccess:^(QIConnections *connections) {
     NSLog(@"Connections: %@", connections.people);
   } onFailure:^(NSError *error) {
     NSLog(@"Error: %@", error);
-  }];
+  }];*/
   
   
  /*

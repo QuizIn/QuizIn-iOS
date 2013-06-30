@@ -20,7 +20,7 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
 
 @implementation LinkedIn
 
-+ (void)getPeopleCurrentWithCompletionHandler:(LIGetPeopleResponse)completionHandler {
++ (void)getPeopleCurrentUserWithCompletionHandler:(LIGetPeopleResponse)completionHandler {
   NSString *path = @"people/~";
   LIHTTPClient *httpClient = [LIHTTPClient sharedClient];
   AFHTTPRequestOperationSuccess success = ^(AFHTTPRequestOperation *requestOperation,
@@ -30,6 +30,27 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
   };
   AFHTTPRequestOperationFailure failure = ^(AFHTTPRequestOperation *requestOperation,
                                             NSError *error){
+    NSLog(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
+    [[AKLinkedInAuthController sharedController]
+        unauthenticateAccount:[[AKAccountStore sharedStore] authenticatedAccount]];
+  };
+  
+  [httpClient getPath:path parameters:nil success:success failure:failure];
+}
+
++ (void)getPeopleCurrentUserConnectionsCountWithOnSuccess:(void (^)(NSInteger numberOfConnections))onSuccess
+                                                onFailure:(void (^)(NSError *error))onFailure {
+  NSString *path = @"people/~:(num-connections)";
+  LIHTTPClient *httpClient = [LIHTTPClient sharedClient];
+  AFHTTPRequestOperationSuccess success = ^(AFHTTPRequestOperation *requestOperation,
+                                            NSDictionary *JSON){
+    NSLog(@"LinkedIn: Profile, %@", JSON);
+    NSInteger numberOfConnections = [JSON[@"numConnections"] intValue];
+    onSuccess ? onSuccess(numberOfConnections) : NULL;
+  };
+  AFHTTPRequestOperationFailure failure = ^(AFHTTPRequestOperation *requestOperation,
+                                            NSError *error){
+    onFailure ? onFailure(error) : NULL;
     NSLog(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
     [[AKLinkedInAuthController sharedController]
         unauthenticateAccount:[[AKAccountStore sharedStore] authenticatedAccount]];

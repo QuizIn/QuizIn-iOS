@@ -7,6 +7,8 @@
 @property(nonatomic, assign, readonly) NSInteger numberOfQuestions;
 @property(nonatomic, assign, readonly) NSInteger currentQuestionIndex;
 
++ (instancetype)quizWithQuestions:(NSArray *)questions;
+- (instancetype)initWithQuestions:(NSArray *)questions;
 - (QIQuizQuestion *)nextQuestion;
 
 @end
