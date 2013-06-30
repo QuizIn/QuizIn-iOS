@@ -1,9 +1,11 @@
 #import <UIKit/UIKit.h>
 #import "QIProgressView.h"
+#import "QICheckAnswersView.h"
 
 @interface QIMultipleChoiceQuizView : UIView
 
-@property(nonatomic, strong) QIProgressView *progressView; 
+@property(nonatomic, strong) QIProgressView *progressView;
+@property(nonatomic, strong) QICheckAnswersView *checkAnswersView;
 @property(nonatomic, assign) NSUInteger quizProgress;
 @property(nonatomic, assign) NSUInteger numberOfQuestions;
 @property(nonatomic, copy) NSString *question;

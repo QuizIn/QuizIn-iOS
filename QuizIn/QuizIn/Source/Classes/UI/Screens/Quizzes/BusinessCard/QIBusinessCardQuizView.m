@@ -426,11 +426,11 @@
     self.cardLastName.text = self.answerLastNames[self.answerName.selectedAnswer];
     self.cardFirstName.alpha = 0;
     self.cardLastName.alpha = 0;
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:.5];
-    self.cardFirstName.alpha = 1;
-    self.cardLastName.alpha = 1;
-    [UIView commitAnimations];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+      self.cardFirstName.alpha = 1;
+      self.cardLastName.alpha = 1;
+    }];
   }
 }
 
@@ -439,10 +439,9 @@
   if (![self.cardCompany.text isEqualToString:self.answerCompanies[self.answerCompany.selectedAnswer]]) {
     self.cardCompany.text = self.answerCompanies[self.answerCompany.selectedAnswer];
     self.cardCompany.alpha = 0;
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:.5];
-    self.cardCompany.alpha = 1;
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.5 animations:^{
+      self.cardCompany.alpha = 1;
+    }];
   }
 }
 
@@ -451,10 +450,9 @@
   if (![self.cardTitle.text isEqualToString:self.answerTitles[self.answerTitle.selectedAnswer]]){
     self.cardTitle.text = self.answerTitles[self.answerTitle.selectedAnswer];
     self.cardTitle.alpha = 0;
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:.5];
-    self.cardTitle.alpha = 1;
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.5 animations:^{
+      self.cardTitle.alpha = 1;
+    }];
   }
 }
 
