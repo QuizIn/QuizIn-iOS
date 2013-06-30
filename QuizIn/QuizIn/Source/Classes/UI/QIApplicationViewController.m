@@ -69,9 +69,9 @@
   [self addChildViewController:self.drawerController];
   [self.view addSubview:self.drawerController.view];
   
-  
+  /*
   QIQuiz *quiz = [QIQuizBuilder quizFromRandomConnections];
-  NSLog(@"%@", quiz);
+  NSLog(@"%@", quiz);*/
   
   /*
   [LinkedIn getPeopleCurrentUserConnectionsCountWithOnSuccess:^(NSInteger numberOfConnections) {

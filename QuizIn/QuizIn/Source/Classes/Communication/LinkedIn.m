@@ -102,7 +102,7 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
                                      count:(NSUInteger)count
                                  onSuccess:(void (^)(QIConnections *connections))onSuccess
                                  onFailure:(void (^)(NSError *error))onFailure {
-  NSString *path = @"people/~/connections:(id,first-name,last-name,positions,location,industry)";
+  NSString *path = @"people/~/connections:(id,first-name,last-name,positions,location,industry,picture-url)";
   LIHTTPClient *httpClient = [LIHTTPClient sharedClient];
   AFHTTPRequestOperationSuccess success = ^(AFHTTPRequestOperation *requestOperation,
                                             NSDictionary *JSON){
@@ -117,6 +117,7 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
       person.firstName = JSONPerson[@"firstName"];
       person.lastName = JSONPerson[@"lastName"];
       person.industry = JSONPerson[@"industry"];
+      person.pictureURL = JSONPerson[@"pictureUrl"];
       
       QILocation *location = [QILocation new];
       location.countryCode = JSONPerson[@"location"][@"country"][@"code"];

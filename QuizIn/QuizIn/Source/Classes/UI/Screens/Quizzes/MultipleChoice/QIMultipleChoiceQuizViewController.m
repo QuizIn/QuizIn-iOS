@@ -1,14 +1,22 @@
 #import "QIMultipleChoiceQuizViewController.h"
 
-@interface QIMultipleChoiceQuizViewController ()
+#import "QIMultipleChoiceQuestion.h"
+#import "QIPerson.h"
 
+@interface QIMultipleChoiceQuizViewController ()
+@property(nonatomic, strong) QIMultipleChoiceQuestion *question;
 @end
 
 @implementation QIMultipleChoiceQuizViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  return [self initWithQuestion:nil];
+};
+
+- (instancetype)initWithQuestion:(QIMultipleChoiceQuestion *)question {
+  self = [super initWithNibName:nil bundle:nil];
   if (self) {
+    _question = question;
   }
   return self;
 }
@@ -23,9 +31,9 @@
   //TODO Cleanup hardcoded test values
   self.multipleChoiceView.numberOfQuestions = 11;
   self.multipleChoiceView.quizProgress = 10;
-  self.multipleChoiceView.question = @"Where do I work?";
-  self.multipleChoiceView.answers = @[@"National Instruments",@"Invodo",@"Mutual Mobile",@"Google"];
-  self.multipleChoiceView.profileImageURL = [NSURL URLWithString:@"http://www.awesomeannie.com/annie-wersching-pictures/cache/misc/headshots/annie-wersching-blonde-headshot-01_144_cw144_ch144_thumb.jpg"];
+  self.multipleChoiceView.question = self.question.questionPrompt;
+  self.multipleChoiceView.answers = self.question.answers;
+  self.multipleChoiceView.profileImageURL = [NSURL URLWithString:self.question.person.pictureURL];
   [self.multipleChoiceView.progressView.exitButton addTarget:self
                                                       action:@selector(userDidCloseQuiz)
                                             forControlEvents:UIControlEventTouchUpInside];

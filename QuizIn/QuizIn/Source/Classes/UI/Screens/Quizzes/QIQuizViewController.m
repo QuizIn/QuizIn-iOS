@@ -5,7 +5,11 @@
 #import "QIBusinessCardViewController.h"
 #import "QIMatchingQuizViewController.h"
 
+#import "QIQuizBuilder.h"
+#import "QIQuiz.h"
+
 @interface QIQuizViewController ()
+@property(nonatomic, strong) QIQuiz *quiz;
 @property(nonatomic, strong, readonly) QIQuizView *quizView;
 @property(nonatomic, strong) QIMultipleChoiceQuizViewController *multipleChoiceController;
 @property(nonatomic, strong) QIBusinessCardViewController *businessCardController;
@@ -28,8 +32,10 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   // TODO(rcacheaux): Clean up.
+  self.quiz = [QIQuizBuilder quizFromRandomConnections];
   
-  self.multipleChoiceController = [[QIMultipleChoiceQuizViewController alloc] init];
+  self.multipleChoiceController =
+      [[QIMultipleChoiceQuizViewController alloc] initWithQuestion:(QIMultipleChoiceQuestion *)[self.quiz nextQuestion]];
   [self addChildViewController:self.multipleChoiceController];
     
   self.matchingController = [[QIMatchingQuizViewController alloc] init];

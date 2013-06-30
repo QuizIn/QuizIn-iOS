@@ -1,5 +1,8 @@
 #import "QIQuiz.h"
 
+#import "QIMultipleChoiceQuestion.h"
+#import "QIPerson.h"
+
 @interface QIQuiz ()
 @property(nonatomic, copy) NSArray *questions;
 @end
@@ -23,8 +26,12 @@
 }
 
 - (QIQuizQuestion *)nextQuestion {
-  // TODO(Rene): Implement.
-  return nil;
+  for (QIMultipleChoiceQuestion *question in self.questions) {
+    if (question.person.pictureURL != nil) {
+      return question;
+    }
+  }
+  return self.questions[0];
 }
 
 @end
