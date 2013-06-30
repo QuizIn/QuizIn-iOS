@@ -13,6 +13,10 @@
 		205504E71780BF3300F7F90F /* QIMultipleChoiceQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504E61780BF3200F7F90F /* QIMultipleChoiceQuestion.m */; };
 		205504EA1780BF4800F7F90F /* QIBusinessCardQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504E91780BF4800F7F90F /* QIBusinessCardQuestion.m */; };
 		205504ED1780BF5B00F7F90F /* QIMatchingQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504EC1780BF5B00F7F90F /* QIMatchingQuestion.m */; };
+		205504F01780C06500F7F90F /* QIPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504EF1780C06400F7F90F /* QIPerson.m */; };
+		205504F31780C1C600F7F90F /* QILocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504F21780C1C600F7F90F /* QILocation.m */; };
+		205504F61780C4DF00F7F90F /* QIPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504F51780C4DE00F7F90F /* QIPosition.m */; };
+		205504F91780C5BA00F7F90F /* QICompany.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504F81780C5BA00F7F90F /* QICompany.m */; };
 		340896B817513D4D00398230 /* Tahoma.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 340896B717513D4D00398230 /* Tahoma.ttf */; };
 		340896BA1751443800398230 /* tahomabd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 340896B91751443800398230 /* tahomabd.ttf */; };
 		340896BD1751712900398230 /* progressView_tracker.png in Resources */ = {isa = PBXBuildFile; fileRef = 340896BB1751712400398230 /* progressView_tracker.png */; };
@@ -187,6 +191,14 @@
 		205504E91780BF4800F7F90F /* QIBusinessCardQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardQuestion.m; sourceTree = "<group>"; };
 		205504EB1780BF5B00F7F90F /* QIMatchingQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIMatchingQuestion.h; sourceTree = "<group>"; };
 		205504EC1780BF5B00F7F90F /* QIMatchingQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIMatchingQuestion.m; sourceTree = "<group>"; };
+		205504EE1780C06400F7F90F /* QIPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIPerson.h; sourceTree = "<group>"; };
+		205504EF1780C06400F7F90F /* QIPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIPerson.m; sourceTree = "<group>"; };
+		205504F11780C1C500F7F90F /* QILocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QILocation.h; sourceTree = "<group>"; };
+		205504F21780C1C600F7F90F /* QILocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QILocation.m; sourceTree = "<group>"; };
+		205504F41780C4DE00F7F90F /* QIPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIPosition.h; sourceTree = "<group>"; };
+		205504F51780C4DE00F7F90F /* QIPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIPosition.m; sourceTree = "<group>"; };
+		205504F71780C5B900F7F90F /* QICompany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICompany.h; sourceTree = "<group>"; };
+		205504F81780C5BA00F7F90F /* QICompany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICompany.m; sourceTree = "<group>"; };
 		340896B717513D4D00398230 /* Tahoma.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tahoma.ttf; sourceTree = "<group>"; };
 		340896B91751443800398230 /* tahomabd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tahomabd.ttf; sourceTree = "<group>"; };
 		340896BB1751712400398230 /* progressView_tracker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressView_tracker.png; sourceTree = "<group>"; };
@@ -424,6 +436,14 @@
 				205504E91780BF4800F7F90F /* QIBusinessCardQuestion.m */,
 				205504EB1780BF5B00F7F90F /* QIMatchingQuestion.h */,
 				205504EC1780BF5B00F7F90F /* QIMatchingQuestion.m */,
+				205504EE1780C06400F7F90F /* QIPerson.h */,
+				205504EF1780C06400F7F90F /* QIPerson.m */,
+				205504F11780C1C500F7F90F /* QILocation.h */,
+				205504F21780C1C600F7F90F /* QILocation.m */,
+				205504F41780C4DE00F7F90F /* QIPosition.h */,
+				205504F51780C4DE00F7F90F /* QIPosition.m */,
+				205504F71780C5B900F7F90F /* QICompany.h */,
+				205504F81780C5BA00F7F90F /* QICompany.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1209,6 +1229,10 @@
 				205504E71780BF3300F7F90F /* QIMultipleChoiceQuestion.m in Sources */,
 				205504EA1780BF4800F7F90F /* QIBusinessCardQuestion.m in Sources */,
 				205504ED1780BF5B00F7F90F /* QIMatchingQuestion.m in Sources */,
+				205504F01780C06500F7F90F /* QIPerson.m in Sources */,
+				205504F31780C1C600F7F90F /* QILocation.m in Sources */,
+				205504F61780C4DF00F7F90F /* QIPosition.m in Sources */,
+				205504F91780C5BA00F7F90F /* QICompany.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
