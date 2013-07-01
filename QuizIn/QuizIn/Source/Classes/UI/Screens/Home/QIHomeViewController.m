@@ -36,6 +36,13 @@
   [self.homeView.calendarPickerButton addTarget:self
                                          action:@selector(calendarPicker:)
                                forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.homeView.businessCardQuizButton addTarget:self
+                                           action:@selector(openBusinessCardQuiz:)
+                                 forControlEvents:UIControlEventTouchUpInside];
+  [self.homeView.matchingQuizButton addTarget:self
+                                       action:@selector(openMatchingQuiz:)
+                             forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,6 +53,18 @@
 
 - (void)startConnectionsQuiz:(id)sender {
   QIQuizViewController *quizViewController = [self newQuizViewController];
+  [self presentViewController:quizViewController animated:YES completion:nil];
+}
+
+- (void)openBusinessCardQuiz:(id)sender {
+  QIQuizViewController *quizViewController = [self newQuizViewController];
+  quizViewController.businessCard = YES;
+  [self presentViewController:quizViewController animated:YES completion:nil];
+}
+
+- (void)openMatchingQuiz:(id)sender {
+  QIQuizViewController *quizViewController = [self newQuizViewController];
+  quizViewController.matching = YES;
   [self presentViewController:quizViewController animated:YES completion:nil];
 }
 

@@ -10,6 +10,10 @@
 @property(nonatomic, strong) UILabel *connectionsQuizNumberOfConnectionsLabel;
 @property(nonatomic, strong) UIView *connectionsQuizImagePreviewCollection;
 
+//Temporary Buttons
+@property(nonatomic, strong, readwrite) UIButton *businessCardQuizButton;
+@property(nonatomic, strong, readwrite) UIButton *matchingQuizButton;
+
 //constraints
 @property(nonatomic, strong) NSMutableArray *constraintsForTopLevelViews;
 @property(nonatomic, strong) NSMutableArray *constraintsForConnectionsQuizStartView;
@@ -38,6 +42,10 @@
     _connectionsQuizStartView = [self newConnectionsQuizStartView];
     _calendarPickerButton = [self newCalendarPickerButton];
     
+    _businessCardQuizButton = [self newBusinessCardQuizButton];
+    _matchingQuizButton = [self newMatchingQuizButton];
+    
+    
     [self constructViewHierachy];
   }
   return self;
@@ -53,6 +61,8 @@
   [self.connectionsQuizStartView addSubview:self.connectionsQuizImagePreviewCollection];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizButton];
   [self addSubview:self.connectionsQuizStartView];
+  [self addSubview:self.businessCardQuizButton];
+  [self addSubview:self.matchingQuizButton];
 
 }
 
@@ -228,6 +238,20 @@
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   button.backgroundColor = [UIColor clearColor];
   return button;
+}
+
+- (UIButton *)newBusinessCardQuizButton {
+  UIButton *businessCardQuizButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  [businessCardQuizButton setTitle:@"Business Card" forState:UIControlStateNormal];
+  businessCardQuizButton.frame = CGRectMake(10.0f, 330.0f, 150.0f, 44.0f);
+  return businessCardQuizButton;
+}
+
+- (UIButton *)newMatchingQuizButton {
+  UIButton *matchingQuizButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  [matchingQuizButton setTitle:@"Matching" forState:UIControlStateNormal];
+  matchingQuizButton.frame = CGRectMake(10.0f, 380.0f, 150.0f, 44.0f);
+  return matchingQuizButton;
 }
 
 #pragma mark Strings

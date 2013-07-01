@@ -21,6 +21,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
+    _businessCard = NO;
+    _matching = NO;
   }
   return self;
 }
@@ -31,21 +33,38 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  if (self.businessCard) {
+    self.businessCardController = [[QIBusinessCardViewController alloc] init];
+    [self addChildViewController:self.businessCardController];
+    [self.businessCardController.businessCardQuizView.nextQuestionButton addTarget:self
+                                                                            action:@selector(nextPressed1)
+                                                                  forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.businessCardController.view];
+    return;
+  }
+  
+  if (self.matching) {
+    self.matchingController = [[QIMatchingQuizViewController alloc] init];
+    [self addChildViewController:self.matchingController];
+    [self.matchingController.matchingQuizView.nextQuestionButton addTarget:self
+                                                                    action:@selector(nextPressed1)
+                                                          forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.matchingController.view];
+    return;
+  }
+  
+  
   self.quiz = [QIQuizBuilder quizFromRandomConnections];
   
   self.multipleChoiceController =
-      [[QIMultipleChoiceQuizViewController alloc] initWithQuestion:(QIMultipleChoiceQuestion *)[self.quiz nextQuestion]];
+      [[QIMultipleChoiceQuizViewController alloc]
+       initWithQuestion:(QIMultipleChoiceQuestion *)[self.quiz nextQuestion]];
   [self addChildViewController:self.multipleChoiceController];
-    
-  self.matchingController = [[QIMatchingQuizViewController alloc] init];
-  [self addChildViewController:self.matchingController];
-
-  self.businessCardController = [[QIBusinessCardViewController alloc] init];
-  [self addChildViewController:self.businessCardController];
-  [self.businessCardController.businessCardQuizView.nextQuestionButton addTarget:self action:@selector(nextPressed1) forControlEvents:UIControlEventTouchUpInside];
-  
   [self.view addSubview:self.multipleChoiceController.view];
-  [self.multipleChoiceController.multipleChoiceView.nextQuestionButton addTarget:self action:@selector(nextPressed) forControlEvents:UIControlEventTouchUpInside];
+  [self.multipleChoiceController.multipleChoiceView.nextQuestionButton addTarget:self
+                                                                          action:@selector(nextPressed)
+                                                                forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)nextPressed{
@@ -68,14 +87,7 @@
 }
 
 - (void)nextPressed1{
-  [self.multipleChoiceController.view removeFromSuperview];
-  [self.multipleChoiceController removeFromParentViewController];
-  
-  QIMultipleChoiceQuizViewController *nextQuestionViewController =
-  [[QIMultipleChoiceQuizViewController alloc] initWithQuestion:(QIMultipleChoiceQuestion *)[self.quiz nextQuestion]];
-  
-  [self addChildViewController:nextQuestionViewController];
-  [self.view addSubview:nextQuestionViewController.view];
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewWillLayoutSubviews {

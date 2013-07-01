@@ -16,7 +16,7 @@
 @property(nonatomic, strong) NSArray *answerButtons;
 @property(nonatomic, strong) NSMutableArray *answerColorImagesQueue;
 @property(nonatomic, strong) NSMutableArray *answerColorImages;
-@property(nonatomic, strong) UIButton *nextQuestionButton;
+@property(nonatomic, strong, readwrite) UIButton *nextQuestionButton;
 @property(nonatomic) BOOL overwriteSelection;
 @property(nonatomic, strong) NSMutableArray *progressViewConstraints;
 @property(nonatomic, strong) NSMutableArray *questionConstraints;
