@@ -11,6 +11,6 @@
 
 @interface QICalendarData : NSObject
 
-+ (NSMutableArray *)getCalendarDataWithStartDate:(NSDate *)date withEventStore:(EKEventStore *)eventStore;
++ (NSMutableArray *)getCalendarDataWithIntervalIndex:(NSInteger)dateIndex withEventStore:(EKEventStore *)eventStore;
 
 @end

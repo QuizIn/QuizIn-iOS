@@ -30,7 +30,7 @@
   [super viewDidLoad];
   //self.calendarPickerView.backgroundColor = [UIColor whiteColor];
   self.calendarPickerView.eventStore = self.eventStore;
-  NSMutableArray *calendarContent = [QICalendarData getCalendarDataWithStartDate:[NSDate date] withEventStore:self.eventStore];
+  NSMutableArray *calendarContent = [QICalendarData getCalendarDataWithIntervalIndex:0 withEventStore:self.eventStore];
   self.calendarPickerView.calendarContent = calendarContent; 
 }
 

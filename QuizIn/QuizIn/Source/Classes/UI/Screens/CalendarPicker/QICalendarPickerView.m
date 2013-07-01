@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UIImageView *viewBackground;
 @property (nonatomic, strong) NSMutableArray *viewConstraints;
 @property (nonatomic, strong) QICalendarTableFooterView *footerViewLoading;
+@property (nonatomic, assign) int numberOfCalendarDataLoads; 
 
 @end
 
@@ -39,6 +40,7 @@
       _bottomSlit = [self newBottomSlit];
       _viewBackground = [self newViewBackground];
       _quizButton = [self newQuizButton];
+      _numberOfCalendarDataLoads = 1;
       
       //[self setTranslatesAutoresizingMaskIntoConstraints:NO];
       [self constructViewHierarchy];
@@ -242,7 +244,8 @@
   NSIndexPath *path = [self.tableView indexPathForCell:lastVisibleCell];
   if(path.section == [self.calendarContent count]-1 && path.row == [[self.calendarContent objectAtIndex:path.section] count]-2)
   {
-    [self.calendarContent addObjectsFromArray:[QICalendarData getCalendarDataWithStartDate:[NSDate date] withEventStore:self.eventStore]];
+    [self.calendarContent addObjectsFromArray:[QICalendarData getCalendarDataWithIntervalIndex:self.numberOfCalendarDataLoads withEventStore:self.eventStore]];
+     self.numberOfCalendarDataLoads++;
     [self.tableView reloadData];
   }
 }

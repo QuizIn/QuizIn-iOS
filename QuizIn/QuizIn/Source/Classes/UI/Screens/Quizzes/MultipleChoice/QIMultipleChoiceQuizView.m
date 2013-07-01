@@ -41,6 +41,7 @@
     _questionLabel = [self newQuestionLabel];
     _answerButtons = @[];
     _nextQuestionButton = [self newNextQuestionButton];
+    _checkAnswersView = [self newCheckAnswersView];
   
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self constructViewHierarchy];
@@ -102,6 +103,7 @@
   [self addSubview:self.nextQuestionButton];
   [self addSubview:self.dividerTop];
   [self addSubview:self.dividerBottom];
+  [self addSubview:self.checkAnswersView];
 }
 
 - (void)loadAnswerButtons {
@@ -221,6 +223,14 @@
     NSLayoutConstraint *tapeY = [NSLayoutConstraint constraintWithItem:_profileImageTape attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_profileImageView attribute:NSLayoutAttributeTop multiplier:1.0f constant:-11.0f];
     
     [self.multipleChoiceConstraints addObjectsFromArray:@[centerImageBackgroundX,centerImageBackgroundY,widthImageBackground,heightImageBackground,centerTapeX,tapeY]];
+    
+    //Constrain Check Answers View
+    NSLayoutConstraint *centerCheckX = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *centerCheckY = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *widthCheck = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *heightCheck = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:81.0f];
+    
+    [self.multipleChoiceConstraints addObjectsFromArray:@[centerCheckX,centerCheckY,widthCheck,heightCheck]];
     
     [self addConstraints:self.multipleChoiceConstraints];
   }
@@ -349,6 +359,13 @@
   [nextQuestionButton setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
   [nextQuestionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   return nextQuestionButton;
+}
+
+- (QICheckAnswersView *)newCheckAnswersView{
+  QICheckAnswersView *view = [[QICheckAnswersView alloc] init];
+  [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [view setBackgroundColor:[UIColor redColor]];
+  return view;
 }
 
 

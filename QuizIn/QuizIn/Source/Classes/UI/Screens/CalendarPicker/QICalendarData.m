@@ -2,19 +2,22 @@
 #import <EventKit/EventKit.h>
 
 #define USE_TEST_DATA @YES
+#define INTERVAL_TO_GRAB 604800.0 //A week
 
 @implementation QICalendarData
 
-+ (NSMutableArray *)getCalendarDataWithStartDate:(NSDate *)date withEventStore:(EKEventStore *)eventStore{
++ (NSMutableArray *)getCalendarDataWithIntervalIndex:(NSInteger)dateIndex withEventStore:(EKEventStore *)eventStore{
     
   if (USE_TEST_DATA){
     NSMutableArray *calendarData = [[self grabTestData] mutableCopy];
+    NSLog(@"%d",dateIndex);
     return calendarData;
   }
   else {
     NSMutableArray *calendarData = [NSMutableArray  array];
-    NSDate *endDate = [[NSDate alloc] dateByAddingTimeInterval:604800.0];
-    NSPredicate *dateRange = [eventStore predicateForEventsWithStartDate:date endDate:endDate calendars:[eventStore calendarsForEntityType:EKEntityTypeEvent]];
+    NSDate *startDate = [[NSDate alloc] dateByAddingTimeInterval:INTERVAL_TO_GRAB*dateIndex];
+    NSDate *endDate = [[NSDate alloc] dateByAddingTimeInterval:INTERVAL_TO_GRAB*(dateIndex+1)];
+    NSPredicate *dateRange = [eventStore predicateForEventsWithStartDate:startDate endDate:endDate calendars:[eventStore calendarsForEntityType:EKEntityTypeEvent]];
     NSArray *events = [eventStore eventsMatchingPredicate:dateRange];
     EKEvent *event = [events objectAtIndex:0];
     // Time - event.startDate
