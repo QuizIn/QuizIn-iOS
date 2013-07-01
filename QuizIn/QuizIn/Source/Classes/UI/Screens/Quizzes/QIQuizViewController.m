@@ -31,7 +31,6 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  // TODO(rcacheaux): Clean up.
   self.quiz = [QIQuizBuilder quizFromRandomConnections];
   
   self.multipleChoiceController =
@@ -52,13 +51,31 @@
 - (void)nextPressed{
   [self.multipleChoiceController.view removeFromSuperview];
   [self.multipleChoiceController removeFromParentViewController];
-  [self.view addSubview:self.businessCardController.view];
+  
+  QIMultipleChoiceQuestion *nextQuestion = (QIMultipleChoiceQuestion *)[self.quiz nextQuestion];
+  
+  if (nextQuestion == nil) {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    return;
+  }
+  
+  QIMultipleChoiceQuizViewController *nextQuestionViewController =
+      [[QIMultipleChoiceQuizViewController alloc] initWithQuestion:nextQuestion];
+  [nextQuestionViewController.multipleChoiceView.nextQuestionButton addTarget:self action:@selector(nextPressed) forControlEvents:UIControlEventTouchUpInside];
+  
+  [self addChildViewController:nextQuestionViewController];
+  [self.view addSubview:nextQuestionViewController.view];
 }
 
 - (void)nextPressed1{
-  [self.businessCardController.view removeFromSuperview];
-  [self.businessCardController removeFromParentViewController];
-  [self.view addSubview:self.matchingController.view];
+  [self.multipleChoiceController.view removeFromSuperview];
+  [self.multipleChoiceController removeFromParentViewController];
+  
+  QIMultipleChoiceQuizViewController *nextQuestionViewController =
+  [[QIMultipleChoiceQuizViewController alloc] initWithQuestion:(QIMultipleChoiceQuestion *)[self.quiz nextQuestion]];
+  
+  [self addChildViewController:nextQuestionViewController];
+  [self.view addSubview:nextQuestionViewController.view];
 }
 
 - (void)viewWillLayoutSubviews {

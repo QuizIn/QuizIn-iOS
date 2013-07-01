@@ -4,6 +4,7 @@
 #import "QIPerson.h"
 
 @interface QIQuiz ()
+@property(nonatomic, assign, readwrite) NSInteger currentQuestionIndex;
 @property(nonatomic, copy) NSArray *questions;
 @end
 
@@ -17,6 +18,7 @@
   self = [super init];
   if (self) {
     _questions = [questions copy];
+    _currentQuestionIndex = 0;
   }
   return self;
 }
@@ -26,12 +28,10 @@
 }
 
 - (QIQuizQuestion *)nextQuestion {
-  for (QIMultipleChoiceQuestion *question in self.questions) {
-    if (question.person.pictureURL != nil) {
-      return question;
-    }
+  if (self.currentQuestionIndex >= [self.questions count]) {
+    return nil;
   }
-  return self.questions[0];
+  return self.questions[self.currentQuestionIndex++];
 }
 
 @end
