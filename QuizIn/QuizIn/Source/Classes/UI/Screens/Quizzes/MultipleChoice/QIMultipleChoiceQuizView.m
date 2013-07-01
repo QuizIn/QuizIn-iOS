@@ -100,10 +100,10 @@
   [self addSubview:self.profileImageTape];
   [self addSubview:self.progressView];
   [self addSubview:self.questionLabel];
-  [self addSubview:self.nextQuestionButton];
   [self addSubview:self.dividerTop];
   [self addSubview:self.dividerBottom];
   [self addSubview:self.checkAnswersView];
+  [self addSubview:self.nextQuestionButton];
 }
 
 - (void)loadAnswerButtons {
