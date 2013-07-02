@@ -15,7 +15,9 @@
 @property(nonatomic, strong) NSArray *answerButtons;
 
 @property(nonatomic, strong) NSMutableArray *progressViewConstraints;
-@property(nonatomic, strong) NSMutableArray *multipleChoiceConstraints; 
+@property(nonatomic, strong) NSMutableArray *multipleChoiceConstraints;
+@property(nonatomic, strong) NSLayoutConstraint *topCheck;
+@property(nonatomic, assign) BOOL resultClosed;
 @end
 
 @implementation QIMultipleChoiceQuizView
@@ -40,8 +42,8 @@
     _profileImageView = [self newProfileImageView];
     _questionLabel = [self newQuestionLabel];
     _answerButtons = @[];
-    _nextQuestionButton = [self newNextQuestionButton];
     _checkAnswersView = [self newCheckAnswersView];
+    _resultClosed = YES; 
   
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self constructViewHierarchy];
@@ -102,14 +104,14 @@
   [self addSubview:self.questionLabel];
   [self addSubview:self.dividerTop];
   [self addSubview:self.dividerBottom];
-  [self addSubview:self.checkAnswersView];
-  [self addSubview:self.nextQuestionButton];
 }
 
 - (void)loadAnswerButtons {
   for (UIButton *button in self.answerButtons) {
     [self addSubview:button];
   }
+  //TODO This should not go here, but I am not sure how to get it on top at this point. 
+  [self addSubview:self.checkAnswersView];
 }
 
 #pragma mark Layout
@@ -170,7 +172,6 @@
                                          _questionLabel,      @"_questionLabel",
                                          _dividerTop,         @"_dividerTop",
                                          _dividerBottom,      @"_dividerBottom",
-                                         _nextQuestionButton, @"_nextQuestionButton",
                                          _answerButtons[0],   @"_answerButtons0",
                                          _answerButtons[1],   @"_answerButtons1",
                                          _answerButtons[2],   @"_answerButtons2",
@@ -193,7 +194,7 @@
       [choiceButtonConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:283.0f]];
     }
     
-    NSString *quizChoiceVertical = @"V:|[_progressView]-3-[_profileImageView(==144)]-12-[_dividerTop(==2)][_questionLabel(>=28)][_dividerBottom(==2)][_answerButtons0(>=44)][_answerButtons1(==_answerButtons0)][_answerButtons2(==_answerButtons0)][_answerButtons3(==_answerButtons0)][_nextQuestionButton(==40)]-3-|";
+    NSString *quizChoiceVertical = @"V:|[_progressView]-3-[_profileImageView(==144)]-(>=15,<=20)-[_dividerTop(==2)][_questionLabel(>=28)][_dividerBottom(==2)]-(>=0,<=8)-[_answerButtons0(>=45,<=60)][_answerButtons1(==_answerButtons0)][_answerButtons2(==_answerButtons0)][_answerButtons3(==_answerButtons0)]-(>=43)-|";
     
     NSArray *quizChoiceVerticalConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:quizChoiceVertical
@@ -201,11 +202,7 @@
                                             metrics:nil
                                               views:multipleChoiceViews];
     
-    NSLayoutConstraint *hNextButton = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0f constant:-10.0f];
-    
-    NSLayoutConstraint *nextButtonWidth = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0f constant:125.0f];
-    
-    [self.multipleChoiceConstraints addObjectsFromArray:@[centerImageX,imageWidth,centerQuestionX,centerDividerTopX,centerDividerBottomX,hNextButton,nextButtonWidth]];
+    [self.multipleChoiceConstraints addObjectsFromArray:@[centerImageX,imageWidth,centerQuestionX,centerDividerTopX,centerDividerBottomX]];
     [self.multipleChoiceConstraints addObjectsFromArray:choiceButtonConstraints];
     [self.multipleChoiceConstraints addObjectsFromArray:quizChoiceVerticalConstraints];
     
@@ -226,14 +223,61 @@
     
     //Constrain Check Answers View
     NSLayoutConstraint *centerCheckX = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *centerCheckY = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
     NSLayoutConstraint *widthCheck = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f];
     NSLayoutConstraint *heightCheck = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:81.0f];
     
-    [self.multipleChoiceConstraints addObjectsFromArray:@[centerCheckX,centerCheckY,widthCheck,heightCheck]];
-    
+    _topCheck = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-40.0f];
+
+    [self.multipleChoiceConstraints addObjectsFromArray:@[centerCheckX,widthCheck,heightCheck,_topCheck]];
     [self addConstraints:self.multipleChoiceConstraints];
   }
+}
+
+#pragma mark Actions
+-(void)checkButtonPressed{
+  NSLog(@"checkButton Pressed");
+  [self showResult];
+}
+-(void)againButtonPressed{
+  NSLog(@"againButton Pressed");
+  [self resetView];
+}
+-(void)showResult{
+  NSLog(@"showResult");
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.checkAnswersView.nextButton setHidden:NO];
+    [self.checkAnswersView.againButton setHidden:NO];
+    [self.checkAnswersView.checkButton setHidden:YES];
+    [self.checkAnswersView.resultHideButton setHidden:NO];
+    [self.topCheck setConstant:-81.0f];
+    [self setResultClosed:NO];
+    [self layoutIfNeeded];
+  }];
+}
+-(void)resetView{
+  NSLog(@"resetView");
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.checkAnswersView.nextButton setHidden:YES];
+    [self.checkAnswersView.againButton setHidden:YES];
+    [self.checkAnswersView.checkButton setHidden:NO];
+    [self.checkAnswersView.resultHideButton setHidden:YES];
+    [self.topCheck setConstant:-40.0f];
+    [self setResultClosed:YES];
+    [self layoutIfNeeded];
+  }];
+}
+-(void)toggleResult{
+  NSLog(@"toggleResult");
+  [UIView animateWithDuration:0.5 animations:^{
+    if (self.resultClosed) {
+      [self.topCheck setConstant:-81.0f];
+    }
+    else {
+      [self.topCheck setConstant:-40.0f];
+    }
+    [self setResultClosed:!self.resultClosed];
+    [self layoutIfNeeded];
+  }];
 }
 
 #pragma mark Strings
@@ -349,22 +393,13 @@
   return answerButton;
 }
 
-- (UIButton *)newNextQuestionButton {
-  UIButton *nextQuestionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  [nextQuestionButton setTitle:[self nextQuestionButtonText] forState:UIControlStateNormal];
-  //[nextQuestionButton setBackgroundImage:[[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 74, 0, 74)] forState:UIControlStateNormal];
-  [nextQuestionButton setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] forState:UIControlStateNormal];
-
-  [nextQuestionButton.titleLabel setFont:[QIFontProvider fontWithSize:14.0f style:Regular]];
-  [nextQuestionButton setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
-  [nextQuestionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  return nextQuestionButton;
-}
-
 - (QICheckAnswersView *)newCheckAnswersView{
   QICheckAnswersView *view = [[QICheckAnswersView alloc] init];
+  [view.resultHideButton addTarget:self action:@selector(toggleResult) forControlEvents:UIControlEventTouchUpInside];
+  [view.againButton addTarget:self action:@selector(againButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+  [view.checkButton addTarget:self action:@selector(checkButtonPressed) forControlEvents:UIControlEventTouchUpInside];
   [view setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [view setBackgroundColor:[UIColor redColor]];
+  [view setBackgroundColor:[UIColor clearColor]];
   return view;
 }
 

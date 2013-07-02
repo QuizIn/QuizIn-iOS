@@ -10,7 +10,9 @@
 
 @interface QICheckAnswersView : UIView
 
-@property(nonatomic, strong,readwrite) UIButton *continueButton;
-
-
+@property(nonatomic, strong,readonly) UIButton *checkButton;
+@property(nonatomic, strong,readonly) UIButton *helpButton;
+@property(nonatomic, strong,readonly) UIButton *nextButton;
+@property(nonatomic, strong,readonly) UIButton *againButton;
+@property(nonatomic, strong,readonly) UIButton *resultHideButton;
 @end

@@ -62,7 +62,7 @@
        initWithQuestion:(QIMultipleChoiceQuestion *)[self.quiz nextQuestion]];
   [self addChildViewController:self.multipleChoiceController];
   [self.view addSubview:self.multipleChoiceController.view];
-  [self.multipleChoiceController.multipleChoiceView.nextQuestionButton addTarget:self
+  [self.multipleChoiceController.multipleChoiceView.checkAnswersView.nextButton addTarget:self
                                                                           action:@selector(nextPressed)
                                                                 forControlEvents:UIControlEventTouchUpInside];
 }
@@ -80,7 +80,7 @@
   
   QIMultipleChoiceQuizViewController *nextQuestionViewController =
       [[QIMultipleChoiceQuizViewController alloc] initWithQuestion:nextQuestion];
-  [nextQuestionViewController.multipleChoiceView.nextQuestionButton addTarget:self action:@selector(nextPressed) forControlEvents:UIControlEventTouchUpInside];
+  [nextQuestionViewController.multipleChoiceView.checkAnswersView.nextButton addTarget:self action:@selector(nextPressed) forControlEvents:UIControlEventTouchUpInside];
   
   [self addChildViewController:nextQuestionViewController];
   [self.view addSubview:nextQuestionViewController.view];

@@ -38,7 +38,7 @@
                                                       action:@selector(userDidCloseQuiz)
                                             forControlEvents:UIControlEventTouchUpInside];
   
-  [self.multipleChoiceView.nextQuestionButton addTarget:self
+  [self.multipleChoiceView.checkAnswersView.nextButton addTarget:self
                                                  action:@selector(userDidPressNext)
                                        forControlEvents:UIControlEventTouchUpInside];
 }
