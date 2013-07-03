@@ -1,10 +1,12 @@
 #import <UIKit/UIKit.h>
 #import "QIProgressView.h"
 #import "BusinessCardAnswer/QIBusinessCardAnswerView.h"
+#import "QICheckAnswersView.h"
 
 @interface QIBusinessCardQuizView : UIView
 
 @property(nonatomic, strong) QIProgressView *progressView;
+@property(nonatomic, strong) QICheckAnswersView *checkAnswersView;
 @property(nonatomic, strong) NSURL *questionImageURL;
 @property(nonatomic, strong) NSArray *answerFirstNames;
 @property(nonatomic, strong) NSArray *answerLastNames;
@@ -12,6 +14,5 @@
 @property(nonatomic, strong) NSArray *answerTitles;
 @property(nonatomic, assign) NSUInteger quizProgress;
 @property(nonatomic, assign) NSUInteger numberOfQuestions;
-@property(nonatomic, strong,readonly) UIButton *nextQuestionButton;
 
 @end

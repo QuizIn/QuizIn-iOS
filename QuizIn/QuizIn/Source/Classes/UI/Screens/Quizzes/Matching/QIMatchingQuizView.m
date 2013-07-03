@@ -21,6 +21,8 @@
 @property(nonatomic, strong) NSMutableArray *progressViewConstraints;
 @property(nonatomic, strong) NSMutableArray *questionConstraints;
 @property(nonatomic, strong) NSMutableArray *answerConstraints;
+@property(nonatomic, strong) NSLayoutConstraint *topCheck;
+@property(nonatomic, assign) BOOL resultClosed;
 @end
 
 @implementation QIMatchingQuizView
@@ -47,9 +49,8 @@
     _questionColorImages = [self newQuestionColorImages];
     _answerColorImages = [self newAnswerColorImages];
     _overwriteSelection = NO; 
-    _nextQuestionButton = [self newNextQuestionButton];
+    _checkAnswersView = [self newCheckAnswersView];
     
-
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];    
     [self constructViewHierarchy];
   }
@@ -110,7 +111,7 @@
   [self addSubview:_questionView];
   [self loadQuestionButtons];
   [self loadAnswerButtons];
-  [self addSubview:self.nextQuestionButton];
+  [self addSubview:self.checkAnswersView];
 }
 
 - (void)loadQuestionButtons{
@@ -216,9 +217,9 @@
                                             metrics:nil
                                               views:questionAnswerViews];
     
-    [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_questionView attribute:NSLayoutAttributeTop multiplier:1.0f constant:10.0f]];
+   //[self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_questionView attribute:NSLayoutAttributeTop multiplier:1.0f constant:10.0f]];
     
-    NSString *vQuestionAnswerView = @"V:[_questionView(<=240)]-2-[_divider(==2)][_answerView(>=220)]|";
+    NSString *vQuestionAnswerView = @"V:[_progressView]-(-10)-[_questionView(<=200)]-2-[_divider(==2)][_answerView(>=220)]|";
     NSArray *vQuestionAnswerViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vQuestionAnswerView
                                             options:NSLayoutFormatAlignAllCenterX
@@ -296,7 +297,6 @@
                                          _answerButtons[1],   @"_answerButtons1",
                                          _answerButtons[2],   @"_answerButtons2",
                                          _answerButtons[3],   @"_answerButtons3",
-                                         _nextQuestionButton, @"_nextQuestionButton",
                                          nil];
 
     for (UIButton *button in self.answerButtons){
@@ -305,7 +305,7 @@
       [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
     }
     
-    NSString *vAnswerButtonsView = @"V:|[_answerButtons0(==_answerButtons0)][_answerButtons1(==_answerButtons0)][_answerButtons2(==_answerButtons0)][_answerButtons3(==_answerButtons0)][_nextQuestionButton]";
+    NSString *vAnswerButtonsView = @"V:|[_answerButtons0(==_answerButtons0)][_answerButtons1(==_answerButtons0)][_answerButtons2(==_answerButtons0)][_answerButtons3(==_answerButtons0)]";
     
     NSArray *vAnswerButtonConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vAnswerButtonsView
@@ -314,21 +314,16 @@
                                               views:answerButtonViews];
     
     [self.answerConstraints addObjectsFromArray:vAnswerButtonConstraints];
-    
-    //Constrian Next Buttong
-    NSArray *vNextButtonConstraint =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nextQuestionButton(==40)]-3-|"
-                                            options:0
-                                            metrics:nil
-                                              views:answerButtonViews];
 
-    NSLayoutConstraint *hNextButton = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0f constant:-10.0f];
+    //Constrain Check Answers View
+    NSLayoutConstraint *centerCheckX = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *widthCheck = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *heightCheck = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:81.0f];
     
-    NSLayoutConstraint *nextButtonWidth = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0f constant:125.0f];
+    _topCheck = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-40.0f];
     
-    [self.answerConstraints addObjectsFromArray:vNextButtonConstraint];
-    [self.answerConstraints addObjectsFromArray:@[hNextButton,nextButtonWidth]];
-
+    [self.answerConstraints addObjectsFromArray:@[centerCheckX,widthCheck,heightCheck,_topCheck]];
+    
     [self addConstraints:self.progressViewConstraints];
     [self addConstraints:self.answerConstraints];
     [self addConstraints:self.questionConstraints];
@@ -472,6 +467,53 @@
   }
   [UIView commitAnimations];
 }
+
+-(void)checkButtonPressed{
+  NSLog(@"checkButton Pressed");
+  [self showResult];
+}
+-(void)againButtonPressed{
+  NSLog(@"againButton Pressed");
+  [self resetView];
+}
+-(void)showResult{
+  NSLog(@"showResult");
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.checkAnswersView.nextButton setHidden:NO];
+    [self.checkAnswersView.againButton setHidden:NO];
+    [self.checkAnswersView.checkButton setHidden:YES];
+    [self.checkAnswersView.resultHideButton setHidden:NO];
+    [self.topCheck setConstant:-81.0f];
+    [self setResultClosed:NO];
+    [self layoutIfNeeded];
+  }];
+}
+-(void)resetView{
+  NSLog(@"resetView");
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.checkAnswersView.nextButton setHidden:YES];
+    [self.checkAnswersView.againButton setHidden:YES];
+    [self.checkAnswersView.checkButton setHidden:NO];
+    [self.checkAnswersView.resultHideButton setHidden:YES];
+    [self.topCheck setConstant:-40.0f];
+    [self setResultClosed:YES];
+    [self layoutIfNeeded];
+  }];
+}
+-(void)toggleResult{
+  NSLog(@"toggleResult");
+  [UIView animateWithDuration:0.5 animations:^{
+    if (self.resultClosed) {
+      [self.topCheck setConstant:-81.0f];
+    }
+    else {
+      [self.topCheck setConstant:-40.0f];
+    }
+    [self setResultClosed:!self.resultClosed];
+    [self layoutIfNeeded];
+  }];
+}
+
                                      
 #pragma mark Factory Methods
 - (QIProgressView *)newProgressView{
@@ -564,7 +606,7 @@
 - (UIButton *)newAnswerButtonWithTitle:(NSString *)title {
   UIButton *answerButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [answerButton setTitle:title forState:UIControlStateNormal];
-  answerButton.titleLabel.font = [QIFontProvider fontWithSize:16.0f style:Bold];
+  answerButton.titleLabel.font = [QIFontProvider fontWithSize:13.0f style:Bold];
   answerButton.titleLabel.adjustsFontSizeToFitWidth = YES;
   answerButton.titleLabel.adjustsLetterSpacingToFitWidth = YES;
   [answerButton setBackgroundImage:[[UIImage imageNamed:@"match_answerbox_std"] resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 18.0f, 15.0f, 18.0f)]  forState:UIControlStateNormal];
@@ -580,16 +622,15 @@
   return answerButton;
 }
 
--(UIButton *)newNextQuestionButton;{
-  UIButton *nextQuestionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  [nextQuestionButton setTitle:[self nextQuestionButtonText] forState:UIControlStateNormal];
-  [nextQuestionButton setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] forState:UIControlStateNormal];
-  [nextQuestionButton.titleLabel setFont:[QIFontProvider fontWithSize:14.0f style:Regular]];
-  [nextQuestionButton setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
-  [nextQuestionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  return nextQuestionButton;
+- (QICheckAnswersView *)newCheckAnswersView{
+  QICheckAnswersView *view = [[QICheckAnswersView alloc] init];
+  [view.resultHideButton addTarget:self action:@selector(toggleResult) forControlEvents:UIControlEventTouchUpInside];
+  [view.againButton addTarget:self action:@selector(againButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+  [view.checkButton addTarget:self action:@selector(checkButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+  [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [view setBackgroundColor:[UIColor clearColor]];
+  return view;
 }
-
 
 
 @end

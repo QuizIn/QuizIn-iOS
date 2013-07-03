@@ -20,7 +20,8 @@
 @property(nonatomic, strong) QIBusinessCardAnswerView *answerCompany;
 @property(nonatomic, strong) NSMutableArray *cardConstraints;
 @property(nonatomic, strong) NSMutableArray *answerConstraints;
-
+@property(nonatomic, strong) NSLayoutConstraint *topCheck;
+@property(nonatomic, assign) BOOL resultClosed;
 @end
 
 
@@ -49,7 +50,7 @@
     _answerTitle = [self newAnswerView];
     _answerCompany = [self newAnswerView];
     _answerFullNames = [self newAnswerFullNames];
-    _nextQuestionButton = [self newNextQuestionButton];
+    _checkAnswersView = [self newCheckAnswersView];
     
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self constructViewHierarchy];
@@ -127,7 +128,7 @@
   [_answerSuperView addSubview:self.answerCompany];
   
   [self addSubview:self.answerSuperView];
-  [self addSubview:self.nextQuestionButton];
+  [self addSubview:self.checkAnswersView];
 }
 
 #pragma mark Layout
@@ -331,10 +332,9 @@
                                                                _answerSuperView,
                                                                _answerName,
                                                                _answerTitle,
-                                                               _answerCompany,
-                                                               _nextQuestionButton);
+                                                               _answerCompany);
     
-    NSString *vAnswerSuperView = @"V:[_businessCardView][_divider(==2)][_answerSuperView][_nextQuestionButton]";
+    NSString *vAnswerSuperView = @"V:[_businessCardView][_divider(==2)][_answerSuperView]";
     NSArray *vAnswerSuperViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vAnswerSuperView
                                             options:0
@@ -370,34 +370,75 @@
       [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
     }
     
-    NSString *vNextButton = @"V:[_nextQuestionButton(==40)]-3-|";
-    NSArray *vNextButtonConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:vNextButton
-                                            options:0
-                                            metrics:nil
-                                              views:answerViews];
-
-    NSLayoutConstraint *hNextButton = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0f constant:-10.0f];
-    
-    NSLayoutConstraint *nextButtonWidth = [NSLayoutConstraint constraintWithItem:_nextQuestionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:1.0f constant:125.0f];
-    
     [self.answerConstraints addObjectsFromArray:hDividerConstraints];
     [self.answerConstraints addObjectsFromArray:vAnswerSuperViewConstraints];
     [self.answerConstraints addObjectsFromArray:hAnswerSuperViewConstraints];
     [self.answerConstraints addObjectsFromArray:vAnswerViewConstraints];
-    [self.answerConstraints addObjectsFromArray:vNextButtonConstraints];
-    [self.answerConstraints addObjectsFromArray:@[hNextButton,nextButtonWidth,centerAnswers]];
-  
+    [self.answerConstraints addObjectsFromArray:@[centerAnswers]];
+    
+    //Constrain Check Answers View
+    NSLayoutConstraint *centerCheckX = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *widthCheck = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *heightCheck = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:81.0f];
+    
+    _topCheck = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-40.0f];
+
+    [self.answerConstraints addObjectsFromArray:@[centerCheckX,widthCheck,heightCheck,_topCheck]];
     [self addConstraints:self.cardConstraints];
     [self addConstraints:self.answerConstraints];
   }
 }
 
+#pragma mark Actions
+-(void)checkButtonPressed{
+  NSLog(@"checkButton Pressed");
+  [self showResult];
+}
+-(void)againButtonPressed{
+  NSLog(@"againButton Pressed");
+  [self resetView];
+}
+-(void)showResult{
+  NSLog(@"showResult");
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.checkAnswersView.nextButton setHidden:NO];
+    [self.checkAnswersView.againButton setHidden:NO];
+    [self.checkAnswersView.checkButton setHidden:YES];
+    [self.checkAnswersView.resultHideButton setHidden:NO];
+    [self.topCheck setConstant:-81.0f];
+    [self setResultClosed:NO];
+    [self layoutIfNeeded];
+  }];
+}
+-(void)resetView{
+  NSLog(@"resetView");
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.checkAnswersView.nextButton setHidden:YES];
+    [self.checkAnswersView.againButton setHidden:YES];
+    [self.checkAnswersView.checkButton setHidden:NO];
+    [self.checkAnswersView.resultHideButton setHidden:YES];
+    [self.topCheck setConstant:-40.0f];
+    [self setResultClosed:YES];
+    [self layoutIfNeeded];
+  }];
+}
+-(void)toggleResult{
+  NSLog(@"toggleResult");
+  [UIView animateWithDuration:0.5 animations:^{
+    if (self.resultClosed) {
+      [self.topCheck setConstant:-81.0f];
+    }
+    else {
+      [self.topCheck setConstant:-40.0f];
+    }
+    [self setResultClosed:!self.resultClosed];
+    [self layoutIfNeeded];
+  }];
+}
+
+
 #pragma mark Strings
 
-- (NSString *)nextQuestionButtonText {
-  return @"Check Answers";
-}
 
 #pragma mark Data Display
 -(void)updateQuestionImage{
@@ -605,16 +646,15 @@
   return answerView;
 }
 
-- (UIButton *)newNextQuestionButton {
-  UIButton *nextQuestionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  [nextQuestionButton setTitle:[self nextQuestionButtonText] forState:UIControlStateNormal];
-  [nextQuestionButton setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] forState:UIControlStateNormal];
-  [nextQuestionButton.titleLabel setFont:[QIFontProvider fontWithSize:14.0f style:Regular]];
-  [nextQuestionButton setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
-  [nextQuestionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-  return nextQuestionButton;
+- (QICheckAnswersView *)newCheckAnswersView{
+  QICheckAnswersView *view = [[QICheckAnswersView alloc] init];
+  [view.resultHideButton addTarget:self action:@selector(toggleResult) forControlEvents:UIControlEventTouchUpInside];
+  [view.againButton addTarget:self action:@selector(againButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+  [view.checkButton addTarget:self action:@selector(checkButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+  [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [view setBackgroundColor:[UIColor clearColor]];
+  return view;
 }
-
 @end
 
 

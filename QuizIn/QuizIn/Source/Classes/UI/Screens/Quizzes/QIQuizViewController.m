@@ -37,7 +37,7 @@
   if (self.businessCard) {
     self.businessCardController = [[QIBusinessCardViewController alloc] init];
     [self addChildViewController:self.businessCardController];
-    [self.businessCardController.businessCardQuizView.nextQuestionButton addTarget:self
+    [self.businessCardController.businessCardQuizView.checkAnswersView.nextButton addTarget:self
                                                                             action:@selector(nextPressed1)
                                                                   forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.businessCardController.view];
@@ -47,7 +47,7 @@
   if (self.matching) {
     self.matchingController = [[QIMatchingQuizViewController alloc] init];
     [self addChildViewController:self.matchingController];
-    [self.matchingController.matchingQuizView.nextQuestionButton addTarget:self
+    [self.matchingController.matchingQuizView.checkAnswersView.nextButton addTarget:self
                                                                     action:@selector(nextPressed1)
                                                           forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.matchingController.view];
