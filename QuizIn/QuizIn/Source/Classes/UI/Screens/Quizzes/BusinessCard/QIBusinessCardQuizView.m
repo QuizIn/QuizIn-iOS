@@ -332,9 +332,10 @@
                                                                _answerSuperView,
                                                                _answerName,
                                                                _answerTitle,
-                                                               _answerCompany);
+                                                               _answerCompany,
+                                                               _checkAnswersView);
     
-    NSString *vAnswerSuperView = @"V:[_businessCardView][_divider(==2)][_answerSuperView]";
+    NSString *vAnswerSuperView = @"V:[_businessCardView]-(>=0,<=15)-[_divider(==2)]-(>=0,<=15)-[_answerSuperView]-(>=45,<=75)-|";
     NSArray *vAnswerSuperViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vAnswerSuperView
                                             options:0

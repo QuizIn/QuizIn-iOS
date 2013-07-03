@@ -377,7 +377,7 @@
 - (UIButton *)newAnswerButtonWithTitle:(NSString *)title {
   UIButton *answerButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [answerButton setTitle:title forState:UIControlStateNormal];
-  answerButton.titleLabel.font = [QIFontProvider fontWithSize:16.0f style:Bold];
+  answerButton.titleLabel.font = [QIFontProvider fontWithSize:13.0f style:Bold];
   answerButton.titleLabel.adjustsFontSizeToFitWidth = YES;
   answerButton.titleLabel.adjustsLetterSpacingToFitWidth = YES;
   [answerButton setTitleColor:[UIColor colorWithWhite:0.33f alpha:1.0f] forState:UIControlStateNormal];

@@ -253,7 +253,7 @@
   //TODO Use Attributed Text to make this a 2-line centered UILabel
   [answer setTranslatesAutoresizingMaskIntoConstraints:NO];
   [answer setBackgroundColor:[UIColor clearColor]];
-  [answer setFont:[QIFontProvider fontWithSize:16.0f style:Bold]];
+  [answer setFont:[QIFontProvider fontWithSize:13.0f style:Bold]];
   [answer setTextColor:[UIColor colorWithWhite:.33f alpha:1.0f]];
   [answer setAdjustsLetterSpacingToFitWidth:YES];
   [answer setAdjustsFontSizeToFitWidth:YES];

@@ -219,7 +219,7 @@
     
    //[self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_questionView attribute:NSLayoutAttributeTop multiplier:1.0f constant:10.0f]];
     
-    NSString *vQuestionAnswerView = @"V:[_progressView]-(-10)-[_questionView(<=200)]-2-[_divider(==2)][_answerView(>=220)]|";
+    NSString *vQuestionAnswerView = @"V:[_progressView]-(>=-10,<=10)-[_questionView(<=200)]-(>=2,<=10)-[_divider(==2)]-(>=0,<=4)-[_answerView(>=180)]-(>=45,<=75)-|";
     NSArray *vQuestionAnswerViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vQuestionAnswerView
                                             options:NSLayoutFormatAlignAllCenterX
@@ -305,7 +305,7 @@
       [self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:250.0f]];
     }
     
-    NSString *vAnswerButtonsView = @"V:|[_answerButtons0(==_answerButtons0)][_answerButtons1(==_answerButtons0)][_answerButtons2(==_answerButtons0)][_answerButtons3(==_answerButtons0)]";
+    NSString *vAnswerButtonsView = @"V:|[_answerButtons0(==_answerButtons0)][_answerButtons1(==_answerButtons0)][_answerButtons2(==_answerButtons0)][_answerButtons3(==_answerButtons0)]|";
     
     NSArray *vAnswerButtonConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vAnswerButtonsView
@@ -586,20 +586,20 @@
 -(NSMutableArray *)newQuestionColorImages{
   UIEdgeInsets insets = UIEdgeInsetsMake(16.0f, 16.0f, 16.0f, 16.0f);
   return [NSMutableArray arrayWithObjects:
-          [[UIImage imageNamed:@"match_pictureholder_blue"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_pictureholder_green"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_pictureholder_red"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_pictureholder_yellow"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_pictureholder_bluev1"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_pictureholder_bluev2"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_pictureholder_bluev3"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_pictureholder_bluev4"] resizableImageWithCapInsets:insets],
           nil];
 }
 
 -(NSMutableArray *)newAnswerColorImages{
   UIEdgeInsets insets = UIEdgeInsetsMake(15.0f, 18.0f, 15.0f, 18.0f);
   return [NSMutableArray arrayWithObjects:
-          [[UIImage imageNamed:@"match_answerbox_blue"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_answerbox_green"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_answerbox_red"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_answerbox_yellow"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_answerbox_bluev1"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_answerbox_bluev2"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_answerbox_bluev3"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_answerbox_bluev4"] resizableImageWithCapInsets:insets],
           nil];
 }
 
