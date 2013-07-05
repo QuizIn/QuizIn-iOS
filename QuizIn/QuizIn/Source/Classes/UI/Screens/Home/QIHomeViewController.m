@@ -2,7 +2,7 @@
 
 #import "QIHomeView.h"
 #import "QIQuizViewController.h"
-#import "QICalendarPickerViewController.h"
+#import "QIGroupSelectionViewController.h"
 
 @interface QIHomeViewController ()
 @property(nonatomic, strong, readonly) QIHomeView *homeView;
@@ -34,7 +34,7 @@
                                 forControlEvents:UIControlEventTouchUpInside];
   
   [self.homeView.calendarPickerButton addTarget:self
-                                         action:@selector(calendarPicker:)
+                                         action:@selector(groupPicker)
                                forControlEvents:UIControlEventTouchUpInside];
   
   [self.homeView.businessCardQuizButton addTarget:self
@@ -68,44 +68,9 @@
   [self presentViewController:quizViewController animated:YES completion:nil];
 }
 
-- (void)calendarPicker:(id)sender {
-  EKEventStore *store = [[EKEventStore alloc] init];
-  EKAuthorizationStatus authorizationStatus = [EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent];
-  BOOL needsToRequestAccessToEventStore = (authorizationStatus == (EKAuthorizationStatusNotDetermined | EKAuthorizationStatusDenied));
-  
-  if (needsToRequestAccessToEventStore) {
-    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-      if (granted) {
-        NSLog(@"ACCESS");
-        [self performSelectorOnMainThread:
-         @selector(calendarViewControllerWithEventStore:)
-                               withObject:store
-                            waitUntilDone:NO];
-      } else {
-        NSLog(@"ACCESS DENIED");
-        // Remove
-        [self performSelectorOnMainThread:
-         @selector(calendarViewControllerWithEventStore:)
-                               withObject:store
-                            waitUntilDone:NO];
-      }
-    }];
-  } else {
-    BOOL granted = (authorizationStatus == EKAuthorizationStatusAuthorized);
-    if (granted) {
-      NSLog(@"Already had ACCESS");
-      [self calendarViewControllerWithEventStore:store];
-    } else {
-      NSLog(@"ACCESS DENIED PREVIOUSLY");
-      [self calendarViewControllerWithEventStore:store];
-    }
-  }
-}
-
-- (void)calendarViewControllerWithEventStore:(EKEventStore *)store{
-  QICalendarPickerViewController *calendarPickerViewController = [self newCalendarPickerViewController];
-  calendarPickerViewController.eventStore = store; 
-  [self presentViewController:calendarPickerViewController animated:YES completion:nil];
+- (void)groupPicker{
+  QIGroupSelectionViewController *groupSelectionViewController = [self newGroupSelectionViewController];
+  [self presentViewController:groupSelectionViewController animated:YES completion:nil];
 }
 #pragma mark Strings
 
@@ -128,11 +93,11 @@
   return quizViewController;
 }
 
-- (QICalendarPickerViewController *)newCalendarPickerViewController {
-  QICalendarPickerViewController *calendarPickerViewController = [[QICalendarPickerViewController alloc] init];
-  calendarPickerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-  calendarPickerViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-  calendarPickerViewController.view.frame = self.view.bounds;
-  return calendarPickerViewController;
+- (QIGroupSelectionViewController *)newGroupSelectionViewController {
+  QIGroupSelectionViewController *groupSelectionViewController = [[QIGroupSelectionViewController alloc] init];
+  groupSelectionViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+  groupSelectionViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+  groupSelectionViewController.view.frame = self.view.bounds;
+  return groupSelectionViewController;
 }
 @end

@@ -142,7 +142,6 @@
     
     //Result View Constraints
     self.resultViewConstraints = [NSMutableArray array];
-    NSDictionary *resultViews = NSDictionaryOfVariableBindings(_resultLabel);
     
     NSLayoutConstraint *hCenterLabel = [NSLayoutConstraint constraintWithItem:_resultLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_resultView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
     

@@ -151,6 +151,20 @@
 		348901771784E4A90004F604 /* match_tape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901641784E4A90004F604 /* match_tape@2x.png */; };
 		3489017A1784E65D0004F604 /* match_answerbox_std.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901781784E60A0004F604 /* match_answerbox_std.png */; };
 		3489017B1784E65D0004F604 /* match_answerbox_std@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901791784E6210004F604 /* match_answerbox_std@2x.png */; };
+		348901BE1786F78C0004F604 /* calendar_datebar1.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901AF1786F78C0004F604 /* calendar_datebar1.png */; };
+		348901BF1786F78C0004F604 /* calendar_datebar1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901B01786F78C0004F604 /* calendar_datebar1@2x.png */; };
+		348901C01786F78C0004F604 /* calendar_expand_btn1.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901B11786F78C0004F604 /* calendar_expand_btn1.png */; };
+		348901C11786F78C0004F604 /* calendar_expand_btn1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901B21786F78C0004F604 /* calendar_expand_btn1@2x.png */; };
+		348901C21786F78C0004F604 /* calendar_meetingtab1.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901B31786F78C0004F604 /* calendar_meetingtab1.png */; };
+		348901C31786F78C0004F604 /* calendar_meetingtab1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901B41786F78C0004F604 /* calendar_meetingtab1@2x.png */; };
+		348901C41786F78C0004F604 /* calendar_meetingtab_selected1.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901B51786F78C0004F604 /* calendar_meetingtab_selected1.png */; };
+		348901C51786F78C0004F604 /* calendar_meetingtab_selected1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901B61786F78C0004F604 /* calendar_meetingtab_selected1@2x.png */; };
+		348901C61786F78C0004F604 /* calendar_reference1.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901B71786F78C0004F604 /* calendar_reference1.png */; };
+		348901C71786F78C0004F604 /* calendar_reference1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901B81786F78C0004F604 /* calendar_reference1@2x.png */; };
+		348901C81786F78C0004F604 /* calendar_slitbottom1.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901B91786F78C0004F604 /* calendar_slitbottom1.png */; };
+		348901C91786F78C0004F604 /* calendar_slitbottom1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901BA1786F78C0004F604 /* calendar_slitbottom1@2x.png */; };
+		348901CA1786F78C0004F604 /* calendar_slittop1.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901BB1786F78C0004F604 /* calendar_slittop1.png */; };
+		348901CB1786F78C0004F604 /* calendar_slittop1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901BC1786F78C0004F604 /* calendar_slittop1@2x.png */; };
 		349248191733603D000AE6D1 /* QIStatsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 349248181733603D000AE6D1 /* QIStatsTracker.m */; };
 		34B1D24B176958D300D38EF2 /* cardquiz_businesscard_v3.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B1D249176958D300D38EF2 /* cardquiz_businesscard_v3.png */; };
 		34B1D24C176958D300D38EF2 /* cardquiz_businesscard_v3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B1D24A176958D300D38EF2 /* cardquiz_businesscard_v3@2x.png */; };
@@ -158,6 +172,12 @@
 		34EF1F9E172E2DC80019D6F7 /* Scratch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34EF1F9D172E2DC80019D6F7 /* Scratch.xib */; };
 		34F01A36172DB2F60056A76A /* QIBusinessCardQuizView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */; };
 		34F01A37172DB2F60056A76A /* QIBusinessCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */; };
+		34FE52491786FE2B00A462C2 /* QIGroupSelectionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE523E1786FE2B00A462C2 /* QIGroupSelectionCellView.m */; };
+		34FE524A1786FE2B00A462C2 /* QIGroupSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE52401786FE2B00A462C2 /* QIGroupSelectionViewController.m */; };
+		34FE524B1786FE2B00A462C2 /* QIGroupSelectionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE52421786FE2B00A462C2 /* QIGroupSelectionData.m */; };
+		34FE524C1786FE2B00A462C2 /* QIGroupSelectionTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE52451786FE2B00A462C2 /* QIGroupSelectionTableFooterView.m */; };
+		34FE524D1786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE52471786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.m */; };
+		34FE524E1786FE2B00A462C2 /* QIGroupSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE52481786FE2B00A462C2 /* QIGroupSelectionView.m */; };
 		880870E216FBD31800D09848 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 880870DF16FBD31800D09848 /* InfoPlist.strings */; };
 		880870EF16FBD32200D09848 /* QuizIn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 880870EA16FBD32200D09848 /* QuizIn.xcdatamodeld */; };
 		880870F716FBD32E00D09848 /* QIAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 880870F316FBD32E00D09848 /* QIAppDelegate.m */; };
@@ -373,6 +393,20 @@
 		348901641784E4A90004F604 /* match_tape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "match_tape@2x.png"; sourceTree = "<group>"; };
 		348901781784E60A0004F604 /* match_answerbox_std.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = match_answerbox_std.png; sourceTree = "<group>"; };
 		348901791784E6210004F604 /* match_answerbox_std@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "match_answerbox_std@2x.png"; sourceTree = "<group>"; };
+		348901AF1786F78C0004F604 /* calendar_datebar1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_datebar1.png; sourceTree = "<group>"; };
+		348901B01786F78C0004F604 /* calendar_datebar1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_datebar1@2x.png"; sourceTree = "<group>"; };
+		348901B11786F78C0004F604 /* calendar_expand_btn1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_expand_btn1.png; sourceTree = "<group>"; };
+		348901B21786F78C0004F604 /* calendar_expand_btn1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_expand_btn1@2x.png"; sourceTree = "<group>"; };
+		348901B31786F78C0004F604 /* calendar_meetingtab1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_meetingtab1.png; sourceTree = "<group>"; };
+		348901B41786F78C0004F604 /* calendar_meetingtab1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_meetingtab1@2x.png"; sourceTree = "<group>"; };
+		348901B51786F78C0004F604 /* calendar_meetingtab_selected1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_meetingtab_selected1.png; sourceTree = "<group>"; };
+		348901B61786F78C0004F604 /* calendar_meetingtab_selected1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_meetingtab_selected1@2x.png"; sourceTree = "<group>"; };
+		348901B71786F78C0004F604 /* calendar_reference1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_reference1.png; sourceTree = "<group>"; };
+		348901B81786F78C0004F604 /* calendar_reference1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_reference1@2x.png"; sourceTree = "<group>"; };
+		348901B91786F78C0004F604 /* calendar_slitbottom1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_slitbottom1.png; sourceTree = "<group>"; };
+		348901BA1786F78C0004F604 /* calendar_slitbottom1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_slitbottom1@2x.png"; sourceTree = "<group>"; };
+		348901BB1786F78C0004F604 /* calendar_slittop1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_slittop1.png; sourceTree = "<group>"; };
+		348901BC1786F78C0004F604 /* calendar_slittop1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_slittop1@2x.png"; sourceTree = "<group>"; };
 		349248171733603D000AE6D1 /* QIStatsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsTracker.h; sourceTree = "<group>"; };
 		349248181733603D000AE6D1 /* QIStatsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsTracker.m; sourceTree = "<group>"; };
 		34B1D249176958D300D38EF2 /* cardquiz_businesscard_v3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardquiz_businesscard_v3.png; sourceTree = "<group>"; };
@@ -384,6 +418,18 @@
 		34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardQuizView.m; sourceTree = "<group>"; };
 		34F01A34172DB2F60056A76A /* QIBusinessCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardViewController.h; sourceTree = "<group>"; };
 		34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardViewController.m; sourceTree = "<group>"; };
+		34FE523D1786FE2B00A462C2 /* QIGroupSelectionCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionCellView.h; sourceTree = "<group>"; };
+		34FE523E1786FE2B00A462C2 /* QIGroupSelectionCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionCellView.m; sourceTree = "<group>"; };
+		34FE523F1786FE2B00A462C2 /* QIGroupSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionViewController.h; sourceTree = "<group>"; };
+		34FE52401786FE2B00A462C2 /* QIGroupSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionViewController.m; sourceTree = "<group>"; };
+		34FE52411786FE2B00A462C2 /* QIGroupSelectionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionData.h; sourceTree = "<group>"; };
+		34FE52421786FE2B00A462C2 /* QIGroupSelectionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionData.m; sourceTree = "<group>"; };
+		34FE52431786FE2B00A462C2 /* QIGroupSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionView.h; sourceTree = "<group>"; };
+		34FE52441786FE2B00A462C2 /* QIGroupSelectionTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionTableFooterView.h; sourceTree = "<group>"; };
+		34FE52451786FE2B00A462C2 /* QIGroupSelectionTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionTableFooterView.m; sourceTree = "<group>"; };
+		34FE52461786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionTableHeaderView.h; sourceTree = "<group>"; };
+		34FE52471786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionTableHeaderView.m; sourceTree = "<group>"; };
+		34FE52481786FE2B00A462C2 /* QIGroupSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionView.m; sourceTree = "<group>"; };
 		634CC7A981E449658DD30D1E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F88557B297046AD9AF083B1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		880870E016FBD31800D09848 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -792,6 +838,27 @@
 			path = CheckAnswersView;
 			sourceTree = "<group>";
 		};
+		348901AE1786F7860004F604 /* Group Selection */ = {
+			isa = PBXGroup;
+			children = (
+				348901AF1786F78C0004F604 /* calendar_datebar1.png */,
+				348901B01786F78C0004F604 /* calendar_datebar1@2x.png */,
+				348901B11786F78C0004F604 /* calendar_expand_btn1.png */,
+				348901B21786F78C0004F604 /* calendar_expand_btn1@2x.png */,
+				348901B31786F78C0004F604 /* calendar_meetingtab1.png */,
+				348901B41786F78C0004F604 /* calendar_meetingtab1@2x.png */,
+				348901B51786F78C0004F604 /* calendar_meetingtab_selected1.png */,
+				348901B61786F78C0004F604 /* calendar_meetingtab_selected1@2x.png */,
+				348901B71786F78C0004F604 /* calendar_reference1.png */,
+				348901B81786F78C0004F604 /* calendar_reference1@2x.png */,
+				348901B91786F78C0004F604 /* calendar_slitbottom1.png */,
+				348901BA1786F78C0004F604 /* calendar_slitbottom1@2x.png */,
+				348901BB1786F78C0004F604 /* calendar_slittop1.png */,
+				348901BC1786F78C0004F604 /* calendar_slittop1@2x.png */,
+			);
+			path = "Group Selection";
+			sourceTree = "<group>";
+		};
 		3492481617335FCC000AE6D1 /* StatTracker */ = {
 			isa = PBXGroup;
 			children = (
@@ -808,6 +875,25 @@
 				34E9774B1764FAC900086673 /* QI_QuizBuilder.m */,
 			);
 			path = QuizBuilder;
+			sourceTree = "<group>";
+		};
+		34FE523C1786FE2B00A462C2 /* Group Selection */ = {
+			isa = PBXGroup;
+			children = (
+				34FE523F1786FE2B00A462C2 /* QIGroupSelectionViewController.h */,
+				34FE52401786FE2B00A462C2 /* QIGroupSelectionViewController.m */,
+				34FE52431786FE2B00A462C2 /* QIGroupSelectionView.h */,
+				34FE52481786FE2B00A462C2 /* QIGroupSelectionView.m */,
+				34FE52411786FE2B00A462C2 /* QIGroupSelectionData.h */,
+				34FE52421786FE2B00A462C2 /* QIGroupSelectionData.m */,
+				34FE523D1786FE2B00A462C2 /* QIGroupSelectionCellView.h */,
+				34FE523E1786FE2B00A462C2 /* QIGroupSelectionCellView.m */,
+				34FE52461786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.h */,
+				34FE52471786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.m */,
+				34FE52441786FE2B00A462C2 /* QIGroupSelectionTableFooterView.h */,
+				34FE52451786FE2B00A462C2 /* QIGroupSelectionTableFooterView.m */,
+			);
+			path = "Group Selection";
 			sourceTree = "<group>";
 		};
 		880870DE16FBD31800D09848 /* Supporting Files */ = {
@@ -839,6 +925,7 @@
 				3478FFE61750EFC1002B29DB /* Multiple Choice */,
 				3478FFB01750EFC1002B29DB /* BusinessCard Quiz */,
 				345E7AB717621DB80020600A /* Match Quiz */,
+				348901AE1786F7860004F604 /* Group Selection */,
 				3478FFBA1750EFC1002B29DB /* Calendar */,
 				3478FFD71750EFC1002B29DB /* Home */,
 				3478FFF41750EFC1002B29DB /* PSDs */,
@@ -959,6 +1046,7 @@
 		88867961172D521C00DCE3D0 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				34FE523C1786FE2B00A462C2 /* Group Selection */,
 				3451979A176CEE490061E459 /* CalendarPicker */,
 				3451979B176CEE4A0061E459 /* LocationPicker */,
 				3451979C176CEE4B0061E459 /* StatsView */,
@@ -1259,6 +1347,20 @@
 				348901771784E4A90004F604 /* match_tape@2x.png in Resources */,
 				3489017A1784E65D0004F604 /* match_answerbox_std.png in Resources */,
 				3489017B1784E65D0004F604 /* match_answerbox_std@2x.png in Resources */,
+				348901BE1786F78C0004F604 /* calendar_datebar1.png in Resources */,
+				348901BF1786F78C0004F604 /* calendar_datebar1@2x.png in Resources */,
+				348901C01786F78C0004F604 /* calendar_expand_btn1.png in Resources */,
+				348901C11786F78C0004F604 /* calendar_expand_btn1@2x.png in Resources */,
+				348901C21786F78C0004F604 /* calendar_meetingtab1.png in Resources */,
+				348901C31786F78C0004F604 /* calendar_meetingtab1@2x.png in Resources */,
+				348901C41786F78C0004F604 /* calendar_meetingtab_selected1.png in Resources */,
+				348901C51786F78C0004F604 /* calendar_meetingtab_selected1@2x.png in Resources */,
+				348901C61786F78C0004F604 /* calendar_reference1.png in Resources */,
+				348901C71786F78C0004F604 /* calendar_reference1@2x.png in Resources */,
+				348901C81786F78C0004F604 /* calendar_slitbottom1.png in Resources */,
+				348901C91786F78C0004F604 /* calendar_slitbottom1@2x.png in Resources */,
+				348901CA1786F78C0004F604 /* calendar_slittop1.png in Resources */,
+				348901CB1786F78C0004F604 /* calendar_slittop1@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1356,6 +1458,12 @@
 				205504FC1780C6C700F7F90F /* QIConnections.m in Sources */,
 				348901281780C5360004F604 /* QICheckAnswersView.m in Sources */,
 				205504FF1780D60E00F7F90F /* QIQuizBuilder.m in Sources */,
+				34FE52491786FE2B00A462C2 /* QIGroupSelectionCellView.m in Sources */,
+				34FE524A1786FE2B00A462C2 /* QIGroupSelectionViewController.m in Sources */,
+				34FE524B1786FE2B00A462C2 /* QIGroupSelectionData.m in Sources */,
+				34FE524C1786FE2B00A462C2 /* QIGroupSelectionTableFooterView.m in Sources */,
+				34FE524D1786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.m in Sources */,
+				34FE524E1786FE2B00A462C2 /* QIGroupSelectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

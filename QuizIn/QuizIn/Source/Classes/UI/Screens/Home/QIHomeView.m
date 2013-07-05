@@ -260,6 +260,6 @@
   return @"Take Quiz";
 }
 - (NSString *)calendarPickerButtonTitle {
-  return @"Calendar Quiz";
+  return @"Group Selection";
 }
 @end
