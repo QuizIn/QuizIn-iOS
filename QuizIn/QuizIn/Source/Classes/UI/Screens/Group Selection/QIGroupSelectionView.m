@@ -2,26 +2,29 @@
 #import "QIGroupSelectionCellView.h"
 #import "QIGroupSelectionData.h"
 #import "QIGroupSelectionTableFooterView.h"
+#import "QIFontProvider.h"
 
 #define FAST_ANIMATION_DURATION 0.35
 #define SLOW_ANIMATION_DURATION 0.75
 #define PAN_CLOSED_X 0
-#define PAN_OPEN_X -60
+#define PAN_OPEN_X -45
 
 @interface QIGroupSelectionView ()
 
+@property (nonatomic, strong) UILabel *viewLabel; 
 @property (nonatomic, retain) UITableView *tableView;
 @property (nonatomic, strong) UIImageView *topSlit;
 @property (nonatomic, strong) UIImageView *bottomSlit;
 @property (nonatomic, strong) UIImageView *viewBackground;
 @property (nonatomic, strong) NSMutableArray *viewConstraints;
 @property (nonatomic, strong) QIGroupSelectionTableFooterView *footerViewLoading;
+@property (nonatomic) float openCellLastTX;
+@property (nonatomic, strong) NSIndexPath *openCellIndexPath;
 
 @end
 
 @implementation QIGroupSelectionView
 
-//@synthesize tableView=_tableView;
 @synthesize openCellLastTX, openCellIndexPath;
 
 + (BOOL)requiresConstraintBasedLayout {
@@ -32,6 +35,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+      _viewLabel = [self newViewLabel];
       _footerViewLoading = [self newFooterViewLoading];
       _tableView = [self newSelectionTable];
       _topSlit = [self newTopSlit];
@@ -39,7 +43,6 @@
       _viewBackground = [self newViewBackground];
       _quizButton = [self newQuizButton];
       
-      //[self setTranslatesAutoresizingMaskIntoConstraints:NO];
       [self constructViewHierarchy];
     }
     return self;
@@ -52,9 +55,19 @@
   }
   _selectionContent = selectionContent;
 }
+
+-(void) setSelectionViewLabelString:(NSString *)selectionViewLabelString {
+  if ([selectionViewLabelString isEqualToString:_selectionViewLabelString]){
+    return;
+  }
+  _selectionViewLabelString = selectionViewLabelString;
+  [self updateViewLabel];
+}
+
 #pragma mark View Hierarchy
 - (void)constructViewHierarchy {
   [self addSubview:self.viewBackground];
+  [self addSubview:self.viewLabel];
   [self addSubview:self.tableView];
   [self addSubview:self.topSlit];
   [self addSubview:self.bottomSlit];
@@ -63,6 +76,9 @@
 }
 #pragma Data Display
 
+-(void)updateViewLabel{
+    self.viewLabel.text = self.selectionViewLabelString;
+}
 #pragma mark Layout
 
 - (void)layoutSubviews {
@@ -94,10 +110,15 @@
  
     
     //Constrain Main View Elements
-    NSDictionary *mainViews = NSDictionaryOfVariableBindings(_topSlit,_tableView,_bottomSlit,_quizButton);
+    NSDictionary *mainViews = NSDictionaryOfVariableBindings(_viewLabel, _topSlit,_tableView,_bottomSlit,_quizButton);
     
     NSArray *vMainViewsConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[_topSlit(==8)]-(-5)-[_tableView]-(-5)-[_bottomSlit(==8)]-[_quizButton(==54)]-6-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_viewLabel(==20)]-3-[_topSlit(==8)]-(-5)-[_tableView]-(-5)-[_bottomSlit(==8)]-[_quizButton(==54)]-6-|"
+                                            options:0
+                                            metrics:0
+                                              views:mainViews];
+    NSArray *hLabelConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[_viewLabel]-8-|"
                                             options:0
                                             metrics:0
                                               views:mainViews];
@@ -122,6 +143,7 @@
                                             metrics:0
                                               views:mainViews];
     
+    [self.viewConstraints addObjectsFromArray:hLabelConstraints];
     [self.viewConstraints addObjectsFromArray:hTopSlitConstraints];
     [self.viewConstraints addObjectsFromArray:hTableViewConstraints];
     [self.viewConstraints addObjectsFromArray:hBottomSlitConstraints];
@@ -174,6 +196,16 @@
   return footer;
 }
 
+- (UILabel *)newViewLabel {
+  UILabel *viewLabel = [[UILabel alloc] init];
+  viewLabel.textAlignment = NSTextAlignmentLeft;
+  viewLabel.backgroundColor = [UIColor clearColor];
+  viewLabel.font = [QIFontProvider fontWithSize:15.0f style:Bold];
+  viewLabel.adjustsFontSizeToFitWidth = YES;
+  viewLabel.textColor = [UIColor colorWithWhite:0.33f alpha:1.0f];
+  [viewLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return viewLabel;
+}
 
 - (UIButton *)newQuizButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -183,6 +215,8 @@
   button.backgroundColor = [UIColor clearColor];
   return button;
 }
+
+
 
 #pragma mark - Table view data source
 

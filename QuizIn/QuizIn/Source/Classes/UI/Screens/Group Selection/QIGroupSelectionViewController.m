@@ -25,6 +25,7 @@
   [super viewDidLoad];
   NSMutableArray *selectionContent = [QIGroupSelectionData getSelectionData];
   self.groupSelectionView.selectionContent = selectionContent;
+  self.groupSelectionView.selectionViewLabelString = @"Create Your Next Quiz";
 }
 
 - (void)viewWillLayoutSubviews {
