@@ -165,7 +165,6 @@
 		348901C91786F78C0004F604 /* calendar_slitbottom1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901BA1786F78C0004F604 /* calendar_slitbottom1@2x.png */; };
 		348901CA1786F78C0004F604 /* calendar_slittop1.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901BB1786F78C0004F604 /* calendar_slittop1.png */; };
 		348901CB1786F78C0004F604 /* calendar_slittop1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901BC1786F78C0004F604 /* calendar_slittop1@2x.png */; };
-		349248191733603D000AE6D1 /* QIStatsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 349248181733603D000AE6D1 /* QIStatsTracker.m */; };
 		34B1D24B176958D300D38EF2 /* cardquiz_businesscard_v3.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B1D249176958D300D38EF2 /* cardquiz_businesscard_v3.png */; };
 		34B1D24C176958D300D38EF2 /* cardquiz_businesscard_v3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B1D24A176958D300D38EF2 /* cardquiz_businesscard_v3@2x.png */; };
 		34E9774C1764FAC900086673 /* QI_QuizBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E9774B1764FAC900086673 /* QI_QuizBuilder.m */; };
@@ -178,6 +177,9 @@
 		34FE524C1786FE2B00A462C2 /* QIGroupSelectionTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE52451786FE2B00A462C2 /* QIGroupSelectionTableFooterView.m */; };
 		34FE524D1786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE52471786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.m */; };
 		34FE524E1786FE2B00A462C2 /* QIGroupSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE52481786FE2B00A462C2 /* QIGroupSelectionView.m */; };
+		34FE5252178A021D00A462C2 /* QIStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE5251178A021D00A462C2 /* QIStatsViewController.m */; };
+		34FE5255178A023500A462C2 /* QIStatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE5254178A023500A462C2 /* QIStatsView.m */; };
+		34FE5258178A05D900A462C2 /* QIStatsData.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE5257178A05D900A462C2 /* QIStatsData.m */; };
 		880870E216FBD31800D09848 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 880870DF16FBD31800D09848 /* InfoPlist.strings */; };
 		880870EF16FBD32200D09848 /* QuizIn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 880870EA16FBD32200D09848 /* QuizIn.xcdatamodeld */; };
 		880870F716FBD32E00D09848 /* QIAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 880870F316FBD32E00D09848 /* QIAppDelegate.m */; };
@@ -407,8 +409,6 @@
 		348901BA1786F78C0004F604 /* calendar_slitbottom1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_slitbottom1@2x.png"; sourceTree = "<group>"; };
 		348901BB1786F78C0004F604 /* calendar_slittop1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_slittop1.png; sourceTree = "<group>"; };
 		348901BC1786F78C0004F604 /* calendar_slittop1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_slittop1@2x.png"; sourceTree = "<group>"; };
-		349248171733603D000AE6D1 /* QIStatsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsTracker.h; sourceTree = "<group>"; };
-		349248181733603D000AE6D1 /* QIStatsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsTracker.m; sourceTree = "<group>"; };
 		34B1D249176958D300D38EF2 /* cardquiz_businesscard_v3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardquiz_businesscard_v3.png; sourceTree = "<group>"; };
 		34B1D24A176958D300D38EF2 /* cardquiz_businesscard_v3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardquiz_businesscard_v3@2x.png"; sourceTree = "<group>"; };
 		34E9774A1764FAC900086673 /* QI_QuizBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QI_QuizBuilder.h; sourceTree = "<group>"; };
@@ -430,6 +430,12 @@
 		34FE52461786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionTableHeaderView.h; sourceTree = "<group>"; };
 		34FE52471786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionTableHeaderView.m; sourceTree = "<group>"; };
 		34FE52481786FE2B00A462C2 /* QIGroupSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionView.m; sourceTree = "<group>"; };
+		34FE5250178A021D00A462C2 /* QIStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsViewController.h; sourceTree = "<group>"; };
+		34FE5251178A021D00A462C2 /* QIStatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsViewController.m; sourceTree = "<group>"; };
+		34FE5253178A023500A462C2 /* QIStatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsView.h; sourceTree = "<group>"; };
+		34FE5254178A023500A462C2 /* QIStatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsView.m; sourceTree = "<group>"; };
+		34FE5256178A05D900A462C2 /* QIStatsData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsData.h; sourceTree = "<group>"; };
+		34FE5257178A05D900A462C2 /* QIStatsData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsData.m; sourceTree = "<group>"; };
 		634CC7A981E449658DD30D1E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F88557B297046AD9AF083B1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		880870E016FBD31800D09848 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -603,13 +609,6 @@
 			children = (
 			);
 			path = LocationPicker;
-			sourceTree = "<group>";
-		};
-		3451979C176CEE4B0061E459 /* StatsView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = StatsView;
 			sourceTree = "<group>";
 		};
 		345E7AB717621DB80020600A /* Match Quiz */ = {
@@ -859,15 +858,6 @@
 			path = "Group Selection";
 			sourceTree = "<group>";
 		};
-		3492481617335FCC000AE6D1 /* StatTracker */ = {
-			isa = PBXGroup;
-			children = (
-				349248171733603D000AE6D1 /* QIStatsTracker.h */,
-				349248181733603D000AE6D1 /* QIStatsTracker.m */,
-			);
-			path = StatTracker;
-			sourceTree = "<group>";
-		};
 		34E977491764FA5500086673 /* QuizBuilder */ = {
 			isa = PBXGroup;
 			children = (
@@ -894,6 +884,19 @@
 				34FE52451786FE2B00A462C2 /* QIGroupSelectionTableFooterView.m */,
 			);
 			path = "Group Selection";
+			sourceTree = "<group>";
+		};
+		34FE524F178A01BD00A462C2 /* StatsView */ = {
+			isa = PBXGroup;
+			children = (
+				34FE5250178A021D00A462C2 /* QIStatsViewController.h */,
+				34FE5251178A021D00A462C2 /* QIStatsViewController.m */,
+				34FE5253178A023500A462C2 /* QIStatsView.h */,
+				34FE5254178A023500A462C2 /* QIStatsView.m */,
+				34FE5256178A05D900A462C2 /* QIStatsData.h */,
+				34FE5257178A05D900A462C2 /* QIStatsData.m */,
+			);
+			path = StatsView;
 			sourceTree = "<group>";
 		};
 		880870DE16FBD31800D09848 /* Supporting Files */ = {
@@ -957,7 +960,6 @@
 			children = (
 				205504DE1780BEBC00F7F90F /* Model */,
 				3478FFA0173EE7CC002B29DB /* Helper Functions */,
-				3492481617335FCC000AE6D1 /* StatTracker */,
 				88867979172D6AF700DCE3D0 /* Auth */,
 				880870F416FBD32E00D09848 /* UI */,
 				880870F216FBD32E00D09848 /* QIAppDelegate.h */,
@@ -1046,10 +1048,10 @@
 		88867961172D521C00DCE3D0 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				34FE524F178A01BD00A462C2 /* StatsView */,
 				34FE523C1786FE2B00A462C2 /* Group Selection */,
 				3451979A176CEE490061E459 /* CalendarPicker */,
 				3451979B176CEE4A0061E459 /* LocationPicker */,
-				3451979C176CEE4B0061E459 /* StatsView */,
 				8886799A172DAFC700DCE3D0 /* Quizzes */,
 				88867968172D53F700DCE3D0 /* Home */,
 			);
@@ -1432,7 +1434,6 @@
 				888679A4172DCE2800DCE3D0 /* QIQuizView.m in Sources */,
 				888679A8172DD5B000DCE3D0 /* QIMultipleChoiceQuizViewController.m in Sources */,
 				888679AB172DD5DA00DCE3D0 /* QIMultipleChoiceQuizView.m in Sources */,
-				349248191733603D000AE6D1 /* QIStatsTracker.m in Sources */,
 				3478FFA4173EE7CD002B29DB /* AsyncImageView.m in Sources */,
 				3478FFA8173FD747002B29DB /* QIProgressView.m in Sources */,
 				3478FFAC1747C19D002B29DB /* QIMatchingQuizViewController.m in Sources */,
@@ -1464,6 +1465,9 @@
 				34FE524C1786FE2B00A462C2 /* QIGroupSelectionTableFooterView.m in Sources */,
 				34FE524D1786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.m in Sources */,
 				34FE524E1786FE2B00A462C2 /* QIGroupSelectionView.m in Sources */,
+				34FE5252178A021D00A462C2 /* QIStatsViewController.m in Sources */,
+				34FE5255178A023500A462C2 /* QIStatsView.m in Sources */,
+				34FE5258178A05D900A462C2 /* QIStatsData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

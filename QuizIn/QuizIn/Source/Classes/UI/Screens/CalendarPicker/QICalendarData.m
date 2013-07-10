@@ -24,6 +24,7 @@
     // Attendees - event.attendees
     // Title - event.title
     // Location - event.location
+    return calendarData; 
   }
 }
 

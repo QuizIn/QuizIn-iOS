@@ -1,8 +1,7 @@
 
-#import "QIStatsTracker.h"
+#import "QIStatsData.h"
 
-@implementation QIStatsTracker
-
+@implementation QIStatsData
 
 //We can track
 //Quizzes Started
@@ -11,7 +10,7 @@
 //How well you know each person
 //Last score
 //Average Score
-
+/*
 + (void)updateStatsWithID:(NSString *)ID questionType:(QuestionType *)questionType correct:(BOOL)correct{
   return;
 }
@@ -28,5 +27,6 @@
   NSArray *knowledgeStats = [[NSArray alloc] init];
   return  knowledgeStats;
 }
+ */
 
 @end

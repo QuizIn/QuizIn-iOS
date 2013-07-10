@@ -1,8 +1,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface QIStatsTracker : NSObject
-
+@interface QIStatsData : NSObject
+/*
 typedef enum QuestionType : NSInteger QuestionType;
 
 enum QuestionType : NSInteger {
@@ -20,6 +20,6 @@ enum QuestionType : NSInteger {
 + (void)endQuiz:(NSString *)loggedInUserID scorePercent:(float)scorePercent;
 + (NSArray *)getPeopleKnowledgeStats:(NSString *)loggedInUser;
 
-
+*/
 
 @end

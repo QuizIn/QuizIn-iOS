@@ -1,6 +1,5 @@
 
 #import <UIKit/UIKit.h>
-#import <EventKit/EventKit.h>
 #import "QIGroupSelectionView.h"
 #import "QIGroupSelectionData.h"
 
