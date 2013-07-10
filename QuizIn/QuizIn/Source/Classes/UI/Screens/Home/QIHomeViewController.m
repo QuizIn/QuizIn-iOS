@@ -3,6 +3,7 @@
 #import "QIHomeView.h"
 #import "QIQuizViewController.h"
 #import "QIGroupSelectionViewController.h"
+#import "QIStatsViewController.h"
 
 @interface QIHomeViewController ()
 @property(nonatomic, strong, readonly) QIHomeView *homeView;
@@ -43,6 +44,10 @@
   [self.homeView.matchingQuizButton addTarget:self
                                        action:@selector(openMatchingQuiz:)
                              forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.homeView.statsViewButton addTarget:self
+                                       action:@selector(openStatsView:)
+                             forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -66,6 +71,11 @@
   QIQuizViewController *quizViewController = [self newQuizViewController];
   quizViewController.matching = YES;
   [self presentViewController:quizViewController animated:YES completion:nil];
+}
+
+- (void)openStatsView:(id)sender {
+  QIStatsViewController *statsViewController = [self newStatsViewController];
+  [self presentViewController:statsViewController animated:YES completion:nil];
 }
 
 - (void)groupPicker{
@@ -99,5 +109,12 @@
   groupSelectionViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
   groupSelectionViewController.view.frame = self.view.bounds;
   return groupSelectionViewController;
+}
+- (QIStatsViewController *)newStatsViewController {
+  QIStatsViewController *statsViewController = [[QIStatsViewController alloc] init];
+  statsViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+  statsViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+  statsViewController.view.frame = self.view.bounds;
+  return statsViewController;
 }
 @end

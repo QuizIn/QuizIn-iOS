@@ -13,6 +13,7 @@
 //Temporary Buttons
 @property(nonatomic, strong, readwrite) UIButton *businessCardQuizButton;
 @property(nonatomic, strong, readwrite) UIButton *matchingQuizButton;
+@property(nonatomic, strong, readwrite) UIButton *statsViewButton; 
 
 //constraints
 @property(nonatomic, strong) NSMutableArray *constraintsForTopLevelViews;
@@ -44,6 +45,7 @@
     
     _businessCardQuizButton = [self newBusinessCardQuizButton];
     _matchingQuizButton = [self newMatchingQuizButton];
+    _statsViewButton = [self newStatsViewButton];
     
     
     [self constructViewHierachy];
@@ -63,6 +65,7 @@
   [self addSubview:self.connectionsQuizStartView];
   [self addSubview:self.businessCardQuizButton];
   [self addSubview:self.matchingQuizButton];
+  [self addSubview:self.statsViewButton];
 
 }
 
@@ -252,6 +255,13 @@
   [matchingQuizButton setTitle:@"Matching" forState:UIControlStateNormal];
   matchingQuizButton.frame = CGRectMake(10.0f, 380.0f, 150.0f, 44.0f);
   return matchingQuizButton;
+}
+
+- (UIButton *)newStatsViewButton {
+  UIButton *statsViewButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  [statsViewButton setTitle:@"Matching" forState:UIControlStateNormal];
+  statsViewButton.frame = CGRectMake(200.0f, 380.0f, 150.0f, 44.0f);
+  return statsViewButton;
 }
 
 #pragma mark Strings

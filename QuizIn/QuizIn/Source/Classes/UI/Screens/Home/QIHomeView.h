@@ -6,4 +6,6 @@
 @property(nonatomic, strong, readonly) UIButton *calendarPickerButton;
 @property(nonatomic, strong, readonly) UIButton *businessCardQuizButton;
 @property(nonatomic, strong, readonly) UIButton *matchingQuizButton;
+@property(nonatomic, strong, readonly) UIButton *statsViewButton;
+
 @end
