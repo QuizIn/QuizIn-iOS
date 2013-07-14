@@ -5,7 +5,7 @@
 
 @interface QIQuizBuilder : NSObject
 
-+ (QIQuiz *)quizFromRandomConnections;
++ (void)quizFromRandomConnectionsWithCompletionBlock:(void (^)(QIQuiz *, NSError *))completionBlock;
 + (QIQuiz *)quizWithConnections:(QIConnections *)connections;
 
 @end

@@ -55,16 +55,21 @@
   }
   
   
-  self.quiz = [QIQuizBuilder quizFromRandomConnections];
-  
-  self.multipleChoiceController =
-      [[QIMultipleChoiceQuizViewController alloc]
-       initWithQuestion:(QIMultipleChoiceQuestion *)[self.quiz nextQuestion]];
-  [self addChildViewController:self.multipleChoiceController];
-  [self.view addSubview:self.multipleChoiceController.view];
-  [self.multipleChoiceController.multipleChoiceView.checkAnswersView.nextButton addTarget:self
-                                                                          action:@selector(nextPressed)
-                                                                forControlEvents:UIControlEventTouchUpInside];
+  [QIQuizBuilder quizFromRandomConnectionsWithCompletionBlock:^(QIQuiz *quiz, NSError *error) {
+    if (error == nil) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        self.quiz = quiz;
+        self.multipleChoiceController =
+        [[QIMultipleChoiceQuizViewController alloc]
+         initWithQuestion:(QIMultipleChoiceQuestion *)[self.quiz nextQuestion]];
+        [self addChildViewController:self.multipleChoiceController];
+        [self.view addSubview:self.multipleChoiceController.view];
+        [self.multipleChoiceController.multipleChoiceView.checkAnswersView.nextButton addTarget:self
+                                                                                         action:@selector(nextPressed)
+                                                                               forControlEvents:UIControlEventTouchUpInside];
+      });
+    }
+  }];
 }
 
 - (void)nextPressed{

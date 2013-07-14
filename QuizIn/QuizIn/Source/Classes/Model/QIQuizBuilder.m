@@ -9,43 +9,52 @@
 
 @implementation QIQuizBuilder
 
-+ (QIQuiz *)quizFromRandomConnections {
-  
-  __block NSInteger numConnections = 0;
-  __block BOOL done = NO;
++ (void)quizFromRandomConnectionsWithCompletionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {
   [LinkedIn getPeopleCurrentUserConnectionsCountWithOnSuccess:^(NSInteger numberOfConnections) {
-    numConnections = numberOfConnections;
-    done = YES;
+    [self fetchRandomConnectionsFromNumberOfConnections:numberOfConnections completionBlock:^(QIConnections *connections, NSError *error) {
+      if (completionBlock) {
+        QIQuiz *quiz = [self quizWithConnections:connections];
+        completionBlock(quiz, nil);
+      }
+    }];
   } onFailure:^(NSError *error) {
     NSLog(@"Error: %@", error);
-    done = YES;
+    if (completionBlock) {
+      completionBlock(nil, error);
+    }
   }];
-  
-  while (!done) {
-    [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-  }
-  done = NO;
-  
+}
+
++ (void)fetchRandomConnectionsFromNumberOfConnections:(NSInteger)numberOfConnections
+                                      completionBlock:(void (^)(QIConnections *connections, NSError *error))completionBlock {
   __block NSMutableArray *peopleForQuiz = [NSMutableArray arrayWithCapacity:10];
+  __block NSInteger count = 0;
+  __block BOOL anyFailures = NO;
+  __block NSError *fetchError = nil;
   
   for (NSInteger i = 0; i < 10; i++) {
-    NSInteger randomPersonIndex = arc4random_uniform(numConnections);
+    NSInteger randomPersonIndex = arc4random_uniform(numberOfConnections);
     [LinkedIn getPeopleConnectionsWithStartIndex:randomPersonIndex count:1 onSuccess:^(QIConnections *connections) {
+      count++;
       [peopleForQuiz addObject:connections.people[0]];
-      done = YES;
+      if (count == 10) {
+        if (completionBlock) {
+          if (anyFailures) {
+            completionBlock(nil, fetchError);
+          } else {
+            QIConnections *connectionsForQuiz = [QIConnections new];
+            connectionsForQuiz.people = [peopleForQuiz copy];
+            completionBlock(connectionsForQuiz, nil);
+          }
+        }
+      }
     } onFailure:^(NSError *error) {
+      count++;
+      anyFailures = YES;
       NSLog(@"Error: %@", error);
-      done = YES;
+      fetchError = error;
     }];
-    while (!done) {
-      [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-    }
-    done = NO;
   }
-  
-  QIConnections *connectionsForQuiz = [QIConnections new];
-  connectionsForQuiz.people = [peopleForQuiz copy];
-  return [self quizWithConnections:connectionsForQuiz];
 }
 
 + (QIQuiz *)quizWithConnections:(QIConnections *)connections {
