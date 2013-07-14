@@ -13,7 +13,6 @@
 @interface QIBusinessCardAnswerView ()
 
 @property(nonatomic, strong) UIImageView *answerHolder;
-@property(nonatomic, strong) UIScrollView *answerScrollView;
 @property(nonatomic, strong) UILabel *answer;
 @property(nonatomic, strong) UILabel *answer1;
 @property(nonatomic, strong) UILabel *answer2;

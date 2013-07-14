@@ -13,6 +13,7 @@ id delegate;
 
 @property(nonatomic, copy) NSArray *answers;
 @property(nonatomic, readonly)int selectedAnswer;
+@property(nonatomic, strong) UIScrollView *answerScrollView;
 
 - (id)delegate;
 - (void)setDelegate:(id)newDelegate;

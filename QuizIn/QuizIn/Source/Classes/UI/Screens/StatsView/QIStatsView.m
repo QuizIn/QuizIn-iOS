@@ -1,19 +1,35 @@
 
 #import "QIStatsView.h"
 
+@interface QIStatsView ()
+
+@property (nonatomic,strong) UIImageView *viewBackground;
+
+@end
+
 @implementation QIStatsView
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-      [self setBackgroundColor:[UIColor greenColor]];
-      UIButton *statsViewButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-      [statsViewButton setTitle:@"Matching" forState:UIControlStateNormal];
-      statsViewButton.frame = CGRectMake(200.0f, 380.0f, 150.0f, 44.0f);
-      [self addSubview:statsViewButton];
+      _viewBackground = [self newViewBackground];
+      [self contstructViewHierarchy];
     }
     return self;
+}
+
+#pragma mark Layout
+-(void)contstructViewHierarchy{
+  [self addSubview:self.viewBackground];
+}
+
+#pragma mark factory methods
+
+- (UIImageView *)newViewBackground{
+  UIImageView *background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"quizin_bg"]];
+  [background setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return background;
 }
 
 //header view with overall stats.

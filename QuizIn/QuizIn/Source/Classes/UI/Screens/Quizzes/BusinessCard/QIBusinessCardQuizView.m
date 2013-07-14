@@ -420,7 +420,11 @@
     [self.checkAnswersView.resultHideButton setHidden:YES];
     [self.topCheck setConstant:-40.0f];
     [self setResultClosed:YES];
+    [self.answerName.answerScrollView setContentOffset:CGPointZero];
+    [self.answerTitle.answerScrollView setContentOffset:CGPointZero];
+    [self.answerCompany.answerScrollView setContentOffset:CGPointZero];
     [self layoutIfNeeded];
+    
   }];
 }
 -(void)toggleResult{

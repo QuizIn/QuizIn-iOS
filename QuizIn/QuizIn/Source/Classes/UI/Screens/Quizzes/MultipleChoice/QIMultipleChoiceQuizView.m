@@ -31,6 +31,7 @@
   if (self) {
     _question = @"";
     _answers = @[];
+    _currentAnswer = NSNotFound;
     
     _viewBackground = [self newViewBackground];
     _dividerTop = [self newDivider];
@@ -263,6 +264,7 @@
     [self.checkAnswersView.resultHideButton setHidden:YES];
     [self.topCheck setConstant:-40.0f];
     [self setResultClosed:YES];
+    [self answerButtonPressed:nil];
     [self layoutIfNeeded];
   }];
 }
@@ -315,7 +317,9 @@
     for (UIButton *button in self.answerButtons){
       button.selected = NO;
     }
-    pressedButton.selected = YES;
+    [pressedButton setSelected:YES];
+    [self setCurrentAnswer:[self.answerButtons indexOfObject:pressedButton]];
+    [self.checkAnswersView.checkButton setEnabled:(self.currentAnswer != NSNotFound)];
   }
 }
 
@@ -398,6 +402,7 @@
   [view.resultHideButton addTarget:self action:@selector(toggleResult) forControlEvents:UIControlEventTouchUpInside];
   [view.againButton addTarget:self action:@selector(againButtonPressed) forControlEvents:UIControlEventTouchUpInside];
   [view.checkButton addTarget:self action:@selector(checkButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+  [view.checkButton setEnabled:NO];
   [view setTranslatesAutoresizingMaskIntoConstraints:NO];
   [view setBackgroundColor:[UIColor clearColor]];
   return view;

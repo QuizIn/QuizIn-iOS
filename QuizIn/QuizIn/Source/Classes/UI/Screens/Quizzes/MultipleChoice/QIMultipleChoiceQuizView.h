@@ -8,6 +8,7 @@
 @property(nonatomic, strong) QICheckAnswersView *checkAnswersView;
 @property(nonatomic, assign) NSUInteger quizProgress;
 @property(nonatomic, assign) NSUInteger numberOfQuestions;
+@property(nonatomic, assign) NSUInteger currentAnswer;
 @property(nonatomic, copy) NSString *question;
 @property(nonatomic, strong) NSURL *profileImageURL;
 @property(nonatomic, copy) NSArray *answers;
