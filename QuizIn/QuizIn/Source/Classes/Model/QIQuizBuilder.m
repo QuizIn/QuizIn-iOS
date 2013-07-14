@@ -63,7 +63,17 @@
   NSMutableArray *questions = [NSMutableArray arrayWithCapacity:10];
   for (NSInteger i = 0; i <= 36; ++i) {
     QIMultipleChoiceQuestion *question = [QIMultipleChoiceQuestion new];
-    NSInteger correctPersonIndex = arc4random_uniform(4);
+    NSInteger correctPersonIndex = 0;
+    
+    for (int p = i; p < 4 + i; p++) {
+      QIPerson *person = (QIPerson *)connections.people[p];
+      if (person.pictureURL != nil) {
+        if (arc4random_uniform(2) == 1) {
+          correctPersonIndex = p -  i;
+        }
+      }
+    }
+    
     question.person = connections.people[correctPersonIndex + i];
     question.questionPrompt = @"What is my name?";
     question.answers = @[[self nameFromConnections:connections atIndex:i],
