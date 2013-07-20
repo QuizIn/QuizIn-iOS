@@ -12,4 +12,5 @@
 @property(nonatomic, copy) NSString *question;
 @property(nonatomic, strong) NSURL *profileImageURL;
 @property(nonatomic, copy) NSArray *answers;
+@property(nonatomic, assign) NSUInteger correctAnswerIndex;
 @end

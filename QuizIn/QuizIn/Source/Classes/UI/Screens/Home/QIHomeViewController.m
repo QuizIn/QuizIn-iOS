@@ -5,6 +5,8 @@
 #import "QIGroupSelectionViewController.h"
 #import "QIStatsViewController.h"
 
+#import "QIStatsData.h" //temp
+
 @interface QIHomeViewController ()
 @property(nonatomic, strong, readonly) QIHomeView *homeView;
 @end
@@ -48,6 +50,17 @@
   [self.homeView.statsViewButton addTarget:self
                                        action:@selector(openStatsView:)
                              forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.homeView.resetStatsButton addTarget:self
+                                     action:@selector(resetStats)
+                           forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.homeView.addStatsButton addTarget:self
+                                   action:@selector(addStats)
+                         forControlEvents:UIControlEventTouchUpInside];
+  [self.homeView.printStatsButton addTarget:self
+                                     action:@selector(printStats)
+                           forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,6 +95,20 @@
   QIGroupSelectionViewController *groupSelectionViewController = [self newGroupSelectionViewController];
   [self presentViewController:groupSelectionViewController animated:YES completion:nil];
 }
+
+- (void)resetStats{
+  [QIStatsData setUpStatsWithNewLoggedInUserID:@"12345"];
+}
+
+- (void)printStats{
+  [QIStatsData printStatsOfID:@"12345"];
+}
+
+- (void)addStats{
+  [QIStatsData addStatsWithLoggedInUserID:@"12345"];
+}
+
+
 #pragma mark Strings
 
 - (NSString *)homeScreenTitle {

@@ -28,11 +28,11 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  //TODO Cleanup hardcoded test values
   self.multipleChoiceView.numberOfQuestions = 11;
   self.multipleChoiceView.quizProgress = 10;
   self.multipleChoiceView.question = self.question.questionPrompt;
   self.multipleChoiceView.answers = self.question.answers;
+  self.multipleChoiceView.correctAnswerIndex = self.question.correctAnswerIndex;
   self.multipleChoiceView.profileImageURL = [NSURL URLWithString:self.question.person.pictureURL];
   [self.multipleChoiceView.progressView.exitButton addTarget:self
                                                       action:@selector(userDidCloseQuiz)
@@ -41,6 +41,7 @@
   [self.multipleChoiceView.checkAnswersView.nextButton addTarget:self
                                                  action:@selector(userDidPressNext)
                                        forControlEvents:UIControlEventTouchUpInside];
+  
 }
 
 - (void)didReceiveMemoryWarning {

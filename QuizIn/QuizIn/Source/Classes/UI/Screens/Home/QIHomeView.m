@@ -13,7 +13,10 @@
 //Temporary Buttons
 @property(nonatomic, strong, readwrite) UIButton *businessCardQuizButton;
 @property(nonatomic, strong, readwrite) UIButton *matchingQuizButton;
-@property(nonatomic, strong, readwrite) UIButton *statsViewButton; 
+@property(nonatomic, strong, readwrite) UIButton *statsViewButton;
+@property(nonatomic, strong, readwrite) UIButton *resetStatsButton;
+@property(nonatomic, strong, readwrite) UIButton *addStatsButton;
+@property(nonatomic, strong, readwrite) UIButton *printStatsButton;
 
 //constraints
 @property(nonatomic, strong) NSMutableArray *constraintsForTopLevelViews;
@@ -46,7 +49,9 @@
     _businessCardQuizButton = [self newBusinessCardQuizButton];
     _matchingQuizButton = [self newMatchingQuizButton];
     _statsViewButton = [self newStatsViewButton];
-    
+    _resetStatsButton = [self newResetStatsButton];
+    _addStatsButton = [self newAddStatsButton];
+    _printStatsButton = [self newPrintStatsButton];
     
     [self constructViewHierachy];
   }
@@ -66,6 +71,9 @@
   [self addSubview:self.businessCardQuizButton];
   [self addSubview:self.matchingQuizButton];
   [self addSubview:self.statsViewButton];
+  [self addSubview:self.resetStatsButton];
+  [self addSubview:self.addStatsButton];
+  [self addSubview:self.printStatsButton];
 
 }
 
@@ -264,6 +272,26 @@
   return statsViewButton;
 }
 
+- (UIButton *)newResetStatsButton {
+  UIButton *statsViewButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  [statsViewButton setTitle:@"Reset Stats" forState:UIControlStateNormal];
+  statsViewButton.frame = CGRectMake(200.0f, 335.0f, 150.0f, 15.0f);
+  return statsViewButton;
+}
+
+- (UIButton *)newAddStatsButton {
+  UIButton *statsViewButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  [statsViewButton setTitle:@"Add Stats" forState:UIControlStateNormal];
+  statsViewButton.frame = CGRectMake(200.0f, 350.0f, 150.0f, 15.0f);
+  return statsViewButton;
+}
+
+- (UIButton *)newPrintStatsButton {
+  UIButton *statsViewButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  [statsViewButton setTitle:@"Print Stats" forState:UIControlStateNormal];
+  statsViewButton.frame = CGRectMake(200.0f, 365.0f, 150.0f, 15.0f);
+  return statsViewButton;
+}
 #pragma mark Strings
 
 - (NSString *)connectionsQuizButtonTitle {

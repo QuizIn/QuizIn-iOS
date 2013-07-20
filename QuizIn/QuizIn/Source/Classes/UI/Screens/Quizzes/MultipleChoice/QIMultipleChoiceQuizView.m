@@ -94,6 +94,10 @@
   [self loadAnswerButtons];
 }
 
+- (void)setCorrectAnswerIndex:(NSUInteger)correctAnswerIndex{
+  _correctAnswerIndex = correctAnswerIndex;
+}
+
 #pragma mark View Hierarchy
 
 - (void)constructViewHierarchy {
@@ -236,28 +240,30 @@
 
 #pragma mark Actions
 -(void)checkButtonPressed{
-  NSLog(@"checkButton Pressed");
   [self showResult];
 }
 -(void)againButtonPressed{
-  NSLog(@"againButton Pressed");
   [self resetView];
 }
 -(void)showResult{
-  NSLog(@"showResult");
   [UIView animateWithDuration:0.5 animations:^{
+    for (UIButton *button in self.answerButtons){
+      [button setUserInteractionEnabled:NO];
+    }
     [self.checkAnswersView.nextButton setHidden:NO];
-    [self.checkAnswersView.againButton setHidden:NO];
     [self.checkAnswersView.checkButton setHidden:YES];
     [self.checkAnswersView.resultHideButton setHidden:NO];
     [self.topCheck setConstant:-81.0f];
     [self setResultClosed:NO];
+    [self processAnswer];
     [self layoutIfNeeded];
   }];
 }
 -(void)resetView{
-  NSLog(@"resetView");
   [UIView animateWithDuration:0.5 animations:^{
+    for (UIButton *button in self.answerButtons){
+      [button setUserInteractionEnabled:YES];
+    }
     [self.checkAnswersView.nextButton setHidden:YES];
     [self.checkAnswersView.againButton setHidden:YES];
     [self.checkAnswersView.checkButton setHidden:NO];
@@ -269,7 +275,6 @@
   }];
 }
 -(void)toggleResult{
-  NSLog(@"toggleResult");
   [UIView animateWithDuration:0.5 animations:^{
     if (self.resultClosed) {
       [self.topCheck setConstant:-81.0f];
@@ -282,11 +287,15 @@
   }];
 }
 
-#pragma mark Strings
-
-- (NSString *)nextQuestionButtonText {
-  return @"Check Answers";
+-(void)processAnswer{
+  if (self.currentAnswer == self.correctAnswerIndex){
+    [self.checkAnswersView correct:YES];
+  }
+  else{
+    [self.checkAnswersView correct:NO];
+  }
 }
+#pragma mark Strings
 
 #pragma mark Data Display
 

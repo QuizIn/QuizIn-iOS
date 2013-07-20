@@ -15,4 +15,11 @@
 @property(nonatomic, strong,readonly) UIButton *nextButton;
 @property(nonatomic, strong,readonly) UIButton *againButton;
 @property(nonatomic, strong,readonly) UIButton *resultHideButton;
+
+
+-(void)correct:(BOOL)correct;
+
 @end
+
+
+

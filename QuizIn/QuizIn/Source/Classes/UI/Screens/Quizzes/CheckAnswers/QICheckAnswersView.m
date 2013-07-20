@@ -6,7 +6,7 @@
 
 @property(nonatomic, strong) UILabel *resultLabel;
 @property(nonatomic, strong) UIView *resultView;
-@property(nonatomic, strong) UIImageView *backgroundImage;
+@property(nonatomic, strong,) UIImageView *backgroundImage;
 @property(nonatomic, strong) NSMutableArray *checkAnswersViewConstraints;
 @property(nonatomic, strong) NSMutableArray *resultViewConstraints;
 
@@ -154,6 +154,18 @@
 }
 
 #pragma mark Actions
+-(void)correct:(BOOL)correct{
+  if(correct){
+    [self.againButton setHidden:YES];
+    [self.backgroundImage setImage:[UIImage imageNamed:@"quizin_navbar_correct"]];
+    [self.resultLabel setText:[self resultCorrectText]];
+  }
+  else {
+    [self.backgroundImage setImage:[UIImage imageNamed:@"quizin_navbar_incorrect"]];
+    [self.resultLabel setText:[self resultIncorrectText]];
+    [self.againButton setHidden:NO];
+  }
+}
 
 #pragma mark Strings
 - (NSString *)checkButtonText{
@@ -165,8 +177,11 @@
 - (NSString *)againButtonText{
   return @"Try Again";
 }
-- (NSString *)resultText{
+- (NSString *)resultCorrectText{
   return @"CORRECT";
+}
+- (NSString *)resultIncorrectText{
+  return @"INCORRECT";
 }
 
 
@@ -193,7 +208,6 @@
   [resultLabel setTextColor:[UIColor colorWithWhite:1.0f alpha:1.0f]];
   [resultLabel setAdjustsFontSizeToFitWidth:YES];
   [resultLabel setAdjustsFontSizeToFitWidth:YES];
-  [resultLabel setText:[self resultText]];
   return resultLabel;
 }
 

@@ -179,7 +179,7 @@
 		34FE524E1786FE2B00A462C2 /* QIGroupSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE52481786FE2B00A462C2 /* QIGroupSelectionView.m */; };
 		34FE5252178A021D00A462C2 /* QIStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE5251178A021D00A462C2 /* QIStatsViewController.m */; };
 		34FE5255178A023500A462C2 /* QIStatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE5254178A023500A462C2 /* QIStatsView.m */; };
-		34FE5258178A05D900A462C2 /* QIStatsData.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE5257178A05D900A462C2 /* QIStatsData.m */; };
+		34FE525B179AE91800A462C2 /* QIStatsData.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE525A179AE91400A462C2 /* QIStatsData.m */; };
 		880870E216FBD31800D09848 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 880870DF16FBD31800D09848 /* InfoPlist.strings */; };
 		880870EF16FBD32200D09848 /* QuizIn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 880870EA16FBD32200D09848 /* QuizIn.xcdatamodeld */; };
 		880870F716FBD32E00D09848 /* QIAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 880870F316FBD32E00D09848 /* QIAppDelegate.m */; };
@@ -434,8 +434,8 @@
 		34FE5251178A021D00A462C2 /* QIStatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsViewController.m; sourceTree = "<group>"; };
 		34FE5253178A023500A462C2 /* QIStatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsView.h; sourceTree = "<group>"; };
 		34FE5254178A023500A462C2 /* QIStatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsView.m; sourceTree = "<group>"; };
-		34FE5256178A05D900A462C2 /* QIStatsData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsData.h; sourceTree = "<group>"; };
-		34FE5257178A05D900A462C2 /* QIStatsData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsData.m; sourceTree = "<group>"; };
+		34FE5259179AE91300A462C2 /* QIStatsData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsData.h; sourceTree = "<group>"; };
+		34FE525A179AE91400A462C2 /* QIStatsData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsData.m; sourceTree = "<group>"; };
 		634CC7A981E449658DD30D1E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F88557B297046AD9AF083B1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		880870E016FBD31800D09848 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -893,8 +893,8 @@
 				34FE5251178A021D00A462C2 /* QIStatsViewController.m */,
 				34FE5253178A023500A462C2 /* QIStatsView.h */,
 				34FE5254178A023500A462C2 /* QIStatsView.m */,
-				34FE5256178A05D900A462C2 /* QIStatsData.h */,
-				34FE5257178A05D900A462C2 /* QIStatsData.m */,
+				34FE5259179AE91300A462C2 /* QIStatsData.h */,
+				34FE525A179AE91400A462C2 /* QIStatsData.m */,
 			);
 			path = StatsView;
 			sourceTree = "<group>";
@@ -1467,7 +1467,7 @@
 				34FE524E1786FE2B00A462C2 /* QIGroupSelectionView.m in Sources */,
 				34FE5252178A021D00A462C2 /* QIStatsViewController.m in Sources */,
 				34FE5255178A023500A462C2 /* QIStatsView.m in Sources */,
-				34FE5258178A05D900A462C2 /* QIStatsData.m in Sources */,
+				34FE525B179AE91800A462C2 /* QIStatsData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
