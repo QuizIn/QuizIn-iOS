@@ -3,9 +3,22 @@
 
 @interface QIStatsData : NSObject
 
-+ (void)setUpStatsWithNewLoggedInUserID:(NSString *)ID;
-+ (void)printStatsOfID:(NSString *)ID;
-+ (void)addStatsWithLoggedInUserID:(NSString *)ID;
 
+- (id)initWithLoggedInUserID:(NSString *)ID;
+
+//debug test functions
+- (void)printStats;
+
+//reset Stats
+- (void)setUpStats;
+
+//gets Stats
+- (int)getCurrentRank;
+- (int)getTotalCorrectAnswers;
+- (int)getTotalIncorrectAnswers;
+- (NSArray *)getConnectionStats;
+
+//update Stats
+- (void)updateStatsWithConnectionProfile:(NSDictionary *)connectionProfile correct:(BOOL)correct;
 
 @end
