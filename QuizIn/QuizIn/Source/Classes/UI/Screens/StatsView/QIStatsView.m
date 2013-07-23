@@ -1,12 +1,14 @@
 
 #import "QIStatsView.h"
 #import "QIStatsCellView.h"
+#import "QIStatsTableHeaderView.h"
 
 @interface QIStatsView ()
 
 
-@property (nonatomic,strong) UIImageView *viewBackground;
+@property (nonatomic, strong) UIImageView *viewBackground;
 @property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, retain) QIStatsTableHeaderView *headerView; 
 @property (nonatomic, retain) NSMutableArray *viewConstraints;
 
 @end
@@ -21,6 +23,7 @@
     self = [super initWithFrame:frame];
     if (self) {
       _viewBackground = [self newViewBackground];
+      _headerView = [self newHeaderView];
       _tableView = [self newStatsTable];
       
       _resetStatsButton = [self newResetStatsButton];
@@ -120,6 +123,12 @@
   return background;
 }
 
+-(QIStatsTableHeaderView *)newHeaderView{
+  QIStatsTableHeaderView *headerView = [[QIStatsTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+  headerView.sectionTitle = @"Heading Title";
+  return headerView;
+}
+
 -(UITableView *)newStatsTable{
   UITableView *tableView = [[UITableView alloc] init];
   [tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -128,6 +137,7 @@
   [tableView setShowsVerticalScrollIndicator:NO];
   tableView.rowHeight = 94;
   tableView.sectionHeaderHeight = 25;
+  tableView.tableHeaderView = self.headerView;
   tableView.dataSource = self;
   tableView.delegate = self;
   return tableView;

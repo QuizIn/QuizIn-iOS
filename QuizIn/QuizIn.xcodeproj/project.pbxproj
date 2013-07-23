@@ -108,6 +108,7 @@
 		3478FFAC1747C19D002B29DB /* QIMatchingQuizViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFAB1747C19D002B29DB /* QIMatchingQuizViewController.m */; };
 		3478FFAF1747C1C7002B29DB /* QIMatchingQuizView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFAE1747C1C7002B29DB /* QIMatchingQuizView.m */; };
 		34821333179C7EC20011986F /* QIStatsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34821330179C7EC00011986F /* QIStatsCellView.m */; };
+		34821337179CC6500011986F /* QIStatsTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34821336179CC64F0011986F /* QIStatsTableHeaderView.m */; };
 		3489011F177A75B40004F604 /* QICalendarData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3489011E177A75B40004F604 /* QICalendarData.m */; };
 		34890121177A76D10004F604 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34890120177A76D10004F604 /* EventKit.framework */; };
 		34890124177F6EA40004F604 /* QICalendarTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34890123177F6EA30004F604 /* QICalendarTableFooterView.m */; };
@@ -351,6 +352,8 @@
 		3478FFFF1750EFC1002B29DB /* quizin_divider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quizin_divider.png; sourceTree = "<group>"; };
 		3482132F179C7EC00011986F /* QIStatsCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsCellView.h; sourceTree = "<group>"; };
 		34821330179C7EC00011986F /* QIStatsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsCellView.m; sourceTree = "<group>"; };
+		34821335179CC64E0011986F /* QIStatsTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsTableHeaderView.h; sourceTree = "<group>"; };
+		34821336179CC64F0011986F /* QIStatsTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsTableHeaderView.m; sourceTree = "<group>"; };
 		3489011D177A75B40004F604 /* QICalendarData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarData.h; sourceTree = "<group>"; };
 		3489011E177A75B40004F604 /* QICalendarData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarData.m; sourceTree = "<group>"; };
 		34890120177A76D10004F604 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
@@ -892,6 +895,8 @@
 		34FE524F178A01BD00A462C2 /* StatsView */ = {
 			isa = PBXGroup;
 			children = (
+				34821335179CC64E0011986F /* QIStatsTableHeaderView.h */,
+				34821336179CC64F0011986F /* QIStatsTableHeaderView.m */,
 				3482132F179C7EC00011986F /* QIStatsCellView.h */,
 				34821330179C7EC00011986F /* QIStatsCellView.m */,
 				34FE5250178A021D00A462C2 /* QIStatsViewController.h */,
@@ -1474,6 +1479,7 @@
 				34FE5255178A023500A462C2 /* QIStatsView.m in Sources */,
 				34FE525B179AE91800A462C2 /* QIStatsData.m in Sources */,
 				34821333179C7EC20011986F /* QIStatsCellView.m in Sources */,
+				34821337179CC6500011986F /* QIStatsTableHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

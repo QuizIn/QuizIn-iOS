@@ -1,29 +1,22 @@
 
-#import "QIGroupSelectionTableHeaderView.h"
+#import "QIStatsTableHeaderView.h"
 #import "QIFontProvider.h"
 
-@interface QIGroupSelectionTableHeaderView ()
+@interface QIStatsTableHeaderView ()
 
-@property (nonatomic,strong) UIView *headerBackgroundView;
 @property (nonatomic,strong) UILabel *sectionTitleLabel;
 @property (nonatomic,strong) NSMutableArray *selfConstraints;
 @property (nonatomic,strong) NSMutableArray *sectionViewConstraints;
 
 @end
 
-@implementation QIGroupSelectionTableHeaderView
-
-
-+ (BOOL)requiresConstraintBasedLayout {
-  return YES;
-}
+@implementation QIStatsTableHeaderView
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
       _sectionTitleLabel = [self newSectionTitleLabel];
-     // [self setTranslatesAutoresizingMaskIntoConstraints:NO];
       [self constructViewHierarchy];
     }
     return self;
@@ -55,7 +48,7 @@
 -(void)updateConstraints{
   [super updateConstraints];
   if (!self.sectionViewConstraints) {
-    
+    /*
     //Constrain Views
     NSDictionary *views = NSDictionaryOfVariableBindings(_sectionTitleLabel);
     
@@ -75,13 +68,14 @@
     [self.sectionViewConstraints addObjectsFromArray:vLabelConstraints];
     
     [self addConstraints:self.sectionViewConstraints];
+     */
   }
 }
 
 #pragma mark Factory Methods
 
 -(UILabel *)newSectionTitleLabel{
-  UILabel *titleLabel = [[UILabel alloc] init];
+  UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
   titleLabel.textAlignment = NSTextAlignmentLeft;
   titleLabel.backgroundColor = [UIColor clearColor];
   titleLabel.font = [QIFontProvider fontWithSize:14.0f style:Regular];

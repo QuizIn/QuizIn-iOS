@@ -1,7 +1,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QIGroupSelectionTableHeaderView : UIView
+@interface QIStatsTableHeaderView : UIView
 
 @property (nonatomic,strong) NSString *sectionTitle;
 
