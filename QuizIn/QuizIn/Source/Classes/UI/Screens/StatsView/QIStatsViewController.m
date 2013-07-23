@@ -32,7 +32,6 @@
   
   [self.statsView.resetStatsButton addTarget:self action:@selector(resetStats) forControlEvents:UIControlEventTouchUpInside];
   [self.statsView.printStatsButton addTarget:self action:@selector(printStats) forControlEvents:UIControlEventTouchUpInside];
-  [self.statsView.addStatsButton addTarget:self action:@selector(addStats) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)resetStats{

@@ -10,7 +10,6 @@
 @property (nonatomic,strong) NSArray *connectionStats;
 
 @property (nonatomic,strong,readwrite) UIButton *resetStatsButton;
-@property (nonatomic,strong,readwrite) UIButton *addStatsButton;
 @property (nonatomic,strong,readwrite) UIButton *printStatsButton;
 
 @end

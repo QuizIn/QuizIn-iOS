@@ -22,6 +22,7 @@
   // key:IndividualStats          Array
         //Array Elements            Dictionary
       //key:UserID              NSString
+      //key:UserPictureID       NSString
       //key:UserFirstName       NSString
       //key:UserLastName        NSString
       //key:CorrectAnswers      Integer
@@ -113,7 +114,7 @@
 
 
 //stats Analytics events
-- (void)updateStatsWithConnectionProfile:(NSDictionary *)connectionProfile correct:(BOOL)correct{
+- (void)updateStatsWithConnectionProfile:(QIPerson *)person correct:(BOOL)correct{
   NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
   NSMutableDictionary *stats = [[prefs objectForKey:self.userID] mutableCopy];
   int totalCorrectAnswers = [[stats objectForKey:@"totalCorrectAnswers"] integerValue];
@@ -131,7 +132,7 @@
                        {
                          NSMutableDictionary *connectionTest = (NSMutableDictionary *)obj;
                          NSString *testID = [connectionTest objectForKey:@"userID"];
-                         if ([testID isEqualToString:[connectionProfile objectForKey:@"userID"]]){
+                         if ([testID isEqualToString:person.personID]){
                            return YES;
                          }
                          else{
@@ -165,12 +166,13 @@
     }
     
     NSMutableDictionary *individualConnectionStatsNew = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                        [connectionProfile objectForKey:@"userID"],         @"userID",
-                                                        [connectionProfile objectForKey:@"userFirstName"],  @"userFirstName",
-                                                        [connectionProfile objectForKey:@"userLastName"],   @"userLastName",
-                                                        [NSNumber numberWithInt:correctAnswers],            @"correctAnswers",
-                                                        [NSNumber numberWithInt:incorrectAnswers],          @"incorrectAnswers",
-                                                        nil];
+                                                         person.pictureURL,                         @"userPictureURL",
+                                                         person.personID,                           @"userID",
+                                                         person.firstName,                          @"userFirstName",
+                                                         person.lastName,                           @"userLastName",
+                                                         [NSNumber numberWithInt:correctAnswers],   @"correctAnswers",
+                                                         [NSNumber numberWithInt:incorrectAnswers], @"incorrectAnswers",
+                                                         nil];
     [connectionStats addObject:individualConnectionStatsNew];
   }
   [stats setObject:[NSNumber numberWithInt:totalCorrectAnswers] forKey:@"totalCorrectAnswers"];

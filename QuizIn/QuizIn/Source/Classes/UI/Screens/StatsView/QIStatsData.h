@@ -1,5 +1,6 @@
 
 #import <Foundation/Foundation.h>
+#import "QIPerson.h"
 
 @interface QIStatsData : NSObject
 
@@ -19,6 +20,6 @@
 - (NSArray *)getConnectionStats;
 
 //update Stats
-- (void)updateStatsWithConnectionProfile:(NSDictionary *)connectionProfile correct:(BOOL)correct;
+- (void)updateStatsWithConnectionProfile:(QIPerson *)person correct:(BOOL)correct;
 
 @end

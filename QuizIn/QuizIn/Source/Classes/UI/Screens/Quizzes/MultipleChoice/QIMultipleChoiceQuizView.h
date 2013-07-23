@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 #import "QIProgressView.h"
 #import "QICheckAnswersView.h"
+#import "QIPerson.h"
 
 @interface QIMultipleChoiceQuizView : UIView
 
@@ -13,4 +14,6 @@
 @property(nonatomic, strong) NSURL *profileImageURL;
 @property(nonatomic, copy) NSArray *answers;
 @property(nonatomic, assign) NSUInteger correctAnswerIndex;
+@property(nonatomic, strong) QIPerson *answerPerson;
+@property(nonatomic, strong) NSString *loggedInUserID; 
 @end

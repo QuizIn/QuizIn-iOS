@@ -1,6 +1,8 @@
 #import "QIMultipleChoiceQuizView.h"
 #import "AsyncImageView.h"
 #import "QIFontProvider.h"
+#import "QIStatsData.h"
+
 
 @interface QIMultipleChoiceQuizView ()
 
@@ -96,6 +98,14 @@
 
 - (void)setCorrectAnswerIndex:(NSUInteger)correctAnswerIndex{
   _correctAnswerIndex = correctAnswerIndex;
+}
+
+- (void)setAnswerPerson:(QIPerson *)answerPerson{
+  _answerPerson = answerPerson;
+}
+
+- (void)setLoggedInUserID:(NSString *)loggedInUserID{
+  _loggedInUserID = loggedInUserID;
 }
 
 #pragma mark View Hierarchy
@@ -288,11 +298,14 @@
 }
 
 -(void)processAnswer{
+  QIStatsData *statsEngine = [[QIStatsData alloc] initWithLoggedInUserID:self.loggedInUserID];
   if (self.currentAnswer == self.correctAnswerIndex){
     [self.checkAnswersView correct:YES];
+    [statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:YES];
   }
   else{
     [self.checkAnswersView correct:NO];
+    [statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:NO];
   }
 }
 #pragma mark Strings

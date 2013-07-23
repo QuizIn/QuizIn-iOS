@@ -27,7 +27,6 @@
       _tableView = [self newStatsTable];
       
       _resetStatsButton = [self newResetStatsButton];
-      _addStatsButton = [self newAddStatsButton];
       _printStatsButton = [self newPrintStatsButton];
       
       [self contstructViewHierarchy];
@@ -65,7 +64,6 @@
   [self addSubview:self.tableView];
   [self addSubview:self.resetStatsButton];
   [self addSubview:self.printStatsButton];
-  [self addSubview:self.addStatsButton];
 }
 
 - (void)layoutSubviews {
@@ -157,13 +155,6 @@
   return statsViewButton;
 }
 
-- (UIButton *)newAddStatsButton {
-  UIButton *statsViewButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-  [statsViewButton setTitle:@"Add Stats" forState:UIControlStateNormal];
-  statsViewButton.frame = CGRectMake(200.0f, 365.0f, 150.0f, 15.0f);
-  return statsViewButton;
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -172,16 +163,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-  NSDictionary *data = [self.connectionStats objectAtIndex:indexPath.row];
   static NSString *cellIdentifier = @"CustomCell";
   QIStatsCellView *cell = (QIStatsCellView *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
   if (cell == nil){
     cell = [[QIStatsCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    [cell setConnectionName:[NSString stringWithFormat:@"%@ %@",[data objectForKey:@"userFirstName"],[data objectForKey:@"userLastName"]]];
-    [cell setKnowledgeIndex:[NSString stringWithFormat:@"%d",[[data objectForKey:@"correctAnswers"] integerValue]]];
-    [cell setProfileImageURL:[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_80_80/p/1/000/080/035/28eea75.jpg"]];
   }
+  NSDictionary *data = [self.connectionStats objectAtIndex:indexPath.row];
+  [cell setConnectionName:[NSString stringWithFormat:@"%@ %@",[data objectForKey:@"userFirstName"],[data objectForKey:@"userLastName"]]];
+  [cell setKnowledgeIndex:[NSString stringWithFormat:@"%d",[[data objectForKey:@"correctAnswers"] integerValue]]];
+  [cell setProfileImageURL:[NSURL URLWithString:[data objectForKey:@"userPictureURL"]]];
   return cell;
 }
 

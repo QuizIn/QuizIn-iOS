@@ -34,6 +34,8 @@
   self.multipleChoiceView.answers = self.question.answers;
   self.multipleChoiceView.correctAnswerIndex = self.question.correctAnswerIndex;
   self.multipleChoiceView.profileImageURL = [NSURL URLWithString:self.question.person.pictureURL];
+  self.multipleChoiceView.loggedInUserID = @"12345";
+  self.multipleChoiceView.answerPerson = self.question.person;
   [self.multipleChoiceView.progressView.exitButton addTarget:self
                                                       action:@selector(userDidCloseQuiz)
                                             forControlEvents:UIControlEventTouchUpInside];
@@ -41,8 +43,9 @@
   [self.multipleChoiceView.checkAnswersView.nextButton addTarget:self
                                                  action:@selector(userDidPressNext)
                                        forControlEvents:UIControlEventTouchUpInside];
-  
 }
+
+
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
