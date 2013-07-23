@@ -48,27 +48,7 @@
 -(void)updateConstraints{
   [super updateConstraints];
   if (!self.sectionViewConstraints) {
-    /*
-    //Constrain Views
-    NSDictionary *views = NSDictionaryOfVariableBindings(_sectionTitleLabel);
     
-    NSArray *hLabelConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-4-[_sectionTitleLabel]|"
-                                            options:0
-                                            metrics:nil
-                                              views:views];
-    NSArray *vLabelConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-2-[_sectionTitleLabel]-2-|"
-                                            options:0
-                                            metrics:nil
-                                              views:views];
-    
-    self.sectionViewConstraints = [NSMutableArray array];
-    [self.sectionViewConstraints addObjectsFromArray:hLabelConstraints];
-    [self.sectionViewConstraints addObjectsFromArray:vLabelConstraints];
-    
-    [self addConstraints:self.sectionViewConstraints];
-     */
   }
 }
 

@@ -53,7 +53,7 @@
   if ([selectionContent isEqualToArray:_selectionContent]) {
     return;
   }
-  _selectionContent = [selectionContent copy];
+  _selectionContent = [selectionContent mutableCopy];
 }
 
 -(void) setSelectionViewLabelString:(NSString *)selectionViewLabelString {
