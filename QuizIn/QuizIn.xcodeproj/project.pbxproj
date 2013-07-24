@@ -273,7 +273,7 @@
 		344B6278179F786D00EE85A9 /* QIHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIHomeView.m; sourceTree = "<group>"; };
 		344B6279179F786D00EE85A9 /* QIHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIHomeViewController.h; sourceTree = "<group>"; };
 		344B627A179F786D00EE85A9 /* QIHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIHomeViewController.m; sourceTree = "<group>"; };
-		344B627B179F786D00EE85A9 /* Scratch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Scratch.xib; sourceTree = "<group>"; };
+		344B627B179F786D00EE85A9 /* Scratch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Scratch.xib; path = Classes/UI/Screens/HomeTabs/Home/Scratch.xib; sourceTree = "<group>"; };
 		344B627F179F786D00EE85A9 /* QIStatsCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsCellView.h; sourceTree = "<group>"; };
 		344B6280179F786D00EE85A9 /* QIStatsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsCellView.m; sourceTree = "<group>"; };
 		344B6281179F786D00EE85A9 /* QIStatsData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsData.h; sourceTree = "<group>"; };
@@ -628,7 +628,6 @@
 				344B6278179F786D00EE85A9 /* QIHomeView.m */,
 				344B6279179F786D00EE85A9 /* QIHomeViewController.h */,
 				344B627A179F786D00EE85A9 /* QIHomeViewController.m */,
-				344B627B179F786D00EE85A9 /* Scratch.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1046,6 +1045,7 @@
 				880870F116FBD32E00D09848 /* Classes */,
 				880870F516FBD32E00D09848 /* main.m */,
 				880870F616FBD32E00D09848 /* QuizIn-Prefix.pch */,
+				344B627B179F786D00EE85A9 /* Scratch.xib */,
 			);
 			path = Source;
 			sourceTree = "<group>";

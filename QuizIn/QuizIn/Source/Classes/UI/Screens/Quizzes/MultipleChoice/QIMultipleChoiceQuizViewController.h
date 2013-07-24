@@ -3,7 +3,7 @@
 
 @class QIMultipleChoiceQuestion;
 
-@interface QIMultipleChoiceQuizViewController : UIViewController
+@interface QIMultipleChoiceQuizViewController : UIViewController <UIActionSheetDelegate>
 
 @property(nonatomic, strong, readonly) QIMultipleChoiceQuizView *multipleChoiceView;
 

@@ -40,16 +40,17 @@
 
 - (void)viewWillAppear:(BOOL)animated{
   [self.view updateConstraints];
+  self.timer = [NSTimer scheduledTimerWithTimeInterval:3.0
+                                                target:self
+                                              selector:@selector(timedImageChange)
+                                              userInfo:nil
+                                               repeats:YES];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.timedImageCount = 0;
-  self.timer = [NSTimer scheduledTimerWithTimeInterval:3.0
-                                            target:self
-                                          selector:@selector(timedImageChange)
-                                          userInfo:nil
-                                           repeats:YES];
+  
   [self.homeView setImageURLs:[self getFourRandomURLs]];
  /// [self.homeView setImageURLs:@[[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_80_80/p/1/000/080/035/28eea75.jpg"],[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_80_80/p/1/000/080/035/28eea75.jpg"],[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_80_80/p/1/000/080/035/28eea75.jpg"],[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_80_80/p/1/000/080/035/28eea75.jpg"]]];
   

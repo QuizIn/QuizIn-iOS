@@ -15,6 +15,7 @@
 @property(nonatomic, strong,readonly) UIButton *nextButton;
 @property(nonatomic, strong,readonly) UIButton *againButton;
 @property(nonatomic, strong,readonly) UIButton *resultHideButton;
+@property(nonatomic, strong,readonly) UIButton *seeProfilesButton; 
 
 
 -(void)correct:(BOOL)correct;

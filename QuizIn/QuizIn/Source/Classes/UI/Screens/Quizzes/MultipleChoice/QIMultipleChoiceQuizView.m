@@ -20,6 +20,7 @@
 @property(nonatomic, strong) NSMutableArray *multipleChoiceConstraints;
 @property(nonatomic, strong) NSLayoutConstraint *topCheck;
 @property(nonatomic, assign) BOOL resultClosed;
+@property(nonatomic, assign) BOOL allowAnalytics;
 @end
 
 @implementation QIMultipleChoiceQuizView
@@ -46,7 +47,8 @@
     _questionLabel = [self newQuestionLabel];
     _answerButtons = @[];
     _checkAnswersView = [self newCheckAnswersView];
-    _resultClosed = YES; 
+    _resultClosed = YES;
+    _allowAnalytics = YES;
   
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self constructViewHierarchy];
@@ -253,6 +255,7 @@
   [self showResult];
 }
 -(void)againButtonPressed{
+  [self setAllowAnalytics:YES];
   [self resetView];
 }
 -(void)showResult{
@@ -301,11 +304,15 @@
   QIStatsData *statsEngine = [[QIStatsData alloc] initWithLoggedInUserID:self.loggedInUserID];
   if (self.currentAnswer == self.correctAnswerIndex){
     [self.checkAnswersView correct:YES];
-    [statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:YES];
+    if (self.allowAnalytics){
+      [statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:YES];
+    }
   }
   else{
     [self.checkAnswersView correct:NO];
-    [statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:NO];
+    if (self.allowAnalytics) {
+      [statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:NO];
+    }
   }
 }
 #pragma mark Strings
