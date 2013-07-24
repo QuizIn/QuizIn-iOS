@@ -1,9 +1,9 @@
 #import "QIHomeViewController.h"
-#import "QIHomeView.h"
 #import "QIQuizViewController.h"
 #import "QIGroupSelectionViewController.h"
-#import "QIStatsViewController.h"
 #import "LinkedIn.h"
+#import "QIHomeView.h"
+
 
 #define MAX_TIMED_IMAGES 4
 
@@ -137,7 +137,7 @@
 #pragma mark Strings
 
 - (NSString *)homeScreenTitle {
-  return @"Quizin";
+  return @"Home";
 }
    
 #pragma mark Properties

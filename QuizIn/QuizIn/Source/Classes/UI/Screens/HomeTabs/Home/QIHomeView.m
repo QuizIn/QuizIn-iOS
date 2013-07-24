@@ -227,14 +227,16 @@
                                                nil];
     
   NSArray *hImagesConstraints =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_profileImage0(==50)]-5-[_profileImage1(==_profileImage0)]-5-[_profileImage2(==_profileImage1)]-5-[_profileImage3(==_profileImage2)]-|"
+  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_profileImage0(==50)]-5-[_profileImage1(==_profileImage0)]-5-[_profileImage2(==_profileImage1)]-5-[_profileImage3(==_profileImage2)]"
                                           options:NSLayoutFormatAlignAllCenterY
                                           metrics:nil
                                             views:imageViews];
   [self.constraintsForImages addObjectsFromArray:hImagesConstraints];
+  
   for (int i = 0; i<[_profileImages count]; i++) {
     [self.constraintsForImages addObject:[NSLayoutConstraint constraintWithItem:[_profileImages objectAtIndex:i] attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:[_profileImages objectAtIndex:i] attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f]];
   }
+  
   [self.connectionsQuizImagePreviewCollection addConstraints:self.constraintsForImages];
   
     //Constrain calendar Picker Button
@@ -314,7 +316,6 @@
 }
 - (UIView *)newConnectionsQuizImagePreviewCollection{
   UIView *previewArea = [[UIView alloc] init];
-  [previewArea setBackgroundColor:[UIColor greenColor]];
   [previewArea setTranslatesAutoresizingMaskIntoConstraints:NO];
   return previewArea;
 }

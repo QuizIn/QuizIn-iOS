@@ -1,13 +1,15 @@
 #import "QIApplicationViewController.h"
-
 #import <AuthKit/AKAuthHandler.h>
-
 #import "AKLinkedInAuthController.h"
 #import "QIDrawerController.h"
 #import "QIHomeViewController.h"
 
+//Tab Bar Views
 #import "QIHomeViewController.h"
 #import "QIStatsViewController.h"
+#import "QIRankViewController.h"
+#import "QISettingsViewController.h"
+#import "QIStoreViewController.h"
 
 // TODO(rcacheaux):  Remove Temp Stuff.
 #import "LinkedIn.h"
@@ -129,7 +131,7 @@
 
 - (UITabBarController *)newTabBarController{
   UITabBarController *tabController = [[UITabBarController alloc] init];
-  [tabController setViewControllers:@[[self newHomeViewController],[self newStatsViewController]]];
+  [tabController setViewControllers:@[[self newHomeViewController],[self newStatsViewController],[self newRankViewController],[self newStoreViewController],[self newSettingsViewController]]];
   return tabController; 
 }
 - (QIDrawerController *)newDrawerController {
@@ -140,12 +142,32 @@
 
 - (QIHomeViewController *)newHomeViewController {
   QIHomeViewController *homeViewController = [[QIHomeViewController alloc] init];
+  [homeViewController setTitle:@"Home"];
   return homeViewController;
 }
 
 - (QIStatsViewController *)newStatsViewController {
   QIStatsViewController *statsViewController = [[QIStatsViewController alloc] init];
+  [statsViewController setTitle:@"Stats"];
   return statsViewController;
+}
+
+- (QIStoreViewController *)newStoreViewController {
+  QIStoreViewController *storeViewController = [[QIStoreViewController alloc] init];
+  [storeViewController setTitle:@"Store"];
+  return storeViewController;
+}
+
+- (QIRankViewController *)newRankViewController {
+  QIRankViewController *rankViewController = [[QIRankViewController alloc] init];
+  [rankViewController setTitle:@"Rank"];
+  return rankViewController;
+}
+
+- (QISettingsViewController *)newSettingsViewController {
+  QISettingsViewController *settingsViewController = [[QISettingsViewController alloc] init];
+  [settingsViewController setTitle:@"Settings"];
+  return settingsViewController;
 }
 
 @end

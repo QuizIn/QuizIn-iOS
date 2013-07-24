@@ -15,6 +15,7 @@
 }
 -(void)loadView{
   self.view = [[QIStatsView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  self.title = @"Stats";
 }
 
 - (void)viewDidLoad{
@@ -25,6 +26,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+  //TODO need to retrieve actual logged in user ID
   QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:@"12345"];
   self.statsView.currentUser = [NSDictionary dictionaryWithObjectsAndKeys:
                                 @"12345", @"userID",
