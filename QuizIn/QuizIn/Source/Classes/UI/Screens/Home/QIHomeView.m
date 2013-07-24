@@ -1,6 +1,10 @@
 #import "QIHomeView.h"
+#import "AsyncImageView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface QIHomeView ()
+
+@property(nonatomic, strong) UIImageView *viewBackground;
 
 //Connections Quiz Start Area
 @property(nonatomic, strong) UIView *connectionsQuizStartView;
@@ -9,17 +13,16 @@
 @property(nonatomic, strong) UILabel *connectionsQuizTitle;
 @property(nonatomic, strong) UILabel *connectionsQuizNumberOfConnectionsLabel;
 @property(nonatomic, strong) UIView *connectionsQuizImagePreviewCollection;
+@property(nonatomic, strong) NSArray *profileImages;
 
 //Temporary Buttons
 @property(nonatomic, strong, readwrite) UIButton *businessCardQuizButton;
 @property(nonatomic, strong, readwrite) UIButton *matchingQuizButton;
-@property(nonatomic, strong, readwrite) UIButton *statsViewButton;
-@property(nonatomic, strong, readwrite) UIButton *showStatsButton;
-
 
 //constraints
 @property(nonatomic, strong) NSMutableArray *constraintsForTopLevelViews;
 @property(nonatomic, strong) NSMutableArray *constraintsForConnectionsQuizStartView;
+@property(nonatomic, strong) NSMutableArray *constraintsForImages; 
 
 @end
 
@@ -35,6 +38,7 @@
     self.backgroundColor = [UIColor whiteColor];
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     //Connections Quiz Start Area Init
+    _viewBackground = [self newViewBackground];
     
     _connectionsQuizPaperImage = [self newConnectionsQuizPaperImage];
     _connectionsQuizBinderImage = [self newConnectionsQuizBinderImage];
@@ -44,20 +48,34 @@
     _connectionsQuizButton = [self newConnectionsQuizButton];
     _connectionsQuizStartView = [self newConnectionsQuizStartView];
     _calendarPickerButton = [self newCalendarPickerButton];
+    _profileImages = [self newProfileImages];
     
     _businessCardQuizButton = [self newBusinessCardQuizButton];
     _matchingQuizButton = [self newMatchingQuizButton];
-    _statsViewButton = [self newStatsViewButton];
-    _showStatsButton = [self newShowStatsButton];
     
     [self constructViewHierachy];
   }
   return self;
 }
 
+#pragma mark Properties
+- (void)setImageURLs:(NSArray *)imageURLs{
+  if([self.imageURLs isEqualToArray:imageURLs]){
+    return;
+  }
+  _imageURLs = [imageURLs copy];
+  [self updateImages];
+}
+
+- (void)setNumberOfConnections:(NSInteger)numberOfConnections{
+  _numberOfConnections = numberOfConnections;
+  [self updateNumberOfConnections];
+}
+
 - (void)constructViewHierachy {
   
   // Construct Connections Quiz Start Area
+  [self addSubview:self.viewBackground];
   [self addSubview:self.calendarPickerButton];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizPaperImage];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizTitle];
@@ -67,25 +85,60 @@
   [self addSubview:self.connectionsQuizStartView];
   [self addSubview:self.businessCardQuizButton];
   [self addSubview:self.matchingQuizButton];
-  [self addSubview:self.statsViewButton];
-  [self addSubview:self.showStatsButton];
+  for (int i= 0; i<4; i++) {
+    [self.connectionsQuizImagePreviewCollection addSubview:[self.profileImages objectAtIndex:i]];
+  }
 }
 
 #pragma mark Layout
 - (void)updateConstraints {
   [super updateConstraints];
-  if (!self.constraintsForConnectionsQuizStartView) {
+  //if (!self.constraintsForConnectionsQuizStartView) {
+   
+    //self constraints
+    NSDictionary *selfConstraintView =NSDictionaryOfVariableBindings(self);
     
+    NSArray *hSelf =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|"
+                                            options:NSLayoutFormatAlignAllBaseline
+                                            metrics:nil
+                                              views:selfConstraintView];
+    
+    NSArray *vSelf =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self]|"
+                                            options:0
+                                            metrics:nil
+                                              views:selfConstraintView];
+    
+    NSMutableArray *selfConstraints = [NSMutableArray array];
+    [selfConstraints addObjectsFromArray:hSelf];
+    [selfConstraints addObjectsFromArray:vSelf];
+    [self.superview addConstraints:selfConstraints];
+
     //TopLevelView Constraints
-    NSDictionary *topLevelViews = NSDictionaryOfVariableBindings(_connectionsQuizStartView);
+    NSDictionary *topLevelViews = NSDictionaryOfVariableBindings(_connectionsQuizStartView,_viewBackground);
     
+    NSArray *hBackgroundContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_viewBackground]|"
+                                            options:NSLayoutFormatAlignAllTop
+                                            metrics:nil
+                                              views:topLevelViews];
+    NSArray *vBackgroundContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_viewBackground]|"
+                                            options:NSLayoutFormatAlignAllLeft
+                                            metrics:nil
+                                              views:topLevelViews];
+    
+    [self.constraintsForTopLevelViews addObjectsFromArray:hBackgroundContraints];
+    [self.constraintsForTopLevelViews addObjectsFromArray:vBackgroundContraints];
+
     NSArray *hConstraintsTopLevelViews =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-25-[_connectionsQuizStartView(>=200)]-25-|"
                                             options:NSLayoutFormatAlignAllBaseline
                                             metrics:nil
                                               views:topLevelViews];
     NSArray *vConstraintsTopLevelViews =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_connectionsQuizStartView(==250)]-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_connectionsQuizStartView(==250)]"
                                             options:NSLayoutFormatAlignAllBaseline
                                             metrics:nil
                                               views:topLevelViews];
@@ -163,7 +216,27 @@
     [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:@[vConstraintsConnectionsQuizPaperImageTop]];
     [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:vConstraintsConnectionsQuizButton];
     [self.connectionsQuizStartView addConstraints:self.constraintsForConnectionsQuizStartView];
+  
+    //Constrain Image View
+  self.constraintsForImages = [NSMutableArray array];
+    NSDictionary *imageViews = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               [_profileImages objectAtIndex:0], @"_profileImage0",
+                                               [_profileImages objectAtIndex:1], @"_profileImage1",
+                                               [_profileImages objectAtIndex:2], @"_profileImage2",
+                                               [_profileImages objectAtIndex:3], @"_profileImage3",
+                                               nil];
     
+  NSArray *hImagesConstraints =
+  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_profileImage0(==50)]-5-[_profileImage1(==_profileImage0)]-5-[_profileImage2(==_profileImage1)]-5-[_profileImage3(==_profileImage2)]-|"
+                                          options:NSLayoutFormatAlignAllCenterY
+                                          metrics:nil
+                                            views:imageViews];
+  [self.constraintsForImages addObjectsFromArray:hImagesConstraints];
+  for (int i = 0; i<[_profileImages count]; i++) {
+    [self.constraintsForImages addObject:[NSLayoutConstraint constraintWithItem:[_profileImages objectAtIndex:i] attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:[_profileImages objectAtIndex:i] attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f]];
+  }
+  [self.connectionsQuizImagePreviewCollection addConstraints:self.constraintsForImages];
+  
     //Constrain calendar Picker Button
     NSDictionary *calendarPickerButtonViews = NSDictionaryOfVariableBindings(_connectionsQuizStartView,_calendarPickerButton);
     
@@ -182,16 +255,38 @@
     [self addConstraints:vConstraintsCalendarPickerButton];
     
     //add Calendar Picker Button TEST
-  }
+ // }
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
 }
+#pragma mark Data
+- (void)updateImages{
+  for (int i=0;i<4;i++) {
+    AsyncImageView *image = [self.profileImages objectAtIndex:i];
+    NSURL *url = [self.imageURLs objectAtIndex:i];
+    [image setImageURL:url];
+  }
+}
+
+- (void)updateNumberOfConnections{
+  if (self.numberOfConnections == 500){
+    [self.connectionsQuizNumberOfConnectionsLabel setText:@"500+ Connections"];
+  }
+  else{
+    [self.connectionsQuizNumberOfConnectionsLabel setText:[NSString stringWithFormat:@"%d Connections",self.numberOfConnections]];
+  }
+}
 
 #pragma mark Factory Methods
 
 // Setup Connections Quiz Start Area
+- (UIImageView *)newViewBackground{
+  UIImageView *background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"quizin_bg"]];
+  [background setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return background;
+}
 
 - (UIImageView *)newConnectionsQuizPaperImage{
   UIImageView *paperImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"connectionsquiz_paperstack"]];
@@ -212,14 +307,14 @@
 }
 - (UILabel *)newConnectionsQuizNumberOfConnectionsLabel{
   UILabel *quizConnections = [[UILabel alloc] init];
-  quizConnections.text = @"865 Connections";
+  quizConnections.text = @"Connections";
   quizConnections.backgroundColor = [UIColor clearColor];
   [quizConnections setTranslatesAutoresizingMaskIntoConstraints:NO];
   return quizConnections;
 }
 - (UIView *)newConnectionsQuizImagePreviewCollection{
   UIView *previewArea = [[UIView alloc] init];
-  previewArea.backgroundColor = [UIColor grayColor];
+  [previewArea setBackgroundColor:[UIColor greenColor]];
   [previewArea setTranslatesAutoresizingMaskIntoConstraints:NO];
   return previewArea;
 }
@@ -255,22 +350,25 @@
 - (UIButton *)newMatchingQuizButton {
   UIButton *matchingQuizButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
   [matchingQuizButton setTitle:@"Matching" forState:UIControlStateNormal];
-  matchingQuizButton.frame = CGRectMake(10.0f, 380.0f, 150.0f, 44.0f);
+  matchingQuizButton.frame = CGRectMake(10.0f, 300.0f, 150.0f, 44.0f);
   return matchingQuizButton;
 }
 
-- (UIButton *)newStatsViewButton {
-  UIButton *statsViewButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-  [statsViewButton setTitle:@"Matching" forState:UIControlStateNormal];
-  statsViewButton.frame = CGRectMake(200.0f, 380.0f, 150.0f, 44.0f);
-  return statsViewButton;
+- (NSArray *)newProfileImages{
+  return @[[self newProfileImageView:nil],[self newProfileImageView:nil],[self newProfileImageView:nil],[self newProfileImageView:nil]];
 }
 
-- (UIButton *)newShowStatsButton {
-  UIButton *statsViewButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-  [statsViewButton setTitle:@"Show Stats" forState:UIControlStateNormal];
-  statsViewButton.frame = CGRectMake(200.0f, 335.0f, 150.0f, 15.0f);
-  return statsViewButton;
+- (AsyncImageView *)newProfileImageView:(NSURL *)imageURL {
+  AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
+  profileImageView.layer.cornerRadius = 4.0f;
+  profileImageView.clipsToBounds = YES;
+  [profileImageView setImageURL:imageURL];
+  [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  profileImageView.contentMode = UIViewContentModeScaleAspectFit;
+  profileImageView.showActivityIndicator = YES;
+  profileImageView.crossfadeDuration = 0.3f;
+  profileImageView.crossfadeImages = YES;
+  return profileImageView;
 }
 
 #pragma mark Strings

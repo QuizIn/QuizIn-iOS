@@ -19,6 +19,12 @@
 
 - (void)viewDidLoad{
   [super viewDidLoad];
+  
+  [self.statsView.resetStatsButton addTarget:self action:@selector(resetStats) forControlEvents:UIControlEventTouchUpInside];
+  [self.statsView.printStatsButton addTarget:self action:@selector(printStats) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
   QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:@"12345"];
   self.statsView.currentUser = [NSDictionary dictionaryWithObjectsAndKeys:
                                 @"12345", @"userID",
@@ -29,9 +35,6 @@
   self.statsView.totalCorrectAnswers = [data getTotalCorrectAnswers];
   self.statsView.totalIncorrectAnswers = [data getTotalIncorrectAnswers];
   self.statsView.connectionStats = [data getConnectionStats];
-  
-  [self.statsView.resetStatsButton addTarget:self action:@selector(resetStats) forControlEvents:UIControlEventTouchUpInside];
-  [self.statsView.printStatsButton addTarget:self action:@selector(printStats) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)resetStats{
