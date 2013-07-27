@@ -120,7 +120,7 @@
 
 -(QIStatsTableHeaderView *)newHeaderView{
   QIStatsTableHeaderView *headerView = [[QIStatsTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
-  headerView.sectionTitle = @"Heading Title";
+  headerView.sectionTitle = @"Heading Title - Link to worst-known quiz";
   return headerView;
 }
 

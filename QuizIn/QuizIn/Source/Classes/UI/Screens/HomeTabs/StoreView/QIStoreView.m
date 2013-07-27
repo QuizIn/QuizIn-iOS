@@ -21,6 +21,7 @@
   viewLabel.adjustsFontSizeToFitWidth = YES;
   viewLabel.textColor = [UIColor colorWithWhite:0.33f alpha:1.0f];
   [viewLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [viewLabel setNumberOfLines:30];
   return viewLabel;
 }
 @end
