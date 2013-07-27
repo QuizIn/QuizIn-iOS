@@ -6,13 +6,13 @@
 + (NSArray *)getRankDelineations{
   return  [NSArray arrayWithObjects:
             [NSNumber numberWithInt:0],
-            [NSNumber numberWithInt:5],
-            [NSNumber numberWithInt:10],
+            [NSNumber numberWithInt:3],
+            [NSNumber numberWithInt:6],
+            [NSNumber numberWithInt:9],
+            [NSNumber numberWithInt:12],
             [NSNumber numberWithInt:15],
-            [NSNumber numberWithInt:30],
-            [NSNumber numberWithInt:50],
-            [NSNumber numberWithInt:100],
-            [NSNumber numberWithInt:200],nil];
+            [NSNumber numberWithInt:17],
+            [NSNumber numberWithInt:23],nil];
 }
 
 + (UIImage *)getRankBadgeForRank:(int)rank{

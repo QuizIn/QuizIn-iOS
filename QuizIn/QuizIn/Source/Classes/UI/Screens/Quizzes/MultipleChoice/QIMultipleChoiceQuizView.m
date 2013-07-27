@@ -1,5 +1,4 @@
 #import "QIMultipleChoiceQuizView.h"
-#import "QIRankDisplayView.h"
 #import "AsyncImageView.h"
 #import "QIFontProvider.h"
 #import "QIStatsData.h"
@@ -7,7 +6,6 @@
 
 @interface QIMultipleChoiceQuizView ()
 
-@property (nonatomic, strong) QIRankDisplayView *rankDisplayView;
 @property (nonatomic, strong) UIImageView *viewBackground;
 @property (nonatomic, strong) UIImageView *dividerTop;
 @property (nonatomic, strong) UIImageView *dividerBottom;
@@ -257,7 +255,8 @@
     NSLayoutConstraint *widthRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f];
     NSLayoutConstraint *heightRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:81.0f];
     
-    _topRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0f constant:30.0f];
+    //Todo place this offscreen
+    _topRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0f constant:-81.0f];
     
     [self.multipleChoiceConstraints addObjectsFromArray:@[centerRankX,widthRank,heightRank,_topRank]];
 
@@ -315,13 +314,31 @@
   }];
 }
 
+-(void)showRankDisplay{
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.topRank setConstant:100.0f];
+    [NSTimer scheduledTimerWithTimeInterval:7.0f target:self selector:@selector(hideRankDisplay) userInfo:nil repeats:NO];
+    [self layoutIfNeeded];
+  }];
+}
+
+-(void)hideRankDisplay{
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.topRank setConstant:-81.0f];
+    [self layoutIfNeeded];
+  }];
+}
+
 -(void)processAnswer{
   QIStatsData *statsEngine = [[QIStatsData alloc] initWithLoggedInUserID:self.loggedInUserID];
   if (self.currentAnswer == self.correctAnswerIndex){
     [self.checkAnswersView correct:YES];
     if (self.allowAnalytics){
       [statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:YES];
-      if ([statsEngine needsRankUpdate]);
+      if ([statsEngine needsRankUpdate]) {
+        self.rankDisplayView.rank = [statsEngine getCurrentRank];
+        [self showRankDisplay];
+      }
     }
   }
   else{
@@ -455,6 +472,8 @@
 
 - (QIRankDisplayView *)newRankDisplayView{
   QIRankDisplayView *view = [[QIRankDisplayView alloc] init];
+  
+  //Todo fix this to pass actual rank
   view.rank = 1;
   [view setTranslatesAutoresizingMaskIntoConstraints:NO];
   [view setBackgroundColor:[UIColor clearColor]];

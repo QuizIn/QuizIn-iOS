@@ -36,12 +36,7 @@
   self.multipleChoiceView.profileImageURL = [NSURL URLWithString:self.question.person.pictureURL];
   self.multipleChoiceView.loggedInUserID = @"12345";
   self.multipleChoiceView.answerPerson = self.question.person;
-  [self.multipleChoiceView.progressView.exitButton addTarget:self
-                                                      action:@selector(userDidCloseQuiz)
-                                            forControlEvents:UIControlEventTouchUpInside];
-  [self.multipleChoiceView.checkAnswersView.nextButton addTarget:self
-                                                 action:@selector(userDidPressNext)
-                                       forControlEvents:UIControlEventTouchUpInside];
+
   [self.multipleChoiceView.checkAnswersView.helpButton addTarget:self
                                                           action:@selector(helpDialog)
                                                 forControlEvents:UIControlEventTouchUpInside];
@@ -55,12 +50,7 @@
 }
 
 #pragma mark Actions
-- (void)userDidCloseQuiz{
-  NSLog(@"User Closed Quiz");
-}
-- (void)userDidPressNext{
-  NSLog(@"userHit Next");
-}
+
 
 #pragma mark Properties
 
