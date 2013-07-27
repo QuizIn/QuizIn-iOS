@@ -21,5 +21,6 @@
 
 //update Stats
 - (void)updateStatsWithConnectionProfile:(QIPerson *)person correct:(BOOL)correct;
+- (BOOL)needsRankUpdate;
 
 @end

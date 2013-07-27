@@ -39,15 +39,12 @@
   [self.multipleChoiceView.progressView.exitButton addTarget:self
                                                       action:@selector(userDidCloseQuiz)
                                             forControlEvents:UIControlEventTouchUpInside];
-  
   [self.multipleChoiceView.checkAnswersView.nextButton addTarget:self
                                                  action:@selector(userDidPressNext)
                                        forControlEvents:UIControlEventTouchUpInside];
-  
   [self.multipleChoiceView.checkAnswersView.helpButton addTarget:self
                                                           action:@selector(helpDialog)
                                                 forControlEvents:UIControlEventTouchUpInside];
-  
   [self.multipleChoiceView.checkAnswersView.seeProfilesButton addTarget:self
                                                                  action:@selector(showActionSheet:)
                                                        forControlEvents:UIControlEventTouchUpInside];

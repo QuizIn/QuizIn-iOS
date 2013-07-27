@@ -1,7 +1,10 @@
 
 #import "QIStatsData.h"
+#import "QIRankDefinition.h"
+
 @interface QIStatsData ()
 @property (nonatomic,strong) NSString *userID;
+@property (nonatomic,strong) NSArray *ranks;
 @end
 
 @implementation QIStatsData
@@ -17,6 +20,7 @@
  //Dictionary Structure
 // key: UserID    Dictionary
   // key:CurrentRank              Integer
+  // key:updateRank               BOOL
   // key:TotalCorrectAnswers      Integer
   // key:TotalIncorrectAnswers    Integer
   // key:IndividualStats          Array
@@ -32,11 +36,12 @@
 - (id)initWithLoggedInUserID:(NSString *)ID{
   self = [super init];
   if (self) {
-    _userID = ID; 
+    _userID = ID;
+    _ranks = [QIRankDefinition getRankDelineations];
+    
   }
   return self;
 }
-
 
 
 
@@ -46,12 +51,14 @@
   NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
   
   NSNumber *currentRank = [NSNumber numberWithInt:0];
+  NSNumber *updateRank = [NSNumber numberWithBool:NO];
   NSNumber *totalCorrectAnswers = [NSNumber numberWithInt:0];
   NSNumber *totalIncorrectAnswers = [NSNumber numberWithInt:0];
   NSMutableArray *connectionStats = [NSMutableArray array];
   
   NSMutableDictionary *userStats = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                     currentRank,            @"currentRank",
+                                    updateRank,             @"updateRank",
                                     totalCorrectAnswers,    @"totalCorrectAnswers",
                                     totalIncorrectAnswers,  @"totalIncorrectAnswers",
                                     connectionStats,        @"connectionStats",
@@ -117,6 +124,8 @@
 - (void)updateStatsWithConnectionProfile:(QIPerson *)person correct:(BOOL)correct{
   NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
   NSMutableDictionary *stats = [[prefs objectForKey:self.userID] mutableCopy];
+  
+  //Handle Total Correct and Incorrect Answers
   int totalCorrectAnswers = [[stats objectForKey:@"totalCorrectAnswers"] integerValue];
   int totalIncorrectAnswers = [[stats objectForKey:@"totalIncorrectAnswers"] integerValue];
   
@@ -127,6 +136,17 @@
     totalIncorrectAnswers++;
   }
   
+  //Handle Rank
+  if (correct){
+    for (int i = 0; i<[self.ranks count]; i++){
+      NSNumber *rankCorrectAnswers = [self.ranks objectAtIndex:i];
+      if ([rankCorrectAnswers integerValue] == totalCorrectAnswers){
+        [stats setObject:[NSNumber numberWithBool:YES] forKey:@"updateRank"];
+        [stats setObject:[NSNumber numberWithInt:i] forKey:@"currentRank"];
+      }
+    }
+  }
+  //Handle Individual Connections Stats
   NSMutableArray *connectionStats = [[stats objectForKey:@"connectionStats"] mutableCopy];
   NSUInteger connectionIndex = [connectionStats indexOfObjectPassingTest:^ (id obj, NSUInteger idx, BOOL *stop)
                        {
@@ -178,9 +198,20 @@
   [stats setObject:[NSNumber numberWithInt:totalCorrectAnswers] forKey:@"totalCorrectAnswers"];
   [stats setObject:[NSNumber numberWithInt:totalIncorrectAnswers] forKey:@"totalIncorrectAnswers"];
   [stats setObject:connectionStats forKey:@"connectionStats"];
+  NSLog(@"Correct:%d Incorrect:%d Rank:%d Update:%d",[[stats objectForKey:@"totalCorrectAnswers"] integerValue],[[stats objectForKey:@"totalIncorrectAnswers"] integerValue],[[stats objectForKey:@"currentRank"] integerValue],[[stats objectForKey:@"updateRank"] integerValue]);
   
   [prefs setObject:stats forKey:self.userID];
   [prefs synchronize];
+}
+
+- (BOOL)needsRankUpdate{
+  NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+  NSMutableDictionary *stats = [[prefs objectForKey:self.userID] mutableCopy];
+  BOOL needsUpdate = [[stats objectForKey:@"updateRank"] boolValue];
+  [stats setObject:[NSNumber numberWithBool:NO] forKey:@"updateRank"];
+  [prefs setObject:stats forKey:self.userID];
+  [prefs synchronize];
+  return needsUpdate;
 }
 
 @end

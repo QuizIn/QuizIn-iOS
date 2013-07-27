@@ -54,6 +54,10 @@
 		344B62C7179F79E000EE85A9 /* QISettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62C6179F79E000EE85A9 /* QISettingsView.m */; };
 		344B62CA179F7A1800EE85A9 /* QIStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62C9179F7A1800EE85A9 /* QIStoreViewController.m */; };
 		344B62CD179F7A2D00EE85A9 /* QIStoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62CC179F7A2D00EE85A9 /* QIStoreView.m */; };
+		344B62D017A35CC700EE85A9 /* calendar_checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 344B62CE17A35CC700EE85A9 /* calendar_checkmark.png */; };
+		344B62D117A35CC700EE85A9 /* calendar_checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 344B62CF17A35CC700EE85A9 /* calendar_checkmark@2x.png */; };
+		344B62D417A3873900EE85A9 /* QIRankDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62D317A3873800EE85A9 /* QIRankDefinition.m */; };
+		344B62D817A38F0400EE85A9 /* QIRankDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62D717A38F0400EE85A9 /* QIRankDisplayView.m */; };
 		34519794176C06EE0061E459 /* cardquiz_businesscard_v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3451978E176C06EE0061E459 /* cardquiz_businesscard_v1.png */; };
 		34519795176C06EE0061E459 /* cardquiz_businesscard_v1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3451978F176C06EE0061E459 /* cardquiz_businesscard_v1@2x.png */; };
 		34519796176C06EE0061E459 /* cardquiz_businesscard_v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 34519790176C06EE0061E459 /* cardquiz_businesscard_v2.png */; };
@@ -320,6 +324,12 @@
 		344B62C9179F7A1800EE85A9 /* QIStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStoreViewController.m; sourceTree = "<group>"; };
 		344B62CB179F7A2D00EE85A9 /* QIStoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStoreView.h; sourceTree = "<group>"; };
 		344B62CC179F7A2D00EE85A9 /* QIStoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStoreView.m; sourceTree = "<group>"; };
+		344B62CE17A35CC700EE85A9 /* calendar_checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_checkmark.png; sourceTree = "<group>"; };
+		344B62CF17A35CC700EE85A9 /* calendar_checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_checkmark@2x.png"; sourceTree = "<group>"; };
+		344B62D217A3873600EE85A9 /* QIRankDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIRankDefinition.h; sourceTree = "<group>"; };
+		344B62D317A3873800EE85A9 /* QIRankDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIRankDefinition.m; sourceTree = "<group>"; };
+		344B62D617A38F0400EE85A9 /* QIRankDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIRankDisplayView.h; sourceTree = "<group>"; };
+		344B62D717A38F0400EE85A9 /* QIRankDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIRankDisplayView.m; sourceTree = "<group>"; };
 		3451978E176C06EE0061E459 /* cardquiz_businesscard_v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardquiz_businesscard_v1.png; sourceTree = "<group>"; };
 		3451978F176C06EE0061E459 /* cardquiz_businesscard_v1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardquiz_businesscard_v1@2x.png"; sourceTree = "<group>"; };
 		34519790176C06EE0061E459 /* cardquiz_businesscard_v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardquiz_businesscard_v2.png; sourceTree = "<group>"; };
@@ -624,10 +634,10 @@
 		344B6276179F786D00EE85A9 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				344B6277179F786D00EE85A9 /* QIHomeView.h */,
-				344B6278179F786D00EE85A9 /* QIHomeView.m */,
 				344B6279179F786D00EE85A9 /* QIHomeViewController.h */,
 				344B627A179F786D00EE85A9 /* QIHomeViewController.m */,
+				344B6277179F786D00EE85A9 /* QIHomeView.h */,
+				344B6278179F786D00EE85A9 /* QIHomeView.m */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -639,6 +649,8 @@
 				344B62BD179F796900EE85A9 /* QIRankViewController.m */,
 				344B62BF179F798300EE85A9 /* QIRankView.h */,
 				344B62C0179F798300EE85A9 /* QIRankView.m */,
+				344B62D217A3873600EE85A9 /* QIRankDefinition.h */,
+				344B62D317A3873800EE85A9 /* QIRankDefinition.m */,
 			);
 			path = RankView;
 			sourceTree = "<group>";
@@ -735,6 +747,15 @@
 			children = (
 			);
 			path = LocationPicker;
+			sourceTree = "<group>";
+		};
+		344B62D517A38EC800EE85A9 /* RankDisplayView */ = {
+			isa = PBXGroup;
+			children = (
+				344B62D617A38F0400EE85A9 /* QIRankDisplayView.h */,
+				344B62D717A38F0400EE85A9 /* QIRankDisplayView.m */,
+			);
+			path = RankDisplayView;
 			sourceTree = "<group>";
 		};
 		345E7AB717621DB80020600A /* Match Quiz */ = {
@@ -966,6 +987,8 @@
 		348901AE1786F7860004F604 /* Group Selection */ = {
 			isa = PBXGroup;
 			children = (
+				344B62CE17A35CC700EE85A9 /* calendar_checkmark.png */,
+				344B62CF17A35CC700EE85A9 /* calendar_checkmark@2x.png */,
 				348901AF1786F78C0004F604 /* calendar_datebar1.png */,
 				348901B01786F78C0004F604 /* calendar_datebar1@2x.png */,
 				348901B11786F78C0004F604 /* calendar_expand_btn1.png */,
@@ -1198,6 +1221,7 @@
 		8886799A172DAFC700DCE3D0 /* Quizzes */ = {
 			isa = PBXGroup;
 			children = (
+				344B62D517A38EC800EE85A9 /* RankDisplayView */,
 				348901251780C51A0004F604 /* CheckAnswers */,
 				3478FFA5173FD6BF002B29DB /* ProgressView */,
 				888679A5172DD57F00DCE3D0 /* MultipleChoice */,
@@ -1443,6 +1467,8 @@
 				348901CA1786F78C0004F604 /* calendar_slittop1.png in Resources */,
 				348901CB1786F78C0004F604 /* calendar_slittop1@2x.png in Resources */,
 				344B628C179F786D00EE85A9 /* Scratch.xib in Resources */,
+				344B62D017A35CC700EE85A9 /* calendar_checkmark.png in Resources */,
+				344B62D117A35CC700EE85A9 /* calendar_checkmark@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1556,6 +1582,8 @@
 				344B62C7179F79E000EE85A9 /* QISettingsView.m in Sources */,
 				344B62CA179F7A1800EE85A9 /* QIStoreViewController.m in Sources */,
 				344B62CD179F7A2D00EE85A9 /* QIStoreView.m in Sources */,
+				344B62D417A3873900EE85A9 /* QIRankDefinition.m in Sources */,
+				344B62D817A38F0400EE85A9 /* QIRankDisplayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

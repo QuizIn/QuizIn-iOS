@@ -27,12 +27,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
   //TODO need to retrieve actual logged in user ID
-  QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:@"12345"];
-  self.statsView.currentUser = [NSDictionary dictionaryWithObjectsAndKeys:
-                                @"12345", @"userID",
-                                @"Rick", @"userFirstName",
-                                @"Kuhlman", @"userLastName",
-                                nil];
+  QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:self.userID];
   self.statsView.currentRank = [data getCurrentRank];
   self.statsView.totalCorrectAnswers = [data getTotalCorrectAnswers];
   self.statsView.totalIncorrectAnswers = [data getTotalIncorrectAnswers];

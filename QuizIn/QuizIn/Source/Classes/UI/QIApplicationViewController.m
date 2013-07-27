@@ -17,6 +17,8 @@
 #import "QIQuizBuilder.h"
 #import "QIQuiz.h"
 
+#define USERID @"12345"
+
 @interface QIApplicationViewController ()<AKAuthHandler>
 //@property(nonatomic, strong) QIDrawerController *drawerController;
 @property(nonatomic, strong) UIViewController *loginViewController;
@@ -143,12 +145,14 @@
 - (QIHomeViewController *)newHomeViewController {
   QIHomeViewController *homeViewController = [[QIHomeViewController alloc] init];
   [homeViewController setTitle:@"Home"];
+  [homeViewController setUserID:USERID];
   return homeViewController;
 }
 
 - (QIStatsViewController *)newStatsViewController {
   QIStatsViewController *statsViewController = [[QIStatsViewController alloc] init];
   [statsViewController setTitle:@"Stats"];
+  [statsViewController setUserID:USERID];
   return statsViewController;
 }
 
@@ -161,6 +165,7 @@
 - (QIRankViewController *)newRankViewController {
   QIRankViewController *rankViewController = [[QIRankViewController alloc] init];
   [rankViewController setTitle:@"Rank"];
+  [rankViewController setUserID:USERID];
   return rankViewController;
 }
 

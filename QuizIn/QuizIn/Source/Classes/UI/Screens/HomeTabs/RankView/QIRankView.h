@@ -10,4 +10,6 @@
 
 @interface QIRankView : UIView
 
+@property(nonatomic,strong) NSString *rank; 
+
 @end

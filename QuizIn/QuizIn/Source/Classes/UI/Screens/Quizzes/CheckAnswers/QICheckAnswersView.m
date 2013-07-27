@@ -68,6 +68,8 @@
   
   if (!self.checkAnswersViewConstraints) {
     
+    self.checkAnswersViewConstraints = [NSMutableArray array];
+    
     //Constrain Background Image
     NSDictionary *backgroundImageViews = NSDictionaryOfVariableBindings(_backgroundImage);
     NSArray *hBackground =
@@ -85,7 +87,7 @@
     [self.checkAnswersViewConstraints addObjectsFromArray:vBackground];
     
     //Check Answer View Constraints
-    self.checkAnswersViewConstraints = [NSMutableArray array];
+
     NSDictionary *checkAnswerViews = NSDictionaryOfVariableBindings(_resultView, _checkButton, _helpButton, _againButton);
     
     NSArray *hHelpButtonConstraints =

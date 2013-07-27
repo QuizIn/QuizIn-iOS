@@ -3,7 +3,6 @@
 
 @interface QIStatsView : UIView <UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic,assign) NSMutableDictionary *currentUser; 
 @property (nonatomic,assign) int currentRank;
 @property (nonatomic,assign) int totalCorrectAnswers;
 @property (nonatomic,assign) int totalIncorrectAnswers;

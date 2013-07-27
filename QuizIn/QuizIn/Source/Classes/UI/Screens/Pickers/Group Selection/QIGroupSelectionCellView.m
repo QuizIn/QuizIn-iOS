@@ -12,6 +12,7 @@
 @property (nonatomic,strong) NSMutableArray *frontViewConstraints;
 @property (nonatomic,strong) NSMutableArray *imageViewConstraints;
 @property (nonatomic,strong) UIImageView *selectionTabImage;
+@property (nonatomic,strong) UIImageView *checkMarkImage;
 @property (nonatomic,strong) UILabel *selectionTitleLabel;
 @property (nonatomic,strong) UILabel *selectionSubtitleLabel;
 @property (nonatomic,strong) UILabel *numberOfContactsLabel;
@@ -43,6 +44,7 @@
       _imagesView = [self newImagesView];
       _numberOfImages = 0;
       _logoImageView = [self newLogoImageView];
+      _checkMarkImage = [self newCheckMarkImage];
       
       _slideOffset = [NSLayoutConstraint constraintWithItem:_frontView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:_backView attribute:NSLayoutAttributeRight multiplier:1.0f constant:0.0f];
       
@@ -109,6 +111,7 @@
   [self.frontView addSubview:self.selectionSubtitleLabel];
   [self.frontView addSubview:self.imagesView];
   [self.frontView addSubview:self.morePeopleLabel];
+  [self.backView addSubview:self.checkMarkImage];
   [self.backView addSubview:self.frontView];
   [self.contentView addSubview:self.backView];
   [self setNeedsUpdateConstraints];
@@ -202,6 +205,12 @@
                                               views:cellFrontViews];
     
     self.frontViewSelfConstraints = [NSMutableArray array];
+    
+    [self.frontViewSelfConstraints addObject:[NSLayoutConstraint constraintWithItem:_checkMarkImage attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_frontView attribute:NSLayoutAttributeHeight multiplier:0.4f constant:0.0f]];
+    [self.frontViewSelfConstraints addObject:[NSLayoutConstraint constraintWithItem:_checkMarkImage attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_frontView attribute:NSLayoutAttributeHeight multiplier:0.4f constant:0.0f]];
+    [self.frontViewSelfConstraints addObject:[NSLayoutConstraint constraintWithItem:_checkMarkImage attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_frontView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+    [self.frontViewSelfConstraints addObject:[NSLayoutConstraint constraintWithItem:_checkMarkImage attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:_backView attribute:NSLayoutAttributeRight multiplier:1.0f constant:-5.0f]];
+    
     [self.frontViewSelfConstraints addObjectsFromArray:@[_slideOffset,frontViewWidthConstaint]];
     [self.frontViewSelfConstraints addObjectsFromArray:vFrontViewContraints];
     
@@ -305,6 +314,13 @@
   [tab setContentMode:UIViewContentModeScaleToFill];
   [tab setTranslatesAutoresizingMaskIntoConstraints:NO];
   return tab;
+}
+
+-(UIImageView *)newCheckMarkImage{
+  UIImageView *check = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"calendar_checkmark"]];
+  [check setContentMode:UIViewContentModeScaleAspectFill];
+  [check setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return check;
 }
 
 -(UILabel *)newNumberOfContactsLabel{

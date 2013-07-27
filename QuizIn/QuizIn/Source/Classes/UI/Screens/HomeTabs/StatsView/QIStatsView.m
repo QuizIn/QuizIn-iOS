@@ -35,9 +35,6 @@
 }
 
 #pragma mark Properties
-- (void)setCurrentUser:(NSMutableDictionary *)currentUser{
-  _currentUser = currentUser;
-}
 
 - (void)setCurrentRank:(int)currentRank {
   _currentRank = currentRank;

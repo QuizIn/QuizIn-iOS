@@ -1,4 +1,5 @@
 #import "QIRankViewController.h"
+#import "QIStatsData.h"
 
 @interface QIRankViewController ()
 
@@ -14,7 +15,13 @@
     }
     return self;
 }
--(void)loadView{
+
+- (void)viewWillAppear:(BOOL)animated{
+  QIStatsData *stats = [[QIStatsData alloc] initWithLoggedInUserID:self.userID];
+  self.rankView.rank = [NSString stringWithFormat:@"%d",[stats getCurrentRank]];
+}
+
+- (void)loadView{
   self.view = [[QIRankView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   self.title = @"Rank";
 }
@@ -29,6 +36,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (QIRankView *)rankView {
+  return (QIRankView *)self.view;
 }
 
 @end
