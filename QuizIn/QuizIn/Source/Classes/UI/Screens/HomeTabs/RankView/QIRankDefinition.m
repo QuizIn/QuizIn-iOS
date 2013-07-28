@@ -93,6 +93,7 @@
       break;
   }
 }
+
 + (NSArray *)getAllRankDescriptions{
   NSMutableArray *all = [NSMutableArray array];
   NSArray *delineations = [self getRankDelineations];
