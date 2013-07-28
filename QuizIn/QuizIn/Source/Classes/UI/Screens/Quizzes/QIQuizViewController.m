@@ -12,6 +12,8 @@
 @interface QIQuizViewController ()
 @property(nonatomic, strong) QIQuiz *quiz;
 @property(nonatomic, strong, readonly) QIQuizView *quizView;
+@property(nonatomic, strong) QIQuizQuestionViewController *currentQuestionViewController;
+
 @property(nonatomic, strong) QIMultipleChoiceQuizViewController *multipleChoiceController;
 @property(nonatomic, strong) QIBusinessCardViewController *businessCardController;
 @property(nonatomic, strong) QIMatchingQuizViewController *matchingController;
@@ -60,20 +62,21 @@
     if (error == nil) {
       dispatch_async(dispatch_get_main_queue(), ^{
         self.quiz = quiz;
-        self.multipleChoiceController =
-        [[QIMultipleChoiceQuizViewController alloc]
-         initWithQuestion:(QIQuizQuestion *)[self.quiz nextQuestion]];
-        [self addChildViewController:self.multipleChoiceController];
-        [self.view addSubview:self.multipleChoiceController.view];
-        [self.multipleChoiceController.multipleChoiceView.checkAnswersView.nextButton addTarget:self
-                                                                                         action:@selector(nextPressed)
-                                                                               forControlEvents:UIControlEventTouchUpInside];
-        [self.multipleChoiceController.multipleChoiceView.rankDisplayView.rankShareButton addTarget:self
-                                                                                             action:@selector(shareRankPressed)
-                                                                                   forControlEvents:UIControlEventTouchUpInside];
-        [self.multipleChoiceController.multipleChoiceView.progressView.exitButton addTarget:self
-                                                                                     action:@selector(userDidCloseQuiz)
-                                                                           forControlEvents:UIControlEventTouchUpInside];
+        self.currentQuestionViewController =
+            [QIQuizQuestionViewControllerFactory
+             questionViewControllerForQuestion:(QIQuizQuestion *)[self.quiz nextQuestion]];
+
+        [self addChildViewController:self.currentQuestionViewController];
+        [self.view addSubview:self.currentQuestionViewController.view];
+        [self.currentQuestionViewController.checkAnswersView.nextButton addTarget:self
+                                                                           action:@selector(nextPressed)
+                                                                 forControlEvents:UIControlEventTouchUpInside];
+        [self.currentQuestionViewController.rankDisplayView.rankShareButton addTarget:self
+                                                                               action:@selector(shareRankPressed)
+                                                                     forControlEvents:UIControlEventTouchUpInside];
+        [self.currentQuestionViewController.progressView.exitButton addTarget:self
+                                                                       action:@selector(userDidCloseQuiz)
+                                                             forControlEvents:UIControlEventTouchUpInside];
 
       });
     }
@@ -82,30 +85,30 @@
 
 #pragma mark Actions
 - (void)nextPressed{
-  [self.multipleChoiceController.view removeFromSuperview];
-  [self.multipleChoiceController removeFromParentViewController];
+  [self.currentQuestionViewController.view removeFromSuperview];
+  [self.currentQuestionViewController removeFromParentViewController];
   
-  QIMultipleChoiceQuestion *nextQuestion = (QIMultipleChoiceQuestion *)[self.quiz nextQuestion];
+  QIQuizQuestion *nextQuestion = (QIQuizQuestion *)[self.quiz nextQuestion];
   
   if (nextQuestion == nil) {
     [self dismissViewControllerAnimated:YES completion:nil];
     return;
   }
   
-  QIMultipleChoiceQuizViewController *nextQuestionViewController =
-      [[QIMultipleChoiceQuizViewController alloc] initWithQuestion:(QIQuizQuestion *)nextQuestion];
+  QIQuizQuestionViewController *nextQuestionViewController =
+      [QIQuizQuestionViewControllerFactory questionViewControllerForQuestion:nextQuestion];
   
   //Todo Combine this into a reusable function 
-  [nextQuestionViewController.multipleChoiceView.checkAnswersView.nextButton addTarget:self action:@selector(nextPressed) forControlEvents:UIControlEventTouchUpInside];
-  [nextQuestionViewController.multipleChoiceView.checkAnswersView.nextButton addTarget:self
-                                                                                   action:@selector(nextPressed)
-                                                                         forControlEvents:UIControlEventTouchUpInside];
-  [nextQuestionViewController.multipleChoiceView.rankDisplayView.rankShareButton addTarget:self
-                                                                                       action:@selector(shareRankPressed)
-                                                                             forControlEvents:UIControlEventTouchUpInside];
-  [nextQuestionViewController.multipleChoiceView.progressView.exitButton addTarget:self
-                                                                               action:@selector(userDidCloseQuiz)
-                                                                     forControlEvents:UIControlEventTouchUpInside];
+  [nextQuestionViewController.checkAnswersView.nextButton addTarget:self action:@selector(nextPressed) forControlEvents:UIControlEventTouchUpInside];
+  [nextQuestionViewController.checkAnswersView.nextButton addTarget:self
+                                                             action:@selector(nextPressed)
+                                                   forControlEvents:UIControlEventTouchUpInside];
+  [nextQuestionViewController.rankDisplayView.rankShareButton addTarget:self
+                                                                 action:@selector(shareRankPressed)
+                                                       forControlEvents:UIControlEventTouchUpInside];
+  [nextQuestionViewController.progressView.exitButton addTarget:self
+                                                         action:@selector(userDidCloseQuiz)
+                                               forControlEvents:UIControlEventTouchUpInside];
   
   [self addChildViewController:nextQuestionViewController];
   [self.view addSubview:nextQuestionViewController.view];

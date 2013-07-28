@@ -11,7 +11,7 @@
 
 + (QIQuizQuestionViewController *)questionViewControllerForQuestion:(QIQuizQuestion *)question {
   if ([question isKindOfClass:[QIMultipleChoiceQuestion class]]) {
-    return [[QIMatchingQuizViewController alloc] initWithQuestion:question];
+    return [[QIMultipleChoiceQuizViewController alloc] initWithQuestion:question];
   }
   if ([question isKindOfClass:[QIBusinessCardQuestion class]]) {
     return [[QIBusinessCardViewController alloc] initWithQuestion:question];

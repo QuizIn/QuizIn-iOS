@@ -20,4 +20,24 @@
   return self;
 }
 
+- (QICheckAnswersView *)checkAnswersView {
+  return (QICheckAnswersView *)[self.view valueForKey:@"checkAnswersView"];
+}
+
+- (QIRankDisplayView *)rankDisplayView {
+  @try {
+    return (QIRankDisplayView *)[self.view valueForKey:@"rankDisplayView"];
+  }
+  @catch (NSException *exception) {
+    return nil;
+  }
+  @finally {
+    NULL;
+  }
+}
+
+- (QIProgressView *)progressView {
+  return (QIProgressView *)[self.view valueForKey:@"progressView"];
+}
+
 @end
