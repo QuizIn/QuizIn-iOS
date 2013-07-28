@@ -14,7 +14,8 @@
 @property(nonatomic, strong) UILabel *cardLastName;
 @property(nonatomic, strong) UILabel *cardTitle;
 @property(nonatomic, strong) UILabel *cardCompany;
-@property(nonatomic, strong) NSMutableArray *answerFullNames;
+@property(nonatomic, strong) NSMutableArray *answerFirstNames;
+@property(nonatomic, strong) NSMutableArray *answerLastNames;
 @property(nonatomic, strong) QIBusinessCardAnswerView *answerName;
 @property(nonatomic, strong) QIBusinessCardAnswerView *answerTitle;
 @property(nonatomic, strong) QIBusinessCardAnswerView *answerCompany;
@@ -46,10 +47,11 @@
     _cardCompany = [self newCardCompany];
     _divider = [self newDivider];
     _answerSuperView = [self newAnswerSuperView];
+    _answerFirstNames = [NSMutableArray array];
+    _answerLastNames = [NSMutableArray array];
     _answerName = [self newAnswerView];
     _answerTitle = [self newAnswerView];
     _answerCompany = [self newAnswerView];
-    _answerFullNames = [self newAnswerFullNames];
     _checkAnswersView = [self newCheckAnswersView];
     
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -76,20 +78,12 @@
   [self updateQuestionImage];
 }
 
-- (void)setAnswerFirstNames:(NSArray *)answerFirstNames {
-  if ([answerFirstNames isEqualToArray:_answerFirstNames]) {
+- (void)setAnswerNames:(NSArray *)answerNames{
+  if ([answerNames isEqualToArray:_answerNames]) {
     return;
   }
-  _answerFirstNames = [answerFirstNames copy];
-  [self updateFullNames];
-}
-
-- (void)setAnswerLastNames:(NSArray *)answerLastNames {
-  if ([answerLastNames isEqualToArray:_answerLastNames]) {
-    return;
-  }
-  _answerLastNames = [answerLastNames copy];
-  [self updateFullNames];
+  _answerNames = answerNames; 
+  [self updateAnswerNames];
 }
 
 - (void)setAnswerCompanies:(NSArray *)answerCompanies {
@@ -455,17 +449,28 @@
   self.progressView.quizProgress = _quizProgress;
 }
 
--(void)updateFullNames{
-  if ([self.answerFirstNames count] == [self.answerLastNames count]){
-    for (int i = 0; i<[self.answerLastNames count]; i++){
-      self.answerFullNames[i] = [[self.answerFirstNames[i] stringByAppendingString:@" "] stringByAppendingString:self.answerLastNames[i]];
-    }
-    [self updateAnswerNames];
-  }
-}
-
 -(void)updateAnswerNames{
-  self.answerName.answers = self.answerFullNames;
+  self.answerName.answers = self.answerNames;
+  for (int i=0;i<[self.answerNames count];i++){
+    NSString *fullName = [self.answerNames objectAtIndex:i];
+    NSArray *names = [fullName componentsSeparatedByString:@" "];
+    if ([names count] == 0){
+      [self.answerFirstNames addObject:@""];
+      [self.answerLastNames addObject:@""];
+    }
+    else if ([names count] == 1) {
+      [self.answerFirstNames addObject:[names objectAtIndex:0]];
+      [self.answerLastNames addObject:@""];
+    }
+    else{
+      [self.answerFirstNames addObject:[names objectAtIndex:0]];
+      NSString *lastNameConcat = @"";
+      for (int j = 1; j<[names count];j++){
+        lastNameConcat = [lastNameConcat stringByAppendingString:[names objectAtIndex:j]];
+      }
+      [self.answerLastNames addObject:lastNameConcat]; 
+    }
+  }
   
   if (![self.cardFirstName.text isEqualToString:self.answerFirstNames[self.answerName.selectedAnswer]]) {
     self.cardFirstName.text = self.answerFirstNames[self.answerName.selectedAnswer];
@@ -637,11 +642,6 @@
   UIView *answerView = [[UIView alloc] init];
   [answerView setTranslatesAutoresizingMaskIntoConstraints:NO];
   return answerView;
-}
-
--(NSMutableArray *)newAnswerFullNames{
-  NSMutableArray *fullNames = [NSMutableArray arrayWithCapacity:3];
-  return fullNames;
 }
 
 -(QIBusinessCardAnswerView *)newAnswerView{
