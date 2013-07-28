@@ -8,7 +8,6 @@
 #import "QIHomeViewController.h"
 #import "QIStatsViewController.h"
 #import "QIRankViewController.h"
-#import "QISettingsViewController.h"
 #import "QIStoreViewController.h"
 
 // TODO(rcacheaux):  Remove Temp Stuff.
@@ -133,7 +132,7 @@
 
 - (UITabBarController *)newTabBarController{
   UITabBarController *tabController = [[UITabBarController alloc] init];
-  [tabController setViewControllers:@[[self newHomeViewController],[self newStatsViewController],[self newRankViewController],[self newStoreViewController],[self newSettingsViewController]]];
+  [tabController setViewControllers:@[[self newHomeViewController],[self newStatsViewController],[self newRankViewController],[self newStoreViewController]]];
   return tabController; 
 }
 - (QIDrawerController *)newDrawerController {
@@ -167,12 +166,6 @@
   [rankViewController setTitle:@"Rank"];
   [rankViewController setUserID:USERID];
   return rankViewController;
-}
-
-- (QISettingsViewController *)newSettingsViewController {
-  QISettingsViewController *settingsViewController = [[QISettingsViewController alloc] init];
-  [settingsViewController setTitle:@"Settings"];
-  return settingsViewController;
 }
 
 @end

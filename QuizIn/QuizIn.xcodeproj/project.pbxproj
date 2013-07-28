@@ -25,6 +25,11 @@
 		340896BE1751712900398230 /* progressView_tracker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 340896BC1751712500398230 /* progressView_tracker@2x.png */; };
 		340896C1175175ED00398230 /* progressView_progress.png in Resources */ = {isa = PBXBuildFile; fileRef = 340896BF175175EC00398230 /* progressView_progress.png */; };
 		340896C2175175ED00398230 /* progressView_progress@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 340896C0175175EC00398230 /* progressView_progress@2x.png */; };
+		3412983517A5A85000678A55 /* QIRankTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412983417A5A85000678A55 /* QIRankTableHeaderView.m */; };
+		3412983817A5A89A00678A55 /* QIRankCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412983717A5A89A00678A55 /* QIRankCellView.m */; };
+		3412983B17A5B3A400678A55 /* QIStoreCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412983A17A5B3A400678A55 /* QIStoreCellView.m */; };
+		3412983E17A5B3D400678A55 /* QIStoreTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412983D17A5B3D400678A55 /* QIStoreTableHeaderView.m */; };
+		3412984117A5B57C00678A55 /* QIStoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412984017A5B57B00678A55 /* QIStoreData.m */; };
 		3429135C1753AAC60056ACCD /* Tahoma Faux Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3429135B1753AAC60056ACCD /* Tahoma Faux Italic.ttf */; };
 		342913601753AC780056ACCD /* QIFontProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 3429135F1753AC780056ACCD /* QIFontProvider.m */; };
 		342913641753E5340056ACCD /* QIBusinessCardAnswerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342913631753E5340056ACCD /* QIBusinessCardAnswerView.m */; };
@@ -50,8 +55,6 @@
 		344B62BB179F790D00EE85A9 /* QIGroupSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62AE179F790D00EE85A9 /* QIGroupSelectionViewController.m */; };
 		344B62BE179F796900EE85A9 /* QIRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62BD179F796900EE85A9 /* QIRankViewController.m */; };
 		344B62C1179F798300EE85A9 /* QIRankView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62C0179F798300EE85A9 /* QIRankView.m */; };
-		344B62C4179F79CF00EE85A9 /* QISettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62C3179F79CF00EE85A9 /* QISettingsViewController.m */; };
-		344B62C7179F79E000EE85A9 /* QISettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62C6179F79E000EE85A9 /* QISettingsView.m */; };
 		344B62CA179F7A1800EE85A9 /* QIStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62C9179F7A1800EE85A9 /* QIStoreViewController.m */; };
 		344B62CD179F7A2D00EE85A9 /* QIStoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62CC179F7A2D00EE85A9 /* QIStoreView.m */; };
 		344B62D017A35CC700EE85A9 /* calendar_checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 344B62CE17A35CC700EE85A9 /* calendar_checkmark.png */; };
@@ -268,6 +271,16 @@
 		340896BC1751712500398230 /* progressView_tracker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progressView_tracker@2x.png"; sourceTree = "<group>"; };
 		340896BF175175EC00398230 /* progressView_progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressView_progress.png; sourceTree = "<group>"; };
 		340896C0175175EC00398230 /* progressView_progress@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progressView_progress@2x.png"; sourceTree = "<group>"; };
+		3412983317A5A84F00678A55 /* QIRankTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIRankTableHeaderView.h; sourceTree = "<group>"; };
+		3412983417A5A85000678A55 /* QIRankTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIRankTableHeaderView.m; sourceTree = "<group>"; };
+		3412983617A5A89A00678A55 /* QIRankCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIRankCellView.h; sourceTree = "<group>"; };
+		3412983717A5A89A00678A55 /* QIRankCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIRankCellView.m; sourceTree = "<group>"; };
+		3412983917A5B3A400678A55 /* QIStoreCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStoreCellView.h; sourceTree = "<group>"; };
+		3412983A17A5B3A400678A55 /* QIStoreCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStoreCellView.m; sourceTree = "<group>"; };
+		3412983C17A5B3D400678A55 /* QIStoreTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStoreTableHeaderView.h; sourceTree = "<group>"; };
+		3412983D17A5B3D400678A55 /* QIStoreTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStoreTableHeaderView.m; sourceTree = "<group>"; };
+		3412983F17A5B57B00678A55 /* QIStoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStoreData.h; sourceTree = "<group>"; };
+		3412984017A5B57B00678A55 /* QIStoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStoreData.m; sourceTree = "<group>"; };
 		3429135B1753AAC60056ACCD /* Tahoma Faux Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tahoma Faux Italic.ttf"; sourceTree = "<group>"; };
 		3429135E1753AC780056ACCD /* QIFontProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIFontProvider.h; sourceTree = "<group>"; };
 		3429135F1753AC780056ACCD /* QIFontProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIFontProvider.m; sourceTree = "<group>"; };
@@ -316,10 +329,6 @@
 		344B62BD179F796900EE85A9 /* QIRankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIRankViewController.m; sourceTree = "<group>"; };
 		344B62BF179F798300EE85A9 /* QIRankView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIRankView.h; sourceTree = "<group>"; };
 		344B62C0179F798300EE85A9 /* QIRankView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIRankView.m; sourceTree = "<group>"; };
-		344B62C2179F79CF00EE85A9 /* QISettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QISettingsViewController.h; sourceTree = "<group>"; };
-		344B62C3179F79CF00EE85A9 /* QISettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QISettingsViewController.m; sourceTree = "<group>"; };
-		344B62C5179F79E000EE85A9 /* QISettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QISettingsView.h; sourceTree = "<group>"; };
-		344B62C6179F79E000EE85A9 /* QISettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QISettingsView.m; sourceTree = "<group>"; };
 		344B62C8179F7A1800EE85A9 /* QIStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStoreViewController.h; sourceTree = "<group>"; };
 		344B62C9179F7A1800EE85A9 /* QIStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStoreViewController.m; sourceTree = "<group>"; };
 		344B62CB179F7A2D00EE85A9 /* QIStoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStoreView.h; sourceTree = "<group>"; };
@@ -624,7 +633,6 @@
 			children = (
 				344B6276179F786D00EE85A9 /* Home */,
 				344B627C179F786D00EE85A9 /* RankView */,
-				344B627D179F786D00EE85A9 /* SettingsView */,
 				344B627E179F786D00EE85A9 /* StatsView */,
 				344B6289179F786D00EE85A9 /* StoreView */,
 			);
@@ -647,6 +655,10 @@
 			children = (
 				344B62BC179F796900EE85A9 /* QIRankViewController.h */,
 				344B62BD179F796900EE85A9 /* QIRankViewController.m */,
+				3412983317A5A84F00678A55 /* QIRankTableHeaderView.h */,
+				3412983417A5A85000678A55 /* QIRankTableHeaderView.m */,
+				3412983617A5A89A00678A55 /* QIRankCellView.h */,
+				3412983717A5A89A00678A55 /* QIRankCellView.m */,
 				344B62BF179F798300EE85A9 /* QIRankView.h */,
 				344B62C0179F798300EE85A9 /* QIRankView.m */,
 				344B62D217A3873600EE85A9 /* QIRankDefinition.h */,
@@ -655,30 +667,19 @@
 			path = RankView;
 			sourceTree = "<group>";
 		};
-		344B627D179F786D00EE85A9 /* SettingsView */ = {
-			isa = PBXGroup;
-			children = (
-				344B62C2179F79CF00EE85A9 /* QISettingsViewController.h */,
-				344B62C3179F79CF00EE85A9 /* QISettingsViewController.m */,
-				344B62C5179F79E000EE85A9 /* QISettingsView.h */,
-				344B62C6179F79E000EE85A9 /* QISettingsView.m */,
-			);
-			path = SettingsView;
-			sourceTree = "<group>";
-		};
 		344B627E179F786D00EE85A9 /* StatsView */ = {
 			isa = PBXGroup;
 			children = (
-				344B627F179F786D00EE85A9 /* QIStatsCellView.h */,
-				344B6280179F786D00EE85A9 /* QIStatsCellView.m */,
-				344B6281179F786D00EE85A9 /* QIStatsData.h */,
-				344B6282179F786D00EE85A9 /* QIStatsData.m */,
-				344B6283179F786D00EE85A9 /* QIStatsTableHeaderView.h */,
-				344B6284179F786D00EE85A9 /* QIStatsTableHeaderView.m */,
-				344B6285179F786D00EE85A9 /* QIStatsView.h */,
-				344B6286179F786D00EE85A9 /* QIStatsView.m */,
 				344B6287179F786D00EE85A9 /* QIStatsViewController.h */,
 				344B6288179F786D00EE85A9 /* QIStatsViewController.m */,
+				344B6283179F786D00EE85A9 /* QIStatsTableHeaderView.h */,
+				344B6284179F786D00EE85A9 /* QIStatsTableHeaderView.m */,
+				344B627F179F786D00EE85A9 /* QIStatsCellView.h */,
+				344B6280179F786D00EE85A9 /* QIStatsCellView.m */,
+				344B6285179F786D00EE85A9 /* QIStatsView.h */,
+				344B6286179F786D00EE85A9 /* QIStatsView.m */,
+				344B6281179F786D00EE85A9 /* QIStatsData.h */,
+				344B6282179F786D00EE85A9 /* QIStatsData.m */,
 			);
 			path = StatsView;
 			sourceTree = "<group>";
@@ -688,8 +689,14 @@
 			children = (
 				344B62C8179F7A1800EE85A9 /* QIStoreViewController.h */,
 				344B62C9179F7A1800EE85A9 /* QIStoreViewController.m */,
+				3412983C17A5B3D400678A55 /* QIStoreTableHeaderView.h */,
+				3412983D17A5B3D400678A55 /* QIStoreTableHeaderView.m */,
+				3412983917A5B3A400678A55 /* QIStoreCellView.h */,
+				3412983A17A5B3A400678A55 /* QIStoreCellView.m */,
 				344B62CB179F7A2D00EE85A9 /* QIStoreView.h */,
 				344B62CC179F7A2D00EE85A9 /* QIStoreView.m */,
+				3412983F17A5B57B00678A55 /* QIStoreData.h */,
+				3412984017A5B57B00678A55 /* QIStoreData.m */,
 			);
 			path = StoreView;
 			sourceTree = "<group>";
@@ -1578,12 +1585,15 @@
 				344B62BB179F790D00EE85A9 /* QIGroupSelectionViewController.m in Sources */,
 				344B62BE179F796900EE85A9 /* QIRankViewController.m in Sources */,
 				344B62C1179F798300EE85A9 /* QIRankView.m in Sources */,
-				344B62C4179F79CF00EE85A9 /* QISettingsViewController.m in Sources */,
-				344B62C7179F79E000EE85A9 /* QISettingsView.m in Sources */,
 				344B62CA179F7A1800EE85A9 /* QIStoreViewController.m in Sources */,
 				344B62CD179F7A2D00EE85A9 /* QIStoreView.m in Sources */,
 				344B62D417A3873900EE85A9 /* QIRankDefinition.m in Sources */,
 				344B62D817A38F0400EE85A9 /* QIRankDisplayView.m in Sources */,
+				3412983517A5A85000678A55 /* QIRankTableHeaderView.m in Sources */,
+				3412983817A5A89A00678A55 /* QIRankCellView.m in Sources */,
+				3412983B17A5B3A400678A55 /* QIStoreCellView.m in Sources */,
+				3412983E17A5B3D400678A55 /* QIStoreTableHeaderView.m in Sources */,
+				3412984117A5B57C00678A55 /* QIStoreData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

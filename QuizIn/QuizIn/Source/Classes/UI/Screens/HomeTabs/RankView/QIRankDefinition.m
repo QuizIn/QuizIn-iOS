@@ -45,10 +45,20 @@
       return [UIImage imageNamed:@"calendar_checkmark"];
       break;
     default:
+      return [UIImage imageNamed:@"calendar_checkmark"];
       break;
   }
-  
 }
+
++ (NSArray *)getAllRankBadges{
+  NSMutableArray *all = [NSMutableArray array];
+  NSArray *delineations = [self getRankDelineations];
+  for (int i = 0;i<[delineations count];i++){
+    [all addObject:[self getRankBadgeForRank:i]];
+  }
+  return [all copy];
+}
+
 + (NSString *)getRankDescriptionForRank:(int)rank{
   switch (rank) {
     case 0:
@@ -79,8 +89,17 @@
       return @"Eigth Rank Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.";
       break;
     default:
+      return @"This Rank is Off the Charts";
       break;
   }
+}
++ (NSArray *)getAllRankDescriptions{
+  NSMutableArray *all = [NSMutableArray array];
+  NSArray *delineations = [self getRankDelineations];
+  for (int i = 0;i<[delineations count];i++){
+    [all addObject:[self getRankDescriptionForRank:i]];
+  }
+  return [all copy];
 }
 
 @end

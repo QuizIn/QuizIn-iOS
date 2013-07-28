@@ -26,7 +26,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-  //TODO need to retrieve actual logged in user ID
   QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:self.userID];
   self.statsView.currentRank = [data getCurrentRank];
   self.statsView.totalCorrectAnswers = [data getTotalCorrectAnswers];
@@ -35,23 +34,13 @@
 }
 
 - (void)resetStats{
-  QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:@"12345"];
+  QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:self.userID];
   [data setUpStats];
 }
 
 - (void)printStats{
-  QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:@"12345"];
+  QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:self.userID];
   [data printStats];
-}
-
-- (void)addStats{
-  QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:@"12345"];
-  NSDictionary *profile = [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"0005", @"userID",
-                           @"Bob", @"userFirstName",
-                           @"Scoma", @"userLastName",
-                           nil];
-  [data updateStatsWithConnectionProfile:profile correct:YES]; 
 }
 
 - (void)viewWillLayoutSubviews {
