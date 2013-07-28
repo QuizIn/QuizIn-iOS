@@ -13,5 +13,6 @@
 @property(nonatomic, copy) QILocation *location;
 @property(nonatomic, copy) NSArray *positions;
 @property(nonatomic, assign) NSInteger numberOfConnections;
+@property(nonatomic, copy) NSString *publicProfileURL;
 
 @end

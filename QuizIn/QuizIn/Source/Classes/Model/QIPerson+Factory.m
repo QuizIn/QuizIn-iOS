@@ -10,6 +10,7 @@
   person.formattedName = personJSON[@"formattedName"];
   person.industry = personJSON[@"industry"];
   person.pictureURL = personJSON[@"pictureUrl"];
+  person.publicProfileURL = personJSON[@"publicProfileUrl"];
   if (personJSON[@"numConnections"] != nil) {
     person.numberOfConnections = [personJSON[@"numConnections"] integerValue];
   } else {

@@ -232,7 +232,8 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
     QILIConnectionsParameters *parameters = [QILIConnectionsParameters new];
     parameters.start = [batch[@"start"] integerValue];
     parameters.count = [batch[@"size"] integerValue];
-    parameters.fieldSelector = @"(id,first-name,last-name,formatted-name,positions,location,industry,picture-url)";
+    parameters.fieldSelector =
+        @"(id,first-name,last-name,formatted-name,positions,location,industry,picture-url,public-profile-url)";
     // Completion.
     QIConnectionsJSONResult JSONCompletion = ^(NSArray *connectionsJSON, NSError *error) {
       resultCount++;

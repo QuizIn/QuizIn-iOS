@@ -16,6 +16,7 @@
   person.location = [self.location copy];
   person.positions = [self.positions copy];
   person.numberOfConnections = self.numberOfConnections;
+  person.publicProfileURL = [self.publicProfileURL copy];
   
   return person;
 }
