@@ -34,6 +34,8 @@
   self.multipleChoiceView.answers = self.question.answers;
   self.multipleChoiceView.correctAnswerIndex = self.question.correctAnswerIndex;
   self.multipleChoiceView.profileImageURL = [NSURL URLWithString:self.question.person.pictureURL];
+  
+  //todo
   self.multipleChoiceView.loggedInUserID = @"12345";
   self.multipleChoiceView.answerPerson = self.question.person;
 
