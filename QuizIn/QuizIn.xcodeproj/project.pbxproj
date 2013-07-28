@@ -17,8 +17,19 @@
 		205504F31780C1C600F7F90F /* QILocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504F21780C1C600F7F90F /* QILocation.m */; };
 		205504F61780C4DF00F7F90F /* QIPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504F51780C4DE00F7F90F /* QIPosition.m */; };
 		205504F91780C5BA00F7F90F /* QICompany.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504F81780C5BA00F7F90F /* QICompany.m */; };
-		205504FC1780C6C700F7F90F /* QIConnections.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504FB1780C6C600F7F90F /* QIConnections.m */; };
-		205504FF1780D60E00F7F90F /* QIQuizBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504FE1780D60D00F7F90F /* QIQuizBuilder.m */; };
+		205504FC1780C6C700F7F90F /* QIConnectionsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504FB1780C6C600F7F90F /* QIConnectionsStore.m */; };
+		205504FF1780D60E00F7F90F /* QIQuizFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504FE1780D60D00F7F90F /* QIQuizFactory.m */; };
+		20CC021A179B329D00FBA085 /* LIHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC0217179B329D00FBA085 /* LIHTTPClient.m */; };
+		20CC021B179B329D00FBA085 /* LinkedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC0219179B329D00FBA085 /* LinkedIn.m */; };
+		20CC021E179B32FA00FBA085 /* QILIPeople.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC021D179B32FA00FBA085 /* QILIPeople.m */; };
+		20CC0221179B341800FBA085 /* QILIConnections.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC0220179B341800FBA085 /* QILIConnections.m */; };
+		20CC0224179B407700FBA085 /* QIHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC0223179B407700FBA085 /* QIHelpers.m */; };
+		20CC0227179B438300FBA085 /* QIConnectionsStoreFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC0226179B438300FBA085 /* QIConnectionsStoreFactory.m */; };
+		20CC022B179B500A00FBA085 /* QIPerson+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC022A179B500900FBA085 /* QIPerson+Factory.m */; };
+		20CC022E179B509900FBA085 /* QILocation+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC022D179B509800FBA085 /* QILocation+Factory.m */; };
+		20CC0231179B513F00FBA085 /* QIPosition+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC0230179B513E00FBA085 /* QIPosition+Factory.m */; };
+		20CC0234179B519800FBA085 /* QICompany+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC0233179B519700FBA085 /* QICompany+Factory.m */; };
+		20CC0288179C9B8E00FBA085 /* QIShuffleSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC0287179C9B8E00FBA085 /* QIShuffleSet.m */; };
 		340896B817513D4D00398230 /* Tahoma.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 340896B717513D4D00398230 /* Tahoma.ttf */; };
 		340896BA1751443800398230 /* tahomabd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 340896B91751443800398230 /* tahomabd.ttf */; };
 		340896BD1751712900398230 /* progressView_tracker.png in Resources */ = {isa = PBXBuildFile; fileRef = 340896BB1751712400398230 /* progressView_tracker.png */; };
@@ -206,8 +217,6 @@
 		88867991172D6AF800DCE3D0 /* QIAccountStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 88867983172D6AF700DCE3D0 /* QIAccountStore.m */; };
 		88867992172D6AF800DCE3D0 /* AKGoogleAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88867985172D6AF700DCE3D0 /* AKGoogleAuthController.m */; };
 		88867993172D6AF800DCE3D0 /* AKLinkedInAuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88867987172D6AF700DCE3D0 /* AKLinkedInAuthController.m */; };
-		88867994172D6AF800DCE3D0 /* LIHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886798A172D6AF800DCE3D0 /* LIHTTPClient.m */; };
-		88867995172D6AF800DCE3D0 /* LinkedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886798C172D6AF800DCE3D0 /* LinkedIn.m */; };
 		88867997172D6D1B00DCE3D0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88867996172D6D1B00DCE3D0 /* SystemConfiguration.framework */; };
 		88867999172D6D6C00DCE3D0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88867998172D6D6C00DCE3D0 /* MobileCoreServices.framework */; };
 		888679A1172DCDA700DCE3D0 /* QIQuizViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 888679A0172DCDA600DCE3D0 /* QIQuizViewController.m */; };
@@ -246,10 +255,33 @@
 		205504F51780C4DE00F7F90F /* QIPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIPosition.m; sourceTree = "<group>"; };
 		205504F71780C5B900F7F90F /* QICompany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICompany.h; sourceTree = "<group>"; };
 		205504F81780C5BA00F7F90F /* QICompany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICompany.m; sourceTree = "<group>"; };
-		205504FA1780C6C500F7F90F /* QIConnections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIConnections.h; sourceTree = "<group>"; };
-		205504FB1780C6C600F7F90F /* QIConnections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIConnections.m; sourceTree = "<group>"; };
-		205504FD1780D60C00F7F90F /* QIQuizBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuizBuilder.h; sourceTree = "<group>"; };
-		205504FE1780D60D00F7F90F /* QIQuizBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIQuizBuilder.m; sourceTree = "<group>"; };
+		205504FA1780C6C500F7F90F /* QIConnectionsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIConnectionsStore.h; sourceTree = "<group>"; };
+		205504FB1780C6C600F7F90F /* QIConnectionsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIConnectionsStore.m; sourceTree = "<group>"; };
+		205504FD1780D60C00F7F90F /* QIQuizFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuizFactory.h; sourceTree = "<group>"; };
+		205504FE1780D60D00F7F90F /* QIQuizFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIQuizFactory.m; sourceTree = "<group>"; };
+		20CC0216179B329D00FBA085 /* LIHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIHTTPClient.h; sourceTree = "<group>"; };
+		20CC0217179B329D00FBA085 /* LIHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIHTTPClient.m; sourceTree = "<group>"; };
+		20CC0218179B329D00FBA085 /* LinkedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedIn.h; sourceTree = "<group>"; };
+		20CC0219179B329D00FBA085 /* LinkedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedIn.m; sourceTree = "<group>"; };
+		20CC021C179B32FA00FBA085 /* QILIPeople.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QILIPeople.h; sourceTree = "<group>"; };
+		20CC021D179B32FA00FBA085 /* QILIPeople.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QILIPeople.m; sourceTree = "<group>"; };
+		20CC021F179B341800FBA085 /* QILIConnections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QILIConnections.h; sourceTree = "<group>"; };
+		20CC0220179B341800FBA085 /* QILIConnections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QILIConnections.m; sourceTree = "<group>"; };
+		20CC0222179B407700FBA085 /* QIHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIHelpers.h; sourceTree = "<group>"; };
+		20CC0223179B407700FBA085 /* QIHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIHelpers.m; sourceTree = "<group>"; };
+		20CC0225179B438300FBA085 /* QIConnectionsStore+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QIConnectionsStore+Factory.h"; sourceTree = "<group>"; };
+		20CC0226179B438300FBA085 /* QIConnectionsStoreFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIConnectionsStoreFactory.m; sourceTree = "<group>"; };
+		20CC0228179B49C000FBA085 /* AFNetworkingBlockTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AFNetworkingBlockTypes.h; sourceTree = "<group>"; };
+		20CC0229179B500900FBA085 /* QIPerson+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QIPerson+Factory.h"; sourceTree = "<group>"; };
+		20CC022A179B500900FBA085 /* QIPerson+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QIPerson+Factory.m"; sourceTree = "<group>"; };
+		20CC022C179B509800FBA085 /* QILocation+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QILocation+Factory.h"; sourceTree = "<group>"; };
+		20CC022D179B509800FBA085 /* QILocation+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QILocation+Factory.m"; sourceTree = "<group>"; };
+		20CC022F179B513E00FBA085 /* QIPosition+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QIPosition+Factory.h"; sourceTree = "<group>"; };
+		20CC0230179B513E00FBA085 /* QIPosition+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QIPosition+Factory.m"; sourceTree = "<group>"; };
+		20CC0232179B519700FBA085 /* QICompany+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QICompany+Factory.h"; sourceTree = "<group>"; };
+		20CC0233179B519700FBA085 /* QICompany+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QICompany+Factory.m"; sourceTree = "<group>"; };
+		20CC0286179C9B8D00FBA085 /* QIShuffleSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIShuffleSet.h; sourceTree = "<group>"; };
+		20CC0287179C9B8E00FBA085 /* QIShuffleSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIShuffleSet.m; sourceTree = "<group>"; };
 		340896B717513D4D00398230 /* Tahoma.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tahoma.ttf; sourceTree = "<group>"; };
 		340896B91751443800398230 /* tahomabd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tahomabd.ttf; sourceTree = "<group>"; };
 		340896BB1751712400398230 /* progressView_tracker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressView_tracker.png; sourceTree = "<group>"; };
@@ -480,10 +512,6 @@
 		88867985172D6AF700DCE3D0 /* AKGoogleAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKGoogleAuthController.m; sourceTree = "<group>"; };
 		88867986172D6AF700DCE3D0 /* AKLinkedInAuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKLinkedInAuthController.h; sourceTree = "<group>"; };
 		88867987172D6AF700DCE3D0 /* AKLinkedInAuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKLinkedInAuthController.m; sourceTree = "<group>"; };
-		88867989172D6AF800DCE3D0 /* LIHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIHTTPClient.h; sourceTree = "<group>"; };
-		8886798A172D6AF800DCE3D0 /* LIHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIHTTPClient.m; sourceTree = "<group>"; };
-		8886798B172D6AF800DCE3D0 /* LinkedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedIn.h; sourceTree = "<group>"; };
-		8886798C172D6AF800DCE3D0 /* LinkedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedIn.m; sourceTree = "<group>"; };
 		88867996172D6D1B00DCE3D0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		88867998172D6D6C00DCE3D0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		8886799F172DCDA600DCE3D0 /* QIQuizViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuizViewController.h; sourceTree = "<group>"; };
@@ -549,12 +577,37 @@
 				205504F51780C4DE00F7F90F /* QIPosition.m */,
 				205504F71780C5B900F7F90F /* QICompany.h */,
 				205504F81780C5BA00F7F90F /* QICompany.m */,
-				205504FA1780C6C500F7F90F /* QIConnections.h */,
-				205504FB1780C6C600F7F90F /* QIConnections.m */,
-				205504FD1780D60C00F7F90F /* QIQuizBuilder.h */,
-				205504FE1780D60D00F7F90F /* QIQuizBuilder.m */,
+				205504FA1780C6C500F7F90F /* QIConnectionsStore.h */,
+				205504FB1780C6C600F7F90F /* QIConnectionsStore.m */,
+				205504FD1780D60C00F7F90F /* QIQuizFactory.h */,
+				205504FE1780D60D00F7F90F /* QIQuizFactory.m */,
+				20CC0225179B438300FBA085 /* QIConnectionsStore+Factory.h */,
+				20CC0226179B438300FBA085 /* QIConnectionsStoreFactory.m */,
+				20CC0229179B500900FBA085 /* QIPerson+Factory.h */,
+				20CC022A179B500900FBA085 /* QIPerson+Factory.m */,
+				20CC022C179B509800FBA085 /* QILocation+Factory.h */,
+				20CC022D179B509800FBA085 /* QILocation+Factory.m */,
+				20CC022F179B513E00FBA085 /* QIPosition+Factory.h */,
+				20CC0230179B513E00FBA085 /* QIPosition+Factory.m */,
+				20CC0232179B519700FBA085 /* QICompany+Factory.h */,
+				20CC0233179B519700FBA085 /* QICompany+Factory.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		20CC0215179B329D00FBA085 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				20CC0216179B329D00FBA085 /* LIHTTPClient.h */,
+				20CC0217179B329D00FBA085 /* LIHTTPClient.m */,
+				20CC0218179B329D00FBA085 /* LinkedIn.h */,
+				20CC0219179B329D00FBA085 /* LinkedIn.m */,
+				20CC021C179B32FA00FBA085 /* QILIPeople.h */,
+				20CC021D179B32FA00FBA085 /* QILIPeople.m */,
+				20CC021F179B341800FBA085 /* QILIConnections.h */,
+				20CC0220179B341800FBA085 /* QILIConnections.m */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		340896B617513D4D00398230 /* Fonts */ = {
@@ -658,6 +711,11 @@
 				34E977491764FA5500086673 /* QuizBuilder */,
 				3429135D1753AC580056ACCD /* FontProvider */,
 				3478FFA1173EE7CD002B29DB /* AsyncImageView */,
+				20CC0222179B407700FBA085 /* QIHelpers.h */,
+				20CC0223179B407700FBA085 /* QIHelpers.m */,
+				20CC0228179B49C000FBA085 /* AFNetworkingBlockTypes.h */,
+				20CC0286179C9B8D00FBA085 /* QIShuffleSet.h */,
+				20CC0287179C9B8E00FBA085 /* QIShuffleSet.m */,
 			);
 			path = "Helper Functions";
 			sourceTree = "<group>";
@@ -958,6 +1016,7 @@
 		880870F116FBD32E00D09848 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				20CC0215179B329D00FBA085 /* Networking */,
 				205504DE1780BEBC00F7F90F /* Model */,
 				3478FFA0173EE7CC002B29DB /* Helper Functions */,
 				88867979172D6AF700DCE3D0 /* Auth */,
@@ -1084,7 +1143,6 @@
 		88867979172D6AF700DCE3D0 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				88867988172D6AF700DCE3D0 /* Communication */,
 				8886797A172D6AF700DCE3D0 /* AKGTMOAuth2Account.h */,
 				8886797B172D6AF700DCE3D0 /* AKGTMOAuth2Account.m */,
 				8886797C172D6AF700DCE3D0 /* AKGTMOAuth2AuthController.h */,
@@ -1101,18 +1159,6 @@
 				88867987172D6AF700DCE3D0 /* AKLinkedInAuthController.m */,
 			);
 			path = Auth;
-			sourceTree = "<group>";
-		};
-		88867988172D6AF700DCE3D0 /* Communication */ = {
-			isa = PBXGroup;
-			children = (
-				88867989172D6AF800DCE3D0 /* LIHTTPClient.h */,
-				8886798A172D6AF800DCE3D0 /* LIHTTPClient.m */,
-				8886798B172D6AF800DCE3D0 /* LinkedIn.h */,
-				8886798C172D6AF800DCE3D0 /* LinkedIn.m */,
-			);
-			name = Communication;
-			path = ../Communication;
 			sourceTree = "<group>";
 		};
 		8886799A172DAFC700DCE3D0 /* Quizzes */ = {
@@ -1426,8 +1472,6 @@
 				88867991172D6AF800DCE3D0 /* QIAccountStore.m in Sources */,
 				88867992172D6AF800DCE3D0 /* AKGoogleAuthController.m in Sources */,
 				88867993172D6AF800DCE3D0 /* AKLinkedInAuthController.m in Sources */,
-				88867994172D6AF800DCE3D0 /* LIHTTPClient.m in Sources */,
-				88867995172D6AF800DCE3D0 /* LinkedIn.m in Sources */,
 				34F01A36172DB2F60056A76A /* QIBusinessCardQuizView.m in Sources */,
 				34F01A37172DB2F60056A76A /* QIBusinessCardViewController.m in Sources */,
 				888679A1172DCDA700DCE3D0 /* QIQuizViewController.m in Sources */,
@@ -1456,9 +1500,9 @@
 				205504F31780C1C600F7F90F /* QILocation.m in Sources */,
 				205504F61780C4DF00F7F90F /* QIPosition.m in Sources */,
 				205504F91780C5BA00F7F90F /* QICompany.m in Sources */,
-				205504FC1780C6C700F7F90F /* QIConnections.m in Sources */,
+				205504FC1780C6C700F7F90F /* QIConnectionsStore.m in Sources */,
 				348901281780C5360004F604 /* QICheckAnswersView.m in Sources */,
-				205504FF1780D60E00F7F90F /* QIQuizBuilder.m in Sources */,
+				205504FF1780D60E00F7F90F /* QIQuizFactory.m in Sources */,
 				34FE52491786FE2B00A462C2 /* QIGroupSelectionCellView.m in Sources */,
 				34FE524A1786FE2B00A462C2 /* QIGroupSelectionViewController.m in Sources */,
 				34FE524B1786FE2B00A462C2 /* QIGroupSelectionData.m in Sources */,
@@ -1468,6 +1512,17 @@
 				34FE5252178A021D00A462C2 /* QIStatsViewController.m in Sources */,
 				34FE5255178A023500A462C2 /* QIStatsView.m in Sources */,
 				34FE525B179AE91800A462C2 /* QIStatsData.m in Sources */,
+				20CC021A179B329D00FBA085 /* LIHTTPClient.m in Sources */,
+				20CC021B179B329D00FBA085 /* LinkedIn.m in Sources */,
+				20CC021E179B32FA00FBA085 /* QILIPeople.m in Sources */,
+				20CC0221179B341800FBA085 /* QILIConnections.m in Sources */,
+				20CC0224179B407700FBA085 /* QIHelpers.m in Sources */,
+				20CC0227179B438300FBA085 /* QIConnectionsStoreFactory.m in Sources */,
+				20CC022B179B500A00FBA085 /* QIPerson+Factory.m in Sources */,
+				20CC022E179B509900FBA085 /* QILocation+Factory.m in Sources */,
+				20CC0231179B513F00FBA085 /* QIPosition+Factory.m in Sources */,
+				20CC0234179B519800FBA085 /* QICompany+Factory.m in Sources */,
+				20CC0288179C9B8E00FBA085 /* QIShuffleSet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

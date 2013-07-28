@@ -68,7 +68,7 @@
   int totalCorrectAnswers = [[stats objectForKey:@"totalCorrectAnswers"] integerValue];
   int totalIncorrectAnswers = [[stats objectForKey:@"totalIncorrectAnswers"] integerValue];
   NSMutableArray *connectionStats = [[stats objectForKey:@"connectionStats"] mutableCopy];
-  NSLog(@"Current Rank: %d \n CorrectAnswers: %d \n Incorrect Answers: %d \n",currentRank, totalCorrectAnswers, totalIncorrectAnswers);
+  DDLogInfo(@"Current Rank: %d \n CorrectAnswers: %d \n Incorrect Answers: %d \n",currentRank, totalCorrectAnswers, totalIncorrectAnswers);
   for (int i = 0; i<[connectionStats count]; i++){
     NSMutableDictionary *individualConnectionStats = [[connectionStats objectAtIndex:i] mutableCopy];
     NSString *userID = [individualConnectionStats objectForKey:@"userID"];
@@ -76,7 +76,7 @@
     NSString *lastName = [individualConnectionStats objectForKey:@"userLastName"];
     int correctAnswers = [[individualConnectionStats objectForKey:@"correctAnswers"] integerValue];
     int incorrectAnswers = [[individualConnectionStats objectForKey:@"incorrectAnswers"] integerValue];
-    NSLog(@"%@ %@ | %@ | %d | %d",firstName,lastName,userID,correctAnswers,incorrectAnswers);
+    DDLogInfo(@"%@ %@ | %@ | %d | %d",firstName,lastName,userID,correctAnswers,incorrectAnswers);
   }
 }
 

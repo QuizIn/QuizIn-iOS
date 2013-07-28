@@ -50,10 +50,10 @@
 
 #pragma mark Actions
 - (void)userDidCloseQuiz{
-  NSLog(@"User Closed Quiz");
+  DDLogInfo(@"User Closed Quiz");
 }
 - (void)userDidPressNext{
-  NSLog(@"userHit Next");
+  DDLogInfo(@"userHit Next");
 }
 
 #pragma mark Properties

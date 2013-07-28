@@ -8,8 +8,8 @@
 
 // TODO(rcacheaux):  Remove Temp Stuff.
 #import "LinkedIn.h"
-#import "QIConnections.h"
-#import "QIQuizBuilder.h"
+#import "QIConnectionsStore.h"
+#import "QIQuizFactory.h"
 #import "QIQuiz.h"
 
 @interface QIApplicationViewController ()<AKAuthHandler>
@@ -71,31 +71,31 @@
   
   /*
   QIQuiz *quiz = [QIQuizBuilder quizFromRandomConnections];
-  NSLog(@"%@", quiz);*/
+  DDLogInfo(@"%@", quiz);*/
   
   /*
   [LinkedIn getPeopleCurrentUserConnectionsCountWithOnSuccess:^(NSInteger numberOfConnections) {
-    NSLog(@"Number of Connections: %d", numberOfConnections);
+    DDLogInfo(@"Number of Connections: %d", numberOfConnections);
   } onFailure:^(NSError *error) {
-    NSLog(@"Error: %@", error);
+    DDLogInfo(@"Error: %@", error);
   }];*/
   
   /*
   [LinkedIn getPeopleConnectionsWithStartIndex:0 count:10 onSuccess:^(QIConnections *connections) {
-    NSLog(@"Connections: %@", connections.people);
+    DDLogInfo(@"Connections: %@", connections.people);
   } onFailure:^(NSError *error) {
-    NSLog(@"Error: %@", error);
+    DDLogInfo(@"Error: %@", error);
   }];*/
   
   
  /*
   [LinkedIn getPeopleCurrentConnectionsWithCompletionHandler:^(NSArray *connections,
                                                                NSError *error) {
-    NSLog(@"Got Connections");
+    DDLogInfo(@"Got Connections");
     for (NSDictionary *person in connections) {
       [LinkedIn getPeopleWithID:person[@"id"] completionHandler:^(NSDictionary *profile,
                                                                   NSError *error) {
-        NSLog(@"Company: %@", profile[@"positions"][@"values"][0][@"company"][@"name"]);
+        DDLogInfo(@"Company: %@", profile[@"positions"][@"values"][0][@"company"][@"name"]);
       }];
     }
   }];

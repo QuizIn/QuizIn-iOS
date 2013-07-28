@@ -5,12 +5,15 @@
 #import "LIHTTPClient.h"
 #import "AKLinkedInAuthController.h"
 
-#import "QIConnections.h"
+#import "QIConnectionsStore.h"
 #import "QIPerson.h"
 #import "QILocation.h"
 #import "QIPosition.h"
 #import "QICompany.h"
 
+#import "QILIPeople.h"
+#import "QILIConnections.h"
+#import "QIConnectionsStore+Factory.h"
 
 
 typedef void (^AFHTTPRequestOperationSuccess)(AFHTTPRequestOperation *operation,
@@ -25,12 +28,12 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
   LIHTTPClient *httpClient = [LIHTTPClient sharedClient];
   AFHTTPRequestOperationSuccess success = ^(AFHTTPRequestOperation *requestOperation,
                                             NSDictionary *JSON){
-    NSLog(@"LinkedIn: Profile, %@", JSON);
+    DDLogInfo(@"LinkedIn: Profile, %@", JSON);
     completionHandler ? completionHandler(JSON, nil) : NULL;
   };
   AFHTTPRequestOperationFailure failure = ^(AFHTTPRequestOperation *requestOperation,
                                             NSError *error){
-    NSLog(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
+    DDLogInfo(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
     [[AKLinkedInAuthController sharedController]
         unauthenticateAccount:[[AKAccountStore sharedStore] authenticatedAccount]];
   };
@@ -44,14 +47,14 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
   LIHTTPClient *httpClient = [LIHTTPClient sharedClient];
   AFHTTPRequestOperationSuccess success = ^(AFHTTPRequestOperation *requestOperation,
                                             NSDictionary *JSON){
-    NSLog(@"LinkedIn: Profile, %@", JSON);
+    DDLogInfo(@"LinkedIn: Profile, %@", JSON);
     NSInteger numberOfConnections = [JSON[@"numConnections"] intValue];
     onSuccess ? onSuccess(numberOfConnections) : NULL;
   };
   AFHTTPRequestOperationFailure failure = ^(AFHTTPRequestOperation *requestOperation,
                                             NSError *error){
     onFailure ? onFailure(error) : NULL;
-    NSLog(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
+    DDLogInfo(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
     [[AKLinkedInAuthController sharedController]
         unauthenticateAccount:[[AKAccountStore sharedStore] authenticatedAccount]];
   };
@@ -70,7 +73,7 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
   };
   AFHTTPRequestOperationFailure failure = ^(AFHTTPRequestOperation *requestOperation,
                                             NSError *error){
-    NSLog(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
+    DDLogInfo(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
     [[AKLinkedInAuthController sharedController]
      unauthenticateAccount:[[AKAccountStore sharedStore] authenticatedAccount]];
   };
@@ -84,13 +87,13 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
   LIHTTPClient *httpClient = [LIHTTPClient sharedClient];
   AFHTTPRequestOperationSuccess success = ^(AFHTTPRequestOperation *requestOperation,
                                             NSDictionary *JSON){
-    NSLog(@"LinkedIn: Connections, %@", JSON);
+    DDLogInfo(@"LinkedIn: Connections, %@", JSON);
     // TODO(rcacheaux): Add protection against changes in JSON.
     completionHandler ? completionHandler(JSON[@"values"], nil) : NULL;
   };
   AFHTTPRequestOperationFailure failure = ^(AFHTTPRequestOperation *requestOperation,
                                             NSError *error){
-    NSLog(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
+    DDLogInfo(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
     [[AKLinkedInAuthController sharedController]
         unauthenticateAccount:[[AKAccountStore sharedStore] authenticatedAccount]];
   };
@@ -100,15 +103,15 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
 
 + (void)getPeopleConnectionsWithStartIndex:(NSUInteger)startIndex
                                      count:(NSUInteger)count
-                                 onSuccess:(void (^)(QIConnections *connections))onSuccess
+                                 onSuccess:(void (^)(QIConnectionsStore *connections))onSuccess
                                  onFailure:(void (^)(NSError *error))onFailure {
   NSString *path = @"people/~/connections:(id,first-name,last-name,positions,location,industry,picture-url)";
   LIHTTPClient *httpClient = [LIHTTPClient sharedClient];
   AFHTTPRequestOperationSuccess success = ^(AFHTTPRequestOperation *requestOperation,
                                             NSDictionary *JSON){
-    NSLog(@"LinkedIn: Connections, %@", JSON);
+    DDLogInfo(@"LinkedIn: Connections, %@", JSON);
     
-    QIConnections *connections = [QIConnections new];
+    QIConnectionsStore *connections = [QIConnectionsStore new];
     NSMutableArray *people = [NSMutableArray arrayWithCapacity:[JSON[@"_count"] intValue]];
     NSArray *JSONPeople = JSON[@"values"];
     for (NSDictionary *JSONPerson in JSONPeople) {
@@ -167,13 +170,99 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
     
     onFailure ? onFailure(error) : NULL;
     // TODO(Rene): Check for unauth responses globally.
-    NSLog(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
+    DDLogInfo(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
     [[AKLinkedInAuthController sharedController]
         unauthenticateAccount:[[AKAccountStore sharedStore] authenticatedAccount]];
   };
   NSDictionary *paramters = @{@"start": [NSString stringWithFormat:@"%d", startIndex],
                               @"count": [NSString stringWithFormat:@"%d", count]};
   [httpClient getPath:path parameters:paramters success:success failure:failure];
+}
+
++ (void)randomConnectionsForAuthenticatedUserWithNumberOfConnectionsToFetch:(NSInteger)numberOfConnectionsToFetch
+                                                               onCompletion:(LIRandomConnectionsResponse)onCompletion {
+  if (numberOfConnectionsToFetch <= 0) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      NSError *error = [NSError errorWithDomain:@"com.quizin" code:-1 userInfo:nil];
+      onCompletion ? onCompletion(nil, error) : NULL;
+    });
+    return;
+  }
+  // Number of connections completion.
+  LIConnectionsCountResult countCompletion = ^(NSInteger numberOfConnections, NSError *error) {
+    NSInteger maxNumberOfConnectionsToFetch = MIN(numberOfConnections, numberOfConnectionsToFetch);
+    if (numberOfConnectionsToFetch >  numberOfConnections) {
+      DDLogWarn(@"User's number of connections: %d is less than requested for random connections: %d.",
+                numberOfConnections, numberOfConnectionsToFetch);
+    }
+    
+    [self batchedConnectionsForAuthenticatedUserWithNumberOfConnections:numberOfConnections
+                                             numberOfConnectionsToFetch:maxNumberOfConnectionsToFetch
+                                                           maxBatchSize:10
+                                                           onCompletion:onCompletion];
+  };
+  
+  // Send request.
+  [self numberOfConnectionsForAuthenticatedUserOnCompletion:countCompletion];
+}
+
++ (void)batchedConnectionsForAuthenticatedUserWithNumberOfConnections:(NSInteger)numberOfConnections
+                                           numberOfConnectionsToFetch:(NSInteger)numberOfConnectionsToFetch
+                                                         maxBatchSize:(NSInteger)maxBatchSize
+                                                         onCompletion:(LIRandomConnectionsResponse)onCompletion {
+  if (numberOfConnectionsToFetch > numberOfConnections) {
+    DDLogWarn(@"User's number of connections: %d is less than requested for batched connections: %d.",
+               numberOfConnections, numberOfConnectionsToFetch);
+    numberOfConnectionsToFetch = numberOfConnections;
+  }
+  
+  // Build batches.
+  NSMutableArray *batches = [NSMutableArray array];
+  for (NSInteger i = 0 ; i < numberOfConnectionsToFetch; i += maxBatchSize) {
+    NSInteger batchSize = MIN(maxBatchSize, numberOfConnectionsToFetch - i);
+    NSInteger randomStartIndex = arc4random_uniform(numberOfConnections - batchSize);
+    [batches addObject:@{@"start": @(randomStartIndex), @"size": @(batchSize)}];
+  }
+  
+  // Make the calls.
+  NSMutableArray *connections = [NSMutableArray arrayWithCapacity:numberOfConnectionsToFetch];
+  __block NSInteger resultCount = 0;
+  __block NSError *JSONRequestError = nil;
+  for (NSDictionary *batch in batches) {
+    QILIConnectionsParameters *parameters = [QILIConnectionsParameters new];
+    parameters.start = [batch[@"start"] integerValue];
+    parameters.count = [batch[@"size"] integerValue];
+    parameters.fieldSelector = @"(id,first-name,last-name,formatted-name,positions,location,industry,picture-url)";
+    // Completion.
+    QIConnectionsJSONResult JSONCompletion = ^(NSArray *connectionsJSON, NSError *error) {
+      resultCount++;
+      if (error == nil) [connections addObjectsFromArray:connectionsJSON];
+      else JSONRequestError = error;
+      // Check for End.
+      if (resultCount == [batches count]) {
+        QIConnectionsStore *connectionsStore = [QIConnectionsStore storeWithJSON:[connections copy]];
+        onCompletion ? onCompletion(connectionsStore, JSONRequestError) : NULL;
+      }
+    };
+    // Get JSON.
+    [QILIConnections getAsJSONForAuthenticatedUserWithParameters:parameters
+                                                    onCompletion:JSONCompletion];
+  }
+}
+
++ (void)numberOfConnectionsForAuthenticatedUserOnCompletion:(LIConnectionsCountResult)onCompletion {
+  // Completion.
+  QIProfileResult profileOnCompletion = ^(QIPerson *person, NSError *error) {
+    if (person != nil && person.numberOfConnections >= 0) {
+      onCompletion ? onCompletion(person.numberOfConnections, nil) : NULL;
+    } else {
+      NSError *error = [NSError errorWithDomain:@"com.quizin" code:-2 userInfo:nil];
+      onCompletion ? onCompletion(-1, error) : NULL;
+    }
+  };
+  
+  [QILIPeople getProfileForAuthenticatedUserWithFieldSelector:@"(num-connections)"
+                                                 onCompletion:profileOnCompletion];
 }
 
 @end

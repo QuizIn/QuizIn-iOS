@@ -10,10 +10,12 @@
   person.personID = [self.personID copy];
   person.firstName = [self.firstName copy];
   person.lastName = [self.lastName copy];
+  person.formattedName = [self.formattedName copy];
   person.pictureURL = [self.pictureURL copy];
   person.industry = [self.industry copy];
   person.location = [self.location copy];
   person.positions = [self.positions copy];
+  person.numberOfConnections = self.numberOfConnections;
   
   return person;
 }
