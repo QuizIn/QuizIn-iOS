@@ -18,7 +18,6 @@
 		205504F61780C4DF00F7F90F /* QIPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504F51780C4DE00F7F90F /* QIPosition.m */; };
 		205504F91780C5BA00F7F90F /* QICompany.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504F81780C5BA00F7F90F /* QICompany.m */; };
 		205504FC1780C6C700F7F90F /* QIConnectionsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504FB1780C6C600F7F90F /* QIConnectionsStore.m */; };
-		205504FF1780D60E00F7F90F /* QIQuizFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504FE1780D60D00F7F90F /* QIQuizFactory.m */; };
 		20CC021A179B329D00FBA085 /* LIHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC0217179B329D00FBA085 /* LIHTTPClient.m */; };
 		20CC021B179B329D00FBA085 /* LinkedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC0219179B329D00FBA085 /* LinkedIn.m */; };
 		20CC021E179B32FA00FBA085 /* QILIPeople.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC021D179B32FA00FBA085 /* QILIPeople.m */; };
@@ -30,6 +29,7 @@
 		20CC0231179B513F00FBA085 /* QIPosition+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC0230179B513E00FBA085 /* QIPosition+Factory.m */; };
 		20CC0234179B519800FBA085 /* QICompany+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC0233179B519700FBA085 /* QICompany+Factory.m */; };
 		20CC0288179C9B8E00FBA085 /* QIShuffleSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 20CC0287179C9B8E00FBA085 /* QIShuffleSet.m */; };
+		20E0200B17A5BBA000CB9D43 /* QIQuizFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E0200A17A5BBA000CB9D43 /* QIQuizFactory.m */; };
 		340896B817513D4D00398230 /* Tahoma.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 340896B717513D4D00398230 /* Tahoma.ttf */; };
 		340896BA1751443800398230 /* tahomabd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 340896B91751443800398230 /* tahomabd.ttf */; };
 		340896BD1751712900398230 /* progressView_tracker.png in Resources */ = {isa = PBXBuildFile; fileRef = 340896BB1751712400398230 /* progressView_tracker.png */; };
@@ -269,8 +269,6 @@
 		205504F81780C5BA00F7F90F /* QICompany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICompany.m; sourceTree = "<group>"; };
 		205504FA1780C6C500F7F90F /* QIConnectionsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIConnectionsStore.h; sourceTree = "<group>"; };
 		205504FB1780C6C600F7F90F /* QIConnectionsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIConnectionsStore.m; sourceTree = "<group>"; };
-		205504FD1780D60C00F7F90F /* QIQuizFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuizFactory.h; sourceTree = "<group>"; };
-		205504FE1780D60D00F7F90F /* QIQuizFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIQuizFactory.m; sourceTree = "<group>"; };
 		20CC0216179B329D00FBA085 /* LIHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIHTTPClient.h; sourceTree = "<group>"; };
 		20CC0217179B329D00FBA085 /* LIHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIHTTPClient.m; sourceTree = "<group>"; };
 		20CC0218179B329D00FBA085 /* LinkedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedIn.h; sourceTree = "<group>"; };
@@ -294,6 +292,8 @@
 		20CC0233179B519700FBA085 /* QICompany+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QICompany+Factory.m"; sourceTree = "<group>"; };
 		20CC0286179C9B8D00FBA085 /* QIShuffleSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIShuffleSet.h; sourceTree = "<group>"; };
 		20CC0287179C9B8E00FBA085 /* QIShuffleSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIShuffleSet.m; sourceTree = "<group>"; };
+		20E0200917A5BBA000CB9D43 /* QIQuizFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuizFactory.h; sourceTree = "<group>"; };
+		20E0200A17A5BBA000CB9D43 /* QIQuizFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIQuizFactory.m; sourceTree = "<group>"; };
 		340896B717513D4D00398230 /* Tahoma.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tahoma.ttf; sourceTree = "<group>"; };
 		340896B91751443800398230 /* tahomabd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tahomabd.ttf; sourceTree = "<group>"; };
 		340896BB1751712400398230 /* progressView_tracker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressView_tracker.png; sourceTree = "<group>"; };
@@ -593,6 +593,8 @@
 		205504DE1780BEBC00F7F90F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				20E0200917A5BBA000CB9D43 /* QIQuizFactory.h */,
+				20E0200A17A5BBA000CB9D43 /* QIQuizFactory.m */,
 				205504DF1780BED200F7F90F /* QIQuiz.h */,
 				205504E01780BED200F7F90F /* QIQuiz.m */,
 				205504E21780BEF900F7F90F /* QIQuizQuestion.h */,
@@ -613,8 +615,6 @@
 				205504F81780C5BA00F7F90F /* QICompany.m */,
 				205504FA1780C6C500F7F90F /* QIConnectionsStore.h */,
 				205504FB1780C6C600F7F90F /* QIConnectionsStore.m */,
-				205504FD1780D60C00F7F90F /* QIQuizFactory.h */,
-				205504FE1780D60D00F7F90F /* QIQuizFactory.m */,
 				20CC0225179B438300FBA085 /* QIConnectionsStore+Factory.h */,
 				20CC0226179B438300FBA085 /* QIConnectionsStoreFactory.m */,
 				20CC0229179B500900FBA085 /* QIPerson+Factory.h */,
@@ -1600,15 +1600,6 @@
 				205504F91780C5BA00F7F90F /* QICompany.m in Sources */,
 				205504FC1780C6C700F7F90F /* QIConnectionsStore.m in Sources */,
 				348901281780C5360004F604 /* QICheckAnswersView.m in Sources */,
-				205504FF1780D60E00F7F90F /* QIQuizFactory.m in Sources */,
-				34FE52491786FE2B00A462C2 /* QIGroupSelectionCellView.m in Sources */,
-				34FE524A1786FE2B00A462C2 /* QIGroupSelectionViewController.m in Sources */,
-				34FE524B1786FE2B00A462C2 /* QIGroupSelectionData.m in Sources */,
-				34FE524C1786FE2B00A462C2 /* QIGroupSelectionTableFooterView.m in Sources */,
-				34FE524D1786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.m in Sources */,
-				34FE524E1786FE2B00A462C2 /* QIGroupSelectionView.m in Sources */,
-				34FE5252178A021D00A462C2 /* QIStatsViewController.m in Sources */,
-				205504FF1780D60E00F7F90F /* QIQuizBuilder.m in Sources */,
 				344B628A179F786D00EE85A9 /* QIHomeView.m in Sources */,
 				344B628B179F786D00EE85A9 /* QIHomeViewController.m in Sources */,
 				344B628D179F786D00EE85A9 /* QIStatsCellView.m in Sources */,
@@ -1623,8 +1614,6 @@
 				344B62B4179F790D00EE85A9 /* QICalendarTableFooterView.m in Sources */,
 				344B62B5179F790D00EE85A9 /* QICalendarTableHeaderView.m in Sources */,
 				344B62B6179F790D00EE85A9 /* QIGroupSelectionCellView.m in Sources */,
-				34FE5255178A023500A462C2 /* QIStatsView.m in Sources */,
-				34FE525B179AE91800A462C2 /* QIStatsData.m in Sources */,
 				20CC021A179B329D00FBA085 /* LIHTTPClient.m in Sources */,
 				20CC021B179B329D00FBA085 /* LinkedIn.m in Sources */,
 				20CC021E179B32FA00FBA085 /* QILIPeople.m in Sources */,
@@ -1649,6 +1638,7 @@
 				344B62CD179F7A2D00EE85A9 /* QIStoreView.m in Sources */,
 				344B62D417A3873900EE85A9 /* QIRankDefinition.m in Sources */,
 				344B62D817A38F0400EE85A9 /* QIRankDisplayView.m in Sources */,
+				20E0200B17A5BBA000CB9D43 /* QIQuizFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

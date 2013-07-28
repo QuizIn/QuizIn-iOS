@@ -49,13 +49,6 @@
   [super didReceiveMemoryWarning];
 }
 
-#pragma mark Actions
-- (void)userDidCloseQuiz{
-  DDLogInfo(@"User Closed Quiz");
-}
-- (void)userDidPressNext{
-  DDLogInfo(@"userHit Next");
-
 
 #pragma mark Properties
 
