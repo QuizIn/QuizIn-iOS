@@ -469,15 +469,15 @@
 }
 
 -(void)checkButtonPressed{
-  NSLog(@"checkButton Pressed");
+  DDLogInfo(@"checkButton Pressed");
   [self showResult];
 }
 -(void)againButtonPressed{
-  NSLog(@"againButton Pressed");
+  DDLogInfo(@"againButton Pressed");
   [self resetView];
 }
 -(void)showResult{
-  NSLog(@"showResult");
+  DDLogInfo(@"showResult");
   [UIView animateWithDuration:0.5 animations:^{
     [self.checkAnswersView.nextButton setHidden:NO];
     [self.checkAnswersView.againButton setHidden:NO];
@@ -489,7 +489,7 @@
   }];
 }
 -(void)resetView{
-  NSLog(@"resetView");
+  DDLogInfo(@"resetView");
   [UIView animateWithDuration:0.5 animations:^{
     [self.checkAnswersView.nextButton setHidden:YES];
     [self.checkAnswersView.againButton setHidden:YES];
@@ -501,7 +501,7 @@
   }];
 }
 -(void)toggleResult{
-  NSLog(@"toggleResult");
+  DDLogInfo(@"toggleResult");
   [UIView animateWithDuration:0.5 animations:^{
     if (self.resultClosed) {
       [self.topCheck setConstant:-81.0f];

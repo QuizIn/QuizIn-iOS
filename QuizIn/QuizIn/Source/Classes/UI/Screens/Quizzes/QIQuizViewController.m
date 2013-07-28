@@ -5,7 +5,7 @@
 #import "QIBusinessCardViewController.h"
 #import "QIMatchingQuizViewController.h"
 
-#import "QIQuizBuilder.h"
+#import "QIQuizFactory.h"
 #import "QIQuiz.h"
 
 @interface QIQuizViewController ()
@@ -55,7 +55,7 @@
   }
   
   
-  [QIQuizBuilder quizFromRandomConnectionsWithCompletionBlock:^(QIQuiz *quiz, NSError *error) {
+  [QIQuizFactory quizFromRandomConnectionsWithCompletionBlock:^(QIQuiz *quiz, NSError *error) {
     if (error == nil) {
       dispatch_async(dispatch_get_main_queue(), ^{
         self.quiz = quiz;

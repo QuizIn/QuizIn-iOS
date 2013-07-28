@@ -1,11 +1,11 @@
 #import <Foundation/Foundation.h>
 
-@class QIConnections;
+@class QIConnectionsStore;
 @class QIQuiz;
 
-@interface QIQuizBuilder : NSObject
+@interface QIQuizFactory : NSObject
 
 + (void)quizFromRandomConnectionsWithCompletionBlock:(void (^)(QIQuiz *, NSError *))completionBlock;
-+ (QIQuiz *)quizWithConnections:(QIConnections *)connections;
++ (QIQuiz *)quizWithConnections:(QIConnectionsStore *)connections;
 
 @end

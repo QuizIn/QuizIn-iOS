@@ -10,7 +10,7 @@
     
   if (USE_TEST_DATA){
     NSMutableArray *calendarData = [[self grabTestData] mutableCopy];
-    NSLog(@"%d",dateIndex);
+    DDLogInfo(@"%d",dateIndex);
     return calendarData;
   }
   else {
