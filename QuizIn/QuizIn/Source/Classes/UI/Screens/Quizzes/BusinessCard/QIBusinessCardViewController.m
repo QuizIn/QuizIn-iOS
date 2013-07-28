@@ -2,8 +2,11 @@
 
 #import "QIQuizQuestionViewController_Protected.h"
 
-@interface QIBusinessCardViewController ()
+#import "QIBusinessCardQuestion.h"
+#import "QIPerson.h"
 
+@interface QIBusinessCardViewController ()
+@property(nonatomic, strong, readonly) QIBusinessCardQuestion *businessCardQuestion;
 @end
 
 @implementation QIBusinessCardViewController
@@ -21,10 +24,10 @@
   [super viewDidLoad];
   self.businessCardQuizView.numberOfQuestions = 10;
   self.businessCardQuizView.quizProgress = 4;
-  self.businessCardQuizView.questionImageURL = [NSURL URLWithString:@"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-1GoRs4ppiKY3Ta53ROlRJPt6osaXKdBTflGKXf0fT3XT433d"];
-  self.businessCardQuizView.answerNames = @[@"Rick Kuhlman",@"Rene Cacheaux",@"Tim Dredge"];
-  self.businessCardQuizView.answerCompanies = @[@"National Instruments",@"Mutual Mobile",@"Invodo Inc."];
-  self.businessCardQuizView.answerTitles = @[@"Senior Product Manager",@"Senior iOS Developer",@"Graphic Designer"];
+  self.businessCardQuizView.questionImageURL = [NSURL URLWithString:self.businessCardQuestion.person.pictureURL];
+  self.businessCardQuizView.answerNames = self.businessCardQuestion.names;
+  self.businessCardQuizView.answerCompanies = self.businessCardQuestion.companies;
+  self.businessCardQuizView.answerTitles = self.businessCardQuestion.titles;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,6 +36,10 @@
 
 - (QIBusinessCardQuizView *)businessCardQuizView {
   return (QIBusinessCardQuizView *)self.view;
+}
+
+- (QIBusinessCardQuestion *)businessCardQuestion {
+  return (QIBusinessCardQuestion *)self.question;
 }
 
 @end

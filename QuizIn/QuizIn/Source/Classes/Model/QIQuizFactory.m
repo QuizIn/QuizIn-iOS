@@ -56,7 +56,7 @@
     [connectionsInQuiz addObject:personID];
     
     
-    if (i == 0) {
+    if (i < 4) {
       // Build business card question.
       QIBusinessCardQuestion *question = [QIBusinessCardQuestion new];
       question.person = connections.people[personID];
