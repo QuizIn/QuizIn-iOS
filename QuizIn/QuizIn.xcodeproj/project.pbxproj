@@ -39,16 +39,42 @@
 		3429135C1753AAC60056ACCD /* Tahoma Faux Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3429135B1753AAC60056ACCD /* Tahoma Faux Italic.ttf */; };
 		342913601753AC780056ACCD /* QIFontProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 3429135F1753AC780056ACCD /* QIFontProvider.m */; };
 		342913641753E5340056ACCD /* QIBusinessCardAnswerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342913631753E5340056ACCD /* QIBusinessCardAnswerView.m */; };
+		344B628A179F786D00EE85A9 /* QIHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B6278179F786D00EE85A9 /* QIHomeView.m */; };
+		344B628B179F786D00EE85A9 /* QIHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B627A179F786D00EE85A9 /* QIHomeViewController.m */; };
+		344B628C179F786D00EE85A9 /* Scratch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 344B627B179F786D00EE85A9 /* Scratch.xib */; };
+		344B628D179F786D00EE85A9 /* QIStatsCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B6280179F786D00EE85A9 /* QIStatsCellView.m */; };
+		344B628E179F786D00EE85A9 /* QIStatsData.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B6282179F786D00EE85A9 /* QIStatsData.m */; };
+		344B628F179F786D00EE85A9 /* QIStatsTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B6284179F786D00EE85A9 /* QIStatsTableHeaderView.m */; };
+		344B6290179F786D00EE85A9 /* QIStatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B6286179F786D00EE85A9 /* QIStatsView.m */; };
+		344B6291179F786D00EE85A9 /* QIStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B6288179F786D00EE85A9 /* QIStatsViewController.m */; };
+		344B62B0179F790D00EE85A9 /* QICalendarCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B6297179F790D00EE85A9 /* QICalendarCellView.m */; };
+		344B62B1179F790D00EE85A9 /* QICalendarData.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B6299179F790D00EE85A9 /* QICalendarData.m */; };
+		344B62B2179F790D00EE85A9 /* QICalendarPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B629B179F790D00EE85A9 /* QICalendarPickerView.m */; };
+		344B62B3179F790D00EE85A9 /* QICalendarPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B629D179F790D00EE85A9 /* QICalendarPickerViewController.m */; };
+		344B62B4179F790D00EE85A9 /* QICalendarTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B629F179F790D00EE85A9 /* QICalendarTableFooterView.m */; };
+		344B62B5179F790D00EE85A9 /* QICalendarTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62A1179F790D00EE85A9 /* QICalendarTableHeaderView.m */; };
+		344B62B6179F790D00EE85A9 /* QIGroupSelectionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62A4179F790D00EE85A9 /* QIGroupSelectionCellView.m */; };
+		344B62B7179F790D00EE85A9 /* QIGroupSelectionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62A6179F790D00EE85A9 /* QIGroupSelectionData.m */; };
+		344B62B8179F790D00EE85A9 /* QIGroupSelectionTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62A8179F790D00EE85A9 /* QIGroupSelectionTableFooterView.m */; };
+		344B62B9179F790D00EE85A9 /* QIGroupSelectionTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62AA179F790D00EE85A9 /* QIGroupSelectionTableHeaderView.m */; };
+		344B62BA179F790D00EE85A9 /* QIGroupSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62AC179F790D00EE85A9 /* QIGroupSelectionView.m */; };
+		344B62BB179F790D00EE85A9 /* QIGroupSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62AE179F790D00EE85A9 /* QIGroupSelectionViewController.m */; };
+		344B62BE179F796900EE85A9 /* QIRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62BD179F796900EE85A9 /* QIRankViewController.m */; };
+		344B62C1179F798300EE85A9 /* QIRankView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62C0179F798300EE85A9 /* QIRankView.m */; };
+		344B62C4179F79CF00EE85A9 /* QISettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62C3179F79CF00EE85A9 /* QISettingsViewController.m */; };
+		344B62C7179F79E000EE85A9 /* QISettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62C6179F79E000EE85A9 /* QISettingsView.m */; };
+		344B62CA179F7A1800EE85A9 /* QIStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62C9179F7A1800EE85A9 /* QIStoreViewController.m */; };
+		344B62CD179F7A2D00EE85A9 /* QIStoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62CC179F7A2D00EE85A9 /* QIStoreView.m */; };
+		344B62D017A35CC700EE85A9 /* calendar_checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 344B62CE17A35CC700EE85A9 /* calendar_checkmark.png */; };
+		344B62D117A35CC700EE85A9 /* calendar_checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 344B62CF17A35CC700EE85A9 /* calendar_checkmark@2x.png */; };
+		344B62D417A3873900EE85A9 /* QIRankDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62D317A3873800EE85A9 /* QIRankDefinition.m */; };
+		344B62D817A38F0400EE85A9 /* QIRankDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344B62D717A38F0400EE85A9 /* QIRankDisplayView.m */; };
 		34519794176C06EE0061E459 /* cardquiz_businesscard_v1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3451978E176C06EE0061E459 /* cardquiz_businesscard_v1.png */; };
 		34519795176C06EE0061E459 /* cardquiz_businesscard_v1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3451978F176C06EE0061E459 /* cardquiz_businesscard_v1@2x.png */; };
 		34519796176C06EE0061E459 /* cardquiz_businesscard_v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 34519790176C06EE0061E459 /* cardquiz_businesscard_v2.png */; };
 		34519797176C06EE0061E459 /* cardquiz_businesscard_v2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34519791176C06EE0061E459 /* cardquiz_businesscard_v2@2x.png */; };
 		34519798176C06EE0061E459 /* cardquiz_businesscard_v4.png in Resources */ = {isa = PBXBuildFile; fileRef = 34519792176C06EE0061E459 /* cardquiz_businesscard_v4.png */; };
 		34519799176C06EE0061E459 /* cardquiz_businesscard_v4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34519793176C06EE0061E459 /* cardquiz_businesscard_v4@2x.png */; };
-		3451979F176CF0420061E459 /* QICalendarPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3451979E176CF0420061E459 /* QICalendarPickerViewController.m */; };
-		345197A2176CF0580061E459 /* QICalendarPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 345197A1176CF0580061E459 /* QICalendarPickerView.m */; };
-		345197A5176DFC8E0061E459 /* QICalendarCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 345197A4176DFC8E0061E459 /* QICalendarCellView.m */; };
-		345A075317762530005FD37D /* QICalendarTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 345A075217762530005FD37D /* QICalendarTableHeaderView.m */; };
 		345E7AB1176218C30020600A /* multiplechoice_pictureholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AAF176218C30020600A /* multiplechoice_pictureholder.png */; };
 		345E7AB2176218C30020600A /* multiplechoice_pictureholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AB0176218C30020600A /* multiplechoice_pictureholder@2x.png */; };
 		345E7AB5176219010020600A /* multiplechoice_tape.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AB3176219010020600A /* multiplechoice_tape.png */; };
@@ -118,9 +144,7 @@
 		3478FFA8173FD747002B29DB /* QIProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFA7173FD747002B29DB /* QIProgressView.m */; };
 		3478FFAC1747C19D002B29DB /* QIMatchingQuizViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFAB1747C19D002B29DB /* QIMatchingQuizViewController.m */; };
 		3478FFAF1747C1C7002B29DB /* QIMatchingQuizView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFAE1747C1C7002B29DB /* QIMatchingQuizView.m */; };
-		3489011F177A75B40004F604 /* QICalendarData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3489011E177A75B40004F604 /* QICalendarData.m */; };
 		34890121177A76D10004F604 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34890120177A76D10004F604 /* EventKit.framework */; };
-		34890124177F6EA40004F604 /* QICalendarTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34890123177F6EA30004F604 /* QICalendarTableFooterView.m */; };
 		348901281780C5360004F604 /* QICheckAnswersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 348901271780C5360004F604 /* QICheckAnswersView.m */; };
 		3489013E1780DC540004F604 /* quizin_command_forward_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 3489012A1780DC540004F604 /* quizin_command_forward_btn.png */; };
 		3489013F1780DC540004F604 /* quizin_command_forward_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3489012B1780DC540004F604 /* quizin_command_forward_btn@2x.png */; };
@@ -179,18 +203,8 @@
 		34B1D24B176958D300D38EF2 /* cardquiz_businesscard_v3.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B1D249176958D300D38EF2 /* cardquiz_businesscard_v3.png */; };
 		34B1D24C176958D300D38EF2 /* cardquiz_businesscard_v3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B1D24A176958D300D38EF2 /* cardquiz_businesscard_v3@2x.png */; };
 		34E9774C1764FAC900086673 /* QI_QuizBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E9774B1764FAC900086673 /* QI_QuizBuilder.m */; };
-		34EF1F9E172E2DC80019D6F7 /* Scratch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34EF1F9D172E2DC80019D6F7 /* Scratch.xib */; };
 		34F01A36172DB2F60056A76A /* QIBusinessCardQuizView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */; };
 		34F01A37172DB2F60056A76A /* QIBusinessCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */; };
-		34FE52491786FE2B00A462C2 /* QIGroupSelectionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE523E1786FE2B00A462C2 /* QIGroupSelectionCellView.m */; };
-		34FE524A1786FE2B00A462C2 /* QIGroupSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE52401786FE2B00A462C2 /* QIGroupSelectionViewController.m */; };
-		34FE524B1786FE2B00A462C2 /* QIGroupSelectionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE52421786FE2B00A462C2 /* QIGroupSelectionData.m */; };
-		34FE524C1786FE2B00A462C2 /* QIGroupSelectionTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE52451786FE2B00A462C2 /* QIGroupSelectionTableFooterView.m */; };
-		34FE524D1786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE52471786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.m */; };
-		34FE524E1786FE2B00A462C2 /* QIGroupSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE52481786FE2B00A462C2 /* QIGroupSelectionView.m */; };
-		34FE5252178A021D00A462C2 /* QIStatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE5251178A021D00A462C2 /* QIStatsViewController.m */; };
-		34FE5255178A023500A462C2 /* QIStatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE5254178A023500A462C2 /* QIStatsView.m */; };
-		34FE525B179AE91800A462C2 /* QIStatsData.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FE525A179AE91400A462C2 /* QIStatsData.m */; };
 		880870E216FBD31800D09848 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 880870DF16FBD31800D09848 /* InfoPlist.strings */; };
 		880870EF16FBD32200D09848 /* QuizIn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 880870EA16FBD32200D09848 /* QuizIn.xcdatamodeld */; };
 		880870F716FBD32E00D09848 /* QIAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 880870F316FBD32E00D09848 /* QIAppDelegate.m */; };
@@ -206,8 +220,6 @@
 		881EAFC616FBD08B0041AD55 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881EAF9916FBD08B0041AD55 /* CoreData.framework */; };
 		881EAFCE16FBD08B0041AD55 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 881EAFCC16FBD08B0041AD55 /* InfoPlist.strings */; };
 		881EAFD116FBD08B0041AD55 /* QuizInTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 881EAFD016FBD08B0041AD55 /* QuizInTests.m */; };
-		8886796B172D53F700DCE3D0 /* QIHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886796A172D53F700DCE3D0 /* QIHomeViewController.m */; };
-		8886796E172D540700DCE3D0 /* QIHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886796D172D540700DCE3D0 /* QIHomeView.m */; };
 		88867975172D572F00DCE3D0 /* QIDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88867974172D572F00DCE3D0 /* QIDrawerController.m */; };
 		88867978172D574C00DCE3D0 /* QIDrawerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88867977172D574C00DCE3D0 /* QIDrawerView.m */; };
 		8886798D172D6AF800DCE3D0 /* AKGTMOAuth2Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 8886797B172D6AF700DCE3D0 /* AKGTMOAuth2Account.m */; };
@@ -293,20 +305,69 @@
 		3429135F1753AC780056ACCD /* QIFontProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIFontProvider.m; sourceTree = "<group>"; };
 		342913621753E5340056ACCD /* QIBusinessCardAnswerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardAnswerView.h; sourceTree = "<group>"; };
 		342913631753E5340056ACCD /* QIBusinessCardAnswerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardAnswerView.m; sourceTree = "<group>"; };
+		344B6277179F786D00EE85A9 /* QIHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIHomeView.h; sourceTree = "<group>"; };
+		344B6278179F786D00EE85A9 /* QIHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIHomeView.m; sourceTree = "<group>"; };
+		344B6279179F786D00EE85A9 /* QIHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIHomeViewController.h; sourceTree = "<group>"; };
+		344B627A179F786D00EE85A9 /* QIHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIHomeViewController.m; sourceTree = "<group>"; };
+		344B627B179F786D00EE85A9 /* Scratch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Scratch.xib; path = Classes/UI/Screens/HomeTabs/Home/Scratch.xib; sourceTree = "<group>"; };
+		344B627F179F786D00EE85A9 /* QIStatsCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsCellView.h; sourceTree = "<group>"; };
+		344B6280179F786D00EE85A9 /* QIStatsCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsCellView.m; sourceTree = "<group>"; };
+		344B6281179F786D00EE85A9 /* QIStatsData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsData.h; sourceTree = "<group>"; };
+		344B6282179F786D00EE85A9 /* QIStatsData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsData.m; sourceTree = "<group>"; };
+		344B6283179F786D00EE85A9 /* QIStatsTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsTableHeaderView.h; sourceTree = "<group>"; };
+		344B6284179F786D00EE85A9 /* QIStatsTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsTableHeaderView.m; sourceTree = "<group>"; };
+		344B6285179F786D00EE85A9 /* QIStatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsView.h; sourceTree = "<group>"; };
+		344B6286179F786D00EE85A9 /* QIStatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsView.m; sourceTree = "<group>"; };
+		344B6287179F786D00EE85A9 /* QIStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsViewController.h; sourceTree = "<group>"; };
+		344B6288179F786D00EE85A9 /* QIStatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsViewController.m; sourceTree = "<group>"; };
+		344B6296179F790D00EE85A9 /* QICalendarCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarCellView.h; sourceTree = "<group>"; };
+		344B6297179F790D00EE85A9 /* QICalendarCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarCellView.m; sourceTree = "<group>"; };
+		344B6298179F790D00EE85A9 /* QICalendarData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarData.h; sourceTree = "<group>"; };
+		344B6299179F790D00EE85A9 /* QICalendarData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarData.m; sourceTree = "<group>"; };
+		344B629A179F790D00EE85A9 /* QICalendarPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarPickerView.h; sourceTree = "<group>"; };
+		344B629B179F790D00EE85A9 /* QICalendarPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarPickerView.m; sourceTree = "<group>"; };
+		344B629C179F790D00EE85A9 /* QICalendarPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarPickerViewController.h; sourceTree = "<group>"; };
+		344B629D179F790D00EE85A9 /* QICalendarPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarPickerViewController.m; sourceTree = "<group>"; };
+		344B629E179F790D00EE85A9 /* QICalendarTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarTableFooterView.h; sourceTree = "<group>"; };
+		344B629F179F790D00EE85A9 /* QICalendarTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarTableFooterView.m; sourceTree = "<group>"; };
+		344B62A0179F790D00EE85A9 /* QICalendarTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarTableHeaderView.h; sourceTree = "<group>"; };
+		344B62A1179F790D00EE85A9 /* QICalendarTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarTableHeaderView.m; sourceTree = "<group>"; };
+		344B62A3179F790D00EE85A9 /* QIGroupSelectionCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionCellView.h; sourceTree = "<group>"; };
+		344B62A4179F790D00EE85A9 /* QIGroupSelectionCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionCellView.m; sourceTree = "<group>"; };
+		344B62A5179F790D00EE85A9 /* QIGroupSelectionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionData.h; sourceTree = "<group>"; };
+		344B62A6179F790D00EE85A9 /* QIGroupSelectionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionData.m; sourceTree = "<group>"; };
+		344B62A7179F790D00EE85A9 /* QIGroupSelectionTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionTableFooterView.h; sourceTree = "<group>"; };
+		344B62A8179F790D00EE85A9 /* QIGroupSelectionTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionTableFooterView.m; sourceTree = "<group>"; };
+		344B62A9179F790D00EE85A9 /* QIGroupSelectionTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionTableHeaderView.h; sourceTree = "<group>"; };
+		344B62AA179F790D00EE85A9 /* QIGroupSelectionTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionTableHeaderView.m; sourceTree = "<group>"; };
+		344B62AB179F790D00EE85A9 /* QIGroupSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionView.h; sourceTree = "<group>"; };
+		344B62AC179F790D00EE85A9 /* QIGroupSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionView.m; sourceTree = "<group>"; };
+		344B62AD179F790D00EE85A9 /* QIGroupSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionViewController.h; sourceTree = "<group>"; };
+		344B62AE179F790D00EE85A9 /* QIGroupSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionViewController.m; sourceTree = "<group>"; };
+		344B62BC179F796900EE85A9 /* QIRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIRankViewController.h; sourceTree = "<group>"; };
+		344B62BD179F796900EE85A9 /* QIRankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIRankViewController.m; sourceTree = "<group>"; };
+		344B62BF179F798300EE85A9 /* QIRankView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIRankView.h; sourceTree = "<group>"; };
+		344B62C0179F798300EE85A9 /* QIRankView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIRankView.m; sourceTree = "<group>"; };
+		344B62C2179F79CF00EE85A9 /* QISettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QISettingsViewController.h; sourceTree = "<group>"; };
+		344B62C3179F79CF00EE85A9 /* QISettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QISettingsViewController.m; sourceTree = "<group>"; };
+		344B62C5179F79E000EE85A9 /* QISettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QISettingsView.h; sourceTree = "<group>"; };
+		344B62C6179F79E000EE85A9 /* QISettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QISettingsView.m; sourceTree = "<group>"; };
+		344B62C8179F7A1800EE85A9 /* QIStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStoreViewController.h; sourceTree = "<group>"; };
+		344B62C9179F7A1800EE85A9 /* QIStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStoreViewController.m; sourceTree = "<group>"; };
+		344B62CB179F7A2D00EE85A9 /* QIStoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStoreView.h; sourceTree = "<group>"; };
+		344B62CC179F7A2D00EE85A9 /* QIStoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStoreView.m; sourceTree = "<group>"; };
+		344B62CE17A35CC700EE85A9 /* calendar_checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_checkmark.png; sourceTree = "<group>"; };
+		344B62CF17A35CC700EE85A9 /* calendar_checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_checkmark@2x.png"; sourceTree = "<group>"; };
+		344B62D217A3873600EE85A9 /* QIRankDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIRankDefinition.h; sourceTree = "<group>"; };
+		344B62D317A3873800EE85A9 /* QIRankDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIRankDefinition.m; sourceTree = "<group>"; };
+		344B62D617A38F0400EE85A9 /* QIRankDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIRankDisplayView.h; sourceTree = "<group>"; };
+		344B62D717A38F0400EE85A9 /* QIRankDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIRankDisplayView.m; sourceTree = "<group>"; };
 		3451978E176C06EE0061E459 /* cardquiz_businesscard_v1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardquiz_businesscard_v1.png; sourceTree = "<group>"; };
 		3451978F176C06EE0061E459 /* cardquiz_businesscard_v1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardquiz_businesscard_v1@2x.png"; sourceTree = "<group>"; };
 		34519790176C06EE0061E459 /* cardquiz_businesscard_v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardquiz_businesscard_v2.png; sourceTree = "<group>"; };
 		34519791176C06EE0061E459 /* cardquiz_businesscard_v2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardquiz_businesscard_v2@2x.png"; sourceTree = "<group>"; };
 		34519792176C06EE0061E459 /* cardquiz_businesscard_v4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardquiz_businesscard_v4.png; sourceTree = "<group>"; };
 		34519793176C06EE0061E459 /* cardquiz_businesscard_v4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardquiz_businesscard_v4@2x.png"; sourceTree = "<group>"; };
-		3451979D176CF0420061E459 /* QICalendarPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarPickerViewController.h; sourceTree = "<group>"; };
-		3451979E176CF0420061E459 /* QICalendarPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarPickerViewController.m; sourceTree = "<group>"; };
-		345197A0176CF0580061E459 /* QICalendarPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarPickerView.h; sourceTree = "<group>"; };
-		345197A1176CF0580061E459 /* QICalendarPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarPickerView.m; sourceTree = "<group>"; };
-		345197A3176DFC8D0061E459 /* QICalendarCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarCellView.h; sourceTree = "<group>"; };
-		345197A4176DFC8E0061E459 /* QICalendarCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarCellView.m; sourceTree = "<group>"; };
-		345A075117762530005FD37D /* QICalendarTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarTableHeaderView.h; sourceTree = "<group>"; };
-		345A075217762530005FD37D /* QICalendarTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarTableHeaderView.m; sourceTree = "<group>"; };
 		345E7AAF176218C30020600A /* multiplechoice_pictureholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplechoice_pictureholder.png; sourceTree = "<group>"; };
 		345E7AB0176218C30020600A /* multiplechoice_pictureholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "multiplechoice_pictureholder@2x.png"; sourceTree = "<group>"; };
 		345E7AB3176219010020600A /* multiplechoice_tape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplechoice_tape.png; sourceTree = "<group>"; };
@@ -380,11 +441,7 @@
 		3478FFFD1750EFC1002B29DB /* quizin_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quizin_bg.png; sourceTree = "<group>"; };
 		3478FFFE1750EFC1002B29DB /* quizin_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quizin_bg@2x.png"; sourceTree = "<group>"; };
 		3478FFFF1750EFC1002B29DB /* quizin_divider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quizin_divider.png; sourceTree = "<group>"; };
-		3489011D177A75B40004F604 /* QICalendarData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarData.h; sourceTree = "<group>"; };
-		3489011E177A75B40004F604 /* QICalendarData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarData.m; sourceTree = "<group>"; };
 		34890120177A76D10004F604 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
-		34890122177F6EA20004F604 /* QICalendarTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICalendarTableFooterView.h; sourceTree = "<group>"; };
-		34890123177F6EA30004F604 /* QICalendarTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICalendarTableFooterView.m; sourceTree = "<group>"; };
 		348901261780C5360004F604 /* QICheckAnswersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICheckAnswersView.h; sourceTree = "<group>"; };
 		348901271780C5360004F604 /* QICheckAnswersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICheckAnswersView.m; sourceTree = "<group>"; };
 		3489012A1780DC540004F604 /* quizin_command_forward_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quizin_command_forward_btn.png; sourceTree = "<group>"; };
@@ -445,29 +502,10 @@
 		34B1D24A176958D300D38EF2 /* cardquiz_businesscard_v3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardquiz_businesscard_v3@2x.png"; sourceTree = "<group>"; };
 		34E9774A1764FAC900086673 /* QI_QuizBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QI_QuizBuilder.h; sourceTree = "<group>"; };
 		34E9774B1764FAC900086673 /* QI_QuizBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QI_QuizBuilder.m; sourceTree = "<group>"; };
-		34EF1F9D172E2DC80019D6F7 /* Scratch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Scratch.xib; sourceTree = "<group>"; };
 		34F01A32172DB2F60056A76A /* QIBusinessCardQuizView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardQuizView.h; sourceTree = "<group>"; };
 		34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardQuizView.m; sourceTree = "<group>"; };
 		34F01A34172DB2F60056A76A /* QIBusinessCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardViewController.h; sourceTree = "<group>"; };
 		34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardViewController.m; sourceTree = "<group>"; };
-		34FE523D1786FE2B00A462C2 /* QIGroupSelectionCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionCellView.h; sourceTree = "<group>"; };
-		34FE523E1786FE2B00A462C2 /* QIGroupSelectionCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionCellView.m; sourceTree = "<group>"; };
-		34FE523F1786FE2B00A462C2 /* QIGroupSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionViewController.h; sourceTree = "<group>"; };
-		34FE52401786FE2B00A462C2 /* QIGroupSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionViewController.m; sourceTree = "<group>"; };
-		34FE52411786FE2B00A462C2 /* QIGroupSelectionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionData.h; sourceTree = "<group>"; };
-		34FE52421786FE2B00A462C2 /* QIGroupSelectionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionData.m; sourceTree = "<group>"; };
-		34FE52431786FE2B00A462C2 /* QIGroupSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionView.h; sourceTree = "<group>"; };
-		34FE52441786FE2B00A462C2 /* QIGroupSelectionTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionTableFooterView.h; sourceTree = "<group>"; };
-		34FE52451786FE2B00A462C2 /* QIGroupSelectionTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionTableFooterView.m; sourceTree = "<group>"; };
-		34FE52461786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIGroupSelectionTableHeaderView.h; sourceTree = "<group>"; };
-		34FE52471786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionTableHeaderView.m; sourceTree = "<group>"; };
-		34FE52481786FE2B00A462C2 /* QIGroupSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIGroupSelectionView.m; sourceTree = "<group>"; };
-		34FE5250178A021D00A462C2 /* QIStatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsViewController.h; sourceTree = "<group>"; };
-		34FE5251178A021D00A462C2 /* QIStatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsViewController.m; sourceTree = "<group>"; };
-		34FE5253178A023500A462C2 /* QIStatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsView.h; sourceTree = "<group>"; };
-		34FE5254178A023500A462C2 /* QIStatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsView.m; sourceTree = "<group>"; };
-		34FE5259179AE91300A462C2 /* QIStatsData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsData.h; sourceTree = "<group>"; };
-		34FE525A179AE91400A462C2 /* QIStatsData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsData.m; sourceTree = "<group>"; };
 		634CC7A981E449658DD30D1E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F88557B297046AD9AF083B1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		880870E016FBD31800D09848 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -490,10 +528,6 @@
 		881EAFCD16FBD08B0041AD55 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		881EAFCF16FBD08B0041AD55 /* QuizInTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuizInTests.h; sourceTree = "<group>"; };
 		881EAFD016FBD08B0041AD55 /* QuizInTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuizInTests.m; sourceTree = "<group>"; };
-		88867969172D53F700DCE3D0 /* QIHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIHomeViewController.h; sourceTree = "<group>"; };
-		8886796A172D53F700DCE3D0 /* QIHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIHomeViewController.m; sourceTree = "<group>"; };
-		8886796C172D540700DCE3D0 /* QIHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIHomeView.h; sourceTree = "<group>"; };
-		8886796D172D540700DCE3D0 /* QIHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIHomeView.m; sourceTree = "<group>"; };
 		88867973172D572F00DCE3D0 /* QIDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIDrawerController.h; sourceTree = "<group>"; };
 		88867974172D572F00DCE3D0 /* QIDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIDrawerController.m; sourceTree = "<group>"; };
 		88867976172D574C00DCE3D0 /* QIDrawerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIDrawerView.h; sourceTree = "<group>"; };
@@ -638,30 +672,143 @@
 			path = BusinessCardAnswer;
 			sourceTree = "<group>";
 		};
-		3451979A176CEE490061E459 /* CalendarPicker */ = {
+		344B6275179F786D00EE85A9 /* HomeTabs */ = {
 			isa = PBXGroup;
 			children = (
-				3451979D176CF0420061E459 /* QICalendarPickerViewController.h */,
-				3451979E176CF0420061E459 /* QICalendarPickerViewController.m */,
-				345197A0176CF0580061E459 /* QICalendarPickerView.h */,
-				345197A1176CF0580061E459 /* QICalendarPickerView.m */,
-				345197A3176DFC8D0061E459 /* QICalendarCellView.h */,
-				345197A4176DFC8E0061E459 /* QICalendarCellView.m */,
-				345A075117762530005FD37D /* QICalendarTableHeaderView.h */,
-				345A075217762530005FD37D /* QICalendarTableHeaderView.m */,
-				34890122177F6EA20004F604 /* QICalendarTableFooterView.h */,
-				34890123177F6EA30004F604 /* QICalendarTableFooterView.m */,
-				3489011D177A75B40004F604 /* QICalendarData.h */,
-				3489011E177A75B40004F604 /* QICalendarData.m */,
+				344B6276179F786D00EE85A9 /* Home */,
+				344B627C179F786D00EE85A9 /* RankView */,
+				344B627D179F786D00EE85A9 /* SettingsView */,
+				344B627E179F786D00EE85A9 /* StatsView */,
+				344B6289179F786D00EE85A9 /* StoreView */,
+			);
+			path = HomeTabs;
+			sourceTree = "<group>";
+		};
+		344B6276179F786D00EE85A9 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				344B6279179F786D00EE85A9 /* QIHomeViewController.h */,
+				344B627A179F786D00EE85A9 /* QIHomeViewController.m */,
+				344B6277179F786D00EE85A9 /* QIHomeView.h */,
+				344B6278179F786D00EE85A9 /* QIHomeView.m */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		344B627C179F786D00EE85A9 /* RankView */ = {
+			isa = PBXGroup;
+			children = (
+				344B62BC179F796900EE85A9 /* QIRankViewController.h */,
+				344B62BD179F796900EE85A9 /* QIRankViewController.m */,
+				344B62BF179F798300EE85A9 /* QIRankView.h */,
+				344B62C0179F798300EE85A9 /* QIRankView.m */,
+				344B62D217A3873600EE85A9 /* QIRankDefinition.h */,
+				344B62D317A3873800EE85A9 /* QIRankDefinition.m */,
+			);
+			path = RankView;
+			sourceTree = "<group>";
+		};
+		344B627D179F786D00EE85A9 /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				344B62C2179F79CF00EE85A9 /* QISettingsViewController.h */,
+				344B62C3179F79CF00EE85A9 /* QISettingsViewController.m */,
+				344B62C5179F79E000EE85A9 /* QISettingsView.h */,
+				344B62C6179F79E000EE85A9 /* QISettingsView.m */,
+			);
+			path = SettingsView;
+			sourceTree = "<group>";
+		};
+		344B627E179F786D00EE85A9 /* StatsView */ = {
+			isa = PBXGroup;
+			children = (
+				344B627F179F786D00EE85A9 /* QIStatsCellView.h */,
+				344B6280179F786D00EE85A9 /* QIStatsCellView.m */,
+				344B6281179F786D00EE85A9 /* QIStatsData.h */,
+				344B6282179F786D00EE85A9 /* QIStatsData.m */,
+				344B6283179F786D00EE85A9 /* QIStatsTableHeaderView.h */,
+				344B6284179F786D00EE85A9 /* QIStatsTableHeaderView.m */,
+				344B6285179F786D00EE85A9 /* QIStatsView.h */,
+				344B6286179F786D00EE85A9 /* QIStatsView.m */,
+				344B6287179F786D00EE85A9 /* QIStatsViewController.h */,
+				344B6288179F786D00EE85A9 /* QIStatsViewController.m */,
+			);
+			path = StatsView;
+			sourceTree = "<group>";
+		};
+		344B6289179F786D00EE85A9 /* StoreView */ = {
+			isa = PBXGroup;
+			children = (
+				344B62C8179F7A1800EE85A9 /* QIStoreViewController.h */,
+				344B62C9179F7A1800EE85A9 /* QIStoreViewController.m */,
+				344B62CB179F7A2D00EE85A9 /* QIStoreView.h */,
+				344B62CC179F7A2D00EE85A9 /* QIStoreView.m */,
+			);
+			path = StoreView;
+			sourceTree = "<group>";
+		};
+		344B6294179F790D00EE85A9 /* Pickers */ = {
+			isa = PBXGroup;
+			children = (
+				344B6295179F790D00EE85A9 /* CalendarPicker */,
+				344B62A2179F790D00EE85A9 /* Group Selection */,
+				344B62AF179F790D00EE85A9 /* LocationPicker */,
+			);
+			path = Pickers;
+			sourceTree = "<group>";
+		};
+		344B6295179F790D00EE85A9 /* CalendarPicker */ = {
+			isa = PBXGroup;
+			children = (
+				344B6296179F790D00EE85A9 /* QICalendarCellView.h */,
+				344B6297179F790D00EE85A9 /* QICalendarCellView.m */,
+				344B6298179F790D00EE85A9 /* QICalendarData.h */,
+				344B6299179F790D00EE85A9 /* QICalendarData.m */,
+				344B629A179F790D00EE85A9 /* QICalendarPickerView.h */,
+				344B629B179F790D00EE85A9 /* QICalendarPickerView.m */,
+				344B629C179F790D00EE85A9 /* QICalendarPickerViewController.h */,
+				344B629D179F790D00EE85A9 /* QICalendarPickerViewController.m */,
+				344B629E179F790D00EE85A9 /* QICalendarTableFooterView.h */,
+				344B629F179F790D00EE85A9 /* QICalendarTableFooterView.m */,
+				344B62A0179F790D00EE85A9 /* QICalendarTableHeaderView.h */,
+				344B62A1179F790D00EE85A9 /* QICalendarTableHeaderView.m */,
 			);
 			path = CalendarPicker;
 			sourceTree = "<group>";
 		};
-		3451979B176CEE4A0061E459 /* LocationPicker */ = {
+		344B62A2179F790D00EE85A9 /* Group Selection */ = {
+			isa = PBXGroup;
+			children = (
+				344B62A3179F790D00EE85A9 /* QIGroupSelectionCellView.h */,
+				344B62A4179F790D00EE85A9 /* QIGroupSelectionCellView.m */,
+				344B62A5179F790D00EE85A9 /* QIGroupSelectionData.h */,
+				344B62A6179F790D00EE85A9 /* QIGroupSelectionData.m */,
+				344B62A7179F790D00EE85A9 /* QIGroupSelectionTableFooterView.h */,
+				344B62A8179F790D00EE85A9 /* QIGroupSelectionTableFooterView.m */,
+				344B62A9179F790D00EE85A9 /* QIGroupSelectionTableHeaderView.h */,
+				344B62AA179F790D00EE85A9 /* QIGroupSelectionTableHeaderView.m */,
+				344B62AB179F790D00EE85A9 /* QIGroupSelectionView.h */,
+				344B62AC179F790D00EE85A9 /* QIGroupSelectionView.m */,
+				344B62AD179F790D00EE85A9 /* QIGroupSelectionViewController.h */,
+				344B62AE179F790D00EE85A9 /* QIGroupSelectionViewController.m */,
+			);
+			path = "Group Selection";
+			sourceTree = "<group>";
+		};
+		344B62AF179F790D00EE85A9 /* LocationPicker */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = LocationPicker;
+			sourceTree = "<group>";
+		};
+		344B62D517A38EC800EE85A9 /* RankDisplayView */ = {
+			isa = PBXGroup;
+			children = (
+				344B62D617A38F0400EE85A9 /* QIRankDisplayView.h */,
+				344B62D717A38F0400EE85A9 /* QIRankDisplayView.m */,
+			);
+			path = RankDisplayView;
 			sourceTree = "<group>";
 		};
 		345E7AB717621DB80020600A /* Match Quiz */ = {
@@ -898,6 +1045,8 @@
 		348901AE1786F7860004F604 /* Group Selection */ = {
 			isa = PBXGroup;
 			children = (
+				344B62CE17A35CC700EE85A9 /* calendar_checkmark.png */,
+				344B62CF17A35CC700EE85A9 /* calendar_checkmark@2x.png */,
 				348901AF1786F78C0004F604 /* calendar_datebar1.png */,
 				348901B01786F78C0004F604 /* calendar_datebar1@2x.png */,
 				348901B11786F78C0004F604 /* calendar_expand_btn1.png */,
@@ -923,38 +1072,6 @@
 				34E9774B1764FAC900086673 /* QI_QuizBuilder.m */,
 			);
 			path = QuizBuilder;
-			sourceTree = "<group>";
-		};
-		34FE523C1786FE2B00A462C2 /* Group Selection */ = {
-			isa = PBXGroup;
-			children = (
-				34FE523F1786FE2B00A462C2 /* QIGroupSelectionViewController.h */,
-				34FE52401786FE2B00A462C2 /* QIGroupSelectionViewController.m */,
-				34FE52431786FE2B00A462C2 /* QIGroupSelectionView.h */,
-				34FE52481786FE2B00A462C2 /* QIGroupSelectionView.m */,
-				34FE52411786FE2B00A462C2 /* QIGroupSelectionData.h */,
-				34FE52421786FE2B00A462C2 /* QIGroupSelectionData.m */,
-				34FE523D1786FE2B00A462C2 /* QIGroupSelectionCellView.h */,
-				34FE523E1786FE2B00A462C2 /* QIGroupSelectionCellView.m */,
-				34FE52461786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.h */,
-				34FE52471786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.m */,
-				34FE52441786FE2B00A462C2 /* QIGroupSelectionTableFooterView.h */,
-				34FE52451786FE2B00A462C2 /* QIGroupSelectionTableFooterView.m */,
-			);
-			path = "Group Selection";
-			sourceTree = "<group>";
-		};
-		34FE524F178A01BD00A462C2 /* StatsView */ = {
-			isa = PBXGroup;
-			children = (
-				34FE5250178A021D00A462C2 /* QIStatsViewController.h */,
-				34FE5251178A021D00A462C2 /* QIStatsViewController.m */,
-				34FE5253178A023500A462C2 /* QIStatsView.h */,
-				34FE5254178A023500A462C2 /* QIStatsView.m */,
-				34FE5259179AE91300A462C2 /* QIStatsData.h */,
-				34FE525A179AE91400A462C2 /* QIStatsData.m */,
-			);
-			path = StatsView;
 			sourceTree = "<group>";
 		};
 		880870DE16FBD31800D09848 /* Supporting Files */ = {
@@ -1009,6 +1126,7 @@
 				880870F116FBD32E00D09848 /* Classes */,
 				880870F516FBD32E00D09848 /* main.m */,
 				880870F616FBD32E00D09848 /* QuizIn-Prefix.pch */,
+				344B627B179F786D00EE85A9 /* Scratch.xib */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -1107,26 +1225,11 @@
 		88867961172D521C00DCE3D0 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				34FE524F178A01BD00A462C2 /* StatsView */,
-				34FE523C1786FE2B00A462C2 /* Group Selection */,
-				3451979A176CEE490061E459 /* CalendarPicker */,
-				3451979B176CEE4A0061E459 /* LocationPicker */,
+				344B6294179F790D00EE85A9 /* Pickers */,
+				344B6275179F786D00EE85A9 /* HomeTabs */,
 				8886799A172DAFC700DCE3D0 /* Quizzes */,
-				88867968172D53F700DCE3D0 /* Home */,
 			);
 			path = Screens;
-			sourceTree = "<group>";
-		};
-		88867968172D53F700DCE3D0 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				88867969172D53F700DCE3D0 /* QIHomeViewController.h */,
-				8886796A172D53F700DCE3D0 /* QIHomeViewController.m */,
-				8886796C172D540700DCE3D0 /* QIHomeView.h */,
-				8886796D172D540700DCE3D0 /* QIHomeView.m */,
-				34EF1F9D172E2DC80019D6F7 /* Scratch.xib */,
-			);
-			path = Home;
 			sourceTree = "<group>";
 		};
 		88867972172D572F00DCE3D0 /* Drawer */ = {
@@ -1164,6 +1267,7 @@
 		8886799A172DAFC700DCE3D0 /* Quizzes */ = {
 			isa = PBXGroup;
 			children = (
+				344B62D517A38EC800EE85A9 /* RankDisplayView */,
 				348901251780C51A0004F604 /* CheckAnswers */,
 				3478FFA5173FD6BF002B29DB /* ProgressView */,
 				888679A5172DD57F00DCE3D0 /* MultipleChoice */,
@@ -1274,7 +1378,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				880870E216FBD31800D09848 /* InfoPlist.strings in Resources */,
-				34EF1F9E172E2DC80019D6F7 /* Scratch.xib in Resources */,
 				3478FF9F173EE237002B29DB /* High-level diagram.pdf in Resources */,
 				347800051750EFC1002B29DB /* cardquiz_answerholder.png in Resources */,
 				347800061750EFC1002B29DB /* cardquiz_answerholder@2x.png in Resources */,
@@ -1409,6 +1512,9 @@
 				348901C91786F78C0004F604 /* calendar_slitbottom1@2x.png in Resources */,
 				348901CA1786F78C0004F604 /* calendar_slittop1.png in Resources */,
 				348901CB1786F78C0004F604 /* calendar_slittop1@2x.png in Resources */,
+				344B628C179F786D00EE85A9 /* Scratch.xib in Resources */,
+				344B62D017A35CC700EE85A9 /* calendar_checkmark.png in Resources */,
+				344B62D117A35CC700EE85A9 /* calendar_checkmark@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1461,8 +1567,6 @@
 				880870F716FBD32E00D09848 /* QIAppDelegate.m in Sources */,
 				880870F816FBD32E00D09848 /* main.m in Sources */,
 				880870FB16FBD3A800D09848 /* QIApplicationViewController.m in Sources */,
-				8886796B172D53F700DCE3D0 /* QIHomeViewController.m in Sources */,
-				8886796E172D540700DCE3D0 /* QIHomeView.m in Sources */,
 				88867975172D572F00DCE3D0 /* QIDrawerController.m in Sources */,
 				88867978172D574C00DCE3D0 /* QIDrawerView.m in Sources */,
 				8886798D172D6AF800DCE3D0 /* AKGTMOAuth2Account.m in Sources */,
@@ -1485,12 +1589,6 @@
 				342913601753AC780056ACCD /* QIFontProvider.m in Sources */,
 				342913641753E5340056ACCD /* QIBusinessCardAnswerView.m in Sources */,
 				34E9774C1764FAC900086673 /* QI_QuizBuilder.m in Sources */,
-				3451979F176CF0420061E459 /* QICalendarPickerViewController.m in Sources */,
-				345197A2176CF0580061E459 /* QICalendarPickerView.m in Sources */,
-				345197A5176DFC8E0061E459 /* QICalendarCellView.m in Sources */,
-				345A075317762530005FD37D /* QICalendarTableHeaderView.m in Sources */,
-				3489011F177A75B40004F604 /* QICalendarData.m in Sources */,
-				34890124177F6EA40004F604 /* QICalendarTableFooterView.m in Sources */,
 				205504E11780BED200F7F90F /* QIQuiz.m in Sources */,
 				205504E41780BEF900F7F90F /* QIQuizQuestion.m in Sources */,
 				205504E71780BF3300F7F90F /* QIMultipleChoiceQuestion.m in Sources */,
@@ -1510,6 +1608,21 @@
 				34FE524D1786FE2B00A462C2 /* QIGroupSelectionTableHeaderView.m in Sources */,
 				34FE524E1786FE2B00A462C2 /* QIGroupSelectionView.m in Sources */,
 				34FE5252178A021D00A462C2 /* QIStatsViewController.m in Sources */,
+				205504FF1780D60E00F7F90F /* QIQuizBuilder.m in Sources */,
+				344B628A179F786D00EE85A9 /* QIHomeView.m in Sources */,
+				344B628B179F786D00EE85A9 /* QIHomeViewController.m in Sources */,
+				344B628D179F786D00EE85A9 /* QIStatsCellView.m in Sources */,
+				344B628E179F786D00EE85A9 /* QIStatsData.m in Sources */,
+				344B628F179F786D00EE85A9 /* QIStatsTableHeaderView.m in Sources */,
+				344B6290179F786D00EE85A9 /* QIStatsView.m in Sources */,
+				344B6291179F786D00EE85A9 /* QIStatsViewController.m in Sources */,
+				344B62B0179F790D00EE85A9 /* QICalendarCellView.m in Sources */,
+				344B62B1179F790D00EE85A9 /* QICalendarData.m in Sources */,
+				344B62B2179F790D00EE85A9 /* QICalendarPickerView.m in Sources */,
+				344B62B3179F790D00EE85A9 /* QICalendarPickerViewController.m in Sources */,
+				344B62B4179F790D00EE85A9 /* QICalendarTableFooterView.m in Sources */,
+				344B62B5179F790D00EE85A9 /* QICalendarTableHeaderView.m in Sources */,
+				344B62B6179F790D00EE85A9 /* QIGroupSelectionCellView.m in Sources */,
 				34FE5255178A023500A462C2 /* QIStatsView.m in Sources */,
 				34FE525B179AE91800A462C2 /* QIStatsData.m in Sources */,
 				20CC021A179B329D00FBA085 /* LIHTTPClient.m in Sources */,
@@ -1523,6 +1636,19 @@
 				20CC0231179B513F00FBA085 /* QIPosition+Factory.m in Sources */,
 				20CC0234179B519800FBA085 /* QICompany+Factory.m in Sources */,
 				20CC0288179C9B8E00FBA085 /* QIShuffleSet.m in Sources */,
+				344B62B7179F790D00EE85A9 /* QIGroupSelectionData.m in Sources */,
+				344B62B8179F790D00EE85A9 /* QIGroupSelectionTableFooterView.m in Sources */,
+				344B62B9179F790D00EE85A9 /* QIGroupSelectionTableHeaderView.m in Sources */,
+				344B62BA179F790D00EE85A9 /* QIGroupSelectionView.m in Sources */,
+				344B62BB179F790D00EE85A9 /* QIGroupSelectionViewController.m in Sources */,
+				344B62BE179F796900EE85A9 /* QIRankViewController.m in Sources */,
+				344B62C1179F798300EE85A9 /* QIRankView.m in Sources */,
+				344B62C4179F79CF00EE85A9 /* QISettingsViewController.m in Sources */,
+				344B62C7179F79E000EE85A9 /* QISettingsView.m in Sources */,
+				344B62CA179F7A1800EE85A9 /* QIStoreViewController.m in Sources */,
+				344B62CD179F7A2D00EE85A9 /* QIStoreView.m in Sources */,
+				344B62D417A3873900EE85A9 /* QIRankDefinition.m in Sources */,
+				344B62D817A38F0400EE85A9 /* QIRankDisplayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

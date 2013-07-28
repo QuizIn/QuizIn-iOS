@@ -1,10 +1,15 @@
 #import "QIApplicationViewController.h"
-
 #import <AuthKit/AKAuthHandler.h>
-
 #import "AKLinkedInAuthController.h"
 #import "QIDrawerController.h"
 #import "QIHomeViewController.h"
+
+//Tab Bar Views
+#import "QIHomeViewController.h"
+#import "QIStatsViewController.h"
+#import "QIRankViewController.h"
+#import "QISettingsViewController.h"
+#import "QIStoreViewController.h"
 
 // TODO(rcacheaux):  Remove Temp Stuff.
 #import "LinkedIn.h"
@@ -12,10 +17,13 @@
 #import "QIQuizFactory.h"
 #import "QIQuiz.h"
 
+#define USERID @"12345"
+
 @interface QIApplicationViewController ()<AKAuthHandler>
-@property(nonatomic, strong) QIDrawerController *drawerController;
+//@property(nonatomic, strong) QIDrawerController *drawerController;
 @property(nonatomic, strong) UIViewController *loginViewController;
 @property(nonatomic, strong) AKLinkedInAuthController *authController;
+@property(nonatomic, strong) UITabBarController *tabViewController;
 @end
 
 @implementation QIApplicationViewController
@@ -47,7 +55,8 @@
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
-  self.drawerController.view.frame = self.view.bounds;
+  //self.drawerController.view.frame = self.view.bounds;
+  self.tabViewController.view.frame = self.view.bounds; 
   self.loginViewController.view.frame = self.view.bounds;
 }
 
@@ -65,9 +74,12 @@
   [self.loginViewController.view removeFromSuperview];
   [self.loginViewController removeFromParentViewController];
   
-  self.drawerController = [self newDrawerController];
-  [self addChildViewController:self.drawerController];
-  [self.view addSubview:self.drawerController.view];
+  self.tabViewController = [self newTabBarController];
+  [self addChildViewController:self.tabViewController];
+  [self.view addSubview:self.tabViewController.view];
+  //self.drawerController = [self newDrawerController];
+  //[self addChildViewController:self.drawerController];
+  //[self.view addSubview:self.drawerController.view];
   
   /*
   QIQuiz *quiz = [QIQuizBuilder quizFromRandomConnections];
@@ -104,8 +116,11 @@
 
 - (void)authControllerAccount:(AKAccount *)account
             didUnauthenticate:(id<AKAuthControl>)authController {
-  [self.drawerController.view removeFromSuperview];
-  [self.drawerController removeFromParentViewController];
+  
+  [self.tabBarController.view removeFromSuperview];
+  [self.tabBarController removeFromParentViewController];
+  //[self.drawerController.view removeFromSuperview];
+  //[self.drawerController removeFromParentViewController];
 }
 
 #pragma mark Factory Methods
@@ -116,6 +131,11 @@
   return authController;
 }
 
+- (UITabBarController *)newTabBarController{
+  UITabBarController *tabController = [[UITabBarController alloc] init];
+  [tabController setViewControllers:@[[self newHomeViewController],[self newStatsViewController],[self newRankViewController],[self newStoreViewController],[self newSettingsViewController]]];
+  return tabController; 
+}
 - (QIDrawerController *)newDrawerController {
   QIDrawerController *drawerController = [[QIDrawerController alloc] init];
   [drawerController updateViewControllers:@[[self newHomeViewController]]];
@@ -124,7 +144,35 @@
 
 - (QIHomeViewController *)newHomeViewController {
   QIHomeViewController *homeViewController = [[QIHomeViewController alloc] init];
+  [homeViewController setTitle:@"Home"];
+  [homeViewController setUserID:USERID];
   return homeViewController;
+}
+
+- (QIStatsViewController *)newStatsViewController {
+  QIStatsViewController *statsViewController = [[QIStatsViewController alloc] init];
+  [statsViewController setTitle:@"Stats"];
+  [statsViewController setUserID:USERID];
+  return statsViewController;
+}
+
+- (QIStoreViewController *)newStoreViewController {
+  QIStoreViewController *storeViewController = [[QIStoreViewController alloc] init];
+  [storeViewController setTitle:@"Store"];
+  return storeViewController;
+}
+
+- (QIRankViewController *)newRankViewController {
+  QIRankViewController *rankViewController = [[QIRankViewController alloc] init];
+  [rankViewController setTitle:@"Rank"];
+  [rankViewController setUserID:USERID];
+  return rankViewController;
+}
+
+- (QISettingsViewController *)newSettingsViewController {
+  QISettingsViewController *settingsViewController = [[QISettingsViewController alloc] init];
+  [settingsViewController setTitle:@"Settings"];
+  return settingsViewController;
 }
 
 @end

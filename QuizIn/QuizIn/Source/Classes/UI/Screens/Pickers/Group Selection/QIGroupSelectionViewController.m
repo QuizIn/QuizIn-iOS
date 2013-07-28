@@ -24,8 +24,11 @@
 - (void)viewDidLoad{
   [super viewDidLoad];
   NSMutableArray *selectionContent = [QIGroupSelectionData getSelectionData];
-  self.groupSelectionView.selectionContent = selectionContent;
-  self.groupSelectionView.selectionViewLabelString = @"Create Your Next Quiz";
+  [self.groupSelectionView setSelectionContent:selectionContent];
+  [self.groupSelectionView setSelectionViewLabelString:@"Create Your Next Quiz"];
+  [self.groupSelectionView.backButton addTarget:self
+                                         action:@selector(backButtonPressed)
+                               forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -36,6 +39,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark Actions
+- (void)backButtonPressed{
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (QIGroupSelectionView *)groupSelectionView {
   return (QIGroupSelectionView *)self.view;

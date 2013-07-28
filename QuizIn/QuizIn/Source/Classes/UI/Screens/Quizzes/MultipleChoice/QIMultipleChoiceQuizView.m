@@ -1,23 +1,27 @@
 #import "QIMultipleChoiceQuizView.h"
 #import "AsyncImageView.h"
 #import "QIFontProvider.h"
+#import "QIStatsData.h"
+
 
 @interface QIMultipleChoiceQuizView ()
 
-@property(nonatomic, strong) UIImageView *viewBackground;
-@property(nonatomic, strong) UIImageView *dividerTop;
-@property(nonatomic, strong) UIImageView *dividerBottom;
-@property(nonatomic, strong) UIImageView *profileImageBackground;
-@property(nonatomic, strong) UIImageView *profileImageTape;
+@property (nonatomic, strong) UIImageView *viewBackground;
+@property (nonatomic, strong) UIImageView *dividerTop;
+@property (nonatomic, strong) UIImageView *dividerBottom;
+@property (nonatomic, strong) UIImageView *profileImageBackground;
+@property (nonatomic, strong) UIImageView *profileImageTape;
 
-@property(nonatomic, strong) AsyncImageView *profileImageView;
-@property(nonatomic, strong) UILabel *questionLabel;
-@property(nonatomic, strong) NSArray *answerButtons;
+@property (nonatomic, strong) AsyncImageView *profileImageView;
+@property (nonatomic, strong) UILabel *questionLabel;
+@property (nonatomic, strong) NSArray *answerButtons;
 
-@property(nonatomic, strong) NSMutableArray *progressViewConstraints;
-@property(nonatomic, strong) NSMutableArray *multipleChoiceConstraints;
-@property(nonatomic, strong) NSLayoutConstraint *topCheck;
-@property(nonatomic, assign) BOOL resultClosed;
+@property (nonatomic, strong) NSMutableArray *progressViewConstraints;
+@property (nonatomic, strong) NSMutableArray *multipleChoiceConstraints;
+@property (nonatomic, strong) NSLayoutConstraint *topCheck;
+@property (nonatomic, strong) NSLayoutConstraint *topRank;
+@property (nonatomic, assign) BOOL resultClosed;
+@property (nonatomic, assign) BOOL allowAnalytics;
 @end
 
 @implementation QIMultipleChoiceQuizView
@@ -41,10 +45,12 @@
     
     _progressView = [self newProgressView];
     _profileImageView = [self newProfileImageView];
+    _rankDisplayView = [self newRankDisplayView];
     _questionLabel = [self newQuestionLabel];
     _answerButtons = @[];
     _checkAnswersView = [self newCheckAnswersView];
-    _resultClosed = YES; 
+    _resultClosed = YES;
+    _allowAnalytics = YES;
   
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self constructViewHierarchy];
@@ -98,6 +104,14 @@
   _correctAnswerIndex = correctAnswerIndex;
 }
 
+- (void)setAnswerPerson:(QIPerson *)answerPerson{
+  _answerPerson = answerPerson;
+}
+
+- (void)setLoggedInUserID:(NSString *)loggedInUserID{
+  _loggedInUserID = loggedInUserID;
+}
+
 #pragma mark View Hierarchy
 
 - (void)constructViewHierarchy {
@@ -109,6 +123,7 @@
   [self addSubview:self.questionLabel];
   [self addSubview:self.dividerTop];
   [self addSubview:self.dividerBottom];
+  [self addSubview:self.rankDisplayView];
 }
 
 - (void)loadAnswerButtons {
@@ -234,6 +249,17 @@
     _topCheck = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-40.0f];
 
     [self.multipleChoiceConstraints addObjectsFromArray:@[centerCheckX,widthCheck,heightCheck,_topCheck]];
+    
+    //Constrain Rank Display
+    NSLayoutConstraint *centerRankX = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *widthRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *heightRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:81.0f];
+    
+    //Todo place this offscreen
+    _topRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0f constant:-81.0f];
+    
+    [self.multipleChoiceConstraints addObjectsFromArray:@[centerRankX,widthRank,heightRank,_topRank]];
+
     [self addConstraints:self.multipleChoiceConstraints];
   }
 }
@@ -243,6 +269,7 @@
   [self showResult];
 }
 -(void)againButtonPressed{
+  [self setAllowAnalytics:YES];
   [self resetView];
 }
 -(void)showResult{
@@ -287,12 +314,38 @@
   }];
 }
 
+-(void)showRankDisplay{
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.topRank setConstant:100.0f];
+    [NSTimer scheduledTimerWithTimeInterval:7.0f target:self selector:@selector(hideRankDisplay) userInfo:nil repeats:NO];
+    [self layoutIfNeeded];
+  }];
+}
+
+-(void)hideRankDisplay{
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.topRank setConstant:-81.0f];
+    [self layoutIfNeeded];
+  }];
+}
+
 -(void)processAnswer{
+  QIStatsData *statsEngine = [[QIStatsData alloc] initWithLoggedInUserID:self.loggedInUserID];
   if (self.currentAnswer == self.correctAnswerIndex){
     [self.checkAnswersView correct:YES];
+    if (self.allowAnalytics){
+      [statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:YES];
+      if ([statsEngine needsRankUpdate]) {
+        self.rankDisplayView.rank = [statsEngine getCurrentRank];
+        [self showRankDisplay];
+      }
+    }
   }
   else{
     [self.checkAnswersView correct:NO];
+    if (self.allowAnalytics) {
+      [statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:NO];
+    }
   }
 }
 #pragma mark Strings
@@ -417,5 +470,14 @@
   return view;
 }
 
+- (QIRankDisplayView *)newRankDisplayView{
+  QIRankDisplayView *view = [[QIRankDisplayView alloc] init];
+  
+  //Todo fix this to pass actual rank
+  view.rank = 1;
+  [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [view setBackgroundColor:[UIColor clearColor]];
+  return view;
+}
 
 @end

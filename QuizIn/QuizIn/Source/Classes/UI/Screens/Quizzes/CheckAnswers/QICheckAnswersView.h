@@ -1,10 +1,3 @@
-//
-//  QICheckAnswersView.h
-//  QuizIn
-//
-//  Created by Rick Kuhlman on 6/30/13.
-//  Copyright (c) 2013 Kuhlmanation LLC. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 
@@ -15,6 +8,7 @@
 @property(nonatomic, strong,readonly) UIButton *nextButton;
 @property(nonatomic, strong,readonly) UIButton *againButton;
 @property(nonatomic, strong,readonly) UIButton *resultHideButton;
+@property(nonatomic, strong,readonly) UIButton *seeProfilesButton; 
 
 
 -(void)correct:(BOOL)correct;

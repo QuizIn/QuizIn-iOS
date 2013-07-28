@@ -42,6 +42,7 @@
       _bottomSlit = [self newBottomSlit];
       _viewBackground = [self newViewBackground];
       _quizButton = [self newQuizButton];
+      _backButton = [self newBackButton];
       
       [self constructViewHierarchy];
     }
@@ -53,7 +54,7 @@
   if ([selectionContent isEqualToArray:_selectionContent]) {
     return;
   }
-  _selectionContent = selectionContent;
+  _selectionContent = [selectionContent mutableCopy];
 }
 
 -(void) setSelectionViewLabelString:(NSString *)selectionViewLabelString {
@@ -72,6 +73,7 @@
   [self addSubview:self.topSlit];
   [self addSubview:self.bottomSlit];
   [self addSubview:self.quizButton];
+  [self addSubview:self.backButton];
   [self.tableView setTableFooterView:self.footerViewLoading];
 }
 #pragma Data Display
@@ -110,7 +112,7 @@
  
     
     //Constrain Main View Elements
-    NSDictionary *mainViews = NSDictionaryOfVariableBindings(_viewLabel, _topSlit,_tableView,_bottomSlit,_quizButton);
+    NSDictionary *mainViews = NSDictionaryOfVariableBindings(_viewLabel, _topSlit,_tableView,_bottomSlit,_quizButton,_backButton);
     
     NSArray *vMainViewsConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_viewLabel(==20)]-3-[_topSlit(==8)]-(-5)-[_tableView]-(-5)-[_bottomSlit(==8)]-[_quizButton(==54)]-6-|"
@@ -142,6 +144,16 @@
                                             options:0
                                             metrics:0
                                               views:mainViews];
+    NSArray *hBackButtonConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_backButton(==100)]"
+                                            options:0
+                                            metrics:0
+                                              views:mainViews];
+    NSArray *vBackButtonConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_backButton(==40)]-3-|"
+                                            options:0
+                                            metrics:0
+                                              views:mainViews];
     
     [self.viewConstraints addObjectsFromArray:hLabelConstraints];
     [self.viewConstraints addObjectsFromArray:hTopSlitConstraints];
@@ -149,6 +161,8 @@
     [self.viewConstraints addObjectsFromArray:hBottomSlitConstraints];
     [self.viewConstraints addObjectsFromArray:vMainViewsConstraints];
     [self.viewConstraints addObjectsFromArray:hButtonConstraints];
+    [self.viewConstraints addObjectsFromArray:vBackButtonConstraints];
+    [self.viewConstraints addObjectsFromArray:hBackButtonConstraints];
     
     [self addConstraints:self.viewConstraints];
   }
@@ -158,6 +172,11 @@
 -(NSString *)quizButtonTitle{
   return @"Take Quiz";
 }
+
+-(NSString *)backButtonTitle{
+  return @"Back";
+}
+
 #pragma mark Factory Methods
 
 -(UITableView *)newSelectionTable{
@@ -216,7 +235,16 @@
   return button;
 }
 
-
+- (UIButton *)newBackButton {
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setTitle:[self backButtonTitle] forState:UIControlStateNormal];
+  [button.titleLabel setFont:[QIFontProvider fontWithSize:12.0f style:Regular]];
+  [button setTitleColor:[UIColor colorWithWhite:0.33f alpha:1.0f] forState:UIControlStateNormal];
+  [button setTitleColor:[UIColor colorWithWhite:0.0f alpha:1.0f] forState:UIControlStateHighlighted];
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  button.backgroundColor = [UIColor clearColor];
+  return button;
+}
 
 #pragma mark - Table view data source
 

@@ -6,5 +6,6 @@
 @interface QIStatsViewController : UIViewController
 
 @property (nonatomic, strong) QIStatsView *statsView;
+@property (nonatomic, strong) NSString *userID; 
 
 @end

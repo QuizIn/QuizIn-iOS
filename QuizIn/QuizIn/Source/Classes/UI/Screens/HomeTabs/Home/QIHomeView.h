@@ -4,14 +4,12 @@
 @interface QIHomeView : UIView
 
 @property(nonatomic, strong, readonly) UIButton *connectionsQuizButton;
+@property(nonatomic, strong) NSArray *imageURLs;
+@property(nonatomic, assign) NSInteger numberOfConnections;
 
 //temporary Buttons
 @property(nonatomic, strong, readonly) UIButton *calendarPickerButton;
 @property(nonatomic, strong, readonly) UIButton *businessCardQuizButton;
 @property(nonatomic, strong, readonly) UIButton *matchingQuizButton;
-@property(nonatomic, strong, readonly) UIButton *statsViewButton;
-@property(nonatomic, strong, readonly) UIButton *resetStatsButton;
-@property(nonatomic, strong, readonly) UIButton *addStatsButton;
-@property(nonatomic, strong, readonly) UIButton *printStatsButton;
 
 @end

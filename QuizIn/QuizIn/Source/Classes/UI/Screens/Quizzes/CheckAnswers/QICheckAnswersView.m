@@ -30,6 +30,7 @@
       _againButton = [self newAgainButton];
       _nextButton = [self newNextButton];
       _resultHideButton = [self newResultHideButton];
+      _seeProfilesButton = [self newSeeProfilesButton];
       
       [self constructViewHierarchy];
     }
@@ -50,6 +51,7 @@
 
 - (void)constructViewHierarchy {
   [self.resultView addSubview:self.resultLabel];
+  [self.resultView addSubview:self.seeProfilesButton];
   [self addSubview:self.backgroundImage];
   [self addSubview:self.resultView];
   [self addSubview:self.helpButton];
@@ -65,6 +67,8 @@
   [super updateConstraints];
   
   if (!self.checkAnswersViewConstraints) {
+    
+    self.checkAnswersViewConstraints = [NSMutableArray array];
     
     //Constrain Background Image
     NSDictionary *backgroundImageViews = NSDictionaryOfVariableBindings(_backgroundImage);
@@ -83,7 +87,7 @@
     [self.checkAnswersViewConstraints addObjectsFromArray:vBackground];
     
     //Check Answer View Constraints
-    self.checkAnswersViewConstraints = [NSMutableArray array];
+
     NSDictionary *checkAnswerViews = NSDictionaryOfVariableBindings(_resultView, _checkButton, _helpButton, _againButton);
     
     NSArray *hHelpButtonConstraints =
@@ -143,11 +147,24 @@
     //Result View Constraints
     self.resultViewConstraints = [NSMutableArray array];
     
+    NSDictionary *resultsViews = NSDictionaryOfVariableBindings(_seeProfilesButton);
+    
     NSLayoutConstraint *hCenterLabel = [NSLayoutConstraint constraintWithItem:_resultLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_resultView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
-    
     NSLayoutConstraint *vCenterLabel = [NSLayoutConstraint constraintWithItem:_resultLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_resultView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f];
-    
+    NSArray *hProfileButtonConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_seeProfilesButton(==28)]"
+                                            options:0
+                                            metrics:nil
+                                              views:resultsViews];
+    NSArray *vProfileButtonConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-4-[_seeProfilesButton(==30)]"
+                                            options:0
+                                            metrics:nil
+                                              views:resultsViews];
+
     [self.resultViewConstraints addObjectsFromArray:@[hCenterLabel,vCenterLabel]];
+    [self.resultViewConstraints addObjectsFromArray:hProfileButtonConstraints];
+    [self.resultViewConstraints addObjectsFromArray:vProfileButtonConstraints];
     
     [_resultView addConstraints:self.resultViewConstraints];
   }
@@ -250,11 +267,19 @@
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   return button;
 }
+
 - (UIButton *)newResultHideButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setBackgroundImage:[UIImage imageNamed:@"quizin_stretch_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   [button setHidden:YES];
+  return button;
+}
+
+- (UIButton *)newSeeProfilesButton {
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setBackgroundImage:[UIImage imageNamed:@"quizin_information_btn"] forState:UIControlStateNormal];
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   return button;
 }
 

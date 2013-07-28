@@ -67,11 +67,19 @@
         [self.multipleChoiceController.multipleChoiceView.checkAnswersView.nextButton addTarget:self
                                                                                          action:@selector(nextPressed)
                                                                                forControlEvents:UIControlEventTouchUpInside];
+        [self.multipleChoiceController.multipleChoiceView.rankDisplayView.rankShareButton addTarget:self
+                                                                                             action:@selector(shareRankPressed)
+                                                                                   forControlEvents:UIControlEventTouchUpInside];
+        [self.multipleChoiceController.multipleChoiceView.progressView.exitButton addTarget:self
+                                                                                     action:@selector(userDidCloseQuiz)
+                                                                           forControlEvents:UIControlEventTouchUpInside];
+
       });
     }
   }];
 }
 
+#pragma mark Actions
 - (void)nextPressed{
   [self.multipleChoiceController.view removeFromSuperview];
   [self.multipleChoiceController removeFromParentViewController];
@@ -85,7 +93,18 @@
   
   QIMultipleChoiceQuizViewController *nextQuestionViewController =
       [[QIMultipleChoiceQuizViewController alloc] initWithQuestion:nextQuestion];
+  
+  //Todo Combine this into a reusable function 
   [nextQuestionViewController.multipleChoiceView.checkAnswersView.nextButton addTarget:self action:@selector(nextPressed) forControlEvents:UIControlEventTouchUpInside];
+  [nextQuestionViewController.multipleChoiceView.checkAnswersView.nextButton addTarget:self
+                                                                                   action:@selector(nextPressed)
+                                                                         forControlEvents:UIControlEventTouchUpInside];
+  [nextQuestionViewController.multipleChoiceView.rankDisplayView.rankShareButton addTarget:self
+                                                                                       action:@selector(shareRankPressed)
+                                                                             forControlEvents:UIControlEventTouchUpInside];
+  [nextQuestionViewController.multipleChoiceView.progressView.exitButton addTarget:self
+                                                                               action:@selector(userDidCloseQuiz)
+                                                                     forControlEvents:UIControlEventTouchUpInside];
   
   [self addChildViewController:nextQuestionViewController];
   [self.view addSubview:nextQuestionViewController.view];
@@ -94,6 +113,16 @@
 - (void)nextPressed1{
   [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+- (void)shareRankPressed{
+  NSLog(@"ShareCurrentRank");
+}
+
+- (void)userDidCloseQuiz{
+  [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark Layout
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
