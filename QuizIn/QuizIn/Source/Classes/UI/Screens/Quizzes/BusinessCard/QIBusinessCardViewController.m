@@ -1,5 +1,6 @@
 #import "QIBusinessCardViewController.h"
 
+#import "QIQuizQuestionViewController_Protected.h"
 
 @interface QIBusinessCardViewController ()
 

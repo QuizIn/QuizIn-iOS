@@ -30,6 +30,8 @@
 		20E0203217A5BED800CB9D43 /* LinkedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E0202C17A5BED800CB9D43 /* LinkedIn.m */; };
 		20E0203317A5BED800CB9D43 /* QILIConnections.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E0202E17A5BED800CB9D43 /* QILIConnections.m */; };
 		20E0203417A5BED800CB9D43 /* QILIPeople.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E0203017A5BED800CB9D43 /* QILIPeople.m */; };
+		20E0203717A5CAC300CB9D43 /* QIQuizQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E0203617A5CAC200CB9D43 /* QIQuizQuestionViewController.m */; };
+		20E0203A17A5CC1C00CB9D43 /* QIQuizQuestionViewControllerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E0203917A5CC1B00CB9D43 /* QIQuizQuestionViewControllerFactory.m */; };
 		340896B817513D4D00398230 /* Tahoma.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 340896B717513D4D00398230 /* Tahoma.ttf */; };
 		340896BA1751443800398230 /* tahomabd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 340896B91751443800398230 /* tahomabd.ttf */; };
 		340896BD1751712900398230 /* progressView_tracker.png in Resources */ = {isa = PBXBuildFile; fileRef = 340896BB1751712400398230 /* progressView_tracker.png */; };
@@ -297,6 +299,11 @@
 		20E0202E17A5BED800CB9D43 /* QILIConnections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QILIConnections.m; sourceTree = "<group>"; };
 		20E0202F17A5BED800CB9D43 /* QILIPeople.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QILIPeople.h; sourceTree = "<group>"; };
 		20E0203017A5BED800CB9D43 /* QILIPeople.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QILIPeople.m; sourceTree = "<group>"; };
+		20E0203517A5CAC100CB9D43 /* QIQuizQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuizQuestionViewController.h; sourceTree = "<group>"; };
+		20E0203617A5CAC200CB9D43 /* QIQuizQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIQuizQuestionViewController.m; sourceTree = "<group>"; };
+		20E0203817A5CC1900CB9D43 /* QIQuizQuestionViewControllerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuizQuestionViewControllerFactory.h; sourceTree = "<group>"; };
+		20E0203917A5CC1B00CB9D43 /* QIQuizQuestionViewControllerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIQuizQuestionViewControllerFactory.m; sourceTree = "<group>"; };
+		20E0203B17A5D05000CB9D43 /* QIQuizQuestionViewController_Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QIQuizQuestionViewController_Protected.h; sourceTree = "<group>"; };
 		340896B717513D4D00398230 /* Tahoma.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tahoma.ttf; sourceTree = "<group>"; };
 		340896B91751443800398230 /* tahomabd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tahomabd.ttf; sourceTree = "<group>"; };
 		340896BB1751712400398230 /* progressView_tracker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressView_tracker.png; sourceTree = "<group>"; };
@@ -1301,6 +1308,11 @@
 				888679A0172DCDA600DCE3D0 /* QIQuizViewController.m */,
 				888679A2172DCE2700DCE3D0 /* QIQuizView.h */,
 				888679A3172DCE2700DCE3D0 /* QIQuizView.m */,
+				20E0203517A5CAC100CB9D43 /* QIQuizQuestionViewController.h */,
+				20E0203617A5CAC200CB9D43 /* QIQuizQuestionViewController.m */,
+				20E0203817A5CC1900CB9D43 /* QIQuizQuestionViewControllerFactory.h */,
+				20E0203917A5CC1B00CB9D43 /* QIQuizQuestionViewControllerFactory.m */,
+				20E0203B17A5D05000CB9D43 /* QIQuizQuestionViewController_Protected.h */,
 			);
 			path = Quizzes;
 			sourceTree = "<group>";
@@ -1666,6 +1678,8 @@
 				20E0203217A5BED800CB9D43 /* LinkedIn.m in Sources */,
 				20E0203317A5BED800CB9D43 /* QILIConnections.m in Sources */,
 				20E0203417A5BED800CB9D43 /* QILIPeople.m in Sources */,
+				20E0203717A5CAC300CB9D43 /* QIQuizQuestionViewController.m in Sources */,
+				20E0203A17A5CC1C00CB9D43 /* QIQuizQuestionViewControllerFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

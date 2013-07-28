@@ -4,6 +4,7 @@
 #import "QIMultipleChoiceQuizViewController.h"
 #import "QIBusinessCardViewController.h"
 #import "QIMatchingQuizViewController.h"
+#import "QIQuizQuestionViewControllerFactory.h"
 
 #import "QIQuizFactory.h"
 #import "QIQuiz.h"
@@ -61,7 +62,7 @@
         self.quiz = quiz;
         self.multipleChoiceController =
         [[QIMultipleChoiceQuizViewController alloc]
-         initWithQuestion:(QIMultipleChoiceQuestion *)[self.quiz nextQuestion]];
+         initWithQuestion:(QIQuizQuestion *)[self.quiz nextQuestion]];
         [self addChildViewController:self.multipleChoiceController];
         [self.view addSubview:self.multipleChoiceController.view];
         [self.multipleChoiceController.multipleChoiceView.checkAnswersView.nextButton addTarget:self
@@ -92,7 +93,7 @@
   }
   
   QIMultipleChoiceQuizViewController *nextQuestionViewController =
-      [[QIMultipleChoiceQuizViewController alloc] initWithQuestion:nextQuestion];
+      [[QIMultipleChoiceQuizViewController alloc] initWithQuestion:(QIQuizQuestion *)nextQuestion];
   
   //Todo Combine this into a reusable function 
   [nextQuestionViewController.multipleChoiceView.checkAnswersView.nextButton addTarget:self action:@selector(nextPressed) forControlEvents:UIControlEventTouchUpInside];

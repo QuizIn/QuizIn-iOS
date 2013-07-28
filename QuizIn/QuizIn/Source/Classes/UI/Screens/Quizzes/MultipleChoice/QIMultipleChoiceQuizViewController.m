@@ -1,25 +1,14 @@
 #import "QIMultipleChoiceQuizViewController.h"
 
+#import "QIQuizQuestionViewController_Protected.h"
 #import "QIMultipleChoiceQuestion.h"
 #import "QIPerson.h"
 
 @interface QIMultipleChoiceQuizViewController ()
-@property(nonatomic, strong) QIMultipleChoiceQuestion *question;
+@property(nonatomic, strong, readonly) QIMultipleChoiceQuestion *multipleChoiceQuestion;
 @end
 
 @implementation QIMultipleChoiceQuizViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  return [self initWithQuestion:nil];
-};
-
-- (instancetype)initWithQuestion:(QIMultipleChoiceQuestion *)question {
-  self = [super initWithNibName:nil bundle:nil];
-  if (self) {
-    _question = question;
-  }
-  return self;
-}
 
 - (void)loadView {
   self.view = [[QIMultipleChoiceQuizView alloc] init];
@@ -30,12 +19,12 @@
   
   self.multipleChoiceView.numberOfQuestions = 11;
   self.multipleChoiceView.quizProgress = 10;
-  self.multipleChoiceView.question = self.question.questionPrompt;
-  self.multipleChoiceView.answers = self.question.answers;
-  self.multipleChoiceView.correctAnswerIndex = self.question.correctAnswerIndex;
-  self.multipleChoiceView.profileImageURL = [NSURL URLWithString:self.question.person.pictureURL];
+  self.multipleChoiceView.question = self.multipleChoiceQuestion.questionPrompt;
+  self.multipleChoiceView.answers = self.multipleChoiceQuestion.answers;
+  self.multipleChoiceView.correctAnswerIndex = self.multipleChoiceQuestion.correctAnswerIndex;
+  self.multipleChoiceView.profileImageURL = [NSURL URLWithString:self.multipleChoiceQuestion.person.pictureURL];
   self.multipleChoiceView.loggedInUserID = @"12345";
-  self.multipleChoiceView.answerPerson = self.question.person;
+  self.multipleChoiceView.answerPerson = self.multipleChoiceQuestion.person;
 
   [self.multipleChoiceView.checkAnswersView.helpButton addTarget:self
                                                           action:@selector(helpDialog)
@@ -59,7 +48,7 @@
 #pragma mark Action Sheet Functions
 - (void)showActionSheet:(id)sender{
   NSString *actionSheetTitle = @"Open LinkedIn Profile For:";
-  NSString *other1 = [NSString stringWithFormat:@"%@ %@",self.question.person.firstName,self.question.person.lastName];
+  NSString *other1 = [NSString stringWithFormat:@"%@ %@",self.multipleChoiceQuestion.person.firstName,self.multipleChoiceQuestion.person.lastName];
   NSString *cancelTitle = @"Cancel";
   UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                 initWithTitle:actionSheetTitle
@@ -73,7 +62,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
   switch (buttonIndex) {
     case 0:{
-      NSString *personID = self.question.person.personID;
+      NSString *personID = self.multipleChoiceQuestion.person.personID;
       NSString *actionUrl = [NSString stringWithFormat:@"linkedin://#profile/%@",personID];
       NSString *actionUrlWeb = [NSString stringWithFormat:@"http://www.linkedin.com/profile/view?id=%@",personID];
       
@@ -101,6 +90,10 @@
                                         cancelButtonTitle:@"Thanks"
                                         otherButtonTitles:nil];
   [alert show];
+}
+
+- (QIMultipleChoiceQuestion *)multipleChoiceQuestion {
+  return (QIMultipleChoiceQuestion *)self.question;
 }
 
 @end

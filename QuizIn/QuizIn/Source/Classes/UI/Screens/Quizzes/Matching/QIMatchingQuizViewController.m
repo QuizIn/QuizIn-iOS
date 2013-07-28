@@ -1,12 +1,6 @@
-//
-//  QIMatchingQuizViewController.m
-//  QuizIn
-//
-//  Created by Rick Kuhlman on 5/18/13.
-//  Copyright (c) 2013 Kuhlmanation LLC. All rights reserved.
-//
-
 #import "QIMatchingQuizViewController.h"
+
+#import "QIQuizQuestionViewController_Protected.h"
 
 @interface QIMatchingQuizViewController ()
 

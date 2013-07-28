@@ -1,7 +1,7 @@
-#import <UIKit/UIKit.h>
+#import "QIQuizQuestionViewController.h"
 #import "QIBusinessCardQuizView.h"
 
-@interface QIBusinessCardViewController : UIViewController
+@interface QIBusinessCardViewController : QIQuizQuestionViewController
 
 @property(nonatomic, strong) QIBusinessCardQuizView *businessCardQuizView;
 

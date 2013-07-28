@@ -1,12 +1,11 @@
-#import <UIKit/UIKit.h>
+#import "QIQuizQuestionViewController.h"
+
 #import "QIMultipleChoiceQuizView.h"
 
 @class QIMultipleChoiceQuestion;
 
-@interface QIMultipleChoiceQuizViewController : UIViewController <UIActionSheetDelegate>
+@interface QIMultipleChoiceQuizViewController : QIQuizQuestionViewController <UIActionSheetDelegate>
 
 @property(nonatomic, strong, readonly) QIMultipleChoiceQuizView *multipleChoiceView;
-
-- (instancetype)initWithQuestion:(QIMultipleChoiceQuestion *)question;
 
 @end
