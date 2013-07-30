@@ -28,6 +28,11 @@
   self.businessCardQuizView.answerNames = self.businessCardQuestion.names;
   self.businessCardQuizView.answerCompanies = self.businessCardQuestion.companies;
   self.businessCardQuizView.answerTitles = self.businessCardQuestion.titles;
+  //todo add actual correct Indexes here. 
+  self.businessCardQuizView.correctNameIndex = 1;
+  self.businessCardQuizView.correctCompanyIndex = 1;
+  self.businessCardQuizView.correctTitleIndex = 1;
+  self.businessCardQuizView.loggedInUserID = @"12345";
 }
 
 - (void)didReceiveMemoryWarning {

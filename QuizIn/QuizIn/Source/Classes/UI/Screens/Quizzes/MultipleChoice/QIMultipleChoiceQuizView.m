@@ -22,6 +22,8 @@
 @property (nonatomic, strong) NSLayoutConstraint *topRank;
 @property (nonatomic, assign) BOOL resultClosed;
 @property (nonatomic, assign) BOOL allowAnalytics;
+@property(nonatomic, assign) NSUInteger currentAnswer;
+
 @end
 
 @implementation QIMultipleChoiceQuizView
@@ -269,7 +271,7 @@
   [self showResult];
 }
 -(void)againButtonPressed{
-  [self setAllowAnalytics:YES];
+  [self setAllowAnalytics:NO];
   [self resetView];
 }
 -(void)showResult{

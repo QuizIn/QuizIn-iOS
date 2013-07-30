@@ -1,28 +1,32 @@
 #import "QIBusinessCardQuizView.h"
 #import "AsyncImageView.h"
+#import "QIStatsData.h"
 #import "QIFontProvider.h"
 
 @interface QIBusinessCardQuizView ()
 
-@property(nonatomic, strong) UIImageView *viewBackground;
-@property(nonatomic, strong) UIView *businessCardView;
-@property(nonatomic, strong) UIImageView *businessCardBackground;
-@property(nonatomic, strong) UIImageView *divider;
-@property(nonatomic, strong) AsyncImageView *profileImageView;
-@property(nonatomic, strong) UIView *answerSuperView;
-@property(nonatomic, strong) UILabel *cardFirstName;
-@property(nonatomic, strong) UILabel *cardLastName;
-@property(nonatomic, strong) UILabel *cardTitle;
-@property(nonatomic, strong) UILabel *cardCompany;
-@property(nonatomic, strong) NSMutableArray *answerFirstNames;
-@property(nonatomic, strong) NSMutableArray *answerLastNames;
-@property(nonatomic, strong) QIBusinessCardAnswerView *answerName;
-@property(nonatomic, strong) QIBusinessCardAnswerView *answerTitle;
-@property(nonatomic, strong) QIBusinessCardAnswerView *answerCompany;
-@property(nonatomic, strong) NSMutableArray *cardConstraints;
-@property(nonatomic, strong) NSMutableArray *answerConstraints;
-@property(nonatomic, strong) NSLayoutConstraint *topCheck;
-@property(nonatomic, assign) BOOL resultClosed;
+@property (nonatomic, strong) UIImageView *viewBackground;
+@property (nonatomic, strong) UIView *businessCardView;
+@property (nonatomic, strong) UIImageView *businessCardBackground;
+@property (nonatomic, strong) UIImageView *divider;
+@property (nonatomic, strong) AsyncImageView *profileImageView;
+@property (nonatomic, strong) UIView *answerSuperView;
+@property (nonatomic, strong) UILabel *cardFirstName;
+@property (nonatomic, strong) UILabel *cardLastName;
+@property (nonatomic, strong) UILabel *cardTitle;
+@property (nonatomic, strong) UILabel *cardCompany;
+@property (nonatomic, strong) NSMutableArray *answerFirstNames;
+@property (nonatomic, strong) NSMutableArray *answerLastNames;
+@property (nonatomic, strong) QIBusinessCardAnswerView *answerName;
+@property (nonatomic, strong) QIBusinessCardAnswerView *answerTitle;
+@property (nonatomic, strong) QIBusinessCardAnswerView *answerCompany;
+@property (nonatomic, strong) NSMutableArray *cardConstraints;
+@property (nonatomic, strong) NSMutableArray *answerConstraints;
+@property (nonatomic, strong) NSLayoutConstraint *topCheck;
+@property (nonatomic, strong) NSLayoutConstraint *topRank;
+@property (nonatomic, assign) BOOL resultClosed;
+@property (nonatomic, assign) BOOL allowAnalytics;
+@property (nonatomic, assign) NSUInteger currentAnswer;
 @end
 
 
@@ -53,6 +57,10 @@
     _answerTitle = [self newAnswerView];
     _answerCompany = [self newAnswerView];
     _checkAnswersView = [self newCheckAnswersView];
+    _rankDisplayView = [self newRankDisplayView];
+    _resultClosed = YES;
+    _allowAnalytics = YES;
+    _currentAnswer = NSNotFound;
     
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self constructViewHierarchy];
@@ -105,7 +113,8 @@
 - (void)constructViewHierarchy {
   
   [self addSubview:self.viewBackground];
-  [self addSubview:_progressView];
+  [self addSubview:self.progressView];
+  [self addSubview:self.rankDisplayView];
   
   [_businessCardView addSubview:self.businessCardBackground];
   [_businessCardView addSubview:self.profileImageView];
@@ -379,18 +388,30 @@
     _topCheck = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-40.0f];
 
     [self.answerConstraints addObjectsFromArray:@[centerCheckX,widthCheck,heightCheck,_topCheck]];
+    
+   //Constrain Rank Display
+    NSLayoutConstraint *centerRankX = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *widthRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *heightRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:81.0f];
+  
+    _topRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0f constant:-81.0f];
+    
+    [self.cardConstraints addObjectsFromArray:@[centerRankX,widthRank,heightRank,_topRank]];
+
     [self addConstraints:self.cardConstraints];
     [self addConstraints:self.answerConstraints];
   }
 }
 
 #pragma mark Actions
+
 -(void)checkButtonPressed{
   DDLogInfo(@"checkButton Pressed");
   [self showResult];
 }
 -(void)againButtonPressed{
   DDLogInfo(@"againButton Pressed");
+  [self setAllowAnalytics:NO];
   [self resetView];
 }
 -(void)showResult{
@@ -402,6 +423,7 @@
     [self.checkAnswersView.resultHideButton setHidden:NO];
     [self.topCheck setConstant:-81.0f];
     [self setResultClosed:NO];
+    [self processAnswer];
     [self layoutIfNeeded];
   }];
 }
@@ -435,6 +457,40 @@
   }];
 }
 
+-(void)showRankDisplay{
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.topRank setConstant:100.0f];
+    [NSTimer scheduledTimerWithTimeInterval:7.0f target:self selector:@selector(hideRankDisplay) userInfo:nil repeats:NO];
+    [self layoutIfNeeded];
+  }];
+}
+
+-(void)hideRankDisplay{
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.topRank setConstant:-81.0f];
+    [self layoutIfNeeded];
+  }];
+}
+
+-(void)processAnswer{
+  QIStatsData *statsEngine = [[QIStatsData alloc] initWithLoggedInUserID:self.loggedInUserID];
+  if (self.currentAnswer == self.correctNameIndex){
+    [self.checkAnswersView correct:YES];
+    if (self.allowAnalytics){
+      //[statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:YES];
+      if ([statsEngine needsRankUpdate]) {
+        self.rankDisplayView.rank = [statsEngine getCurrentRank];
+        [self showRankDisplay];
+      }
+    }
+  }
+  else{
+    [self.checkAnswersView correct:NO];
+    if (self.allowAnalytics) {
+      //[statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:NO];
+    }
+  }
+}
 
 #pragma mark Strings
 
@@ -513,6 +569,9 @@
   QIBusinessCardAnswerView *answerSelection = (QIBusinessCardAnswerView *)sender;
   if ([answerSelection isEqual:self.answerName]){
     [self updateAnswerNames];
+    //todo this shoudl change to the actual selected index
+    [self setCurrentAnswer:1];
+    
   } else if ([answerSelection isEqual:self.answerCompany]){
     [self updateAnswerCompanies];
   } else if ([answerSelection isEqual:self.answerTitle]){
@@ -660,6 +719,17 @@
   [view setBackgroundColor:[UIColor clearColor]];
   return view;
 }
+
+- (QIRankDisplayView *)newRankDisplayView{
+  QIRankDisplayView *view = [[QIRankDisplayView alloc] init];
+  
+  //Todo fix this to pass actual rank
+  view.rank = 1;
+  [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [view setBackgroundColor:[UIColor clearColor]];
+  return view;
+}
+
 @end
 
 
