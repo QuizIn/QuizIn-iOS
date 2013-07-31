@@ -43,6 +43,7 @@
 		3412983B17A5B3A400678A55 /* QIStoreCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412983A17A5B3A400678A55 /* QIStoreCellView.m */; };
 		3412983E17A5B3D400678A55 /* QIStoreTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412983D17A5B3D400678A55 /* QIStoreTableHeaderView.m */; };
 		3412984117A5B57C00678A55 /* QIStoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412984017A5B57B00678A55 /* QIStoreData.m */; };
+		3412984417A8898C00678A55 /* QIStatsSummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412984317A8898C00678A55 /* QIStatsSummaryView.m */; };
 		3429135C1753AAC60056ACCD /* Tahoma Faux Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3429135B1753AAC60056ACCD /* Tahoma Faux Italic.ttf */; };
 		342913601753AC780056ACCD /* QIFontProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 3429135F1753AC780056ACCD /* QIFontProvider.m */; };
 		342913641753E5340056ACCD /* QIBusinessCardAnswerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342913631753E5340056ACCD /* QIBusinessCardAnswerView.m */; };
@@ -320,6 +321,8 @@
 		3412983D17A5B3D400678A55 /* QIStoreTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStoreTableHeaderView.m; sourceTree = "<group>"; };
 		3412983F17A5B57B00678A55 /* QIStoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStoreData.h; sourceTree = "<group>"; };
 		3412984017A5B57B00678A55 /* QIStoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStoreData.m; sourceTree = "<group>"; };
+		3412984217A8898C00678A55 /* QIStatsSummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsSummaryView.h; sourceTree = "<group>"; };
+		3412984317A8898C00678A55 /* QIStatsSummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsSummaryView.m; sourceTree = "<group>"; };
 		3429135B1753AAC60056ACCD /* Tahoma Faux Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tahoma Faux Italic.ttf"; sourceTree = "<group>"; };
 		3429135E1753AC780056ACCD /* QIFontProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIFontProvider.h; sourceTree = "<group>"; };
 		3429135F1753AC780056ACCD /* QIFontProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIFontProvider.m; sourceTree = "<group>"; };
@@ -736,6 +739,8 @@
 			children = (
 				344B6287179F786D00EE85A9 /* QIStatsViewController.h */,
 				344B6288179F786D00EE85A9 /* QIStatsViewController.m */,
+				3412984217A8898C00678A55 /* QIStatsSummaryView.h */,
+				3412984317A8898C00678A55 /* QIStatsSummaryView.m */,
 				344B6283179F786D00EE85A9 /* QIStatsTableHeaderView.h */,
 				344B6284179F786D00EE85A9 /* QIStatsTableHeaderView.m */,
 				344B627F179F786D00EE85A9 /* QIStatsCellView.h */,
@@ -1680,6 +1685,7 @@
 				20E0203417A5BED800CB9D43 /* QILIPeople.m in Sources */,
 				20E0203717A5CAC300CB9D43 /* QIQuizQuestionViewController.m in Sources */,
 				20E0203A17A5CC1C00CB9D43 /* QIQuizQuestionViewControllerFactory.m in Sources */,
+				3412984417A8898C00678A55 /* QIStatsSummaryView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

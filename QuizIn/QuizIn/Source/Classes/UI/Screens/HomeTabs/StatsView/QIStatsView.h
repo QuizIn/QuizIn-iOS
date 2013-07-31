@@ -1,7 +1,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QIStatsView : UIView <UITableViewDataSource,UITableViewDelegate>
+@interface QIStatsView : UIView <UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
 
 @property (nonatomic,assign) int currentRank;
 @property (nonatomic,assign) int totalCorrectAnswers;
