@@ -26,7 +26,6 @@
 @property (nonatomic, strong) NSLayoutConstraint *topRank;
 @property (nonatomic, assign) BOOL resultClosed;
 @property (nonatomic, assign) BOOL allowAnalytics;
-@property (nonatomic, assign) NSUInteger currentAnswer;
 @end
 
 
@@ -60,7 +59,6 @@
     _rankDisplayView = [self newRankDisplayView];
     _resultClosed = YES;
     _allowAnalytics = YES;
-    _currentAnswer = NSNotFound;
     
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self constructViewHierarchy];
@@ -108,13 +106,33 @@
   _answerTitles = [answerTitles copy];
   [self updateAnswerTitles];
 }
+
+- (void)setAnswerPerson:(QIPerson *)answerPerson{
+  _answerPerson = answerPerson;
+}
+
+- (void)setCorrectNameIndex:(NSUInteger)correctNameIndex{
+  _correctNameIndex = correctNameIndex;
+}
+
+- (void)setCorrectCompanyIndex:(NSUInteger)correctCompanyIndex{
+  _correctCompanyIndex = correctCompanyIndex;
+}
+
+- (void)setCorrectTitleIndex:(NSUInteger)correctTitleIndex{
+  _correctTitleIndex = correctTitleIndex; 
+}
+
+- (void)setLoggedInUserID:(NSString *)loggedInUserID{
+  _loggedInUserID = loggedInUserID;
+}
+
 #pragma mark View Hierarchy
 
 - (void)constructViewHierarchy {
   
   [self addSubview:self.viewBackground];
   [self addSubview:self.progressView];
-  [self addSubview:self.rankDisplayView];
   
   [_businessCardView addSubview:self.businessCardBackground];
   [_businessCardView addSubview:self.profileImageView];
@@ -132,6 +150,7 @@
   
   [self addSubview:self.answerSuperView];
   [self addSubview:self.checkAnswersView];
+  [self addSubview:self.rankDisplayView];
 }
 
 #pragma mark Layout
@@ -440,7 +459,6 @@
     [self.answerTitle.answerScrollView setContentOffset:CGPointZero];
     [self.answerCompany.answerScrollView setContentOffset:CGPointZero];
     [self layoutIfNeeded];
-    
   }];
 }
 -(void)toggleResult{
@@ -474,10 +492,11 @@
 
 -(void)processAnswer{
   QIStatsData *statsEngine = [[QIStatsData alloc] initWithLoggedInUserID:self.loggedInUserID];
-  if (self.currentAnswer == self.correctNameIndex){
+  BOOL correct = self.answerName.selectedAnswer == self.correctNameIndex & self.answerCompany.selectedAnswer == self.correctCompanyIndex & self.answerTitle.selectedAnswer == self.correctTitleIndex;
+  if (correct){
     [self.checkAnswersView correct:YES];
     if (self.allowAnalytics){
-      //[statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:YES];
+      [statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:YES];
       if ([statsEngine needsRankUpdate]) {
         self.rankDisplayView.rank = [statsEngine getCurrentRank];
         [self showRankDisplay];
@@ -487,7 +506,7 @@
   else{
     [self.checkAnswersView correct:NO];
     if (self.allowAnalytics) {
-      //[statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:NO];
+      [statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:NO];
     }
   }
 }
@@ -569,9 +588,6 @@
   QIBusinessCardAnswerView *answerSelection = (QIBusinessCardAnswerView *)sender;
   if ([answerSelection isEqual:self.answerName]){
     [self updateAnswerNames];
-    //todo this shoudl change to the actual selected index
-    [self setCurrentAnswer:1];
-    
   } else if ([answerSelection isEqual:self.answerCompany]){
     [self updateAnswerCompanies];
   } else if ([answerSelection isEqual:self.answerTitle]){
@@ -722,8 +738,6 @@
 
 - (QIRankDisplayView *)newRankDisplayView{
   QIRankDisplayView *view = [[QIRankDisplayView alloc] init];
-  
-  //Todo fix this to pass actual rank
   view.rank = 1;
   [view setTranslatesAutoresizingMaskIntoConstraints:NO];
   [view setBackgroundColor:[UIColor clearColor]];

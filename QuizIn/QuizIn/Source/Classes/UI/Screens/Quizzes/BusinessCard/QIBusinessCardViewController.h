@@ -1,7 +1,7 @@
 #import "QIQuizQuestionViewController.h"
 #import "QIBusinessCardQuizView.h"
 
-@interface QIBusinessCardViewController : QIQuizQuestionViewController
+@interface QIBusinessCardViewController : QIQuizQuestionViewController <UIAlertViewDelegate, UIActionSheetDelegate>
 
 @property(nonatomic, strong) QIBusinessCardQuizView *businessCardQuizView;
 

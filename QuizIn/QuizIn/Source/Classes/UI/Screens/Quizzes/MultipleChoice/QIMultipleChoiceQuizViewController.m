@@ -66,7 +66,7 @@
     case 0:{
       NSString *personID = self.multipleChoiceQuestion.person.personID;
       NSString *actionUrl = [NSString stringWithFormat:@"linkedin://#profile/%@",personID];
-      NSString *actionUrlWeb = [NSString stringWithFormat:@"http://www.linkedin.com/profile/view?id=%@",personID];
+      NSString *actionUrlWeb = self.multipleChoiceQuestion.person.publicProfileURL; 
       
       BOOL canOpenURL = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:actionUrl]];
       if (canOpenURL){
@@ -91,6 +91,11 @@
                                                  delegate:nil
                                         cancelButtonTitle:@"Thanks"
                                         otherButtonTitles:nil];
+  for (UIView *view in alert.subviews) {
+    if([[view class] isSubclassOfClass:[UILabel class]]) {
+      [((UILabel*)view) setTextAlignment:NSTextAlignmentLeft];
+    }
+  }
   [alert show];
 }
 

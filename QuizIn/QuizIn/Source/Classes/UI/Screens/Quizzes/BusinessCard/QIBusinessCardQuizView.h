@@ -3,12 +3,14 @@
 #import "BusinessCardAnswer/QIBusinessCardAnswerView.h"
 #import "QICheckAnswersView.h"
 #import "QIRankDisplayView.h"
+#import "QIPerson.h"
 
 @interface QIBusinessCardQuizView : UIView
 
 @property(nonatomic, strong) QIProgressView *progressView;
 @property(nonatomic, strong) QICheckAnswersView *checkAnswersView;
 @property(nonatomic, strong) QIRankDisplayView *rankDisplayView;
+@property(nonatomic, strong) QIPerson *answerPerson; 
 @property(nonatomic, strong) NSURL *questionImageURL;
 @property(nonatomic, strong) NSArray *answerNames;
 @property(nonatomic, strong) NSArray *answerCompanies;

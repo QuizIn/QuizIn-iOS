@@ -1,6 +1,7 @@
 #import "QIMatchingQuizView.h"
 #import "AsyncImageView.h"
 #import "QIFontProvider.h"
+#import "QIStatsData.h"
 
 @interface QIMatchingQuizView ()
 
@@ -22,7 +23,9 @@
 @property(nonatomic, strong) NSMutableArray *questionConstraints;
 @property(nonatomic, strong) NSMutableArray *answerConstraints;
 @property(nonatomic, strong) NSLayoutConstraint *topCheck;
+@property (nonatomic, strong) NSLayoutConstraint *topRank;
 @property(nonatomic, assign) BOOL resultClosed;
+@property (nonatomic, assign) BOOL allowAnalytics;
 @end
 
 @implementation QIMatchingQuizView
@@ -39,6 +42,7 @@
     _divider = [self newDivider];
     _progressView = [self newProgressView];
     _questionView = [self newQuestionView];
+    _rankDisplayView = [self newRankDisplayView];
     _answerView = [self newAnswerView];
     _answerButtons = @[];
     _questionButtons = @[];
@@ -50,6 +54,8 @@
     _answerColorImages = [self newAnswerColorImages];
     _overwriteSelection = NO; 
     _checkAnswersView = [self newCheckAnswersView];
+    _resultClosed = YES;
+    _allowAnalytics = YES;
     
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];    
     [self constructViewHierarchy];
@@ -59,6 +65,7 @@
 
 
 #pragma mark Properties
+
 - (void)setQuestionImageURLs:(NSArray *)questionImageURLs{
   if ([questionImageURLs isEqualToArray:_questionImageURLs]) {
     return;
@@ -101,6 +108,10 @@
   [self updateProgress];
 }
 
+- (void)setLoggedInUserID:(NSString *)loggedInUserID{
+  _loggedInUserID = loggedInUserID;
+}
+
 #pragma mark View Hierarchy
 
 - (void)constructViewHierarchy {
@@ -111,7 +122,8 @@
   [self addSubview:_questionView];
   [self loadQuestionButtons];
   [self loadAnswerButtons];
-  [self addSubview:self.checkAnswersView];
+  [self addSubview:_checkAnswersView];
+  [self addSubview:_rankDisplayView];
 }
 
 - (void)loadQuestionButtons{
@@ -324,6 +336,15 @@
     
     [self.answerConstraints addObjectsFromArray:@[centerCheckX,widthCheck,heightCheck,_topCheck]];
     
+    //Constrain Rank Display
+    NSLayoutConstraint *centerRankX = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *widthRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *heightRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:81.0f];
+    
+    _topRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0f constant:-81.0f];
+    
+    [self.answerConstraints addObjectsFromArray:@[centerRankX,widthRank,heightRank,_topRank]];
+    
     [self addConstraints:self.progressViewConstraints];
     [self addConstraints:self.answerConstraints];
     [self addConstraints:self.questionConstraints];
@@ -377,6 +398,27 @@
 }
 
 #pragma mark actions
+- (void)checkForComplete{
+  int total = [self.questionButtons count] + [self.answerButtons count];
+  int countComplete = 0;
+  for (UIButton *button in self.questionButtons) {
+    if (button.selected) {
+      countComplete++; 
+    }
+  }
+  for (UIButton *button in self.answerButtons) {
+    if (button.selected) {
+      countComplete++;
+    }
+  }
+  if (total == countComplete){
+    [self.checkAnswersView.checkButton setEnabled:YES]; 
+  }
+  else{
+    [self.checkAnswersView.checkButton setEnabled:NO];
+  }
+}
+
 -(NSNumber *)dequeueQuestionColorImage{
   NSNumber *lastImageIndex = [self.questionColorImagesQueue lastObject];
   [self.questionColorImagesQueue removeLastObject];
@@ -474,6 +516,7 @@
 }
 -(void)againButtonPressed{
   DDLogInfo(@"againButton Pressed");
+  [self setAllowAnalytics:NO];
   [self resetView];
 }
 -(void)showResult{
@@ -485,6 +528,7 @@
     [self.checkAnswersView.resultHideButton setHidden:NO];
     [self.topCheck setConstant:-81.0f];
     [self setResultClosed:NO];
+    [self processAnswer];
     [self layoutIfNeeded];
   }];
 }
@@ -514,6 +558,41 @@
   }];
 }
 
+-(void)showRankDisplay{
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.topRank setConstant:100.0f];
+    [NSTimer scheduledTimerWithTimeInterval:7.0f target:self selector:@selector(hideRankDisplay) userInfo:nil repeats:NO];
+    [self layoutIfNeeded];
+  }];
+}
+
+-(void)hideRankDisplay{
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.topRank setConstant:-81.0f];
+    [self layoutIfNeeded];
+  }];
+}
+
+-(void)processAnswer{
+  QIStatsData *statsEngine = [[QIStatsData alloc] initWithLoggedInUserID:self.loggedInUserID];
+  BOOL correct = NO; //test For Correct Answer
+  if (correct){
+    [self.checkAnswersView correct:YES];
+    if (self.allowAnalytics){
+      //[statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:YES];
+      if ([statsEngine needsRankUpdate]) {
+        self.rankDisplayView.rank = [statsEngine getCurrentRank];
+        [self showRankDisplay];
+      }
+    }
+  }
+  else{
+    [self.checkAnswersView correct:NO];
+    if (self.allowAnalytics) {
+      //[statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:NO];
+    }
+  }
+}
                                      
 #pragma mark Factory Methods
 - (QIProgressView *)newProgressView{
@@ -554,6 +633,7 @@
   [questionButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [questionButton setTag:99];
   [questionButton addTarget:self action:@selector(questionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+  [questionButton addTarget:self action:@selector(checkForComplete) forControlEvents:UIControlEventTouchUpInside];
   return questionButton;
 }
 
@@ -618,7 +698,7 @@
   [answerButton setReversesTitleShadowWhenHighlighted:NO];
   [answerButton setTag:99];
   [answerButton addTarget:self action:@selector(answerButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-  
+  [answerButton addTarget:self action:@selector(checkForComplete) forControlEvents:UIControlEventTouchUpInside];
   return answerButton;
 }
 
@@ -627,11 +707,19 @@
   [view.resultHideButton addTarget:self action:@selector(toggleResult) forControlEvents:UIControlEventTouchUpInside];
   [view.againButton addTarget:self action:@selector(againButtonPressed) forControlEvents:UIControlEventTouchUpInside];
   [view.checkButton addTarget:self action:@selector(checkButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+  [view.checkButton setEnabled:NO];
   [view setTranslatesAutoresizingMaskIntoConstraints:NO];
   [view setBackgroundColor:[UIColor clearColor]];
   return view;
 }
 
+- (QIRankDisplayView *)newRankDisplayView{
+  QIRankDisplayView *view = [[QIRankDisplayView alloc] init];
+  view.rank = 1;
+  [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [view setBackgroundColor:[UIColor clearColor]];
+  return view;
+}
 
 @end
 

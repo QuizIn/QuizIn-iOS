@@ -11,11 +11,9 @@
 @property (nonatomic, strong) UIImageView *dividerBottom;
 @property (nonatomic, strong) UIImageView *profileImageBackground;
 @property (nonatomic, strong) UIImageView *profileImageTape;
-
 @property (nonatomic, strong) AsyncImageView *profileImageView;
 @property (nonatomic, strong) UILabel *questionLabel;
 @property (nonatomic, strong) NSArray *answerButtons;
-
 @property (nonatomic, strong) NSMutableArray *progressViewConstraints;
 @property (nonatomic, strong) NSMutableArray *multipleChoiceConstraints;
 @property (nonatomic, strong) NSLayoutConstraint *topCheck;
@@ -474,8 +472,6 @@
 
 - (QIRankDisplayView *)newRankDisplayView{
   QIRankDisplayView *view = [[QIRankDisplayView alloc] init];
-  
-  //Todo fix this to pass actual rank
   view.rank = 1;
   [view setTranslatesAutoresizingMaskIntoConstraints:NO];
   [view setBackgroundColor:[UIColor clearColor]];

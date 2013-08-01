@@ -16,7 +16,6 @@
 @property(nonatomic, strong) NSArray *profileImages;
 
 //Temporary Buttons
-@property(nonatomic, strong, readwrite) UIButton *businessCardQuizButton;
 @property(nonatomic, strong, readwrite) UIButton *matchingQuizButton;
 
 //constraints
@@ -50,7 +49,6 @@
     _calendarPickerButton = [self newCalendarPickerButton];
     _profileImages = [self newProfileImages];
     
-    _businessCardQuizButton = [self newBusinessCardQuizButton];
     _matchingQuizButton = [self newMatchingQuizButton];
     
     [self constructViewHierachy];
@@ -83,7 +81,6 @@
   [self.connectionsQuizStartView addSubview:self.connectionsQuizImagePreviewCollection];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizButton];
   [self addSubview:self.connectionsQuizStartView];
-  [self addSubview:self.businessCardQuizButton];
   [self addSubview:self.matchingQuizButton];
   for (int i= 0; i<4; i++) {
     [self.connectionsQuizImagePreviewCollection addSubview:[self.profileImages objectAtIndex:i]];
@@ -295,11 +292,13 @@
   [paperImage setTranslatesAutoresizingMaskIntoConstraints:NO];
   return paperImage;
 }
+
 - (UIImageView *)newConnectionsQuizBinderImage{
   UIImageView *binderImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"connectionsquiz_paperstack"]];
   [binderImage setTranslatesAutoresizingMaskIntoConstraints:NO];
   return binderImage;
 }
+
 - (UILabel *)newConnectionsQuizTitle{
   UILabel *quizTitle = [[UILabel alloc] init];
   quizTitle.text = @"Connections Quiz";
@@ -307,6 +306,7 @@
   [quizTitle setTranslatesAutoresizingMaskIntoConstraints:NO];
   return quizTitle;
 }
+
 - (UILabel *)newConnectionsQuizNumberOfConnectionsLabel{
   UILabel *quizConnections = [[UILabel alloc] init];
   quizConnections.text = @"Connections";
@@ -314,11 +314,13 @@
   [quizConnections setTranslatesAutoresizingMaskIntoConstraints:NO];
   return quizConnections;
 }
+
 - (UIView *)newConnectionsQuizImagePreviewCollection{
   UIView *previewArea = [[UIView alloc] init];
   [previewArea setTranslatesAutoresizingMaskIntoConstraints:NO];
   return previewArea;
 }
+
 - (UIButton *)newConnectionsQuizButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setTitle:[self connectionsQuizButtonTitle] forState:UIControlStateNormal];
@@ -327,11 +329,13 @@
   button.backgroundColor = [UIColor clearColor];
   return button;
 }
+
 - (UIView *)newConnectionsQuizStartView{
   UIView *startView = [[UIView alloc] init];
   [startView setTranslatesAutoresizingMaskIntoConstraints:NO];
   return startView;
 }
+
 -(UIButton *)newCalendarPickerButton{
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setTitle:[self calendarPickerButtonTitle] forState:UIControlStateNormal];
@@ -341,17 +345,10 @@
   return button;
 }
 
-- (UIButton *)newBusinessCardQuizButton {
-  UIButton *businessCardQuizButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-  [businessCardQuizButton setTitle:@"Business Card" forState:UIControlStateNormal];
-  businessCardQuizButton.frame = CGRectMake(10.0f, 330.0f, 150.0f, 44.0f);
-  return businessCardQuizButton;
-}
-
 - (UIButton *)newMatchingQuizButton {
   UIButton *matchingQuizButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
   [matchingQuizButton setTitle:@"Matching" forState:UIControlStateNormal];
-  matchingQuizButton.frame = CGRectMake(10.0f, 300.0f, 150.0f, 44.0f);
+  matchingQuizButton.frame = CGRectMake(10.0f, 350.0f, 150.0f, 44.0f);
   return matchingQuizButton;
 }
 
