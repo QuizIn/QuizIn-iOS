@@ -54,6 +54,8 @@
                                 cancelButtonTitle:cancelTitle
                                 destructiveButtonTitle:nil
                                 otherButtonTitles:other1, nil];
+  [actionSheet setOpaque:NO];
+  [actionSheet setAlpha:.8f];
   [actionSheet showInView:self.view];
 }
 
@@ -82,8 +84,9 @@
 #pragma mark Alert Functions
 
 - (void)helpDialog{
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Multiple Choice Question"
-                                                  message:@"1) Click the correct answer\n2) Press 'Check Answers'\n3) 'Continue'"
+
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@" Business Card Question"
+                                                  message:@"Swipe the answer selectors left and right to fill out the business card and touch Check Answers"
                                                  delegate:nil
                                         cancelButtonTitle:@"Thanks"
                                         otherButtonTitles:nil];
@@ -93,6 +96,7 @@
     }
   }
   [alert show];
+
 }
 
 - (void)didReceiveMemoryWarning {

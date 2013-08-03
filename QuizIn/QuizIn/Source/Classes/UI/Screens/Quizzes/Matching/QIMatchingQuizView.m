@@ -538,9 +538,22 @@
     [self.checkAnswersView.nextButton setHidden:YES];
     [self.checkAnswersView.againButton setHidden:YES];
     [self.checkAnswersView.checkButton setHidden:NO];
+    [self.checkAnswersView.checkButton setEnabled:NO];
     [self.checkAnswersView.resultHideButton setHidden:YES];
     [self.topCheck setConstant:-40.0f];
     [self setResultClosed:YES];
+    for (UIButton *button in self.questionButtons){
+      [button setSelected:NO];
+      [button setUserInteractionEnabled:YES];
+      [button setAlpha:1.0f];
+    }
+    for (UIButton *button in self.answerButtons){
+      [button setSelected:NO];
+      [button setUserInteractionEnabled:YES];
+      [button setAlpha:1.0f];
+    }
+    self.questionColorImagesQueue = [self newQueue];
+    self.answerColorImagesQueue = [self newQueue];
     [self layoutIfNeeded];
   }];
 }

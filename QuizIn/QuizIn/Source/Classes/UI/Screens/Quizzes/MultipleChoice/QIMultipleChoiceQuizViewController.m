@@ -24,7 +24,7 @@
   self.multipleChoiceView.correctAnswerIndex = self.multipleChoiceQuestion.correctAnswerIndex;
   self.multipleChoiceView.profileImageURL = [NSURL URLWithString:self.multipleChoiceQuestion.person.pictureURL];
   
-  //todo
+  //todo loggedinuserID
   self.multipleChoiceView.loggedInUserID = @"12345";
   self.multipleChoiceView.answerPerson = self.multipleChoiceQuestion.person;
 
@@ -58,6 +58,8 @@
                                 cancelButtonTitle:cancelTitle
                                 destructiveButtonTitle:nil
                                 otherButtonTitles:other1, nil];
+  [actionSheet setOpaque:NO];
+  [actionSheet setAlpha:.8f];
   [actionSheet showInView:self.view];
 }
 
@@ -86,8 +88,8 @@
 #pragma mark Alert Functions
 
 - (void)helpDialog{
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Multiple Choice Question"
-                                                  message:@"1) Click the correct answer\n2) Press 'Check Answers'\n3) 'Continue'"
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@" Multiple Choice Question"
+                                                  message:@"Touch the answer and touch Check Answers."
                                                  delegate:nil
                                         cancelButtonTitle:@"Thanks"
                                         otherButtonTitles:nil];

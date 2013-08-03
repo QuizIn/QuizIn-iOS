@@ -98,7 +98,6 @@
   QIQuizQuestionViewController *nextQuestionViewController =
       [QIQuizQuestionViewControllerFactory questionViewControllerForQuestion:nextQuestion];
   
-  //Todo Combine this into a reusable function 
   [nextQuestionViewController.checkAnswersView.nextButton addTarget:self action:@selector(nextPressed) forControlEvents:UIControlEventTouchUpInside];
   [nextQuestionViewController.checkAnswersView.nextButton addTarget:self
                                                              action:@selector(nextPressed)

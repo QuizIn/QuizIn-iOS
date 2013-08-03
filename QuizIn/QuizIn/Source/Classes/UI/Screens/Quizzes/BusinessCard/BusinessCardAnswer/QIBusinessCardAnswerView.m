@@ -33,6 +33,7 @@
 {
   self = [super initWithFrame:frame];
   if (self) {
+
     _answerHolder = [self newAnswerHolder];
     _answerScrollView = [self newAnswerScrollView];
     _answer = [self newAnswer];
@@ -40,6 +41,7 @@
     _answer2 = [self newAnswer];
     _spacers = [self newSpacers];
     _selectedAnswer = 0;
+    
     [self constructViewHierarchy];
   }
   return self;
@@ -187,9 +189,6 @@
                                             options:NSLayoutFormatAlignAllTop
                                             metrics:nil
                                               views:answerHolderConstraintViews];
-    
-    //[self.answerViewConstraints addObjectsFromArray:@[vAnswer,vAnswer1,vAnswer2,vAnswerHeight,vAnswer1Height,vAnswer2Height]];
-    //[self.answerViewConstraints addObjectsFromArray:hNames];
 
     [self.scrollViewConstraints addObjectsFromArray:@[vAnswer,vAnswer1,vAnswer2,vAnswerHeight,vAnswer1Height,vAnswer2Height]];
     [self.scrollViewConstraints addObjectsFromArray:hNames];
@@ -204,9 +203,9 @@
   if ([self.answers count] == 0) {
     return;
   }
-  _answer.text = _answers[0];
-  _answer1.text = _answers[1];
-  _answer2.text = _answers[2];
+  _answer.attributedText = [self answerString:_answers[0]];
+  _answer1.attributedText = [self answerString:_answers[1]];
+  _answer2.attributedText = [self answerString:_answers[2]];
 }
 
 - (void)updateCurrentAnswer{
@@ -226,7 +225,6 @@
 
 - (UIImageView *)newAnswerHolder {
   UIImageView *answerHolder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cardquiz_answerholder"]];
-  //TODO needs insets
   [answerHolder setTranslatesAutoresizingMaskIntoConstraints:NO];
   return answerHolder;
 }
@@ -249,17 +247,24 @@
 
 -(UILabel *)newAnswer{
   UILabel *answer = [[UILabel alloc] init];
-  //TODO Use Attributed Text to make this a 2-line centered UILabel
+  [answer setAttributedText:[self answerString:@"test"]];
   [answer setTranslatesAutoresizingMaskIntoConstraints:NO];
   [answer setBackgroundColor:[UIColor clearColor]];
-  [answer setFont:[QIFontProvider fontWithSize:13.0f style:Bold]];
-  [answer setTextColor:[UIColor colorWithWhite:.33f alpha:1.0f]];
   [answer setAdjustsLetterSpacingToFitWidth:YES];
   [answer setAdjustsFontSizeToFitWidth:YES];
   [answer setMinimumScaleFactor:.7f];
+  [answer setNumberOfLines:2];
   [answer setLineBreakMode:NSLineBreakByTruncatingMiddle];
   [answer setTextAlignment:NSTextAlignmentCenter];
   return answer;
+}
+
+- (NSMutableAttributedString *)answerString:(NSString *)input
+{
+  NSMutableAttributedString *labelAttributes = [[NSMutableAttributedString alloc] initWithString:input];
+  [labelAttributes addAttribute:NSFontAttributeName value:[QIFontProvider fontWithSize:12.0f style:Bold] range:NSMakeRange(0, labelAttributes.length)];
+  [labelAttributes addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:.33f alpha:1.0f] range:NSMakeRange(0, labelAttributes.length)];
+  return labelAttributes;
 }
 
 -(NSArray *)newSpacers{
