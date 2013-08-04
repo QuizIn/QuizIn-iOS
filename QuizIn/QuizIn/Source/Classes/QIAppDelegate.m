@@ -5,6 +5,8 @@
 
 #import "QIApplicationViewController.h"
 
+#import "QILISearch.h"
+
 int ddLogLevel;
 
 @implementation QIAppDelegate
@@ -17,6 +19,17 @@ int ddLogLevel;
   QIApplicationViewController *applicationViewController = [QIApplicationViewController new];
   self.window.rootViewController = applicationViewController;
   [self.window makeKeyAndVisible];
+  
+  
+  [QILISearch getPeopleSearchWithFieldSelector:@"(facets:(code,buckets:(code,name,count)))"
+                              searchParameters:@{@"facets": @"current-company",
+                                                 @"IDUPIfacet": @"network,F", @"start": @"12"}
+                                  onCompletion:^(NSArray *people, NSError *error) {
+    NSLog(@"DONE");
+  }];
+  //)?
+  
+  
   return YES;
 }
 

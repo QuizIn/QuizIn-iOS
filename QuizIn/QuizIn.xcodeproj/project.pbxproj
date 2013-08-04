@@ -17,6 +17,7 @@
 		205504F31780C1C600F7F90F /* QILocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504F21780C1C600F7F90F /* QILocation.m */; };
 		205504F61780C4DF00F7F90F /* QIPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504F51780C4DE00F7F90F /* QIPosition.m */; };
 		205504F91780C5BA00F7F90F /* QICompany.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504F81780C5BA00F7F90F /* QICompany.m */; };
+		20683D9A17AEE0210047B803 /* QILISearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 20683D9917AEE0210047B803 /* QILISearch.m */; };
 		20E0201A17A5BE9900CB9D43 /* QICompany+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E0200D17A5BE9900CB9D43 /* QICompany+Factory.m */; };
 		20E0201B17A5BE9900CB9D43 /* QIConnectionsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E0200F17A5BE9900CB9D43 /* QIConnectionsStore.m */; };
 		20E0201C17A5BE9900CB9D43 /* QIConnectionsStoreFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E0201117A5BE9900CB9D43 /* QIConnectionsStoreFactory.m */; };
@@ -273,6 +274,8 @@
 		205504F51780C4DE00F7F90F /* QIPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIPosition.m; sourceTree = "<group>"; };
 		205504F71780C5B900F7F90F /* QICompany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICompany.h; sourceTree = "<group>"; };
 		205504F81780C5BA00F7F90F /* QICompany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICompany.m; sourceTree = "<group>"; };
+		20683D9817AEE0210047B803 /* QILISearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QILISearch.h; sourceTree = "<group>"; };
+		20683D9917AEE0210047B803 /* QILISearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QILISearch.m; sourceTree = "<group>"; };
 		20E0200C17A5BE9900CB9D43 /* QICompany+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QICompany+Factory.h"; sourceTree = "<group>"; };
 		20E0200D17A5BE9900CB9D43 /* QICompany+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QICompany+Factory.m"; sourceTree = "<group>"; };
 		20E0200E17A5BE9900CB9D43 /* QIConnectionsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIConnectionsStore.h; sourceTree = "<group>"; };
@@ -663,6 +666,8 @@
 				20E0202E17A5BED800CB9D43 /* QILIConnections.m */,
 				20E0202F17A5BED800CB9D43 /* QILIPeople.h */,
 				20E0203017A5BED800CB9D43 /* QILIPeople.m */,
+				20683D9817AEE0210047B803 /* QILISearch.h */,
+				20683D9917AEE0210047B803 /* QILISearch.m */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -1686,6 +1691,7 @@
 				20E0203717A5CAC300CB9D43 /* QIQuizQuestionViewController.m in Sources */,
 				20E0203A17A5CC1C00CB9D43 /* QIQuizQuestionViewControllerFactory.m in Sources */,
 				3412984417A8898C00678A55 /* QIStatsSummaryView.m in Sources */,
+				20683D9A17AEE0210047B803 /* QILISearch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

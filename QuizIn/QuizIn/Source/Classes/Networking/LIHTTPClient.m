@@ -7,7 +7,7 @@
 #import "AKOAuth2AccountCredential.h"
 #import "QIAccountStore.h"
 
-static NSString * const kAFLinkedInAPIBaseURLString = @"https://api.linkedin.com/v1";
+static NSString * const kAFLinkedInAPIBaseURLString = @"https://api.linkedin.com/v1/";
 
 @implementation LIHTTPClient
 
