@@ -57,7 +57,7 @@
     [connectionsInQuiz addObject:personID];
     
     
-    if (i < 4) {
+    if (i < 2) {
       QIMatchingQuestion *question = [QIMatchingQuestion new];
       NSMutableArray *matchingQuizPeople = [NSMutableArray arrayWithCapacity:4];
       // TODO(Rene): Handle if have less than 4 people with profile pic.
