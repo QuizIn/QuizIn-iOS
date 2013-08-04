@@ -30,7 +30,7 @@
   self.statsView.currentRank = [data getCurrentRank];
   self.statsView.totalCorrectAnswers = [data getTotalCorrectAnswers];
   self.statsView.totalIncorrectAnswers = [data getTotalIncorrectAnswers];
-  self.statsView.connectionStats = [data getConnectionStats];
+  self.statsView.connectionStats = [data getConnectionStatsInOrderBy:lastName];
 }
 
 - (void)resetStats{

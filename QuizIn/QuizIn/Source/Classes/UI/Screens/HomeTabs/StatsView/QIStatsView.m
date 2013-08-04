@@ -154,10 +154,10 @@
 -(UITableView *)newStatsTable{
   UITableView *tableView = [[UITableView alloc] init];
   [tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [tableView setBackgroundColor:[UIColor colorWithRed:80.0f/255.0f green:125.0f/255.0f blue:144.0f/255.0f alpha:.3f]];
+  [tableView setBackgroundColor:[UIColor clearColor]];
   [tableView setSeparatorColor:[UIColor colorWithWhite:.8f alpha:1.0f]];
   [tableView setShowsVerticalScrollIndicator:NO];
-  tableView.rowHeight = 94;
+  tableView.rowHeight = 46;
   tableView.sectionHeaderHeight = 25;
   tableView.tableHeaderView = self.headerView;
   tableView.dataSource = self;
@@ -169,6 +169,7 @@
   UIButton *statsViewButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
   [statsViewButton setTitle:@"Reset Stats" forState:UIControlStateNormal];
   statsViewButton.frame = CGRectMake(200.0f, 335.0f, 150.0f, 15.0f);
+  [statsViewButton setHidden:YES]; 
   return statsViewButton;
 }
 
@@ -176,6 +177,7 @@
   UIButton *statsViewButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
   [statsViewButton setTitle:@"Print Stats" forState:UIControlStateNormal];
   statsViewButton.frame = CGRectMake(200.0f, 350.0f, 150.0f, 15.0f);
+  [statsViewButton setHidden:YES];
   return statsViewButton;
 }
 
@@ -196,9 +198,16 @@
     [self layoutIfNeeded];
   }];
 }
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+  return [[self.connectionStats objectAtIndex:0] count];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-  return [self.connectionStats count];
+  return [[[self.connectionStats objectAtIndex:1] objectForKey:[[self.connectionStats objectAtIndex:0] objectAtIndex:section]] count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+  return [[self.connectionStats objectAtIndex:0] objectAtIndex:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -209,10 +218,13 @@
     cell = [[QIStatsCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
   }
-  NSDictionary *data = [self.connectionStats objectAtIndex:indexPath.row];
+  NSDictionary *data = [[[self.connectionStats objectAtIndex:1] objectForKey:[[self.connectionStats objectAtIndex:0] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+  int knowledgeIndex = [[data objectForKey:@"correctAnswers"] integerValue]-[[data objectForKey:@"incorrectAnswers"] integerValue];
   [cell setConnectionName:[NSString stringWithFormat:@"%@ %@",[data objectForKey:@"userFirstName"],[data objectForKey:@"userLastName"]]];
-  [cell setKnowledgeIndex:[NSString stringWithFormat:@"%d",[[data objectForKey:@"correctAnswers"] integerValue]]];
+  [cell setKnowledgeIndex:[NSString stringWithFormat:@"%d",knowledgeIndex]];
   [cell setProfileImageURL:[NSURL URLWithString:[data objectForKey:@"userPictureURL"]]];
+  [cell setRightAnswers:[NSString stringWithFormat:@"%d",[[data objectForKey:@"correctAnswers"] integerValue]]];
+  [cell setWrongAnswers:[NSString stringWithFormat:@"%d",[[data objectForKey:@"incorrectAnswers"] integerValue]]];
   return cell;
 }
 

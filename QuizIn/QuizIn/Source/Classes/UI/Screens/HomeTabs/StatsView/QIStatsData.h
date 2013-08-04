@@ -4,6 +4,12 @@
 
 @interface QIStatsData : NSObject
 
+typedef enum SortBy: NSInteger SortBy;
+enum SortBy : NSInteger {
+  lastName,
+  firstName,
+  knowledgeIndex
+};
 
 - (id)initWithLoggedInUserID:(NSString *)ID;
 
@@ -18,6 +24,7 @@
 - (int)getTotalCorrectAnswers;
 - (int)getTotalIncorrectAnswers;
 - (NSArray *)getConnectionStats;
+- (NSArray *)getConnectionStatsInOrderBy:(SortBy)sortBy;
 
 //update Stats
 - (void)updateStatsWithConnectionProfile:(QIPerson *)person correct:(BOOL)correct;
