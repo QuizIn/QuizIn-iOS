@@ -13,6 +13,8 @@
 @property(nonatomic, strong, readonly) UIButton *nextQuestionButton;
 @property(nonatomic, copy) NSArray *questionImageURLs;
 @property(nonatomic, copy) NSArray *answers;
+// Array is in order of answers, each item in the array is the index of the matching picture.
+@property(nonatomic, copy) NSArray *correctAnswers;
 @property(nonatomic, strong) NSString *loggedInUserID; 
 
 

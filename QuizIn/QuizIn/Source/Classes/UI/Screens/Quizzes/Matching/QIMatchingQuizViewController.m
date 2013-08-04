@@ -1,9 +1,11 @@
 #import "QIMatchingQuizViewController.h"
 
 #import "QIQuizQuestionViewController_Protected.h"
+#import "QIMatchingQuestion.h"
+#import "QIPerson.h"
 
 @interface QIMatchingQuizViewController ()
-
+@property(nonatomic, strong, readonly) QIMatchingQuestion *matchingQuestion;
 @end
 
 @implementation QIMatchingQuizViewController
@@ -25,11 +27,15 @@
   [super viewDidLoad];
   self.matchingQuizView.numberOfQuestions = 10;
   self.matchingQuizView.quizProgress = 4;
-  self.matchingQuizView.questionImageURLs = @[[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/3/000/00d/248/1c9f8fa.jpg"],
-                                              [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/6/000/1f0/39b/3ae80b5.jpg"],
-                                              [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/1/000/095/3e4/142853e.jpg"],
-                                              [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_200_200/p/1/000/080/035/28eea75.jpg"]];
-  self.matchingQuizView.answers = @[@"Knoxville Fellows",@"Invodo",@"Mutual Mobile",@"Google"];
+  
+  NSMutableArray *imageURLs = [NSMutableArray arrayWithCapacity:[self.matchingQuestion.people count]];
+  for (QIPerson *person in self.matchingQuestion.people) {
+    [imageURLs addObject:[NSURL URLWithString:person.pictureURL]];
+  }
+  self.matchingQuizView.questionImageURLs = [imageURLs copy];
+  
+  self.matchingQuizView.answers = self.matchingQuestion.answers;
+  self.matchingQuizView.correctAnswers = self.matchingQuestion.correctAnswers;
   self.matchingQuizView.loggedInUserID = @"12345";
   
   [self.matchingQuizView.checkAnswersView.helpButton addTarget:self
@@ -103,6 +109,10 @@
 
 - (QIMatchingQuizView *)matchingQuizView {
   return (QIMatchingQuizView *)self.view;
+}
+
+- (QIMatchingQuestion *)matchingQuestion {
+  return (QIMatchingQuestion *)self.question;
 }
 
 @end
