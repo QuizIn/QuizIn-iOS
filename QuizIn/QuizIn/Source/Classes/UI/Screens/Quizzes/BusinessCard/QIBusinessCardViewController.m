@@ -28,11 +28,10 @@
   self.businessCardQuizView.answerNames = self.businessCardQuestion.names;
   self.businessCardQuizView.answerCompanies = self.businessCardQuestion.companies;
   self.businessCardQuizView.answerTitles = self.businessCardQuestion.titles;
-  self.businessCardQuizView.answerPerson = self.businessCardQuestion.person; 
-  //todo add actual correct Indexes here. 
-  self.businessCardQuizView.correctNameIndex = 1;
-  self.businessCardQuizView.correctCompanyIndex = 1;
-  self.businessCardQuizView.correctTitleIndex = 1;
+  self.businessCardQuizView.answerPerson = self.businessCardQuestion.person;  
+  self.businessCardQuizView.correctNameIndex = self.businessCardQuestion.correctNameIndex;
+  self.businessCardQuizView.correctCompanyIndex = self.businessCardQuestion.correctCompanyIndex;
+  self.businessCardQuizView.correctTitleIndex = self.businessCardQuestion.correctTitleIndex;
   self.businessCardQuizView.loggedInUserID = @"12345";
   
   [self.businessCardQuizView.checkAnswersView.helpButton addTarget:self
