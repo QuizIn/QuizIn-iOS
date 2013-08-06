@@ -143,32 +143,48 @@
   NSMutableDictionary *stats = [[prefs objectForKey:self.userID] mutableCopy];
   NSMutableArray *connectionStats = [stats objectForKey:@"connectionStats"];
   
-  NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"userLastName" ascending:YES];
+  NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
   NSArray *sortDescriptors = @[sortDescriptor];
   NSArray *sortedConnectionStats = [connectionStats sortedArrayUsingDescriptors:sortDescriptors];
 
   NSMutableDictionary *connectionStatsAlphabetical = [NSMutableDictionary dictionary];
   NSMutableArray *sections = [NSMutableArray array];
   
-  for (NSDictionary *connection in sortedConnectionStats){
-    NSString *lastName = [connection objectForKey:@"userLastName"];
-    NSString *letter = @"";
-    if ([lastName length]>0){
-      unichar character = [lastName characterAtIndex:0];
-      letter = [NSString stringWithFormat:@"%C", character];
-      letter = [letter uppercaseString];
+  if (sortBy == lastName | sortBy == firstName){
+    for (NSDictionary *connection in sortedConnectionStats){
+      NSString *name = [connection objectForKey:sortKey];
+      NSString *letter = @"";
+      if ([name length]>0){
+        unichar character = [name characterAtIndex:0];
+        letter = [NSString stringWithFormat:@"%C", character];
+        letter = [letter uppercaseString];
+      }
+      else{
+        letter = @" ";
+      }
+      NSUInteger index = [sections indexOfObject:letter];
+      if (index == NSNotFound) {
+        [sections addObject:letter];
+        NSMutableArray *sectionList = [NSMutableArray arrayWithObject:connection];
+        [connectionStatsAlphabetical setObject:sectionList forKey:letter];
+      }
+      else{
+        [[connectionStatsAlphabetical objectForKey:letter] addObject:connection];
+      }
     }
-    else{
-      letter = @" ";
-    }
-    NSUInteger index = [sections indexOfObject:letter];
-    if (index == NSNotFound) {
-      [sections addObject:letter];
-      NSMutableArray *sectionList = [NSMutableArray arrayWithObject:connection];
-      [connectionStatsAlphabetical setObject:sectionList forKey:letter];
-    }
-    else{
-      [[connectionStatsAlphabetical objectForKey:letter] addObject:connection];
+  }
+  else if (sortBy == knowledgeIndex){
+    for (NSDictionary *connection in sortedConnectionStats){
+      NSString *sectionName = [NSString stringWithFormat:@"%d",[[connection objectForKey:sortKey] integerValue]];
+      NSUInteger index = [sections indexOfObject:sectionName];
+      if (index == NSNotFound) {
+        [sections addObject:sectionName];
+        NSMutableArray *sectionList = [NSMutableArray arrayWithObject:connection];
+        [connectionStatsAlphabetical setObject:sectionList forKey:sectionName];
+      }
+      else{
+        [[connectionStatsAlphabetical objectForKey:sectionName] addObject:connection];
+      }
     }
   }
   return @[sections,connectionStatsAlphabetical];

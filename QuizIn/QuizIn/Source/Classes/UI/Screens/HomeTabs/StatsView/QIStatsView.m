@@ -1,19 +1,14 @@
 
 #import "QIStatsView.h"
-#import "QIStatsCellView.h"
-#import "QIStatsTableHeaderView.h"
-#import "QIStatsSummaryView.h"
+
+#define SUMMARY_OFFSET -160
 
 @interface QIStatsView ()
 
-
 @property (nonatomic, strong) UIImageView *viewBackground;
-@property (nonatomic, retain) UITableView *tableView;
 @property (nonatomic, retain) QIStatsTableHeaderView *headerView;
-@property (nonatomic, strong) QIStatsSummaryView *summaryView; 
 @property (nonatomic, retain) NSMutableArray *viewConstraints;
 @property (nonatomic, strong) NSLayoutConstraint *vSummaryViewConstraint;
-@property (nonatomic, assign) NSUInteger lastContentOffset; 
 
 @end
 
@@ -157,11 +152,11 @@
   [tableView setBackgroundColor:[UIColor clearColor]];
   [tableView setSeparatorColor:[UIColor colorWithWhite:.8f alpha:1.0f]];
   [tableView setShowsVerticalScrollIndicator:NO];
-  tableView.rowHeight = 46;
-  tableView.sectionHeaderHeight = 25;
-  tableView.tableHeaderView = self.headerView;
-  tableView.dataSource = self;
-  tableView.delegate = self;
+  [tableView setRowHeight:46];
+  [tableView setSectionHeaderHeight:25];
+  [tableView setTableHeaderView:self.headerView];
+  [tableView setDataSource:self];
+  [tableView setDelegate:self];
   return tableView;
 }
 
@@ -182,22 +177,26 @@
 }
 
 #pragma mark - Table view data source
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    self.lastContentOffset = scrollView.contentOffset.y;
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+  
+  if (scrollView.contentOffset.y <= 0 & self.vSummaryViewConstraint.constant == SUMMARY_OFFSET){
+    [UIView animateWithDuration:.5 animations:^{
+      [self.vSummaryViewConstraint setConstant:0];
+      [self.tableView reloadData];
+      [self layoutIfNeeded];
+    }];
+  }
+  else if (scrollView.contentOffset.y > 0 & self.vSummaryViewConstraint.constant == 0){
+    [UIView animateWithDuration:.5 animations:^{
+      [self.vSummaryViewConstraint setConstant:SUMMARY_OFFSET];
+      [self.tableView reloadData];
+      [self layoutIfNeeded];
+    }];
+  }
+  
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-  [UIView animateWithDuration:.5 animations:^{
-    if (self.lastContentOffset > scrollView.contentOffset.y){
-      [self.vSummaryViewConstraint setConstant:0];
-    }
-    else if (self.lastContentOffset < scrollView.contentOffset.y){
-      [self.vSummaryViewConstraint setConstant:-170];
-    }
-    [self layoutIfNeeded];
-  }];
-}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
   return [[self.connectionStats objectAtIndex:0] count];
 }
@@ -208,6 +207,15 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
   return [[self.connectionStats objectAtIndex:0] objectAtIndex:section];
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
+  if (self.vSummaryViewConstraint.constant == SUMMARY_OFFSET){
+    return [self.connectionStats objectAtIndex:0];
+  }
+  else{
+    return nil; 
+  }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{

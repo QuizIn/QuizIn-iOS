@@ -833,6 +833,7 @@
 		344B62D517A38EC800EE85A9 /* RankDisplayView */ = {
 			isa = PBXGroup;
 			children = (
+				348901251780C51A0004F604 /* CheckAnswers */,
 				344B62D617A38F0400EE85A9 /* QIRankDisplayView.h */,
 				344B62D717A38F0400EE85A9 /* QIRankDisplayView.m */,
 			);
@@ -1040,7 +1041,8 @@
 				348901261780C5360004F604 /* QICheckAnswersView.h */,
 				348901271780C5360004F604 /* QICheckAnswersView.m */,
 			);
-			path = CheckAnswers;
+			name = CheckAnswers;
+			path = ../CheckAnswers;
 			sourceTree = "<group>";
 		};
 		348901291780DC540004F604 /* CheckAnswersView */ = {
@@ -1309,7 +1311,6 @@
 			isa = PBXGroup;
 			children = (
 				344B62D517A38EC800EE85A9 /* RankDisplayView */,
-				348901251780C51A0004F604 /* CheckAnswers */,
 				3478FFA5173FD6BF002B29DB /* ProgressView */,
 				888679A5172DD57F00DCE3D0 /* MultipleChoice */,
 				8886799B172DAFC700DCE3D0 /* BusinessCard */,

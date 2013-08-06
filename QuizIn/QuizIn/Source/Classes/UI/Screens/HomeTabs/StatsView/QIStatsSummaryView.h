@@ -10,4 +10,6 @@
 
 @interface QIStatsSummaryView : UIView
 
+@property (nonatomic, strong) UISegmentedControl *sorterSegmentedControl;
+
 @end
