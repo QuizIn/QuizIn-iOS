@@ -5,27 +5,28 @@
 
 @interface QIMatchingQuizView ()
 
-@property(nonatomic, strong) UIImageView *viewBackground;
-@property(nonatomic, strong) UIImageView *divider;
-@property(nonatomic, strong) UIView *questionView;
-@property(nonatomic, strong) NSArray *questionButtons;
-@property(nonatomic, strong) NSArray *questionButtonImages;
-@property(nonatomic, strong) NSMutableArray *questionColorImagesQueue;
-@property(nonatomic, strong) NSMutableArray *questionColorImages;
-@property(nonatomic, strong) NSArray *questionButtonTapes;
-@property(nonatomic, strong) UIView *answerView;
-@property(nonatomic, strong) NSArray *answerButtons;
-@property(nonatomic, strong) NSMutableArray *answerColorImagesQueue;
-@property(nonatomic, strong) NSMutableArray *answerColorImages;
-@property(nonatomic, strong, readwrite) UIButton *nextQuestionButton;
-@property(nonatomic) BOOL overwriteSelection;
-@property(nonatomic, strong) NSMutableArray *progressViewConstraints;
-@property(nonatomic, strong) NSMutableArray *questionConstraints;
-@property(nonatomic, strong) NSMutableArray *answerConstraints;
-@property(nonatomic, strong) NSLayoutConstraint *topCheck;
+@property (nonatomic, strong) UIImageView *viewBackground;
+@property (nonatomic, strong) UIImageView *divider;
+@property (nonatomic, strong) UIView *questionView;
+@property (nonatomic, strong) NSArray *questionButtons;
+@property (nonatomic, strong) NSArray *questionButtonImages;
+@property (nonatomic, strong) NSMutableArray *questionColorImagesQueue;
+@property (nonatomic, strong) NSMutableArray *questionColorImages;
+@property (nonatomic, strong) NSArray *questionButtonTapes;
+@property (nonatomic, strong) UIView *answerView;
+@property (nonatomic, strong) NSArray *answerButtons;
+@property (nonatomic, strong) NSMutableArray *answerColorImagesQueue;
+@property (nonatomic, strong) NSMutableArray *answerColorImages;
+@property (nonatomic, strong, readwrite) UIButton *nextQuestionButton;
+@property (nonatomic) BOOL overwriteSelection;
+@property (nonatomic, strong) NSMutableArray *progressViewConstraints;
+@property (nonatomic, strong) NSMutableArray *questionConstraints;
+@property (nonatomic, strong) NSMutableArray *answerConstraints;
+@property (nonatomic, strong) NSLayoutConstraint *topCheck;
 @property (nonatomic, strong) NSLayoutConstraint *topRank;
-@property(nonatomic, assign) BOOL resultClosed;
+@property (nonatomic, assign) BOOL resultClosed;
 @property (nonatomic, assign) BOOL allowAnalytics;
+@property (nonatomic, assign) BOOL firstClicked; 
 @end
 
 @implementation QIMatchingQuizView
@@ -56,6 +57,7 @@
     _checkAnswersView = [self newCheckAnswersView];
     _resultClosed = YES;
     _allowAnalytics = YES;
+    _firstClicked = NO;
     
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];    
     [self constructViewHierarchy];
@@ -110,6 +112,13 @@
 
 - (void)setLoggedInUserID:(NSString *)loggedInUserID{
   _loggedInUserID = loggedInUserID;
+}
+
+- (void)setPeople:(NSArray *)people{
+  if ([people isEqualToArray:_people]){
+    return;
+  }
+  _people = people; 
 }
 
 #pragma mark View Hierarchy
@@ -432,8 +441,9 @@
 }
 
 - (void)questionButtonPressed:(id)sender{
+  self.firstClicked = !self.firstClicked; 
   UIButton *pressedButton = (UIButton *)sender;
-  int questionColorImageIndex  = 0;
+  int questionColorImageIndex = 0;
   if (!pressedButton.selected) {
     questionColorImageIndex = [[self dequeueQuestionColorImage] integerValue];
     [pressedButton setBackgroundImage:self.questionColorImages[questionColorImageIndex] forState:UIControlStateSelected];
@@ -461,7 +471,9 @@
       button.selected = NO;
     }
     [button setUserInteractionEnabled:NO];
-    [button setAlpha:0.4f];
+    if ((pressedButton != button)){
+      [button setAlpha:0.4f];
+    }
   }
   for (UIButton *button in self.answerButtons) {
     [button setUserInteractionEnabled:YES];
@@ -471,6 +483,7 @@
 }
 
 - (void)answerButtonPressed:(id)sender{
+  self.firstClicked = !self.firstClicked; 
   UIButton *pressedButton = (UIButton *)sender;
   int answerColorImageIndex = 0;
   if (!pressedButton.selected) {
@@ -501,7 +514,9 @@
       button.selected = NO;
     }
     [button setUserInteractionEnabled:NO];
-    [button setAlpha:0.4f];
+    if ((pressedButton != button)){
+      [button setAlpha:0.4f];
+    }
   }
   for (UIButton *button in self.questionButtons) {
     [button setUserInteractionEnabled:YES];
@@ -588,11 +603,21 @@
 
 -(void)processAnswer{
   QIStatsData *statsEngine = [[QIStatsData alloc] initWithLoggedInUserID:self.loggedInUserID];
-  BOOL correct = NO; //test For Correct Answer
+  NSMutableArray *correctArray = [NSMutableArray array];
+  BOOL correct = YES; 
+  for (int i = 0; i<[self.answerButtons count];i++){
+    int answerPictureIndex = [[self.correctAnswers objectAtIndex:i] integerValue];
+    BOOL correctIndividual = [[self.answerButtons objectAtIndex:i] tag] == [[self.questionButtons objectAtIndex:answerPictureIndex] tag];
+    [correctArray addObject:[NSNumber numberWithBool:correctIndividual]];
+    correct = correct & correctIndividual; 
+  }
+  
   if (correct){
     [self.checkAnswersView correct:YES];
     if (self.allowAnalytics){
-      //[statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:YES];
+      for (QIPerson *person in self.people){
+        [statsEngine updateStatsWithConnectionProfile:person correct:YES];
+      }
       if ([statsEngine needsRankUpdate]) {
         self.rankDisplayView.rank = [statsEngine getCurrentRank];
         [self showRankDisplay];
@@ -602,7 +627,11 @@
   else{
     [self.checkAnswersView correct:NO];
     if (self.allowAnalytics) {
-      //[statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:NO];
+      for (int i = 0;i<[correctArray count];i++){
+        int answerPictureIndex = [[self.correctAnswers objectAtIndex:i] integerValue];
+        [statsEngine updateStatsWithConnectionProfile:[self.people objectAtIndex:answerPictureIndex] correct:[[correctArray objectAtIndex:i] boolValue]];
+        NSLog([[self.people objectAtIndex:i] firstName]);
+      }
     }
   }
 }

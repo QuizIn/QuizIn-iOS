@@ -36,6 +36,7 @@
   
   self.matchingQuizView.answers = self.matchingQuestion.answers;
   self.matchingQuizView.correctAnswers = self.matchingQuestion.correctAnswers;
+  self.matchingQuizView.people = self.matchingQuestion.people;
   self.matchingQuizView.loggedInUserID = @"12345";
   
   [self.matchingQuizView.checkAnswersView.helpButton addTarget:self
@@ -48,40 +49,34 @@
 #pragma mark Action Sheet Functions
 - (void)showActionSheet:(id)sender{
   NSString *actionSheetTitle = @"Open LinkedIn Profile For:";
-  //todo add array of people
-  NSString *other1 = @"Bunch of People";
+  NSString *other0 = [NSString stringWithFormat:@"%@ %@",[[self.matchingQuestion.people objectAtIndex:0] firstName],[[self.matchingQuestion.people objectAtIndex:0] lastName]];
+  NSString *other1 = [NSString stringWithFormat:@"%@ %@",[[self.matchingQuestion.people objectAtIndex:1] firstName],[[self.matchingQuestion.people objectAtIndex:1] lastName]];
+  NSString *other2 = [NSString stringWithFormat:@"%@ %@",[[self.matchingQuestion.people objectAtIndex:2] firstName],[[self.matchingQuestion.people objectAtIndex:2] lastName]];
+  NSString *other3 = [NSString stringWithFormat:@"%@ %@",[[self.matchingQuestion.people objectAtIndex:3] firstName],[[self.matchingQuestion.people objectAtIndex:3] lastName]];
   NSString *cancelTitle = @"Cancel";
   UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                 initWithTitle:actionSheetTitle
                                 delegate:self
                                 cancelButtonTitle:cancelTitle
                                 destructiveButtonTitle:nil
-                                otherButtonTitles:other1, nil];
+                                otherButtonTitles:other0, other1, other2, other3, nil];
   [actionSheet setOpaque:NO];
   [actionSheet setAlpha:.8f];
   [actionSheet showInView:self.view];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-  switch (buttonIndex) {
-    case 0:{
-      //todo add array of people here 
-      NSString *personID = @"12345"; 
-      NSString *actionUrl = [NSString stringWithFormat:@"linkedin://#profile/%@",personID];
-      NSString *actionUrlWeb = @"www.linkedin.com/pub/rick-kuhlman/1a/531/ba/"; 
-      
-      BOOL canOpenURL = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:actionUrl]];
-      if (canOpenURL){
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:actionUrl]];
-      }
-      else {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:actionUrlWeb]];
-      }
-      break;
+  if (buttonIndex<=3){
+    NSString *personID = [[self.matchingQuestion.people objectAtIndex:buttonIndex] personID];
+    NSString *actionUrl = [NSString stringWithFormat:@"linkedin://#profile/%@",personID];
+    NSString *actionUrlWeb = [[self.matchingQuestion.people objectAtIndex:buttonIndex] publicProfileURL];
+    BOOL canOpenURL = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:actionUrl]];
+    if (canOpenURL){
+      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:actionUrl]];
     }
-      
-    default:
-      break;
+    else {
+      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:actionUrlWeb]];
+    }
   }
 }
 
