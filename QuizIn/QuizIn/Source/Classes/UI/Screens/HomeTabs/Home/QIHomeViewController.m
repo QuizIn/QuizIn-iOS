@@ -30,11 +30,13 @@
 
 - (void)loadView {
   self.view = [[QIHomeView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  [LinkedIn getPeopleCurrentUserConnectionsCountWithOnSuccess:^(NSInteger numberOfConnections) {
-    NSLog(@"Number of Connections: %d", numberOfConnections);
-    self.homeView.numberOfConnections = numberOfConnections;
-  } onFailure:^(NSError *error) {
-    NSLog(@"Error: %@", error);
+  [LinkedIn numberOfConnectionsForAuthenticatedUserOnCompletion:^(NSInteger numberOfConnections, NSError *error) {
+    if (error == nil) {
+      NSLog(@"Number of Connections: %d", numberOfConnections);
+      self.homeView.numberOfConnections = numberOfConnections;
+    } else {
+      NSLog(@"Error: %@", error);
+    }
   }];
 }
 
@@ -97,16 +99,6 @@
   }
 
   return [testArray copy];
-  /*
-  NSInteger randomPersonIndex = arc4random_uniform(self.homeView.numberOfConnections);
-  [LinkedIn getPeopleConnectionsWithStartIndex:randomPersonIndex count:4 onSuccess:^(QIConnections *connections) {
-   __block NSMutableArray *peopleForQuiz = [NSMutableArray arrayWithCapacity:40];
-    [peopleForQuiz addObject:connections.people[0]];
-    
-  }onFailure:^(NSError *error) {
-    NSLog(@"Error: %@", error);
-  }];
-   */
 }
 
 - (void)timedImageChange{

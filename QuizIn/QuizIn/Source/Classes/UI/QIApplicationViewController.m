@@ -79,38 +79,6 @@
   //self.drawerController = [self newDrawerController];
   //[self addChildViewController:self.drawerController];
   //[self.view addSubview:self.drawerController.view];
-  
-  /*
-  QIQuiz *quiz = [QIQuizBuilder quizFromRandomConnections];
-  DDLogInfo(@"%@", quiz);*/
-  
-  /*
-  [LinkedIn getPeopleCurrentUserConnectionsCountWithOnSuccess:^(NSInteger numberOfConnections) {
-    DDLogInfo(@"Number of Connections: %d", numberOfConnections);
-  } onFailure:^(NSError *error) {
-    DDLogInfo(@"Error: %@", error);
-  }];*/
-  
-  /*
-  [LinkedIn getPeopleConnectionsWithStartIndex:0 count:10 onSuccess:^(QIConnections *connections) {
-    DDLogInfo(@"Connections: %@", connections.people);
-  } onFailure:^(NSError *error) {
-    DDLogInfo(@"Error: %@", error);
-  }];*/
-  
-  
- /*
-  [LinkedIn getPeopleCurrentConnectionsWithCompletionHandler:^(NSArray *connections,
-                                                               NSError *error) {
-    DDLogInfo(@"Got Connections");
-    for (NSDictionary *person in connections) {
-      [LinkedIn getPeopleWithID:person[@"id"] completionHandler:^(NSDictionary *profile,
-                                                                  NSError *error) {
-        DDLogInfo(@"Company: %@", profile[@"positions"][@"values"][0][@"company"][@"name"]);
-      }];
-    }
-  }];
-  */
 }
 
 - (void)authControllerAccount:(AKAccount *)account
