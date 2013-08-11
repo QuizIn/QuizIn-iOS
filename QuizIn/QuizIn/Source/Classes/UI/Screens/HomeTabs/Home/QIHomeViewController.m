@@ -19,13 +19,8 @@
                bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    [self loadNavigation];
   }
   return self;
-}
-
-- (void)loadNavigation {
-  self.title = [self homeScreenTitle];
 }
 
 - (void)loadView {
@@ -41,12 +36,16 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-  [self.view updateConstraints];
+  [self.view updateConstraintsIfNeeded]; 
   self.timer = [NSTimer scheduledTimerWithTimeInterval:3.0
                                                 target:self
                                               selector:@selector(timedImageChange)
                                               userInfo:nil
                                                repeats:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+  [self.homeView.scrollView setContentOffset:CGPointMake(0, 0)]; 
 }
 
 - (void)viewDidLoad {
@@ -59,10 +58,22 @@
   [self.homeView.connectionsQuizButton addTarget:self
                                           action:@selector(startConnectionsQuiz:)
                                 forControlEvents:UIControlEventTouchUpInside];
-  
+
   [self.homeView.companyQuizButton addTarget:self
                                          action:@selector(groupPicker)
                                forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.homeView.localeQuizButton addTarget:self
+                                      action:@selector(groupPicker)
+                            forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.homeView.industryQuizButton addTarget:self
+                                      action:@selector(groupPicker)
+                            forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.homeView.groupQuizButton addTarget:self
+                                      action:@selector(groupPicker)
+                            forControlEvents:UIControlEventTouchUpInside];
   
 }
 
