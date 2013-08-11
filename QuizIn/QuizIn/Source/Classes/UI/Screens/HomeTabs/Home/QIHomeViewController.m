@@ -61,10 +61,6 @@
   [self.homeView.calendarPickerButton addTarget:self
                                          action:@selector(groupPicker)
                                forControlEvents:UIControlEventTouchUpInside];
-
-  [self.homeView.matchingQuizButton addTarget:self
-                                       action:@selector(openMatchingQuiz:)
-                             forControlEvents:UIControlEventTouchUpInside];
   
 }
 
@@ -76,12 +72,6 @@
 
 - (void)startConnectionsQuiz:(id)sender {
   QIQuizViewController *quizViewController = [self newQuizViewController];
-  [self presentViewController:quizViewController animated:YES completion:nil];
-}
-
-- (void)openMatchingQuiz:(id)sender {
-  QIQuizViewController *quizViewController = [self newQuizViewController];
-  quizViewController.matching = YES;
   [self presentViewController:quizViewController animated:YES completion:nil];
 }
 

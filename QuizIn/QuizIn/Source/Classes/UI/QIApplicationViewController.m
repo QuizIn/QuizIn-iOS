@@ -133,6 +133,8 @@
 - (UITabBarController *)newTabBarController{
   UITabBarController *tabController = [[UITabBarController alloc] init];
   [tabController setViewControllers:@[[self newHomeViewController],[self newStatsViewController],[self newRankViewController],[self newStoreViewController]]];
+  [tabController.tabBar setSelectedImageTintColor:[UIColor orangeColor]];
+  [tabController.tabBar setTintColor:[UIColor colorWithWhite:.15f alpha:1.0f]];
   return tabController; 
 }
 - (QIDrawerController *)newDrawerController {
@@ -144,6 +146,7 @@
 - (QIHomeViewController *)newHomeViewController {
   QIHomeViewController *homeViewController = [[QIHomeViewController alloc] init];
   [homeViewController setTitle:@"Home"];
+  [homeViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Home" image:[UIImage imageNamed:@"connectionsquiz_home_btn"] tag:0]];
   [homeViewController setUserID:USERID];
   return homeViewController;
 }
@@ -151,21 +154,24 @@
 - (QIStatsViewController *)newStatsViewController {
   QIStatsViewController *statsViewController = [[QIStatsViewController alloc] init];
   [statsViewController setTitle:@"Stats"];
+  [statsViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Stats" image:[UIImage imageNamed:@"connectionsquiz_stats_btn"] tag:1]];
   [statsViewController setUserID:USERID];
   return statsViewController;
-}
-
-- (QIStoreViewController *)newStoreViewController {
-  QIStoreViewController *storeViewController = [[QIStoreViewController alloc] init];
-  [storeViewController setTitle:@"Store"];
-  return storeViewController;
 }
 
 - (QIRankViewController *)newRankViewController {
   QIRankViewController *rankViewController = [[QIRankViewController alloc] init];
   [rankViewController setTitle:@"Rank"];
+  [rankViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Rank" image:[UIImage imageNamed:@"connectionsquiz_rank_btn"] tag:2]];
   [rankViewController setUserID:USERID];
   return rankViewController;
+}
+
+- (QIStoreViewController *)newStoreViewController {
+  QIStoreViewController *storeViewController = [[QIStoreViewController alloc] init];
+  [storeViewController setTitle:@"Store"];
+  [storeViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Store" image:[UIImage imageNamed:@"connectionsquiz_store_btn"] tag:3]];
+  return storeViewController;
 }
 
 @end

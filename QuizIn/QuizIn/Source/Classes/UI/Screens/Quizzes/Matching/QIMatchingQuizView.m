@@ -734,7 +734,7 @@
   [answerButton setBackgroundImage:[[UIImage imageNamed:@"match_answerbox_std"] resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 18.0f, 15.0f, 18.0f)]  forState:UIControlStateNormal];
   [answerButton setTitleColor:[UIColor colorWithWhite:0.33f alpha:1.0f] forState:UIControlStateNormal];
   [answerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-  [answerButton setTitleEdgeInsets:UIEdgeInsetsMake(15.0f, 18.0f, 15.0f, 18.0f)];
+  [answerButton setTitleEdgeInsets:UIEdgeInsetsMake(15.0f, 20.0f, 15.0f, 20.0f)];
   [answerButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   [answerButton setAdjustsImageWhenHighlighted:NO];
   [answerButton setReversesTitleShadowWhenHighlighted:NO];
