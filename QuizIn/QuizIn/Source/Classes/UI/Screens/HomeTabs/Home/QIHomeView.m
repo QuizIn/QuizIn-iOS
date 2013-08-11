@@ -215,7 +215,7 @@
   
   
   NSArray *vConstraintsConnectionsQuizButton =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_connectionsQuizButton]-20-|"
+  [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_connectionsQuizButton(==46)]-25-|"
                                           options:NSLayoutFormatAlignAllLeft
                                           metrics:nil
                                             views:connectionQuizViews];
@@ -251,7 +251,7 @@
                                             views:connectionQuizViews];
   
   NSArray *hConstraintsConnectionsQuizViewsQuizButton =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_connectionsQuizButton(>=150)]-30-|"
+  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-29-[_connectionsQuizButton(==212)]-29-|"
                                           options:0
                                           metrics:nil
                                             views:connectionQuizViews];
@@ -295,28 +295,28 @@
   NSDictionary *groupSelectionViews = NSDictionaryOfVariableBindings(_topLeftCard,_topRightCard,_bottomLeftCard,_bottomRightCard);
   
   NSArray *hConstrainTopCards =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_topLeftCard]-[_topRightCard(==_topLeftCard)]-|"
+  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(-2)-[_topLeftCard(==163)]-(-2)-[_topRightCard(==_topLeftCard)]-(-2)-|"
                                           options:NSLayoutFormatAlignAllTop
                                           metrics:nil
                                             views:groupSelectionViews];
   NSArray *hConstrainBottomCards =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_bottomLeftCard(==_topLeftCard)]-[_bottomRightCard(==_bottomLeftCard)]-|"
+  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(-2)-[_bottomLeftCard(==_topLeftCard)]-(-2)-[_bottomRightCard(==_bottomLeftCard)]-(-2)-|"
                                           options:NSLayoutFormatAlignAllTop
                                           metrics:nil
                                             views:groupSelectionViews];
   
   NSArray *vConstrainLeftCards =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topLeftCard(==100)]-[_bottomLeftCard(==_topLeftCard)]"
+  [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topLeftCard(==124)]-(-10)-[_bottomLeftCard(==_topLeftCard)]"
                                           options:NSLayoutFormatAlignAllLeft
                                           metrics:nil
                                             views:groupSelectionViews];
   NSArray *vConstrainRightCards = 
-  [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topRightCard(==_topLeftCard)]-[_bottomRightCard(==_topRightCard)]"
+  [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topRightCard(==_topLeftCard)]-(-10)-[_bottomRightCard(==_topRightCard)]"
                                           options:NSLayoutFormatAlignAllLeft
                                           metrics:nil
                                             views:groupSelectionViews];
   
-  NSLayoutConstraint *topLeftCardInitialPosition = [NSLayoutConstraint constraintWithItem:_topLeftCard attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_connectionsQuizStartView attribute:NSLayoutAttributeBottom multiplier:1.0f constant:10.0f];
+  NSLayoutConstraint *topLeftCardInitialPosition = [NSLayoutConstraint constraintWithItem:_topLeftCard attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_connectionsQuizStartView attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-5.0f];
   
   [self.constraintsForGroupSelectionView addObjectsFromArray:@[topLeftCardInitialPosition]]; 
   [self.constraintsForGroupSelectionView addObjectsFromArray:hConstrainTopCards];
@@ -416,7 +416,7 @@
 
 - (UIButton *)newConnectionsQuizButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setBackgroundImage:[[UIImage imageNamed:@"connectionsquiz_hobnob_btn"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 74, 0, 74)] forState:UIControlStateNormal];
+  [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_hobnob_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   button.backgroundColor = [UIColor clearColor];
   return button;
