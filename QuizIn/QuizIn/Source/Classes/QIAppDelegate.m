@@ -20,14 +20,14 @@ int ddLogLevel;
   self.window.rootViewController = applicationViewController;
   [self.window makeKeyAndVisible];
   
-  
-  [QILISearch getPeopleSearchWithFieldSelector:@"(facets:(code,buckets:(code,name,count)))"
+  /*
+  //facets:(code,buckets:(code,name,count))
+  [QILISearch getPeopleSearchWithFieldSelector:@"(people:(first-name))"
                               searchParameters:@{@"facets": @"current-company",
-                                                 @"IDUPIfacet": @"network,F", @"start": @"12"}
+                                                 @"facet": @[@"network,F", @"location,us:84"]}
                                   onCompletion:^(NSArray *people, NSError *error) {
     NSLog(@"DONE");
-  }];
-  //)?
+  }];*/
   
   
   return YES;
