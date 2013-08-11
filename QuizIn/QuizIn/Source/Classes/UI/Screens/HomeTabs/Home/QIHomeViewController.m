@@ -58,7 +58,7 @@
                                           action:@selector(startConnectionsQuiz:)
                                 forControlEvents:UIControlEventTouchUpInside];
   
-  [self.homeView.calendarPickerButton addTarget:self
+  [self.homeView.companyQuizButton addTarget:self
                                          action:@selector(groupPicker)
                                forControlEvents:UIControlEventTouchUpInside];
   

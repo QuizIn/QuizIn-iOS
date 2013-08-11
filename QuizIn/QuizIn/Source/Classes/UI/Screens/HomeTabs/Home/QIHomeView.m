@@ -22,6 +22,10 @@
 @property (nonatomic, strong) UIImageView *topRightCard;
 @property (nonatomic, strong) UIImageView *bottomLeftCard;
 @property (nonatomic, strong) UIImageView *bottomRightCard;
+@property (nonatomic, strong) UILabel *companyQuizLabel;
+@property (nonatomic, strong) UILabel *localeQuizLabel;
+@property (nonatomic, strong) UILabel *industryQuizLabel;
+@property (nonatomic, strong) UILabel *groupQuizLabel;
 
 //constraints
 @property (nonatomic, strong) NSMutableArray *constraintsForScrollView; 
@@ -56,7 +60,6 @@
     _connectionsQuizImagePreviewCollection = [self newConnectionsQuizImagePreviewCollection];
     _connectionsQuizButton = [self newConnectionsQuizButton];
     _connectionsQuizStartView = [self newConnectionsQuizStartView];
-    _calendarPickerButton = [self newCalendarPickerButton];
     _profileImages = [self newProfileImages];
     
     //Group Selection Start View
@@ -64,6 +67,14 @@
     _topRightCard = [self newTopRightCard];
     _bottomLeftCard = [self newBottomLeftCard];
     _bottomRightCard = [self newBottomRightCard];
+    _companyQuizButton = [self newQuizButton];
+    _localeQuizButton = [self newQuizButton];
+    _industryQuizButton = [self newQuizButton];
+    _groupQuizButton = [self newQuizButton];
+    _companyQuizLabel = [self newQuizLabelWithText:@"CompanyQuiz"];
+    _localeQuizLabel = [self newQuizLabelWithText:@"LocaleQuiz"];
+    _industryQuizLabel = [self newQuizLabelWithText:@"IndustryQuiz"];
+    _groupQuizLabel = [self newQuizLabelWithText:@"GroupQuiz"];
 
     [self constructViewHierachy];
   }
@@ -90,7 +101,6 @@
   [self addSubview:self.viewBackground];
   [self addSubview:self.scrollView];
 
-  [self.scrollView addSubview:self.calendarPickerButton];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizPaperImage];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizTitle];
   [self.connectionsQuizStartView addSubview:self.connectionsQuizNumberOfConnectionsLabel];
@@ -107,230 +117,253 @@
   [self.scrollView addSubview:self.topRightCard];
   [self.scrollView addSubview:self.bottomLeftCard];
   [self.scrollView addSubview:self.bottomRightCard];
+  [self.scrollView addSubview:self.companyQuizButton]; 
+  [self.scrollView addSubview:self.localeQuizButton];
+  [self.scrollView addSubview:self.groupQuizButton];
+  [self.scrollView addSubview:self.industryQuizButton];
+  [self.scrollView addSubview:self.companyQuizLabel];
+  [self.scrollView addSubview:self.localeQuizLabel];
+  [self.scrollView addSubview:self.groupQuizLabel];
+  [self.scrollView addSubview:self.industryQuizLabel]; 
 }
 
 #pragma mark Layout
-- (void)updateConstraints {
-  [super updateConstraints];
-  
-  
-  //self constraints
-  NSDictionary *selfConstraintView = NSDictionaryOfVariableBindings(self);
-  
-  NSArray *hSelf =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|"
-                                          options:NSLayoutFormatAlignAllBaseline
-                                          metrics:nil
-                                            views:selfConstraintView];
-  
-  NSArray *vSelf =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self]|"
-                                          options:0
-                                          metrics:nil
-                                            views:selfConstraintView];
-  
-  NSMutableArray *selfConstraints = [NSMutableArray array];
-  [selfConstraints addObjectsFromArray:hSelf];
-  [selfConstraints addObjectsFromArray:vSelf];
-  [self.superview addConstraints:selfConstraints];
-  
-  //scrollView Constraints
-  self.constraintsForTopLevelViews = [NSMutableArray array];
-  
-  NSDictionary *topLevelViews = NSDictionaryOfVariableBindings(_scrollView,_viewBackground);
-  
-  NSArray *hScrollContraints =
-  [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_scrollView]|"
-                                          options:NSLayoutFormatAlignAllTop
-                                          metrics:nil
-                                            views:topLevelViews];
-  NSArray *vScrollContraints =
-  [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_scrollView]|"
-                                          options:NSLayoutFormatAlignAllLeft
-                                          metrics:nil
-                                            views:topLevelViews];
-  NSArray *hBackgroundContraints =
-  [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_viewBackground]|"
-                                          options:NSLayoutFormatAlignAllTop
-                                          metrics:nil
-                                            views:topLevelViews];
-  NSArray *vBackgroundContraints =
-  [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_viewBackground]|"
-                                          options:NSLayoutFormatAlignAllLeft
-                                          metrics:nil
-                                            views:topLevelViews];
-  
-  [self.constraintsForTopLevelViews addObjectsFromArray:hBackgroundContraints];
-  [self.constraintsForTopLevelViews addObjectsFromArray:vBackgroundContraints];
-  [self.constraintsForTopLevelViews addObjectsFromArray:hScrollContraints];
-  [self.constraintsForTopLevelViews addObjectsFromArray:vScrollContraints];
-  
-  [self addConstraints:self.constraintsForTopLevelViews];
-  
-  //TopLevelView Constraints
-  self.constraintsForScrollView = [NSMutableArray array];
-  NSDictionary *scrollViewViews = NSDictionaryOfVariableBindings(_connectionsQuizStartView,_calendarPickerButton);
-  
-  NSArray *hConstraintsCalendarPickerButton =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_calendarPickerButton]-30-|"
-                                          options:0
-                                          metrics:nil
-                                            views:scrollViewViews];
-  NSArray *vConstraintsCalendarPickerButton =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_connectionsQuizStartView]-[_calendarPickerButton]"
-                                          options:0
-                                          metrics:nil
-                                            views:scrollViewViews];
-  
-  NSArray *hConstraintsTopLevelViews =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-25-[_connectionsQuizStartView(>=200)]-25-|"
-                                          options:NSLayoutFormatAlignAllBaseline
-                                          metrics:nil
-                                            views:scrollViewViews];
-  NSArray *vConstraintsTopLevelViews =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_connectionsQuizStartView(==250)]"
-                                          options:NSLayoutFormatAlignAllBaseline
-                                          metrics:nil
-                                            views:scrollViewViews];
-  
-  [self.constraintsForScrollView addObjectsFromArray:hConstraintsCalendarPickerButton];
-  [self.constraintsForScrollView addObjectsFromArray:vConstraintsCalendarPickerButton]; 
-  [self.constraintsForScrollView addObjectsFromArray:hConstraintsTopLevelViews];
-  [self.constraintsForScrollView addObjectsFromArray:vConstraintsTopLevelViews];
-  [self.scrollView addConstraints:self.constraintsForScrollView];
-  
-  //ConnectionsQuizStartView Constraints
-  
-  NSDictionary *connectionQuizViews = NSDictionaryOfVariableBindings(_connectionsQuizPaperImage,_connectionsQuizBinderImage,_connectionsQuizTitle,_connectionsQuizNumberOfConnectionsLabel,_connectionsQuizImagePreviewCollection,_connectionsQuizButton);
-  NSString *primaryVertical = @"V:|-40-[_connectionsQuizTitle][_connectionsQuizNumberOfConnectionsLabel]-30-[_connectionsQuizImagePreviewCollection(==60)]";
-  
-  NSArray *vConstraintsConnectionsQuizPaperImageBottom =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_connectionsQuizPaperImage]|"
-                                          options:NSLayoutFormatAlignAllLeft
-                                          metrics:nil
-                                            views:connectionQuizViews];
-  
-  NSLayoutConstraint *vConstraintsConnectionsQuizPaperImageTop =
-  [NSLayoutConstraint constraintWithItem:_connectionsQuizPaperImage attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_connectionsQuizStartView attribute:NSLayoutAttributeTop multiplier:1.0 constant:-20.0];
-  
-  
-  NSArray *vConstraintsConnectionsQuizButton =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_connectionsQuizButton(==46)]-25-|"
-                                          options:NSLayoutFormatAlignAllLeft
-                                          metrics:nil
-                                            views:connectionQuizViews];
-  
-  NSArray *vConstraintsConnectionsQuizViews =
-  [NSLayoutConstraint constraintsWithVisualFormat:primaryVertical
-                                          options:NSLayoutFormatAlignAllLeft
-                                          metrics:nil
-                                            views:connectionQuizViews];
-  
-  NSArray *hConstraintsConnectionsQuizViewsPaperImage =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_connectionsQuizPaperImage]|"
-                                          options:0
-                                          metrics:nil
-                                            views:connectionQuizViews];
-  
-  NSArray *hConstraintsConnectionsQuizViewsTitle =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizTitle]"
-                                          options:0
-                                          metrics:nil
-                                            views:connectionQuizViews];
-  
-  NSArray *hConstraintsConnectionsQuizViewsConnectionsLabel =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizNumberOfConnectionsLabel]"
-                                          options:0
-                                          metrics:nil
-                                            views:connectionQuizViews];
-  
-  NSArray *hConstraintsConnectionsQuizViewsImagePreview =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizImagePreviewCollection(>=150)]-|"
-                                          options:0
-                                          metrics:nil
-                                            views:connectionQuizViews];
-  
-  NSArray *hConstraintsConnectionsQuizViewsQuizButton =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-29-[_connectionsQuizButton(==212)]-29-|"
-                                          options:0
-                                          metrics:nil
-                                            views:connectionQuizViews];
-  
-  self.constraintsForConnectionsQuizStartView = [NSMutableArray array];
-  [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsPaperImage];
-  [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsTitle];
-  [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsConnectionsLabel];
-  [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsImagePreview];
-  [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsQuizButton];
-  [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:vConstraintsConnectionsQuizViews];
-  [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:vConstraintsConnectionsQuizPaperImageBottom];
-  [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:@[vConstraintsConnectionsQuizPaperImageTop]];
-  [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:vConstraintsConnectionsQuizButton];
-  [self.connectionsQuizStartView addConstraints:self.constraintsForConnectionsQuizStartView];
-  
-  //Constrain Image View
-  self.constraintsForImages = [NSMutableArray array];
-  NSDictionary *imageViews = [NSDictionary dictionaryWithObjectsAndKeys:
-                              [_profileImages objectAtIndex:0], @"_profileImage0",
-                              [_profileImages objectAtIndex:1], @"_profileImage1",
-                              [_profileImages objectAtIndex:2], @"_profileImage2",
-                              [_profileImages objectAtIndex:3], @"_profileImage3",
-                              nil];
-  
-  NSArray *hImagesConstraints =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_profileImage0(==50)]-5-[_profileImage1(==_profileImage0)]-5-[_profileImage2(==_profileImage1)]-5-[_profileImage3(==_profileImage2)]"
-                                          options:NSLayoutFormatAlignAllCenterY
-                                          metrics:nil
-                                            views:imageViews];
-  [self.constraintsForImages addObjectsFromArray:hImagesConstraints];
-  
-  for (int i = 0; i<[_profileImages count]; i++) {
-    [self.constraintsForImages addObject:[NSLayoutConstraint constraintWithItem:[_profileImages objectAtIndex:i] attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:[_profileImages objectAtIndex:i] attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f]];
-  }
-  
-  [self.connectionsQuizImagePreviewCollection addConstraints:self.constraintsForImages];
-  
-  //Constain Group Picker Areas
-  self.constraintsForGroupSelectionView = [NSMutableArray array];
-  NSDictionary *groupSelectionViews = NSDictionaryOfVariableBindings(_topLeftCard,_topRightCard,_bottomLeftCard,_bottomRightCard);
-  
-  NSArray *hConstrainTopCards =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(-2)-[_topLeftCard(==163)]-(-2)-[_topRightCard(==_topLeftCard)]-(-2)-|"
-                                          options:NSLayoutFormatAlignAllTop
-                                          metrics:nil
-                                            views:groupSelectionViews];
-  NSArray *hConstrainBottomCards =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(-2)-[_bottomLeftCard(==_topLeftCard)]-(-2)-[_bottomRightCard(==_bottomLeftCard)]-(-2)-|"
-                                          options:NSLayoutFormatAlignAllTop
-                                          metrics:nil
-                                            views:groupSelectionViews];
-  
-  NSArray *vConstrainLeftCards =
-  [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topLeftCard(==124)]-(-10)-[_bottomLeftCard(==_topLeftCard)]"
-                                          options:NSLayoutFormatAlignAllLeft
-                                          metrics:nil
-                                            views:groupSelectionViews];
-  NSArray *vConstrainRightCards = 
-  [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topRightCard(==_topLeftCard)]-(-10)-[_bottomRightCard(==_topRightCard)]"
-                                          options:NSLayoutFormatAlignAllLeft
-                                          metrics:nil
-                                            views:groupSelectionViews];
-  
-  NSLayoutConstraint *topLeftCardInitialPosition = [NSLayoutConstraint constraintWithItem:_topLeftCard attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_connectionsQuizStartView attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-5.0f];
-  
-  [self.constraintsForGroupSelectionView addObjectsFromArray:@[topLeftCardInitialPosition]]; 
-  [self.constraintsForGroupSelectionView addObjectsFromArray:hConstrainTopCards];
-  [self.constraintsForGroupSelectionView addObjectsFromArray:hConstrainBottomCards];
-  [self.constraintsForGroupSelectionView addObjectsFromArray:vConstrainLeftCards];
-  [self.constraintsForGroupSelectionView addObjectsFromArray:vConstrainRightCards];
-  
-  [self.scrollView addConstraints:self.constraintsForGroupSelectionView]; 
-
-}
-
 - (void)layoutSubviews {
   [super layoutSubviews];
 }
+
+- (void)updateConstraints {
+  [super updateConstraints];
+  
+  if (!self.constraintsForGroupSelectionView){
+    //self constraints
+    NSDictionary *selfConstraintView = NSDictionaryOfVariableBindings(self);
+    
+    NSArray *hSelf =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|"
+                                            options:NSLayoutFormatAlignAllBaseline
+                                            metrics:nil
+                                              views:selfConstraintView];
+    
+    NSArray *vSelf =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self]|"
+                                            options:0
+                                            metrics:nil
+                                              views:selfConstraintView];
+    
+    NSMutableArray *selfConstraints = [NSMutableArray array];
+    [selfConstraints addObjectsFromArray:hSelf];
+    [selfConstraints addObjectsFromArray:vSelf];
+    [self.superview addConstraints:selfConstraints];
+    
+    //scrollView Constraints
+    self.constraintsForTopLevelViews = [NSMutableArray array];
+    
+    NSDictionary *topLevelViews = NSDictionaryOfVariableBindings(_scrollView,_viewBackground);
+    
+    NSArray *hScrollContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_scrollView]|"
+                                            options:NSLayoutFormatAlignAllTop
+                                            metrics:nil
+                                              views:topLevelViews];
+   
+    NSArray *vScrollContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_scrollView]|"
+                                            options:NSLayoutFormatAlignAllLeft
+                                            metrics:nil
+                                              views:topLevelViews];
+    
+    NSArray *hBackgroundContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_viewBackground]|"
+                                            options:NSLayoutFormatAlignAllTop
+                                            metrics:nil
+                                              views:topLevelViews];
+    NSArray *vBackgroundContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_viewBackground]|"
+                                            options:NSLayoutFormatAlignAllLeft
+                                            metrics:nil
+                                              views:topLevelViews];
+    
+    [self.constraintsForTopLevelViews addObjectsFromArray:hBackgroundContraints];
+    [self.constraintsForTopLevelViews addObjectsFromArray:vBackgroundContraints];
+    [self.constraintsForTopLevelViews addObjectsFromArray:hScrollContraints];
+    [self.constraintsForTopLevelViews addObjectsFromArray:vScrollContraints];
+    
+    [self addConstraints:self.constraintsForTopLevelViews];
+    
+    //TopLevelView Constraints
+    self.constraintsForScrollView = [NSMutableArray array];
+    NSDictionary *scrollViewViews = NSDictionaryOfVariableBindings(_connectionsQuizStartView);
+    
+    NSArray *hConstraintsTopLevelViews =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-25-[_connectionsQuizStartView(>=200)]-25-|"
+                                            options:NSLayoutFormatAlignAllBaseline
+                                            metrics:nil
+                                              views:scrollViewViews];
+    NSArray *vConstraintsTopLevelViews =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_connectionsQuizStartView(==250)]"
+                                            options:NSLayoutFormatAlignAllBaseline
+                                            metrics:nil
+                                              views:scrollViewViews];
+    
+    [self.constraintsForScrollView addObjectsFromArray:hConstraintsTopLevelViews];
+    [self.constraintsForScrollView addObjectsFromArray:vConstraintsTopLevelViews];
+    [self.scrollView addConstraints:self.constraintsForScrollView];
+    
+    //ConnectionsQuizStartView Constraints
+    
+    NSDictionary *connectionQuizViews = NSDictionaryOfVariableBindings(_connectionsQuizPaperImage,_connectionsQuizBinderImage,_connectionsQuizTitle,_connectionsQuizNumberOfConnectionsLabel,_connectionsQuizImagePreviewCollection,_connectionsQuizButton);
+    NSString *primaryVertical = @"V:|-40-[_connectionsQuizTitle][_connectionsQuizNumberOfConnectionsLabel]-20-[_connectionsQuizImagePreviewCollection(==60)]";
+    
+    NSArray *vConstraintsConnectionsQuizPaperImageBottom =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_connectionsQuizPaperImage]|"
+                                            options:NSLayoutFormatAlignAllLeft
+                                            metrics:nil
+                                              views:connectionQuizViews];
+    
+    NSLayoutConstraint *vConstraintsConnectionsQuizPaperImageTop =
+    [NSLayoutConstraint constraintWithItem:_connectionsQuizPaperImage attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_connectionsQuizStartView attribute:NSLayoutAttributeTop multiplier:1.0 constant:-20.0];
+    
+    
+    NSArray *vConstraintsConnectionsQuizButton =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_connectionsQuizButton(==46)]-25-|"
+                                            options:NSLayoutFormatAlignAllLeft
+                                            metrics:nil
+                                              views:connectionQuizViews];
+    
+    NSArray *vConstraintsConnectionsQuizViews =
+    [NSLayoutConstraint constraintsWithVisualFormat:primaryVertical
+                                            options:NSLayoutFormatAlignAllLeft
+                                            metrics:nil
+                                              views:connectionQuizViews];
+    
+    NSArray *hConstraintsConnectionsQuizViewsPaperImage =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_connectionsQuizPaperImage]|"
+                                            options:0
+                                            metrics:nil
+                                              views:connectionQuizViews];
+    
+    NSArray *hConstraintsConnectionsQuizViewsTitle =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizTitle]"
+                                            options:0
+                                            metrics:nil
+                                              views:connectionQuizViews];
+    
+    NSArray *hConstraintsConnectionsQuizViewsConnectionsLabel =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizNumberOfConnectionsLabel]"
+                                            options:0
+                                            metrics:nil
+                                              views:connectionQuizViews];
+    
+    NSArray *hConstraintsConnectionsQuizViewsImagePreview =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_connectionsQuizImagePreviewCollection(>=150)]-|"
+                                            options:0
+                                            metrics:nil
+                                              views:connectionQuizViews];
+    
+    NSArray *hConstraintsConnectionsQuizViewsQuizButton =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-29-[_connectionsQuizButton(==212)]-29-|"
+                                            options:0
+                                            metrics:nil
+                                              views:connectionQuizViews];
+    
+    self.constraintsForConnectionsQuizStartView = [NSMutableArray array];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsPaperImage];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsTitle];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsConnectionsLabel];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsImagePreview];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:hConstraintsConnectionsQuizViewsQuizButton];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:vConstraintsConnectionsQuizViews];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:vConstraintsConnectionsQuizPaperImageBottom];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:@[vConstraintsConnectionsQuizPaperImageTop]];
+    [self.constraintsForConnectionsQuizStartView  addObjectsFromArray:vConstraintsConnectionsQuizButton];
+    [self.connectionsQuizStartView addConstraints:self.constraintsForConnectionsQuizStartView];
+    
+    //Constrain Image View
+    self.constraintsForImages = [NSMutableArray array];
+    NSDictionary *imageViews = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [_profileImages objectAtIndex:0], @"_profileImage0",
+                                [_profileImages objectAtIndex:1], @"_profileImage1",
+                                [_profileImages objectAtIndex:2], @"_profileImage2",
+                                [_profileImages objectAtIndex:3], @"_profileImage3",
+                                nil];
+    
+    NSArray *hImagesConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_profileImage0(==50)]-5-[_profileImage1(==_profileImage0)]-5-[_profileImage2(==_profileImage1)]-5-[_profileImage3(==_profileImage2)]"
+                                            options:NSLayoutFormatAlignAllCenterY
+                                            metrics:nil
+                                              views:imageViews];
+    [self.constraintsForImages addObjectsFromArray:hImagesConstraints];
+    
+    for (int i = 0; i<[_profileImages count]; i++) {
+      [self.constraintsForImages addObject:[NSLayoutConstraint constraintWithItem:[_profileImages objectAtIndex:i] attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:[_profileImages objectAtIndex:i] attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f]];
+    }
+    
+    [self.connectionsQuizImagePreviewCollection addConstraints:self.constraintsForImages];
+    
+    //Constain Group Picker Areas
+    self.constraintsForGroupSelectionView = [NSMutableArray array];
+    NSDictionary *groupSelectionViews = NSDictionaryOfVariableBindings(_topLeftCard,_topRightCard,_bottomLeftCard,_bottomRightCard,_companyQuizLabel,_companyQuizButton,_localeQuizLabel,_localeQuizButton,_groupQuizLabel,_groupQuizButton,_industryQuizLabel,_industryQuizButton);
+    
+    NSArray *hConstrainTopCards =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-1-[_topLeftCard(==163)]-(-8)-[_topRightCard(==_topLeftCard)]-1-|"
+                                            options:NSLayoutFormatAlignAllTop
+                                            metrics:nil
+                                              views:groupSelectionViews];
+    NSArray *hConstrainBottomCards =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-1-[_bottomLeftCard(==_topLeftCard)]-(-8)-[_bottomRightCard(==_bottomLeftCard)]-1-|"
+                                            options:NSLayoutFormatAlignAllTop
+                                            metrics:nil
+                                              views:groupSelectionViews];
+    
+    NSArray *vConstrainLeftCards =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topLeftCard(==124)]-(-15)-[_bottomLeftCard(==_topLeftCard)]"
+                                            options:NSLayoutFormatAlignAllLeft
+                                            metrics:nil
+                                              views:groupSelectionViews];
+    NSArray *vConstrainRightCards =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topRightCard(==_topLeftCard)]-(-15)-[_bottomRightCard(==_topRightCard)]"
+                                            options:NSLayoutFormatAlignAllLeft
+                                            metrics:nil
+                                              views:groupSelectionViews];
+    
+    NSLayoutConstraint *topLeftCardInitialPosition = [NSLayoutConstraint constraintWithItem:_topLeftCard attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_connectionsQuizStartView attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-5.0f];
+    
+    NSArray *vConstrainTopLeftCardContent =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topLeftCard]-(-82)-[_companyQuizLabel(==20)]-[_companyQuizButton(==20)]"
+                                            options:NSLayoutFormatAlignAllCenterX
+                                            metrics:nil
+                                              views:groupSelectionViews];
+    NSArray *vConstrainTopRightCardContent =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topRightCard]-(-82)-[_localeQuizLabel(==20)]-[_localeQuizButton(==20)]"
+                                            options:NSLayoutFormatAlignAllCenterX
+                                            metrics:nil
+                                              views:groupSelectionViews];
+    NSArray *vConstrainBottomLeftCardContent =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_bottomLeftCard]-(-82)-[_groupQuizLabel(==20)]-[_groupQuizButton(==20)]"
+                                            options:NSLayoutFormatAlignAllCenterX
+                                            metrics:nil
+                                              views:groupSelectionViews];
+    NSArray *vConstrainBottomRightCardContent =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_bottomRightCard]-(-82)-[_industryQuizLabel(==20)]-[_industryQuizButton(==20)]"
+                                            options:NSLayoutFormatAlignAllCenterX
+                                            metrics:nil
+                                              views:groupSelectionViews];
+    
+    [self.constraintsForGroupSelectionView addObjectsFromArray:@[topLeftCardInitialPosition]];
+    [self.constraintsForGroupSelectionView addObjectsFromArray:hConstrainTopCards];
+    [self.constraintsForGroupSelectionView addObjectsFromArray:hConstrainBottomCards];
+    [self.constraintsForGroupSelectionView addObjectsFromArray:vConstrainLeftCards];
+    [self.constraintsForGroupSelectionView addObjectsFromArray:vConstrainRightCards];
+    [self.constraintsForGroupSelectionView addObjectsFromArray:vConstrainTopLeftCardContent];
+    [self.constraintsForGroupSelectionView addObjectsFromArray:vConstrainTopRightCardContent];
+    [self.constraintsForGroupSelectionView addObjectsFromArray:vConstrainBottomLeftCardContent];
+    [self.constraintsForGroupSelectionView addObjectsFromArray:vConstrainBottomRightCardContent];
+    
+    [self.scrollView addConstraints:self.constraintsForGroupSelectionView];
+  }
+}
+
 #pragma mark Data
 - (void)updateImages{
   for (int i=0;i<4;i++) {
@@ -428,15 +461,6 @@
   return startView;
 }
 
--(UIButton *)newCalendarPickerButton{
-  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setTitle:[self calendarPickerButtonTitle] forState:UIControlStateNormal];
-  [button setBackgroundImage:[[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 74, 0, 74)] forState:UIControlStateNormal];
-  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [button setBackgroundColor:[UIColor clearColor]];
-  return button;
-}
-
 - (NSArray *)newProfileImages{
   return @[[self newProfileImageView:nil],[self newProfileImageView:nil],[self newProfileImageView:nil],[self newProfileImageView:nil]];
 }
@@ -467,7 +491,7 @@
 }
 
 - (UIImageView *)newBottomLeftCard{
-  UIImageView *cardView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"connectionsquiz_topright_card"]];
+  UIImageView *cardView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"connectionsquiz_bottomleft_card"]];
   [cardView setTranslatesAutoresizingMaskIntoConstraints:NO];
   return cardView;
 }
@@ -478,6 +502,24 @@
   return cardView;
 }
 
+- (UIButton *)newQuizButton{
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_locked_btn"] forState:UIControlStateNormal];
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [button setBackgroundColor:[UIColor clearColor]];
+  return button;
+}
+   
+- (UILabel *)newQuizLabelWithText:(NSString *)text{
+  UILabel *label = [[UILabel alloc] init];
+  [label setText:text];
+  [label setFont:[QIFontProvider fontWithSize:13.0f style:Regular]];
+  [label setTextColor:[UIColor colorWithWhite:0.33f alpha:1.0f]];
+  [label setBackgroundColor:[UIColor clearColor]];
+  [label setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return label;
+}
+
 #pragma mark Strings
 - (NSString *)homeViewTitle{
   return @"Connections Quiz"; 
@@ -486,7 +528,4 @@
   return @"Connections"; 
 }
 
-- (NSString *)calendarPickerButtonTitle {
-  return @"Group Selection";
-}
 @end
