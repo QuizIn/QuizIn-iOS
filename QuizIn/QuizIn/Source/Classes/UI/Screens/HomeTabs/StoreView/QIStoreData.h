@@ -3,4 +3,6 @@
 
 @interface QIStoreData : NSObject
 
++ (NSArray *) getStoreData;
+  
 @end

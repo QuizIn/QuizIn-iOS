@@ -112,8 +112,6 @@
 -(UITableView *)newRankTable{
   UITableView *tableView = [[UITableView alloc] init];
   [tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  //[tableView setBackgroundColor:[UIColor colorWithRed:80.0f/255.0f green:125.0f/255.0f blue:144.0f/255.0f alpha:.3f]];
-  //[tableView setSeparatorColor:[UIColor colorWithWhite:.8f alpha:1.0f]];
   [tableView setShowsVerticalScrollIndicator:NO];
   tableView.rowHeight = 94;
   tableView.sectionHeaderHeight = 25;

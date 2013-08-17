@@ -137,27 +137,7 @@
   [super updateConstraints];
   
   if (!self.constraintsForGroupSelectionView){
-    //self constraints
-    /*
-    NSDictionary *selfConstraintView = NSDictionaryOfVariableBindings(self);
-    
-    NSArray *hSelf =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|"
-                                            options:NSLayoutFormatAlignAllBaseline
-                                            metrics:nil
-                                              views:selfConstraintView];
-    
-    NSArray *vSelf =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self]|"
-                                            options:0
-                                            metrics:nil
-                                              views:selfConstraintView];
-    
-    NSMutableArray *selfConstraints = [NSMutableArray array];
-    [selfConstraints addObjectsFromArray:hSelf];
-    [selfConstraints addObjectsFromArray:vSelf];
-    [self.superview addConstraints:selfConstraints];
-    */
+   
     //scrollView Constraints
     self.constraintsForTopLevelViews = [NSMutableArray array];
     

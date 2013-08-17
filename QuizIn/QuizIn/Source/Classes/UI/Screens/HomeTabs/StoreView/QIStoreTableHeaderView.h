@@ -10,4 +10,6 @@
 
 @interface QIStoreTableHeaderView : UIView
 
+@property (nonatomic, strong) UIButton *buyAllButton; 
+
 @end

@@ -1,13 +1,12 @@
-//
-//  QIStoreCellView.h
-//  QuizIn
-//
-//  Created by Rick Kuhlman on 7/28/13.
-//  Copyright (c) 2013 Kuhlmanation LLC. All rights reserved.
-//
 
 #import <UIKit/UIKit.h>
 
 @interface QIStoreCellView : UITableViewCell
+
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *price;
+@property (nonatomic, strong) NSString *description;
+@property (nonatomic, strong) UIButton *previewButton;
+@property (nonatomic, strong) UIButton *buyButton;
 
 @end
