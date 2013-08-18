@@ -1,6 +1,9 @@
 #import <Foundation/Foundation.h>
 
-typedef void (^QISearchResult)(NSArray *people, NSError *error);
+@class QILISearchResultData;
+
+typedef void (^QISearchResult)(QILISearchResultData *result, NSError *error);
+
 
 @interface QILISearch : NSObject
 
@@ -8,4 +11,11 @@ typedef void (^QISearchResult)(NSArray *people, NSError *error);
                         searchParameters:(NSDictionary *)searchParameters
                             onCompletion:(QISearchResult)onCompletion;
 
+@end
+
+@interface QILISearchResultData : NSObject
+@property(nonatomic, assign) NSInteger count;
+@property(nonatomic, assign) NSInteger start;
+@property(nonatomic, assign) NSInteger total;
+@property(nonatomic, copy) NSArray *peopleJSON;
 @end

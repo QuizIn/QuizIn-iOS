@@ -27,8 +27,25 @@ static NSString * const kAFLinkedInAPIBaseURLString = @"https://api.linkedin.com
 extern NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value);
 
 NSArray * LIAFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
-  if ([value isKindOfClass:[NSArray class]]) {
-    NSMutableArray *mutableQueryStringComponents = [NSMutableArray array];
+  NSMutableArray *mutableQueryStringComponents = [NSMutableArray array];
+  if ([value isKindOfClass:[NSDictionary class]]) {
+    NSDictionary *dictionary = value;
+    NSSortDescriptor *sortDescriptor =
+        [NSSortDescriptor sortDescriptorWithKey:@"description"
+                                      ascending:YES
+                                       selector:@selector(caseInsensitiveCompare:)];
+    for (id nestedKey in [dictionary.allKeys sortedArrayUsingDescriptors:@[sortDescriptor]]) {
+      id nestedValue = dictionary[nestedKey];
+      if (nestedValue) {
+        if ([nestedValue isKindOfClass:[NSArray class]]) {
+          [mutableQueryStringComponents addObjectsFromArray:LIAFQueryStringPairsFromKeyAndValue((key ? [NSString stringWithFormat:@"%@[%@]", key, nestedKey] : nestedKey), nestedValue)];
+        } else {
+          [mutableQueryStringComponents addObjectsFromArray:AFQueryStringPairsFromKeyAndValue((key ? [NSString stringWithFormat:@"%@[%@]", key, nestedKey] : nestedKey), nestedValue)];
+        }
+      }
+    }
+    return mutableQueryStringComponents;
+  } else if ([value isKindOfClass:[NSArray class]]) {
     NSArray *array = value;
     for (id nestedValue in array) {
       [mutableQueryStringComponents addObjectsFromArray:LIAFQueryStringPairsFromKeyAndValue(key, nestedValue)];
@@ -46,7 +63,7 @@ NSArray * LIAFQueryStringPairsFromDictionary(NSDictionary *dictionary) {
 NSString * LIAFQueryStringFromParametersWithEncoding(NSDictionary *parameters, NSStringEncoding stringEncoding) {
   NSMutableArray *mutablePairs = [NSMutableArray array];
   for (id pair in LIAFQueryStringPairsFromDictionary(parameters)) {
-    NSString *encodedString;
+    CFStringRef encodedString;
     
     SEL encodedStringSel = @selector(URLEncodedStringValueWithEncoding:);
     NSInvocation *inv =
@@ -58,7 +75,7 @@ NSString * LIAFQueryStringFromParametersWithEncoding(NSDictionary *parameters, N
     [inv invoke];
     [inv getReturnValue:&encodedString];
     
-    [mutablePairs addObject:encodedString];
+    [mutablePairs addObject:(__bridge id)(encodedString)];
   }
   return [mutablePairs componentsJoinedByString:@"&"];
 }

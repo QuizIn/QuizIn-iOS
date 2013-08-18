@@ -16,7 +16,7 @@
   // Construct path.
   NSMutableString *resourcePath = [@"/v1/people-search" mutableCopy];
   if (fieldSelector) {
-    [resourcePath appendFormat:@":%@", fieldSelector];
+    [resourcePath appendFormat:@":(%@)", fieldSelector];
   }
   
   // Build query parameter dictionary.
@@ -25,10 +25,14 @@
   
   // Success block.
   AFHTTPRequestOperationSuccess success = ^(AFHTTPRequestOperation *requestOperation,
-                                            id JSON){
-    
-    NSLog(@"%@", JSON);
-    onCompletion ? onCompletion(nil, nil) : NULL;
+                                            NSDictionary *JSON){
+    NSDictionary *peopleResultJSON = JSON[@"people"];
+    QILISearchResultData *result = [QILISearchResultData new];
+    result.count = [peopleResultJSON[@"_count"] integerValue];
+    result.start = [peopleResultJSON[@"_start"] integerValue];
+    result.total = [peopleResultJSON[@"_total"] integerValue];
+    result.peopleJSON = peopleResultJSON[@"values"];
+    onCompletion ? onCompletion(result, nil) : NULL;
   };
   // Failure block.
   AFHTTPRequestOperationFailure failure = ^(AFHTTPRequestOperation *requestOperation,
@@ -44,9 +48,6 @@
   NSMutableURLRequest *urlRequest = [httpClient requestWithMethod:@"GET"
                                                       path:resourcePath
                                                 parameters:searchParameters];
-  NSString *urlString = [urlRequest.URL absoluteString];
-  urlString = [urlString stringByReplacingOccurrencesOfString:@"IDUPI" withString:@""];
-  urlRequest.URL = [NSURL URLWithString:urlString];
   
   AFHTTPRequestOperation *operation = [httpClient HTTPRequestOperationWithRequest:urlRequest
                                                                           success:success
@@ -54,4 +55,7 @@
   [httpClient enqueueHTTPRequestOperation:operation];
 }
 
+@end
+
+@implementation QILISearchResultData
 @end
