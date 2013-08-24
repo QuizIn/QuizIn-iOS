@@ -126,6 +126,9 @@
 		34519797176C06EE0061E459 /* cardquiz_businesscard_v2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34519791176C06EE0061E459 /* cardquiz_businesscard_v2@2x.png */; };
 		34519798176C06EE0061E459 /* cardquiz_businesscard_v4.png in Resources */ = {isa = PBXBuildFile; fileRef = 34519792176C06EE0061E459 /* cardquiz_businesscard_v4.png */; };
 		34519799176C06EE0061E459 /* cardquiz_businesscard_v4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34519793176C06EE0061E459 /* cardquiz_businesscard_v4@2x.png */; };
+		345A1B1D17C43BC700FFDFA1 /* QIStoreSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 345A1B1C17C43BC700FFDFA1 /* QIStoreSectionHeaderView.m */; };
+		345A1B2017C9461000FFDFA1 /* QIStorePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 345A1B1F17C9461000FFDFA1 /* QIStorePreviewViewController.m */; };
+		345A1B2317C9462C00FFDFA1 /* QIStorePreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 345A1B2217C9462B00FFDFA1 /* QIStorePreviewView.m */; };
 		345E7AB1176218C30020600A /* multiplechoice_pictureholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AAF176218C30020600A /* multiplechoice_pictureholder.png */; };
 		345E7AB2176218C30020600A /* multiplechoice_pictureholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AB0176218C30020600A /* multiplechoice_pictureholder@2x.png */; };
 		345E7AB5176219010020600A /* multiplechoice_tape.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AB3176219010020600A /* multiplechoice_tape.png */; };
@@ -470,6 +473,12 @@
 		34519791176C06EE0061E459 /* cardquiz_businesscard_v2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardquiz_businesscard_v2@2x.png"; sourceTree = "<group>"; };
 		34519792176C06EE0061E459 /* cardquiz_businesscard_v4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardquiz_businesscard_v4.png; sourceTree = "<group>"; };
 		34519793176C06EE0061E459 /* cardquiz_businesscard_v4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardquiz_businesscard_v4@2x.png"; sourceTree = "<group>"; };
+		345A1B1B17C43BC700FFDFA1 /* QIStoreSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStoreSectionHeaderView.h; sourceTree = "<group>"; };
+		345A1B1C17C43BC700FFDFA1 /* QIStoreSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStoreSectionHeaderView.m; sourceTree = "<group>"; };
+		345A1B1E17C9461000FFDFA1 /* QIStorePreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStorePreviewViewController.h; sourceTree = "<group>"; };
+		345A1B1F17C9461000FFDFA1 /* QIStorePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStorePreviewViewController.m; sourceTree = "<group>"; };
+		345A1B2117C9462B00FFDFA1 /* QIStorePreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStorePreviewView.h; sourceTree = "<group>"; };
+		345A1B2217C9462B00FFDFA1 /* QIStorePreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStorePreviewView.m; sourceTree = "<group>"; };
 		345E7AAF176218C30020600A /* multiplechoice_pictureholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplechoice_pictureholder.png; sourceTree = "<group>"; };
 		345E7AB0176218C30020600A /* multiplechoice_pictureholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "multiplechoice_pictureholder@2x.png"; sourceTree = "<group>"; };
 		345E7AB3176219010020600A /* multiplechoice_tape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplechoice_tape.png; sourceTree = "<group>"; };
@@ -902,12 +911,18 @@
 				344B62C9179F7A1800EE85A9 /* QIStoreViewController.m */,
 				3412983C17A5B3D400678A55 /* QIStoreTableHeaderView.h */,
 				3412983D17A5B3D400678A55 /* QIStoreTableHeaderView.m */,
+				345A1B1B17C43BC700FFDFA1 /* QIStoreSectionHeaderView.h */,
+				345A1B1C17C43BC700FFDFA1 /* QIStoreSectionHeaderView.m */,
 				3412983917A5B3A400678A55 /* QIStoreCellView.h */,
 				3412983A17A5B3A400678A55 /* QIStoreCellView.m */,
 				344B62CB179F7A2D00EE85A9 /* QIStoreView.h */,
 				344B62CC179F7A2D00EE85A9 /* QIStoreView.m */,
 				3412983F17A5B57B00678A55 /* QIStoreData.h */,
 				3412984017A5B57B00678A55 /* QIStoreData.m */,
+				345A1B1E17C9461000FFDFA1 /* QIStorePreviewViewController.h */,
+				345A1B1F17C9461000FFDFA1 /* QIStorePreviewViewController.m */,
+				345A1B2117C9462B00FFDFA1 /* QIStorePreviewView.h */,
+				345A1B2217C9462B00FFDFA1 /* QIStorePreviewView.m */,
 			);
 			path = StoreView;
 			sourceTree = "<group>";
@@ -1853,6 +1868,9 @@
 				20E0203A17A5CC1C00CB9D43 /* QIQuizQuestionViewControllerFactory.m in Sources */,
 				3412984417A8898C00678A55 /* QIStatsSummaryView.m in Sources */,
 				20683D9A17AEE0210047B803 /* QILISearch.m in Sources */,
+				345A1B1D17C43BC700FFDFA1 /* QIStoreSectionHeaderView.m in Sources */,
+				345A1B2017C9461000FFDFA1 /* QIStorePreviewViewController.m in Sources */,
+				345A1B2317C9462C00FFDFA1 /* QIStorePreviewView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

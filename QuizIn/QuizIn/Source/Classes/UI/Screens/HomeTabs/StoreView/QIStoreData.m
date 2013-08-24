@@ -29,14 +29,26 @@
 + (NSArray *) getStoreData{
   return
   @[
-    @{@"type": @"Harden With Variety",
+    @{@"type": @"Focus With Filters",
       @"item": @[
                 @{@"itemTitle":@"Business Card Question",
                   @"itemPrice":@".99",
                   @"itemDescription":@"Fill out Name, Title, and Company for each individual"},
+                
                 @{@"itemTitle":@"Business Card Question",
                   @"itemPrice":@".99",
                   @"itemDescription":@"Fill out Name, Title, and Company for each individual"},
+                ]},
+    
+    @{@"type": @"Harden With Variety",
+      @"item": @[
+                @{@"itemTitle":@"Business Card Question",
+                  @"itemPrice":@".99",
+                  @"itemDescription":@"New way to harden your knowledge of name, title, and company"},
+                
+                @{@"itemTitle":@"Matching Question",
+                  @"itemPrice":@".99",
+                  @"itemDescription":@"Harden by picking from a group of pictures and tidbits"},
                 ]},
     
     @{@"type": @"Deepen With Details",
@@ -44,16 +56,6 @@
                 @{@"itemTitle":@"Industry,School,and Locale Details",
                   @"itemPrice":@".99",
                   @"itemDescription":@"Adds Industry, School, and Locale to teh question sets"},
-                ]},
-    
-    @{@"type": @"Harden With Variety",
-      @"item": @[
-                @{@"itemTitle":@"Business Card Question",
-                  @"itemPrice":@".99",
-                  @"itemDescription":@"Fill out Name, Title, and Company for each individual"},
-                @{@"itemTitle":@"Business Card Question",
-                  @"itemPrice":@".99",
-                  @"itemDescription":@"Fill out Name, Title, and Company for each individual"},
                 ]},
     ];
 }

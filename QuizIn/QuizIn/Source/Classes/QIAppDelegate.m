@@ -18,6 +18,7 @@ int ddLogLevel;
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   QIApplicationViewController *applicationViewController = [QIApplicationViewController new];
   self.window.rootViewController = applicationViewController;
+  //self.window.rootViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
   [self.window makeKeyAndVisible];
   
   /*

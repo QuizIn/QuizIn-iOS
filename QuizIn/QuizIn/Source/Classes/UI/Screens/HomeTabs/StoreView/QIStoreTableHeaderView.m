@@ -87,10 +87,13 @@
 
 -(UILabel *)newStoreLabel{
   UILabel *label = [[UILabel alloc] init];
+  NSMutableAttributedString *labelAttributes = [[NSMutableAttributedString alloc] initWithString:@"HobNob Store"];
+  [labelAttributes addAttribute:NSFontAttributeName value:[QIFontProvider fontWithSize:20.0f style:Bold] range:NSMakeRange(0, labelAttributes.length)];
+  [labelAttributes addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:255.0f/255.0f green:178.0f/255.0f blue:61.0f/255.0f alpha:1.0] range:NSMakeRange(0, 3)];
+  [labelAttributes addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:1.0f alpha:1.0f] range:NSMakeRange(3, 9)];
+  [label setAttributedText:labelAttributes]; 
   [label setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [label setBackgroundColor:[UIColor clearColor]]; 
-  [label setText:@"Hobnob Store"];
-  [label setFont:[QIFontProvider fontWithSize:14.0f style:Bold]];
+  [label setBackgroundColor:[UIColor clearColor]];
   return label; 
 }
 

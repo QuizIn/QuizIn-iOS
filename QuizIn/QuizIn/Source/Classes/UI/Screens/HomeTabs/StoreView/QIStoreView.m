@@ -1,13 +1,13 @@
 #import "QIStoreView.h"
 #import "QIStoreCellView.h"
 #import "QIStoreTableHeaderView.h"
+#import "QIStoreSectionHeaderView.h"
 #import "QIRankDefinition.h"
 #import "QIStoreData.h"
 
 @interface QIStoreView ()
 
 @property (nonatomic, strong) UIImageView *viewBackground;
-@property (nonatomic, retain) UITableView *tableView;
 @property (nonatomic, retain) QIStoreTableHeaderView *headerView;
 @property (nonatomic, retain) NSMutableArray *viewConstraints;
 @property (nonatomic, strong) NSArray *storeData; 
@@ -25,7 +25,7 @@
   if (self) {
     _viewBackground = [self newViewBackground];
     _headerView = [self newHeaderView];
-    _tableView = [self newRankTable];
+    _tableView = [self newStoreTable];
     _storeData = [QIStoreData getStoreData];
     
     [self contstructViewHierarchy];
@@ -40,6 +40,8 @@
   [self addSubview:self.viewBackground];
   [self addSubview:self.tableView];
 }
+
+#pragma mark Layout
 
 - (void)layoutSubviews {
   [super layoutSubviews];
@@ -102,12 +104,15 @@
   return headerView;
 }
 
--(UITableView *)newRankTable{
-  UITableView *tableView = [[UITableView alloc] init];
+-(UITableView *)newStoreTable{
+  UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
   [tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [tableView setBackgroundColor:[UIColor clearColor]];
+  [tableView setBackgroundView:nil];
+  [tableView setOpaque:NO]; 
   [tableView setSeparatorColor:[UIColor clearColor]];
   [tableView setShowsVerticalScrollIndicator:NO];
+  [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
   tableView.rowHeight = 107;
   tableView.sectionHeaderHeight = 25;
   tableView.tableHeaderView = self.headerView;
@@ -121,8 +126,16 @@
   return [self.storeData count];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-  return [[self.storeData objectAtIndex:section] objectForKey:@"type"];
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+  QIStoreSectionHeaderView *headerView = [[QIStoreSectionHeaderView alloc] init];
+  headerView.sectionTitle = [[self.storeData objectAtIndex:section] objectForKey:@"type"];
+  return headerView;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+  return 44.0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -136,6 +149,8 @@
   if (cell == nil){
     cell = [[QIStoreCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    [cell setBackgroundView:nil];
+    [cell setBackgroundColor:[UIColor clearColor]];
   }
   [cell setTitle:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemTitle"]];
   [cell setPrice:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemPrice"]];
