@@ -11,5 +11,6 @@
 @interface QIStorePreviewView : UIView
 
 @property (nonatomic, strong) UIButton *buyButton;
+@property (nonatomic, strong) UIButton *exitButton;
 
 @end

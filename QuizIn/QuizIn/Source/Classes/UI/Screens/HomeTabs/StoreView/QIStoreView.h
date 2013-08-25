@@ -1,8 +1,10 @@
 
 #import <UIKit/UIKit.h>
+#import "QIStorePreviewViewController.h"
+#import "QIStoreViewController.h"
 
-@interface QIStoreView : UIView <UITableViewDataSource, UITableViewDelegate>
+@interface QIStoreView : UIView 
 
-@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, strong) UITableView *tableView;
 
 @end

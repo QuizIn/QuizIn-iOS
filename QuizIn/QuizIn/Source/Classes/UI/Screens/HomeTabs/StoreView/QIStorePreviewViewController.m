@@ -22,8 +22,8 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
+  [super viewDidLoad];
+  [self.previewView.exitButton addTarget:self action:@selector(dismissPreview) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning
@@ -32,7 +32,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (QIStorePreviewView *)storeView {
+- (void)dismissPreview{
+  [self dismissViewControllerAnimated:NO completion:nil]; 
+}
+   
+- (QIStorePreviewView *)previewView{
   return (QIStorePreviewView *)self.view;
 }
 
