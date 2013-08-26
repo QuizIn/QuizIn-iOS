@@ -4,6 +4,8 @@
 #import "QIStorePreviewViewController.h"
 #import "QIStoreData.h"
 
+#define SECTION_INDEX_SPAN 100.0f
+
 @interface QIStoreViewController ()
 
 @property (nonatomic, retain) UITableView *tableView;
@@ -24,6 +26,7 @@
     }
     return self;
 }
+
 -(void)loadView{
   self.view = [[QIStoreView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   self.title = @"Store";
@@ -35,38 +38,43 @@
   [tableHeader.buyAllButton addTarget:self action:@selector(buyAll) forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+}
+
+- (void)didReceiveMemoryWarning
+{
+  [super didReceiveMemoryWarning];
+}
+
+- (QIStoreView *)storeView {
+  return (QIStoreView *)self.view;
+}
+
 
 #pragma mark Actions
 
 - (void)buyAll{
+  NSLog(@"Buy All");
   QIStorePreviewViewController *previewController = [[QIStorePreviewViewController alloc] init];
   [self presentViewController:previewController  animated:YES completion:nil];
 }
 
 - (void)preview:(UIButton *)button{
+  NSInteger section = floor(button.tag/SECTION_INDEX_SPAN);
+  NSInteger row = fmodf(button.tag,SECTION_INDEX_SPAN); 
+  NSLog(@"Preview: Tag-%d  Section-%d  Row-%d",button.tag, section, row);
   QIStorePreviewViewController *previewController = [[QIStorePreviewViewController alloc] init];
   [self presentViewController:previewController  animated:YES completion:nil];
 }
 
 - (void)buy:(UIButton *)button{
+  NSInteger section = floor(button.tag/SECTION_INDEX_SPAN);
+  NSInteger row = fmodf(button.tag,SECTION_INDEX_SPAN);
+  NSLog(@"Buy: Tag-%d  Section-%d  Row-%d",button.tag, section, row);
   QIStorePreviewViewController *previewController = [[QIStorePreviewViewController alloc] init];
   [self presentViewController:previewController  animated:YES completion:nil];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (QIStoreView *)storeView {
-  return (QIStoreView *)self.view;
 }
 
 #pragma mark TableView
@@ -127,10 +135,12 @@
     [cell setBackgroundView:nil];
     [cell setBackgroundColor:[UIColor clearColor]];
   }
-  [cell.previewButton setTag:indexPath.row*2];
-  [cell.buyButton setTag:indexPath.row*2+1];
+  
+  [cell.previewButton setTag:indexPath.section*SECTION_INDEX_SPAN +indexPath.row];
+  [cell.buyButton setTag:indexPath.section*SECTION_INDEX_SPAN+indexPath.row];
   [cell.previewButton addTarget:self action:@selector(preview:) forControlEvents:UIControlEventTouchUpInside];
   [cell.buyButton addTarget:self action:@selector(buy:) forControlEvents:UIControlEventTouchUpInside];
+  
   [cell setTitle:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemTitle"]];
   [cell setPrice:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemPrice"]];
   [cell setDescription:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemDescription"]];

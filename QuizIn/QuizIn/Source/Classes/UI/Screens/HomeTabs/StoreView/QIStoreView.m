@@ -23,9 +23,6 @@
   self = [super initWithFrame:frame];
   if (self) {
     _viewBackground = [self newViewBackground];
-    //_headerView = [self newHeaderView];
-    //_tableView = [self newStoreTable];
-    //_storeData = [QIStoreData getStoreData];
     
     [self contstructViewHierarchy];
   }
@@ -93,15 +90,6 @@
   }
 }
 
-#pragma mark Actions
--(void)buy:(UIButton *)button{
-  NSLog(@"%d",button.tag);
- // QIStorePreviewViewController *previewController = [[QIStorePreviewViewController alloc] init];
-}
--(void)preview:(UIButton *)button{
-  NSLog(@"%d",button.tag); 
-}
-
 #pragma mark factory methods
 
 - (UIImageView *)newViewBackground{
@@ -109,10 +97,5 @@
   [background setTranslatesAutoresizingMaskIntoConstraints:NO];
   return background;
 }
-
-
-
-
-
 
 @end

@@ -31,7 +31,6 @@
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     _authController = [self newLinkedInAuthController];
-    [self setModalPresentationStyle:UIModalPresentationCurrentContext]; 
   }
   return self;
 }
@@ -104,7 +103,7 @@
   [tabController setViewControllers:@[[self newHomeViewController],[self newStatsViewController],[self newRankViewController],[self newStoreViewController]]];
   [tabController.tabBar setSelectedImageTintColor:[UIColor orangeColor]];
   [tabController.tabBar setTintColor:[UIColor colorWithWhite:.15f alpha:1.0f]];
-  [tabController setModalPresentationStyle:UIModalPresentationCurrentContext];
+  //[tabController setModalPresentationStyle:UIModalPresentationCurrentContext];
   return tabController; 
 }
 - (QIDrawerController *)newDrawerController {

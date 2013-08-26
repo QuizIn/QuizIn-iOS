@@ -13,7 +13,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-          }
+    }
     return self;
 }
 
@@ -26,9 +26,14 @@
   NSMutableArray *selectionContent = [QIGroupSelectionData getSelectionData];
   [self.groupSelectionView setSelectionContent:selectionContent];
   [self.groupSelectionView setSelectionViewLabelString:@"Create Your Next Quiz"];
+  
   [self.groupSelectionView.backButton addTarget:self
                                          action:@selector(backButtonPressed)
                                forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.groupSelectionView.footerView.searchButton addTarget:self
+                                                      action:@selector(showSearchView)
+                                            forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -38,14 +43,21 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark Actions
+- (void)showSearchView{
+  QISearchPickerViewController *searchController = [[QISearchPickerViewController alloc] init];
+  [searchController setModalPresentationStyle:UIModalPresentationFullScreen];
+  [searchController setModalTransitionStyle:UIModalTransitionStyleCoverVertical]; 
+  [self presentViewController:searchController animated:YES completion:nil];
+}
+
 - (void)backButtonPressed{
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (QIGroupSelectionView *)groupSelectionView {
   return (QIGroupSelectionView *)self.view;
 }
+
 @end

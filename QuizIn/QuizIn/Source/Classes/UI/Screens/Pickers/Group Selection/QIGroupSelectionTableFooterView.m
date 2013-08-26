@@ -3,9 +3,7 @@
 
 @interface QIGroupSelectionTableFooterView ()
 
-@property (nonatomic,strong) UIView *footerBackgroundView;
-@property (nonatomic,strong) UIActivityIndicatorView *loadingIndicator; 
-@property (nonatomic,strong) NSMutableArray *footerViewConstraints;
+@property (nonatomic, strong) NSMutableArray *footerViewConstraints;
 
 @end
 
@@ -19,7 +17,10 @@
 {
   self = [super initWithFrame:frame];
   if (self) {
-    _loadingIndicator = [self newLoadingIndicator];
+    _searchButton = [self newSearchButton];
+    _searchBar = [self newSearchBar];
+    
+    [self setBackgroundColor:[UIColor colorWithRed:240.0f/255.0f green:240.0f/255.0f blue:240.0f/255.0f alpha:1.0f]];
     [self constructViewHierarchy];
   }
   return self;
@@ -27,7 +28,8 @@
 
 #pragma mark View Hierarchy
 -(void)constructViewHierarchy{
-  [self addSubview:self.loadingIndicator];
+  [self addSubview:self.searchBar];
+  [self addSubview:self.searchButton];
 }
 
 #pragma mark Layout
@@ -41,31 +43,66 @@
   if (!self.footerViewConstraints) {
 
     //Constrain Views
-    NSDictionary *views = NSDictionaryOfVariableBindings(_loadingIndicator);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_searchBar, _searchButton);
     
-    NSArray *vLoadingConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-2-[_loadingIndicator(==20)]-2-|"
+    NSArray *hBarConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_searchButton]|"
+                                            options:0
+                                            metrics:nil
+                                              views:views];
+    
+    NSArray *vBarConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_searchButton(==44)]|"
+                                            options:0
+                                            metrics:nil
+                                              views:views];
+    
+    NSArray *hButtonConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_searchBar]|"
+                                            options:0
+                                            metrics:nil
+                                              views:views];
+    
+    NSArray *vButtonConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_searchBar(==44)]|"
                                             options:0
                                             metrics:nil
                                               views:views];
 
-    NSLayoutConstraint *centerXLoadingIndicator = [NSLayoutConstraint constraintWithItem:_loadingIndicator attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
     
     self.footerViewConstraints = [NSMutableArray array];
-    [self.footerViewConstraints addObjectsFromArray:@[centerXLoadingIndicator]];
-    [self.footerViewConstraints addObjectsFromArray:vLoadingConstraints];
+    [self.footerViewConstraints addObjectsFromArray:hBarConstraints];
+    [self.footerViewConstraints addObjectsFromArray:vBarConstraints];
+    [self.footerViewConstraints addObjectsFromArray:hButtonConstraints];
+    [self.footerViewConstraints addObjectsFromArray:vButtonConstraints];
     
     [self addConstraints:self.footerViewConstraints];
-
   }
 }
 
 #pragma mark Factory Methods
--(UIActivityIndicatorView *) newLoadingIndicator{
-  UIActivityIndicatorView *loadingIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-  [loadingIndicator setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [loadingIndicator startAnimating];
-  return loadingIndicator; 
+
+- (UIButton *)newSearchButton {
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setShowsTouchWhenHighlighted:NO]; 
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  button.backgroundColor = [UIColor clearColor];
+  return button;
+}
+
+- (UISearchBar *)newSearchBar{
+  UISearchBar *searchBar = [[UISearchBar alloc] init];
+  [searchBar setShowsCancelButton:NO animated:YES];
+  [searchBar setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [searchBar setTintColor:[UIColor clearColor]];
+  [searchBar setPlaceholder:@"Search For More"];
+  for (UIView *subview in searchBar.subviews) {
+    if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+      [subview removeFromSuperview];
+      break;
+    }
+  }
+  return searchBar;
 }
 
 @end

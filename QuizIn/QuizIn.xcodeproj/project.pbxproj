@@ -129,6 +129,8 @@
 		345A1B1D17C43BC700FFDFA1 /* QIStoreSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 345A1B1C17C43BC700FFDFA1 /* QIStoreSectionHeaderView.m */; };
 		345A1B2017C9461000FFDFA1 /* QIStorePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 345A1B1F17C9461000FFDFA1 /* QIStorePreviewViewController.m */; };
 		345A1B2317C9462C00FFDFA1 /* QIStorePreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 345A1B2217C9462B00FFDFA1 /* QIStorePreviewView.m */; };
+		345A1B2B17CAA54200FFDFA1 /* QISearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 345A1B2A17CAA54200FFDFA1 /* QISearchPickerViewController.m */; };
+		345A1B2E17CAA57800FFDFA1 /* QISearchPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 345A1B2D17CAA57800FFDFA1 /* QISearchPickerView.m */; };
 		345E7AB1176218C30020600A /* multiplechoice_pictureholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AAF176218C30020600A /* multiplechoice_pictureholder.png */; };
 		345E7AB2176218C30020600A /* multiplechoice_pictureholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AB0176218C30020600A /* multiplechoice_pictureholder@2x.png */; };
 		345E7AB5176219010020600A /* multiplechoice_tape.png in Resources */ = {isa = PBXBuildFile; fileRef = 345E7AB3176219010020600A /* multiplechoice_tape.png */; };
@@ -479,6 +481,10 @@
 		345A1B1F17C9461000FFDFA1 /* QIStorePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStorePreviewViewController.m; sourceTree = "<group>"; };
 		345A1B2117C9462B00FFDFA1 /* QIStorePreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStorePreviewView.h; sourceTree = "<group>"; };
 		345A1B2217C9462B00FFDFA1 /* QIStorePreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStorePreviewView.m; sourceTree = "<group>"; };
+		345A1B2917CAA54200FFDFA1 /* QISearchPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QISearchPickerViewController.h; sourceTree = "<group>"; };
+		345A1B2A17CAA54200FFDFA1 /* QISearchPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QISearchPickerViewController.m; sourceTree = "<group>"; };
+		345A1B2C17CAA57800FFDFA1 /* QISearchPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QISearchPickerView.h; sourceTree = "<group>"; };
+		345A1B2D17CAA57800FFDFA1 /* QISearchPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QISearchPickerView.m; sourceTree = "<group>"; };
 		345E7AAF176218C30020600A /* multiplechoice_pictureholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplechoice_pictureholder.png; sourceTree = "<group>"; };
 		345E7AB0176218C30020600A /* multiplechoice_pictureholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "multiplechoice_pictureholder@2x.png"; sourceTree = "<group>"; };
 		345E7AB3176219010020600A /* multiplechoice_tape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplechoice_tape.png; sourceTree = "<group>"; };
@@ -959,6 +965,7 @@
 		344B62A2179F790D00EE85A9 /* Group Selection */ = {
 			isa = PBXGroup;
 			children = (
+				345A1B2817CAA54100FFDFA1 /* Search Picker */,
 				344B62A3179F790D00EE85A9 /* QIGroupSelectionCellView.h */,
 				344B62A4179F790D00EE85A9 /* QIGroupSelectionCellView.m */,
 				344B62A5179F790D00EE85A9 /* QIGroupSelectionData.h */,
@@ -990,6 +997,17 @@
 				344B62D717A38F0400EE85A9 /* QIRankDisplayView.m */,
 			);
 			path = RankDisplayView;
+			sourceTree = "<group>";
+		};
+		345A1B2817CAA54100FFDFA1 /* Search Picker */ = {
+			isa = PBXGroup;
+			children = (
+				345A1B2917CAA54200FFDFA1 /* QISearchPickerViewController.h */,
+				345A1B2A17CAA54200FFDFA1 /* QISearchPickerViewController.m */,
+				345A1B2C17CAA57800FFDFA1 /* QISearchPickerView.h */,
+				345A1B2D17CAA57800FFDFA1 /* QISearchPickerView.m */,
+			);
+			path = "Search Picker";
 			sourceTree = "<group>";
 		};
 		345E7AB717621DB80020600A /* Match Quiz */ = {
@@ -1871,6 +1889,8 @@
 				345A1B1D17C43BC700FFDFA1 /* QIStoreSectionHeaderView.m in Sources */,
 				345A1B2017C9461000FFDFA1 /* QIStorePreviewViewController.m in Sources */,
 				345A1B2317C9462C00FFDFA1 /* QIStorePreviewView.m in Sources */,
+				345A1B2B17CAA54200FFDFA1 /* QISearchPickerViewController.m in Sources */,
+				345A1B2E17CAA57800FFDFA1 /* QISearchPickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
