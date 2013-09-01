@@ -39,6 +39,8 @@
 		340896BE1751712900398230 /* progressView_tracker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 340896BC1751712500398230 /* progressView_tracker@2x.png */; };
 		340896C1175175ED00398230 /* progressView_progress.png in Resources */ = {isa = PBXBuildFile; fileRef = 340896BF175175EC00398230 /* progressView_progress.png */; };
 		340896C2175175ED00398230 /* progressView_progress@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 340896C0175175EC00398230 /* progressView_progress@2x.png */; };
+		340D3D2C17D23BAB004F5522 /* DLPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 340D3D2B17D23BAB004F5522 /* DLPieChart.m */; };
+		340D3D2F17D3A0DE004F5522 /* QIStatsSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 340D3D2E17D3A0DD004F5522 /* QIStatsSectionHeaderView.m */; };
 		3412983517A5A85000678A55 /* QIRankTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412983417A5A85000678A55 /* QIRankTableHeaderView.m */; };
 		3412983817A5A89A00678A55 /* QIRankCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412983717A5A89A00678A55 /* QIRankCellView.m */; };
 		3412983B17A5B3A400678A55 /* QIStoreCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412983A17A5B3A400678A55 /* QIStoreCellView.m */; };
@@ -355,6 +357,10 @@
 		340896BC1751712500398230 /* progressView_tracker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progressView_tracker@2x.png"; sourceTree = "<group>"; };
 		340896BF175175EC00398230 /* progressView_progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressView_progress.png; sourceTree = "<group>"; };
 		340896C0175175EC00398230 /* progressView_progress@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progressView_progress@2x.png"; sourceTree = "<group>"; };
+		340D3D2A17D23BAB004F5522 /* DLPieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPieChart.h; sourceTree = "<group>"; };
+		340D3D2B17D23BAB004F5522 /* DLPieChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPieChart.m; sourceTree = "<group>"; };
+		340D3D2D17D3A0DC004F5522 /* QIStatsSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsSectionHeaderView.h; sourceTree = "<group>"; };
+		340D3D2E17D3A0DD004F5522 /* QIStatsSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsSectionHeaderView.m; sourceTree = "<group>"; };
 		3412983317A5A84F00678A55 /* QIRankTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIRankTableHeaderView.h; sourceTree = "<group>"; };
 		3412983417A5A85000678A55 /* QIRankTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIRankTableHeaderView.m; sourceTree = "<group>"; };
 		3412983617A5A89A00678A55 /* QIRankCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIRankCellView.h; sourceTree = "<group>"; };
@@ -769,6 +775,15 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		340D3D2917D23BAB004F5522 /* Pie Chart Library */ = {
+			isa = PBXGroup;
+			children = (
+				340D3D2A17D23BAB004F5522 /* DLPieChart.h */,
+				340D3D2B17D23BAB004F5522 /* DLPieChart.m */,
+			);
+			path = "Pie Chart Library";
+			sourceTree = "<group>";
+		};
 		3412984517B7C0B900678A55 /* Tab Bar Icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -894,12 +909,15 @@
 		344B627E179F786D00EE85A9 /* StatsView */ = {
 			isa = PBXGroup;
 			children = (
+				340D3D2917D23BAB004F5522 /* Pie Chart Library */,
 				344B6287179F786D00EE85A9 /* QIStatsViewController.h */,
 				344B6288179F786D00EE85A9 /* QIStatsViewController.m */,
 				3412984217A8898C00678A55 /* QIStatsSummaryView.h */,
 				3412984317A8898C00678A55 /* QIStatsSummaryView.m */,
 				344B6283179F786D00EE85A9 /* QIStatsTableHeaderView.h */,
 				344B6284179F786D00EE85A9 /* QIStatsTableHeaderView.m */,
+				340D3D2D17D3A0DC004F5522 /* QIStatsSectionHeaderView.h */,
+				340D3D2E17D3A0DD004F5522 /* QIStatsSectionHeaderView.m */,
 				344B627F179F786D00EE85A9 /* QIStatsCellView.h */,
 				344B6280179F786D00EE85A9 /* QIStatsCellView.m */,
 				344B6285179F786D00EE85A9 /* QIStatsView.h */,
@@ -1891,6 +1909,8 @@
 				345A1B2317C9462C00FFDFA1 /* QIStorePreviewView.m in Sources */,
 				345A1B2B17CAA54200FFDFA1 /* QISearchPickerViewController.m in Sources */,
 				345A1B2E17CAA57800FFDFA1 /* QISearchPickerView.m in Sources */,
+				340D3D2C17D23BAB004F5522 /* DLPieChart.m in Sources */,
+				340D3D2F17D3A0DE004F5522 /* QIStatsSectionHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

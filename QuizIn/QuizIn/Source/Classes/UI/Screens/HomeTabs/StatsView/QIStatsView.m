@@ -153,7 +153,7 @@
   [tableView setSeparatorColor:[UIColor colorWithWhite:.8f alpha:1.0f]];
   [tableView setShowsVerticalScrollIndicator:NO];
   [tableView setRowHeight:46];
-  [tableView setSectionHeaderHeight:25];
+  [tableView setSectionHeaderHeight:40];
   [tableView setTableHeaderView:self.headerView];
   [tableView setDataSource:self];
   [tableView setDelegate:self];
@@ -181,14 +181,14 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
   
   if (scrollView.contentOffset.y <= 0 & self.vSummaryViewConstraint.constant == SUMMARY_OFFSET){
-    [UIView animateWithDuration:.5 animations:^{
+    [UIView animateWithDuration:.3 animations:^{
       [self.vSummaryViewConstraint setConstant:0];
       [self.tableView reloadData];
       [self layoutIfNeeded];
     }];
   }
   else if (scrollView.contentOffset.y > 0 & self.vSummaryViewConstraint.constant == 0){
-    [UIView animateWithDuration:.5 animations:^{
+    [UIView animateWithDuration:.3 animations:^{
       [self.vSummaryViewConstraint setConstant:SUMMARY_OFFSET];
       [self.tableView reloadData];
       [self layoutIfNeeded];
@@ -199,6 +199,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
   return [[self.connectionStats objectAtIndex:0] count];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+  QIStatsSectionHeaderView *headerView = [[QIStatsSectionHeaderView alloc] init];
+  headerView.sectionTitle = @"Section Title"; 
+  return headerView;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

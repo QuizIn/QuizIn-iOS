@@ -208,7 +208,7 @@
     //ConnectionsQuizStartView Constraints
     
     NSDictionary *connectionQuizViews = NSDictionaryOfVariableBindings(_connectionsQuizPaperImage,_connectionsQuizBinderImage,_connectionsQuizTitle,_connectionsQuizNumberOfConnectionsLabel,_connectionsQuizImagePreviewCollection,_connectionsQuizButton);
-    NSString *primaryVertical = @"V:|-40-[_connectionsQuizTitle][_connectionsQuizNumberOfConnectionsLabel]-15-[_connectionsQuizImagePreviewCollection(==60)]";
+    NSString *primaryVertical = @"V:|-40-[_connectionsQuizTitle]-(-3)-[_connectionsQuizNumberOfConnectionsLabel]-15-[_connectionsQuizImagePreviewCollection(==60)]";
     
     NSArray *vConstraintsConnectionsQuizPaperImageBottom =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_connectionsQuizPaperImage(==250)]"
@@ -422,10 +422,12 @@
 
 - (UILabel *)newConnectionsQuizTitle{
   UILabel *quizTitle = [[UILabel alloc] init];
-  [quizTitle setText:[self homeViewTitle]];
-  [quizTitle setFont:[QIFontProvider fontWithSize:16.0f style:Bold]];
-  [quizTitle setTextColor:[UIColor colorWithWhite:0.33f alpha:1.0f]];
-  [quizTitle setAdjustsFontSizeToFitWidth:YES];
+  NSMutableAttributedString *labelAttributes = [[NSMutableAttributedString alloc] initWithString:[self homeViewTitle]];
+  [labelAttributes addAttribute:NSFontAttributeName value:[QIFontProvider fontWithSize:16.0f style:Regular] range:NSMakeRange(labelAttributes.length-4, 4)];
+  [labelAttributes addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:0.33f alpha:1.0f] range:NSMakeRange(labelAttributes.length-4,4)];
+  [labelAttributes addAttribute:NSFontAttributeName value:[QIFontProvider fontWithSize:16.0f style:Bold] range:NSMakeRange(0,labelAttributes.length-4)];
+  [labelAttributes addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:0.33f alpha:1.0f] range:NSMakeRange(0,labelAttributes.length-4)];
+  [quizTitle setAttributedText:labelAttributes];
   [quizTitle setBackgroundColor:[UIColor clearColor]];
   [quizTitle setTranslatesAutoresizingMaskIntoConstraints:NO];
   return quizTitle;
@@ -435,7 +437,7 @@
   UILabel *quizConnections = [[UILabel alloc] init];
   [quizConnections setText:[self homeViewSubtext]];
   [quizConnections setFont:[QIFontProvider fontWithSize:13.0f style:Regular]];
-  [quizConnections setTextColor:[UIColor colorWithWhite:0.33f alpha:1.0f]];
+  [quizConnections setTextColor:[UIColor colorWithWhite:0.50f alpha:1.0f]];
   [quizConnections setAdjustsFontSizeToFitWidth:YES];
   [quizConnections setBackgroundColor:[UIColor clearColor]];
   [quizConnections setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -513,9 +515,13 @@
    
 - (UILabel *)newQuizLabelWithText:(NSString *)text{
   UILabel *label = [[UILabel alloc] init];
-  [label setText:text];
-  [label setFont:[QIFontProvider fontWithSize:13.0f style:Regular]];
-  [label setTextColor:[UIColor colorWithWhite:0.33f alpha:1.0f]];
+  NSMutableAttributedString *labelAttributes = [[NSMutableAttributedString alloc] initWithString:text];
+  
+  [labelAttributes addAttribute:NSFontAttributeName value:[QIFontProvider fontWithSize:13.0f style:Regular] range:NSMakeRange(labelAttributes.length-4, 4)];
+  [labelAttributes addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:0.33f alpha:1.0f] range:NSMakeRange(labelAttributes.length-4,4)];
+  [labelAttributes addAttribute:NSFontAttributeName value:[QIFontProvider fontWithSize:13.0f style:Bold] range:NSMakeRange(0,labelAttributes.length-4)];
+  [labelAttributes addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:0.33f alpha:1.0f] range:NSMakeRange(0,labelAttributes.length-4)];
+  [label setAttributedText:labelAttributes];
   [label setBackgroundColor:[UIColor clearColor]];
   [label setTranslatesAutoresizingMaskIntoConstraints:NO];
   return label;
@@ -523,7 +529,7 @@
 
 #pragma mark Strings
 - (NSString *)homeViewTitle{
-  return @"Connections Quiz"; 
+  return @"ConnectionsQuiz"; 
 }
 - (NSString *)homeViewSubtext{
   return @"Connections"; 

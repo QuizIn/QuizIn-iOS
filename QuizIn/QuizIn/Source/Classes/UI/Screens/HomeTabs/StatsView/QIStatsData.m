@@ -201,6 +201,7 @@
   
   if (correct) {
     totalCorrectAnswers++;
+    //add up/down arrow
   }
   else{
     totalIncorrectAnswers++;
