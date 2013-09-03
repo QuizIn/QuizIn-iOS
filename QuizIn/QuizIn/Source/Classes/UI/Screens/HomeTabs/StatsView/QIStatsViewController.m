@@ -31,6 +31,7 @@
   self.statsView.totalCorrectAnswers = [data getTotalCorrectAnswers];
   self.statsView.totalIncorrectAnswers = [data getTotalIncorrectAnswers];
   self.statsView.connectionStats = [data getConnectionStatsInOrderBy:lastName];
+  //[self.statsView.summaryView.pieChartView reloadData];
   [self.statsView.tableView reloadData];
 }
 

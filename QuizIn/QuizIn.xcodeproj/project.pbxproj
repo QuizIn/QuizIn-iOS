@@ -41,6 +41,9 @@
 		340896C2175175ED00398230 /* progressView_progress@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 340896C0175175EC00398230 /* progressView_progress@2x.png */; };
 		340D3D2C17D23BAB004F5522 /* DLPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 340D3D2B17D23BAB004F5522 /* DLPieChart.m */; };
 		340D3D2F17D3A0DE004F5522 /* QIStatsSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 340D3D2E17D3A0DD004F5522 /* QIStatsSectionHeaderView.m */; };
+		340D3D3317D4EA1F004F5522 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 340D3D3217D4EA1F004F5522 /* IAPHelper.m */; };
+		340D3D3617D4EE55004F5522 /* QIIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 340D3D3517D4EE55004F5522 /* QIIAPHelper.m */; };
+		340D3D3817D4F0B5004F5522 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 340D3D3717D4F0B5004F5522 /* StoreKit.framework */; };
 		3412983517A5A85000678A55 /* QIRankTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412983417A5A85000678A55 /* QIRankTableHeaderView.m */; };
 		3412983817A5A89A00678A55 /* QIRankCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412983717A5A89A00678A55 /* QIRankCellView.m */; };
 		3412983B17A5B3A400678A55 /* QIStoreCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3412983A17A5B3A400678A55 /* QIStoreCellView.m */; };
@@ -361,6 +364,11 @@
 		340D3D2B17D23BAB004F5522 /* DLPieChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPieChart.m; sourceTree = "<group>"; };
 		340D3D2D17D3A0DC004F5522 /* QIStatsSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStatsSectionHeaderView.h; sourceTree = "<group>"; };
 		340D3D2E17D3A0DD004F5522 /* QIStatsSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStatsSectionHeaderView.m; sourceTree = "<group>"; };
+		340D3D3117D4EA1F004F5522 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
+		340D3D3217D4EA1F004F5522 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
+		340D3D3417D4EE55004F5522 /* QIIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIIAPHelper.h; sourceTree = "<group>"; };
+		340D3D3517D4EE55004F5522 /* QIIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIIAPHelper.m; sourceTree = "<group>"; };
+		340D3D3717D4F0B5004F5522 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3412983317A5A84F00678A55 /* QIRankTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIRankTableHeaderView.h; sourceTree = "<group>"; };
 		3412983417A5A85000678A55 /* QIRankTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIRankTableHeaderView.m; sourceTree = "<group>"; };
 		3412983617A5A89A00678A55 /* QIRankCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIRankCellView.h; sourceTree = "<group>"; };
@@ -683,6 +691,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				340D3D3817D4F0B5004F5522 /* StoreKit.framework in Frameworks */,
 				34890121177A76D10004F604 /* EventKit.framework in Frameworks */,
 				88867999172D6D6C00DCE3D0 /* MobileCoreServices.framework in Frameworks */,
 				88867997172D6D1B00DCE3D0 /* SystemConfiguration.framework in Frameworks */,
@@ -782,6 +791,17 @@
 				340D3D2B17D23BAB004F5522 /* DLPieChart.m */,
 			);
 			path = "Pie Chart Library";
+			sourceTree = "<group>";
+		};
+		340D3D3017D4E9F4004F5522 /* InAppPurchases */ = {
+			isa = PBXGroup;
+			children = (
+				340D3D3117D4EA1F004F5522 /* IAPHelper.h */,
+				340D3D3217D4EA1F004F5522 /* IAPHelper.m */,
+				340D3D3417D4EE55004F5522 /* QIIAPHelper.h */,
+				340D3D3517D4EE55004F5522 /* QIIAPHelper.m */,
+			);
+			path = InAppPurchases;
 			sourceTree = "<group>";
 		};
 		3412984517B7C0B900678A55 /* Tab Bar Icons */ = {
@@ -1072,6 +1092,7 @@
 		3478FFA0173EE7CC002B29DB /* Helper Functions */ = {
 			isa = PBXGroup;
 			children = (
+				340D3D3017D4E9F4004F5522 /* InAppPurchases */,
 				20E0202117A5BEBA00CB9D43 /* AFNetworkingBlockTypes.h */,
 				20E0202217A5BEBA00CB9D43 /* QIHelpers.h */,
 				20E0202317A5BEBA00CB9D43 /* QIHelpers.m */,
@@ -1364,10 +1385,10 @@
 		881EAF8716FBD08B0041AD55 = {
 			isa = PBXGroup;
 			children = (
+				340D3D3717D4F0B5004F5522 /* StoreKit.framework */,
 				881EAF9B16FBD08B0041AD55 /* QuizIn */,
 				881EAFC916FBD08B0041AD55 /* QuizInTests */,
 				881EAF9216FBD08B0041AD55 /* Frameworks */,
-				881EAF9116FBD08B0041AD55 /* Products */,
 				7F88557B297046AD9AF083B1 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
@@ -1379,6 +1400,7 @@
 				881EAFC116FBD08B0041AD55 /* QuizInTests.octest */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		881EAF9216FBD08B0041AD55 /* Frameworks */ = {
@@ -1411,6 +1433,7 @@
 		881EAFC916FBD08B0041AD55 /* QuizInTests */ = {
 			isa = PBXGroup;
 			children = (
+				881EAF9116FBD08B0041AD55 /* Products */,
 				881EAFCF16FBD08B0041AD55 /* QuizInTests.h */,
 				881EAFD016FBD08B0041AD55 /* QuizInTests.m */,
 				881EAFCA16FBD08B0041AD55 /* Supporting Files */,
@@ -1911,6 +1934,8 @@
 				345A1B2E17CAA57800FFDFA1 /* QISearchPickerView.m in Sources */,
 				340D3D2C17D23BAB004F5522 /* DLPieChart.m in Sources */,
 				340D3D2F17D3A0DE004F5522 /* QIStatsSectionHeaderView.m in Sources */,
+				340D3D3317D4EA1F004F5522 /* IAPHelper.m in Sources */,
+				340D3D3617D4EE55004F5522 /* QIIAPHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1964,7 +1989,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rick Kuhlman (F5BEM35ST8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rick Kuhlman (F5BEM35ST8)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1979,6 +2005,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "0629AF15-CE83-4911-8F4D-3FE5CF8C5385";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0629AF15-CE83-4911-8F4D-3FE5CF8C5385";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1995,7 +2023,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rick Kuhlman (F5BEM35ST8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rick Kuhlman (F5BEM35ST8)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2003,6 +2032,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "0629AF15-CE83-4911-8F4D-3FE5CF8C5385";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0629AF15-CE83-4911-8F4D-3FE5CF8C5385";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

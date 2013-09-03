@@ -59,19 +59,19 @@
                                           action:@selector(startConnectionsQuiz:)
                                 forControlEvents:UIControlEventTouchUpInside];
 
-  [self.homeView.companyQuizButton addTarget:self
+  [self.homeView.companyQuizLockButton addTarget:self
                                          action:@selector(groupPicker)
                                forControlEvents:UIControlEventTouchUpInside];
   
-  [self.homeView.localeQuizButton addTarget:self
+  [self.homeView.localeQuizLockButton addTarget:self
                                       action:@selector(groupPicker)
                             forControlEvents:UIControlEventTouchUpInside];
   
-  [self.homeView.industryQuizButton addTarget:self
+  [self.homeView.industryQuizLockButton addTarget:self
                                       action:@selector(groupPicker)
                             forControlEvents:UIControlEventTouchUpInside];
   
-  [self.homeView.groupQuizButton addTarget:self
+  [self.homeView.groupQuizLockButton addTarget:self
                                       action:@selector(groupPicker)
                             forControlEvents:UIControlEventTouchUpInside];
   

@@ -60,5 +60,62 @@
     ];
 }
 
++ (NSArray *) getStoreDataWithProducts:(NSArray *)products{
+  
+  NSString *filterKey = @"f_";
+  NSIndexSet *filterIndexes = [products indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+    SKProduct *product = (SKProduct *)obj;
+    NSRange findKey = [product.productIdentifier rangeOfString:filterKey];
+    NSUInteger found = findKey.location;
+    if (found == NSNotFound){
+      return NO;
+    }
+    else{
+      return YES;
+    }
+  }];
+  
+  NSArray *filterStoreItems = [products objectsAtIndexes:filterIndexes];
+  for (SKProduct *product in filterStoreItems){
+    NSLog(@"FILTER: %@",product.productIdentifier);
+  }
+  
+  NSString *questionKey = @"q_";
+  NSString *detailKey = @"d_";
+  
+
+  
+  return
+  @[
+    @{@"type": @"Focus With Filters",
+      @"item": @[
+          @{@"itemTitle":@"Business Card Question",
+            @"itemPrice":@".99",
+            @"itemDescription":@"Fill out Name, Title, and Company for each individual"},
+          
+          @{@"itemTitle":@"Business Card Question",
+            @"itemPrice":@".99",
+            @"itemDescription":@"Fill out Name, Title, and Company for each individual"},
+          ]},
+    
+    @{@"type": @"Harden With Variety",
+      @"item": @[
+          @{@"itemTitle":@"Business Card Question",
+            @"itemPrice":@".99",
+            @"itemDescription":@"New way to harden your knowledge of name, title, and company"},
+          
+          @{@"itemTitle":@"Matching Question",
+            @"itemPrice":@".99",
+            @"itemDescription":@"Harden by picking from a group of pictures and tidbits"},
+          ]},
+    
+    @{@"type": @"Deepen With Details",
+      @"item": @[
+          @{@"itemTitle":@"Industry,School,and Locale Details",
+            @"itemPrice":@".99",
+            @"itemDescription":@"Adds Industry, School, and Locale to teh question sets"},
+          ]},
+    ];
+}
 
 @end

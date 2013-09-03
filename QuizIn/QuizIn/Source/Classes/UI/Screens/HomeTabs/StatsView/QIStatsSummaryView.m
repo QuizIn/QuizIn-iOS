@@ -1,7 +1,11 @@
 
 #import "QIStatsSummaryView.h"
+#import "QIFontProvider.h"
+
 @interface QIStatsSummaryView ()
-@property (nonatomic, retain) DLPieChart *pieChartView;
+@property (nonatomic, strong) UILabel *correctAnswersLabel;
+@property (nonatomic, strong) UILabel *incorrectAnswersLabel;
+@property (nonatomic, strong) UILabel *currentRankLabel;
 @property (nonatomic, strong) NSMutableArray *viewConstraints; 
 @end
 
@@ -16,16 +20,56 @@
     if (self) {
       _pieChartView = [self newPieChartView]; 
       _sorterSegmentedControl = [self newSorter];
+      _leastQuizButton = [self newQuizButton];
+      _correctAnswersLabel = [self newSummaryLabel];
+      _incorrectAnswersLabel = [self newSummaryLabel];
+      _currentRankLabel = [self newSummaryLabel];
+      
       [self constructViewHierarchy];
     }
     return self;
 }
 
+#pragma mark Properties
+
+- (void)setCorrectAnswers:(NSString *)correctAnswers{
+  _correctAnswers = correctAnswers;
+  [self updateCorrectAnswers]; 
+}
+
+- (void)setIncorrectAnswers:(NSString *)incorrectAnswers {
+  _incorrectAnswers = incorrectAnswers;
+  [self updateIncorrectAnswers]; 
+}
+
+- (void)setCurrentRank:(NSString *)currentRank{
+  _currentRank = currentRank;
+  [self updateCurrentRank]; 
+}
+
+#pragma mark Data Layout
+- (void)updateCorrectAnswers{
+  self.correctAnswersLabel.text = self.correctAnswers; 
+}
+
+- (void)updateIncorrectAnswers{
+  self.incorrectAnswersLabel.text = self.incorrectAnswers; 
+}
+
+- (void)updateCurrentRank{
+  self.currentRankLabel.text = self.currentRank; 
+}
+
+
 #pragma mark View Hierarchy
 - (void)constructViewHierarchy{
   [self addSubview:self.sorterSegmentedControl];
   [self addSubview:self.pieChartView];
-  [self.pieChartView customamizeDraw:self.pieChartView pieCentre:CGPointMake(50, 50) animationSpeed:2.0f labelRadius:30.0f]; 
+  [self addSubview:self.correctAnswersLabel];
+  [self addSubview:self.incorrectAnswersLabel];
+  [self addSubview:self.leastQuizButton];
+  [self addSubview:self.currentRankLabel]; 
+  [self.pieChartView customamizeDraw:self.pieChartView pieCentre:CGPointMake(60, 60) animationSpeed:2.0f labelRadius:60.0f];
 }
 
 #pragma mark Layout
@@ -36,7 +80,7 @@
 - (void)updateConstraints {
   [super updateConstraints];
   
-  NSDictionary *views = NSDictionaryOfVariableBindings(_sorterSegmentedControl,_pieChartView);
+  NSDictionary *views = NSDictionaryOfVariableBindings(_sorterSegmentedControl,_pieChartView,_correctAnswersLabel, _incorrectAnswersLabel,_leastQuizButton, _currentRankLabel);
   
   NSArray *hViewConstraints =
   [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-5-[_sorterSegmentedControl]-5-|"
@@ -50,12 +94,38 @@
                                             views:views];
   
   NSArray *hPieConstraints =
-  [NSLayoutConstraint constraintsWithVisualFormat:  @"H:[_pieChartView(==140)]|"
+  [NSLayoutConstraint constraintsWithVisualFormat:  @"H:[_pieChartView(==120)]-10-|"
                                           options:0
                                           metrics:nil
                                             views:views];
   NSArray *vPieConstraints =
-  [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-30-[_pieChartView(==140)]"
+  [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-10-[_pieChartView(==120)]"
+                                          options:0
+                                          metrics:nil
+                                            views:views];
+  
+  NSArray *hCorrectConstraints =
+  [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-5-[_correctAnswersLabel(==120)]"
+                                          options:0
+                                          metrics:nil
+                                            views:views];
+  NSArray *hIncorrectConstraints =
+  [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-5-[_incorrectAnswersLabel(==120)]"
+                                          options:0
+                                          metrics:nil
+                                            views:views];
+  NSArray *hRankConstraints =
+  [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-5-[_currentRankLabel(==120)]"
+                                          options:0
+                                          metrics:nil
+                                            views:views];
+  NSArray *hButtonConstraints =
+  [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-5-[_leastQuizButton(==59)]"
+                                          options:0
+                                          metrics:nil
+                                            views:views];
+  NSArray *vStatsConstraints =
+  [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-10-[_correctAnswersLabel(==30)]-5-[_incorrectAnswersLabel(==30)]-5-[_currentRankLabel(==30)]-5-[_leastQuizButton(==22)]"
                                           options:0
                                           metrics:nil
                                             views:views];
@@ -65,6 +135,11 @@
   [self.viewConstraints addObjectsFromArray:vViewConstraints];
   [self.viewConstraints addObjectsFromArray:hPieConstraints];
   [self.viewConstraints addObjectsFromArray:vPieConstraints];
+  [self.viewConstraints addObjectsFromArray:hCorrectConstraints];
+  [self.viewConstraints addObjectsFromArray:hIncorrectConstraints];
+  [self.viewConstraints addObjectsFromArray:hRankConstraints];
+  [self.viewConstraints addObjectsFromArray:hButtonConstraints];
+  [self.viewConstraints addObjectsFromArray:vStatsConstraints];
   [self addConstraints:self.viewConstraints]; 
 }
 
@@ -79,13 +154,32 @@
 }
 
 -(DLPieChart *)newPieChartView{
-  DLPieChart *view = [[DLPieChart alloc] initWithFrame:CGRectMake(0, 0, 140, 140) Center:CGPointMake(240, 80) Radius:60];
+  DLPieChart *view = [[DLPieChart alloc] initWithFrame:CGRectMake(0, 0, 120, 120) Center:CGPointMake(0,0) Radius:60];
   [view setTranslatesAutoresizingMaskIntoConstraints:NO]; 
-  [view setShowLabel:NO]; 
+  [view setShowLabel:NO];
   [view setDelegate:self];
   [view setDataSource:self];
   return view; 
 }
+
+- (UIButton *)newQuizButton{
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_locked_btn"] forState:UIControlStateNormal];
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [button setBackgroundColor:[UIColor clearColor]];
+  return button;
+}
+
+- (UILabel *)newSummaryLabel{
+  UILabel *label = [[UILabel alloc] init];
+  [label setFont:[QIFontProvider fontWithSize:13.0f style:Bold]];
+  [label setTextColor:[UIColor colorWithWhite:0.33f alpha:1.0f]];
+  [label setAdjustsFontSizeToFitWidth:YES];
+  [label setBackgroundColor:[UIColor clearColor]];
+  [label setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return label;
+}
+
 
 #pragma mark Pie Chart Delegate
 
@@ -119,7 +213,5 @@
                           nil];
   return [textArray objectAtIndex:index];
 }
-
-
 
 @end

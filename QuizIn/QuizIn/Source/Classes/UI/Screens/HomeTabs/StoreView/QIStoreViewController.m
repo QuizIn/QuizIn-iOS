@@ -11,6 +11,7 @@
 @property (nonatomic, retain) UITableView *tableView;
 @property (nonatomic, retain) QIStoreTableHeaderView *headerView;
 @property (nonatomic, strong) NSArray *storeData;
+@property (nonatomic, strong) NSArray *products;
 
 @end
 
@@ -22,7 +23,18 @@
     if (self) {
       _headerView = [self newHeaderView];
       _tableView = [self newStoreTable];
-      _storeData = [QIStoreData getStoreData];
+      
+      //todo fix testing 
+      _storeData = nil; 
+      _products = nil;
+      [self.tableView reloadData];
+      [[QIIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+        if (success) {
+          _products = products;
+          _storeData = [QIStoreData getStoreDataWithProducts:_products]; 
+          [self.tableView reloadData];
+        }
+      }];
     }
     return self;
 }

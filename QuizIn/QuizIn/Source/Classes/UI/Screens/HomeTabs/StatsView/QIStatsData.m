@@ -39,6 +39,10 @@
   if (self) {
     _userID = ID;
     _ranks = [QIRankDefinition getRankDelineations];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if (![prefs objectForKey:_userID]){
+      [self setUpStats]; 
+    }
   }
   return self;
 }

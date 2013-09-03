@@ -47,12 +47,12 @@
     NSDictionary *backgroundImageConstraintView = NSDictionaryOfVariableBindings(_viewBackground, _buyButton, _exitButton);
     
     NSArray *hBackgroundContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-25-[_viewBackground]-28-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_viewBackground]|"
                                             options:NSLayoutFormatAlignAllTop
                                             metrics:nil
                                               views:backgroundImageConstraintView];
     NSArray *vBackgroundContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-25-[_viewBackground]-28-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_viewBackground]|"
                                             options:0
                                             metrics:nil
                                               views:backgroundImageConstraintView];
@@ -67,12 +67,12 @@
                                             metrics:nil
                                               views:backgroundImageConstraintView];
     NSArray *hExitButtonContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_exitButton]-18-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_exitButton]-10-|"
                                             options:0
                                             metrics:nil
                                               views:backgroundImageConstraintView];
     NSArray *vExitButtonContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-18-[_exitButton]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_exitButton]"
                                             options:0
                                             metrics:nil
                                               views:backgroundImageConstraintView];

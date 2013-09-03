@@ -1,4 +1,5 @@
 
+#import "QIIAPHelper.h"
 #import "QIStoreTableHeaderView.h"
 #import "QIStoreSectionHeaderView.h"
 #import "QIStoreCellView.h"

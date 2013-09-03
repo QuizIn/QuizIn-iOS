@@ -101,7 +101,7 @@
 - (UITabBarController *)newTabBarController{
   UITabBarController *tabController = [[UITabBarController alloc] init];
   [tabController setViewControllers:@[[self newHomeViewController],[self newStatsViewController],[self newRankViewController],[self newStoreViewController]]];
-  [tabController.tabBar setSelectedImageTintColor:[UIColor orangeColor]];
+  [tabController.tabBar setSelectedImageTintColor:[UIColor colorWithRed:1.0f green:.71f blue:.20f alpha:1.0f]];
   [tabController.tabBar setTintColor:[UIColor colorWithWhite:.15f alpha:1.0f]];
   //[tabController setModalPresentationStyle:UIModalPresentationCurrentContext];
   return tabController; 

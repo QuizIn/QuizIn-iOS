@@ -38,14 +38,17 @@
 
 - (void)setCurrentRank:(int)currentRank {
   _currentRank = currentRank;
+  [self updateCurrentRank];
 }
 
 - (void)setTotalCorrectAnswers:(int)totalCorrectAnswers{
   _totalCorrectAnswers = totalCorrectAnswers;
+  [self updateCorrectAnswers]; 
 }
 
 - (void)setTotalIncorrectAnswers:(int)totalIncorrectAnswers{
   _totalIncorrectAnswers = totalIncorrectAnswers;
+  [self updateIncorrectAnswers]; 
 }
 
 - (void)setConnectionStats:(NSArray *)connectionStats{
@@ -53,6 +56,19 @@
     return;
   }
   _connectionStats = [connectionStats copy];
+}
+
+#pragma mark Data Layout
+- (void)updateCorrectAnswers{
+  [self.summaryView setCorrectAnswers:[NSString stringWithFormat:@"Correct Answers: %d", self.totalCorrectAnswers]];
+}
+
+- (void)updateIncorrectAnswers{
+  [self.summaryView setIncorrectAnswers:[NSString stringWithFormat:@"Incorrect Answers: %d", self.totalIncorrectAnswers]]; 
+}
+
+- (void)updateCurrentRank{
+  [self.summaryView setCurrentRank:[NSString stringWithFormat:@"Current Rank: %d", self.currentRank]];
 }
 
 #pragma mark Layout
@@ -193,8 +209,7 @@
       [self.tableView reloadData];
       [self layoutIfNeeded];
     }];
-  }
-  
+  }  
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
