@@ -61,15 +61,15 @@
 
 #pragma mark Data Layout
 - (void)updateCorrectAnswers{
-  [self.summaryView setCorrectAnswers:[NSString stringWithFormat:@"Correct Answers: %d", self.totalCorrectAnswers]];
+  [self.summaryView setCorrectAnswers:[NSNumber numberWithInt:self.totalCorrectAnswers]];
 }
 
 - (void)updateIncorrectAnswers{
-  [self.summaryView setIncorrectAnswers:[NSString stringWithFormat:@"Incorrect Answers: %d", self.totalIncorrectAnswers]]; 
+  [self.summaryView setIncorrectAnswers:[NSNumber numberWithInt:self.totalIncorrectAnswers]];
 }
 
 - (void)updateCurrentRank{
-  [self.summaryView setCurrentRank:[NSString stringWithFormat:@"Current Rank: %d", self.currentRank]];
+  [self.summaryView setCurrentRank:[NSNumber numberWithInt:self.currentRank]];
 }
 
 #pragma mark Layout

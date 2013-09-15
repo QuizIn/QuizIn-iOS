@@ -8,9 +8,9 @@
 @property (nonatomic, strong) NSMutableArray *pieChartData;
 @property (nonatomic, retain) DLPieChart *pieChartView;
 @property (nonatomic, strong) UIButton *leastQuizButton;
-@property (nonatomic, strong) NSString *correctAnswers;
-@property (nonatomic, strong) NSString *incorrectAnswers;
-@property (nonatomic, strong) NSString *currentRank;
+@property (nonatomic, strong) NSNumber *correctAnswers;
+@property (nonatomic, strong) NSNumber *incorrectAnswers;
+@property (nonatomic, strong) NSNumber *currentRank;
 
 
 @end
