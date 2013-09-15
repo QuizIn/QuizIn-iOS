@@ -137,7 +137,7 @@
 }
 
 -(QIStatsSummaryView *)newStatsSummaryView{
-  QIStatsSummaryView *summaryView = [[QIStatsSummaryView alloc] initWithFrame:CGRectMake(0,0,320,200)];
+  QIStatsSummaryView *summaryView = [[QIStatsSummaryView alloc] initWithFrame:CGRectMake(0,0,320,250)];
   return summaryView;
 }
 
