@@ -4,6 +4,7 @@
 @interface QIStorePreviewView ()
 
 @property (nonatomic, strong) UIImageView *viewBackground;
+@property (nonatomic, strong) UIScrollView *previewScrollView;
 @property (nonatomic, strong) NSMutableArray *constraints;
 
 @end
@@ -20,6 +21,7 @@
       [self setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:.5f]];
       
       _viewBackground = [self newViewBackground];
+      _previewScrollView = [self newPreviewScrollView]; 
       _buyButton = [self newBuyButton];
       _exitButton = [self newExitButton]; 
       
@@ -94,6 +96,22 @@
   UIImageView *background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"quizin_bg"]];
   [background setTranslatesAutoresizingMaskIntoConstraints:NO];
   return background;
+}
+
+- (UIScrollView *)newPreviewScrollView{
+  UIScrollView *scrollView = [[UIScrollView alloc] init];
+  [scrollView setDelegate:self];
+  [scrollView setBackgroundColor:[UIColor colorWithWhite:.2f alpha:1.0f]];
+  [scrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [scrollView setPagingEnabled:YES];
+  [scrollView setShowsHorizontalScrollIndicator:NO];
+  [scrollView setShowsVerticalScrollIndicator:NO];
+  [scrollView setBouncesZoom:NO];
+  [scrollView setBounces:YES];
+  [scrollView setDirectionalLockEnabled:YES];
+  [scrollView setAlwaysBounceVertical:NO];
+  [scrollView setAlwaysBounceHorizontal:YES];
+  return scrollView;
 }
 
 - (UIButton *)newBuyButton {

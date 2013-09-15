@@ -42,8 +42,10 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  //SWTICH FOR OFFLINE USAGE
   [self.authController beginAuthenticationAttempt];
-//  [self authControllerAccount:nil didAuthenticate:nil];
+  //[self authControllerAccount:nil didAuthenticate:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,7 +74,7 @@
   // TODO(rcacheaux): Check if exists.
   [self.loginViewController.view removeFromSuperview];
   [self.loginViewController removeFromParentViewController];
-  
+
   self.tabViewController = [self newTabBarController];
   [self addChildViewController:self.tabViewController];
   [self.view addSubview:self.tabViewController.view];

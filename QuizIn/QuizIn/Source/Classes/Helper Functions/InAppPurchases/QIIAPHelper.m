@@ -15,8 +15,8 @@
                                   @"com.kuhlmanation.hobnob.f_company",
                                   @"com.kuhlmanation.hobnob.f_group",
                                   @"com.kuhlmanation.hobnob.f_industry",
-                                  @"com.kuhlmanation.hobnob.f_least",
                                   @"com.kuhlmanation.hobnob.f_locale",
+                                  @"com.kuhlmanation.hobnob.f_least",
                                   nil];
     sharedInstance = [[self alloc] initWithProductIdentifiers:productIdentifiers];
   });

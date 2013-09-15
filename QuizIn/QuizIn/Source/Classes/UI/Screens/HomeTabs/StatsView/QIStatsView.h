@@ -1,5 +1,4 @@
 
-#import "QIStatsTableHeaderView.h"
 #import "QIStatsSectionHeaderView.h"
 #import "QIStatsSummaryView.h"
 #import "QIStatsCellView.h"

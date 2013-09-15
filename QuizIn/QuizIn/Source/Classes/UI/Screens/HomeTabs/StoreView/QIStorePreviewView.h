@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QIStorePreviewView : UIView
+@interface QIStorePreviewView : UIView <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIButton *buyButton;
 @property (nonatomic, strong) UIButton *exitButton;

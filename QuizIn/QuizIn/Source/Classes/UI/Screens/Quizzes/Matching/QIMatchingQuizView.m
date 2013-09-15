@@ -706,23 +706,38 @@
 }
 
 -(NSMutableArray *)newQuestionColorImages{
-  UIEdgeInsets insets = UIEdgeInsetsMake(16.0f, 16.0f, 16.0f, 16.0f);
+  /*UIEdgeInsets insets = UIEdgeInsetsMake(16.0f, 16.0f, 16.0f, 16.0f);
   return [NSMutableArray arrayWithObjects:
           [[UIImage imageNamed:@"match_pictureholder_bluev1"] resizableImageWithCapInsets:insets],
           [[UIImage imageNamed:@"match_pictureholder_bluev2"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_pictureholder_bluev3"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_pictureholder_bluev4"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_pictureholder_orangev1"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_pictureholder_orangev2"] resizableImageWithCapInsets:insets],
+          nil];
+   */
+  return [NSMutableArray arrayWithObjects:
+          [UIImage imageNamed:@"match_pictureholder_bluev1"],
+          [UIImage imageNamed:@"match_pictureholder_bluev2"],
+          [UIImage imageNamed:@"match_pictureholder_orangev1"],
+          [UIImage imageNamed:@"match_pictureholder_orangev2"],
           nil];
 }
 
 -(NSMutableArray *)newAnswerColorImages{
-  UIEdgeInsets insets = UIEdgeInsetsMake(15.0f, 18.0f, 15.0f, 18.0f);
+  /*UIEdgeInsets insets = UIEdgeInsetsMake(15.0f, 18.0f, 15.0f, 18.0f);
   return [NSMutableArray arrayWithObjects:
           [[UIImage imageNamed:@"match_answerbox_bluev1"] resizableImageWithCapInsets:insets],
           [[UIImage imageNamed:@"match_answerbox_bluev2"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_answerbox_bluev3"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_answerbox_bluev4"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_answerbox_orangev1"] resizableImageWithCapInsets:insets],
+          [[UIImage imageNamed:@"match_answerbox_orangev2"] resizableImageWithCapInsets:insets],
           nil];
+   */
+  return [NSMutableArray arrayWithObjects:
+          [UIImage imageNamed:@"match_answerbox_bluev1"],
+          [UIImage imageNamed:@"match_answerbox_bluev2"],
+          [UIImage imageNamed:@"match_answerbox_orangev1"],
+          [UIImage imageNamed:@"match_answerbox_orangev2"],
+          nil];
+  
 }
 
 - (UIButton *)newAnswerButtonWithTitle:(NSString *)title {
@@ -731,7 +746,8 @@
   answerButton.titleLabel.font = [QIFontProvider fontWithSize:13.0f style:Bold];
   answerButton.titleLabel.adjustsFontSizeToFitWidth = YES;
   answerButton.titleLabel.adjustsLetterSpacingToFitWidth = YES;
-  [answerButton setBackgroundImage:[[UIImage imageNamed:@"match_answerbox_std"] resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 18.0f, 15.0f, 18.0f)]  forState:UIControlStateNormal];
+ // [answerButton setBackgroundImage:[[UIImage imageNamed:@"match_answerbox_std"] resizableImageWithCapInsets:UIEdgeInsetsMake(15.0f, 18.0f, 15.0f, 18.0f)]  forState:UIControlStateNormal];
+  [answerButton setBackgroundImage:[UIImage imageNamed:@"match_answerbox_std"]  forState:UIControlStateNormal];
   [answerButton setTitleColor:[UIColor colorWithWhite:0.33f alpha:1.0f] forState:UIControlStateNormal];
   [answerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
   [answerButton setTitleEdgeInsets:UIEdgeInsetsMake(15.0f, 20.0f, 15.0f, 20.0f)];

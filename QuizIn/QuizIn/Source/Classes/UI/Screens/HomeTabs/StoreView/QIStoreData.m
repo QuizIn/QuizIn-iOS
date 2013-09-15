@@ -2,6 +2,7 @@
 #import "QIStoreData.h"
 
 @implementation QIStoreData
+
 /*
  Harden With Variety - Questions ask in different ways harden your learning.
     Multiple Choice Question Type	FREE
@@ -26,40 +27,6 @@
  
 */
 
-+ (NSArray *) getStoreData{
-  return
-  @[
-    @{@"type": @"Focus With Filters",
-      @"item": @[
-                @{@"itemTitle":@"Business Card Question",
-                  @"itemPrice":@".99",
-                  @"itemDescription":@"Fill out Name, Title, and Company for each individual"},
-                
-                @{@"itemTitle":@"Business Card Question",
-                  @"itemPrice":@".99",
-                  @"itemDescription":@"Fill out Name, Title, and Company for each individual"},
-                ]},
-    
-    @{@"type": @"Harden With Variety",
-      @"item": @[
-                @{@"itemTitle":@"Business Card Question",
-                  @"itemPrice":@".99",
-                  @"itemDescription":@"New way to harden your knowledge of name, title, and company"},
-                
-                @{@"itemTitle":@"Matching Question",
-                  @"itemPrice":@".99",
-                  @"itemDescription":@"Harden by picking from a group of pictures and tidbits"},
-                ]},
-    
-    @{@"type": @"Deepen With Details",
-      @"item": @[
-                @{@"itemTitle":@"Industry,School,and Locale Details",
-                  @"itemPrice":@".99",
-                  @"itemDescription":@"Adds Industry, School, and Locale to teh question sets"},
-                ]},
-    ];
-}
-
 + (NSArray *) getStoreDataWithProducts:(NSArray *)products{
   
   NSString *filterKey = @"f_";
@@ -71,51 +38,198 @@
       return NO;
     }
     else{
+      NSLog(@"FILTER: %@",product.productIdentifier);
       return YES;
     }
   }];
-  
-  NSArray *filterStoreItems = [products objectsAtIndexes:filterIndexes];
-  for (SKProduct *product in filterStoreItems){
-    NSLog(@"FILTER: %@",product.productIdentifier);
-  }
+  NSArray *filterPurchases = [products objectsAtIndexes:filterIndexes]; 
   
   NSString *questionKey = @"q_";
+  NSIndexSet *questionTypeIndexes = [products indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+    SKProduct *product = (SKProduct *)obj;
+    NSRange findKey = [product.productIdentifier rangeOfString:questionKey];
+    NSUInteger found = findKey.location;
+    if (found == NSNotFound){
+      return NO;
+    }
+    else{
+      NSLog(@"QUESTION: %@",product.productIdentifier);
+      return YES;
+    }
+  }];
+  NSArray *questionPurchases = [products objectsAtIndexes:questionTypeIndexes];
+  
   NSString *detailKey = @"d_";
+  NSIndexSet *detailIndexes = [products indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+    SKProduct *product = (SKProduct *)obj;
+    NSRange findKey = [product.productIdentifier rangeOfString:detailKey];
+    NSUInteger found = findKey.location;
+    if (found == NSNotFound){
+      return NO;
+    }
+    else{
+      NSLog(@"DETAIL: %@",product.productIdentifier);
+      return YES;
+    }
+  }];
+  NSArray *detailPurchases = [products objectsAtIndexes:detailIndexes];
   
+  NSMutableArray *filterPurchasesItems = [NSMutableArray array];
+  for (SKProduct *product in filterPurchases){
+    [filterPurchasesItems addObject:[self storeItemWithProduct:product]];
+  }
+  
+  NSMutableArray *questionPurchasesItems = [NSMutableArray array];
+  for (SKProduct *product in questionPurchases){
+    [questionPurchasesItems addObject:[self storeItemWithProduct:product]];
+  }
+  
+  NSMutableArray *detailPurchasesItems = [NSMutableArray array];
+  for (SKProduct *product in detailPurchases){
+    [detailPurchasesItems addObject:[self storeItemWithProduct:product]];
+  }
+  
+  NSMutableArray *storeItems = [NSMutableArray array];
+  
+  if ([filterPurchasesItems count]>0){
+    [storeItems addObject:
+     @{
+     @"type":@"Focus With Filters",
+     @"item":filterPurchasesItems,
+     }];
+  }
 
+  if ([questionPurchasesItems count]>0){
+    [storeItems addObject:
+     @{
+     @"type":@"Harden With Variety",
+     @"item":questionPurchasesItems,
+     }];
+  }
   
-  return
-  @[
-    @{@"type": @"Focus With Filters",
-      @"item": @[
-          @{@"itemTitle":@"Business Card Question",
-            @"itemPrice":@".99",
-            @"itemDescription":@"Fill out Name, Title, and Company for each individual"},
-          
-          @{@"itemTitle":@"Business Card Question",
-            @"itemPrice":@".99",
-            @"itemDescription":@"Fill out Name, Title, and Company for each individual"},
-          ]},
-    
-    @{@"type": @"Harden With Variety",
-      @"item": @[
-          @{@"itemTitle":@"Business Card Question",
-            @"itemPrice":@".99",
-            @"itemDescription":@"New way to harden your knowledge of name, title, and company"},
-          
-          @{@"itemTitle":@"Matching Question",
-            @"itemPrice":@".99",
-            @"itemDescription":@"Harden by picking from a group of pictures and tidbits"},
-          ]},
-    
-    @{@"type": @"Deepen With Details",
-      @"item": @[
-          @{@"itemTitle":@"Industry,School,and Locale Details",
-            @"itemPrice":@".99",
-            @"itemDescription":@"Adds Industry, School, and Locale to teh question sets"},
-          ]},
-    ];
+  if ([detailPurchasesItems count]>0){
+    [storeItems addObject:
+     @{
+     @"type":@"Deepen With Details",
+     @"item":detailPurchasesItems,
+     }];
+  }
+  
+  return storeItems; 
 }
 
++ (NSString *)formattedPriceWithProduct:(SKProduct *)product{
+  NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+  [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+  [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+  [numberFormatter setLocale:product.priceLocale];
+  return [numberFormatter stringFromNumber:product.price];
+}
+
++ (NSString *)shortDescrtptionWithProduct:(SKProduct *)product{
+  //Todo Change this into a singleton
+  NSArray *productIdentifiers = 
+        @[
+          @"com.kuhlmanation.hobnob.d_pack1",
+          @"com.kuhlmanation.hobnob.p_kit",
+          @"com.kuhlmanation.hobnob.q_businesscard",
+          @"com.kuhlmanation.hobnob.q_matching",
+          @"com.kuhlmanation.hobnob.f_company",
+          @"com.kuhlmanation.hobnob.f_group",
+          @"com.kuhlmanation.hobnob.f_industry",
+          @"com.kuhlmanation.hobnob.f_locale",
+          @"com.kuhlmanation.hobnob.f_least"];
+  
+  switch ([productIdentifiers indexOfObject:product.productIdentifier]) {
+    case 0: //com.kuhlmanation.hobnob.d_pack1
+      return @"Add more details to your HobNobin' abilities";
+      break;
+    case 1: //com.kuhlmanation.hobnob.p_kit
+      return @"Get them all at a discount";
+      break;
+    case 2: //com.kuhlmanation.hobnob.q_businesscard
+      return @"Add the business card question type to the HobNob mix";
+      break;
+    case 3: //com.kuhlmanation.hobnob.q_matching
+      return @"Add a matching question type to the HobNob mix";
+      break;
+    case 4: //com.kuhlmanation.hobnob.f_company
+      return @"HobNob with contacts from specific companies";
+      break;
+    case 5: //com.kuhlmanation.hobnob.f_group
+      return @"HobNob with contacts with specific interests and associations";
+      break;
+    case 6: //com.kuhlmanation.hobnob.f_industry
+      return @"HobNob with contacts from particular industries"; 
+      break;
+    case 7: //com.kuhlmanation.hobnob.f_locale
+      return @"HobNob with contacts in various locations";
+      break;
+    case 8: //com.kuhlmanation.hobnob.f_least"
+      return @"HobNob with contacts you know the worst"; 
+      break;
+    default:
+      return @"Upgrade your HobNobin' abilities"; 
+      break;
+  }
+}
+
++ (UIImage *)iconWithProduct:(SKProduct *)product{
+  
+  NSArray *productIdentifiers =
+  @[
+    @"com.kuhlmanation.hobnob.d_pack1",
+    @"com.kuhlmanation.hobnob.p_kit",
+    @"com.kuhlmanation.hobnob.q_businesscard",
+    @"com.kuhlmanation.hobnob.q_matching",
+    @"com.kuhlmanation.hobnob.f_company",
+    @"com.kuhlmanation.hobnob.f_group",
+    @"com.kuhlmanation.hobnob.f_industry",
+    @"com.kuhlmanation.hobnob.f_locale",
+    @"com.kuhlmanation.hobnob.f_least"];
+  
+  switch ([productIdentifiers indexOfObject:product.productIdentifier]) {
+    case 0: //com.kuhlmanation.hobnob.d_pack1
+      return [UIImage imageNamed:@"store_producticon_businesscard"];
+      break;
+    case 1: //com.kuhlmanation.hobnob.p_kit
+      return [UIImage imageNamed:@"store_producticon_businesscard"];
+      break;
+    case 2: //com.kuhlmanation.hobnob.q_businesscard
+      return [UIImage imageNamed:@"store_producticon_businesscard"];
+      break;
+    case 3: //com.kuhlmanation.hobnob.q_matching
+      return [UIImage imageNamed:@"store_producticon_matching"];
+      break;
+    case 4: //com.kuhlmanation.hobnob.f_company
+      return [UIImage imageNamed:@"store_producticon_company"]; 
+      break;
+    case 5: //com.kuhlmanation.hobnob.f_group
+      return [UIImage imageNamed:@"store_producticon_group"];
+      break;
+    case 6: //com.kuhlmanation.hobnob.f_industry
+      return [UIImage imageNamed:@"store_producticon_industry"];
+      break;
+    case 7: //com.kuhlmanation.hobnob.f_locale
+      return [UIImage imageNamed:@"store_producticon_locale"];
+      break;
+    case 8: //com.kuhlmanation.hobnob.f_least"
+      return [UIImage imageNamed:@"store_producticon_leastofthese"];
+      break;
+    default:
+      return [UIImage imageNamed:@"store_producticon_businesscard"];
+      break;
+  }
+}
+
++ (NSDictionary *)storeItemWithProduct:(SKProduct *)product{
+  return
+    @{
+      @"itemTitle":product.localizedTitle,
+      @"itemPrice":[self formattedPriceWithProduct:product],
+      @"itemDescription":product.localizedDescription,
+      @"itemShortDescription":[self shortDescrtptionWithProduct:product],
+      @"itemIcon":[self iconWithProduct:product]
+    };
+}
 @end

@@ -32,6 +32,7 @@
       //key:UserLastName        NSString
       //key:CorrectAnswers      Integer
       //key:IncorrectAnswers    Integer
+      //key:lastDirection       BOOL
 */
 
 - (id)initWithLoggedInUserID:(NSString *)ID{
@@ -202,10 +203,8 @@
   //Handle Total Correct and Incorrect Answers
   int totalCorrectAnswers = [[stats objectForKey:@"totalCorrectAnswers"] integerValue];
   int totalIncorrectAnswers = [[stats objectForKey:@"totalIncorrectAnswers"] integerValue];
-  
   if (correct) {
     totalCorrectAnswers++;
-    //add up/down arrow
   }
   else{
     totalIncorrectAnswers++;
@@ -235,29 +234,37 @@
                          }
                         }];
   if (connectionIndex != NSNotFound) {
+    BOOL lastDirection;
     NSMutableDictionary *individualConnectionStats = [[connectionStats objectAtIndex:connectionIndex] mutableCopy];
     if (correct) {
       int correctAnswers = [[individualConnectionStats objectForKey:@"correctAnswers"] integerValue];
       correctAnswers++;
+      lastDirection = YES; 
       [individualConnectionStats setObject:[NSNumber numberWithInt:correctAnswers] forKey:@"correctAnswers"];
+      [individualConnectionStats setObject:[NSNumber numberWithBool:lastDirection] forKey:@"lastDirection"];
     }
     else{
       int incorrectAnswers = [[individualConnectionStats objectForKey:@"incorrectAnswers"] integerValue];
       incorrectAnswers++;
+      lastDirection = NO;
       [individualConnectionStats setObject:[NSNumber numberWithInt:incorrectAnswers] forKey:@"incorrectAnswers"];
+      [individualConnectionStats setObject:[NSNumber numberWithBool:lastDirection] forKey:@"lastDirection"]; 
     }
     [connectionStats replaceObjectAtIndex:connectionIndex withObject:individualConnectionStats];
   }
   else {
     int correctAnswers;
     int incorrectAnswers;
+    BOOL lastDirection; 
     if (correct) {
       correctAnswers = 1;
       incorrectAnswers = 0;
+      lastDirection = YES; 
     }
     else{
       correctAnswers = 0;
       incorrectAnswers = 1;
+      lastDirection = NO; 
     }
     
     NSMutableDictionary *individualConnectionStatsNew = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -265,8 +272,10 @@
                                                          person.personID,                           @"userID",
                                                          person.firstName,                          @"userFirstName",
                                                          person.lastName,                           @"userLastName",
+                                                         person.publicProfileURL,                   @"profileURL",
                                                          [NSNumber numberWithInt:correctAnswers],   @"correctAnswers",
                                                          [NSNumber numberWithInt:incorrectAnswers], @"incorrectAnswers",
+                                                         [NSNumber numberWithBool:lastDirection],   @"lastDirection",
                                                          nil];
     [connectionStats addObject:individualConnectionStatsNew];
   }

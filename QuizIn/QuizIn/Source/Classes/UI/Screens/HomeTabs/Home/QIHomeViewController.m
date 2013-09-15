@@ -25,14 +25,14 @@
 
 - (void)loadView {
   self.view = [[QIHomeView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  [LinkedIn numberOfConnectionsForAuthenticatedUserOnCompletion:^(NSInteger numberOfConnections, NSError *error) {
+  /*[LinkedIn numberOfConnectionsForAuthenticatedUserOnCompletion:^(NSInteger numberOfConnections, NSError *error) {
     if (error == nil) {
       NSLog(@"Number of Connections: %d", numberOfConnections);
       self.homeView.numberOfConnections = numberOfConnections;
     } else {
       NSLog(@"Error: %@", error);
     }
-  }];
+  }];*/
 }
 
 - (void)viewWillAppear:(BOOL)animated{

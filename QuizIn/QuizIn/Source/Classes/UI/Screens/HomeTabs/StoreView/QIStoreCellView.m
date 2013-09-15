@@ -10,6 +10,7 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *priceLabel;
 @property (nonatomic, strong) UILabel *descriptionLabel;
+@property (nonatomic, strong) UIImageView *iconImageView;
 
 @end
 
@@ -29,7 +30,8 @@
       _previewButton = [self newPreviewButton];
       _titleLabel = [self newTitleLabel];
       _priceLabel = [self newPriceLabel];
-      _descriptionLabel = [self newDescriptionLabel]; 
+      _descriptionLabel = [self newDescriptionLabel];
+      _iconImageView = [self newIconImageView];
       
       [self constructViewHierarchy]; 
     }
@@ -52,6 +54,11 @@
   [self updateDescription];
 }
 
+-(void)setIconImage:(UIImage *)image{
+  _iconImage = image;
+  [self updateIconImage]; 
+}
+
 #pragma mark Layout
 - (void)constructViewHierarchy{
   [self.contentView addSubview:_backgroundImage];
@@ -60,6 +67,7 @@
   [self.contentView addSubview:_titleLabel];
   [self.contentView addSubview:_priceLabel];
   [self.contentView addSubview:_descriptionLabel];
+  [self.contentView addSubview:_iconImageView]; 
 }
 
 - (void)updateConstraints {
@@ -68,7 +76,7 @@
   if (!self.constraints){
     self.constraints = [NSMutableArray array];
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_backgroundImage,_previewButton,_buyButton,_titleLabel,_priceLabel,_descriptionLabel);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_backgroundImage,_previewButton,_buyButton,_titleLabel,_priceLabel,_descriptionLabel,_iconImageView);
     
     NSArray *hBackground =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_backgroundImage]|"
@@ -109,18 +117,25 @@
     NSLayoutConstraint *vTitleLabel = [NSLayoutConstraint constraintWithItem:_titleLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_backgroundImage attribute:NSLayoutAttributeTop multiplier:1.0f constant:11.0f];
     
 
+    NSArray *hIconLabel =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_iconImageView(==50)]-5-[_descriptionLabel(>=10)]-15-|"
+                                            options:0
+                                            metrics:nil
+                                              views:views];
     
-    NSArray *hDescriptionLabel =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_descriptionLabel(==270)]"
+    NSArray *vIconLabel =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-40-[_iconImageView(==50)]"
                                             options:0
                                             metrics:nil
                                               views:views];
     
     NSArray *vDescriptionLabel =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_titleLabel]-7-[_descriptionLabel(==25)]"
-                                            options:NSLayoutFormatAlignAllLeft
+                                            options:0
                                             metrics:nil
                                               views:views];
+    
+
   
     [self.constraints addObjectsFromArray:hBackground];
     [self.constraints addObjectsFromArray:vBackground];
@@ -128,8 +143,9 @@
     [self.constraints addObjectsFromArray:vPreviewButton];
     [self.constraints addObjectsFromArray:vBuyButton];
     [self.constraints addObjectsFromArray:hTitleLabels];
-    [self.constraints addObjectsFromArray:hDescriptionLabel];
     [self.constraints addObjectsFromArray:vDescriptionLabel];
+    [self.constraints addObjectsFromArray:vIconLabel];
+    [self.constraints addObjectsFromArray:hIconLabel];
     [self.constraints addObjectsFromArray:@[hTitleLabel,vTitleLabel]];
     
     [self.contentView addConstraints:self.constraints];
@@ -149,10 +165,22 @@
   self.descriptionLabel.text = self.description; 
 }
 
+-(void)updateIconImage{
+  self.iconImageView.image = self.iconImage;
+}
+
 #pragma mark Factory Methods
 - (UIImageView *)newBackgroundImage{
   UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"store_productcard"]];
   [image setContentMode:UIViewContentModeCenter];
+  [image setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return image;
+}
+
+- (UIImageView *)newIconImageView{
+  UIImageView *image = [[UIImageView alloc] init];
+  [image setBackgroundColor:[UIColor clearColor]];
+  [image setContentMode:UIViewContentModeScaleAspectFit];
   [image setTranslatesAutoresizingMaskIntoConstraints:NO];
   return image;
 }

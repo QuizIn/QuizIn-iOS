@@ -3,13 +3,18 @@
 #import "QIFontProvider.h"
 
 @interface QIStatsSummaryView ()
+@property (nonatomic, strong) UIImageView *correctAnswersBackground;
 @property (nonatomic, strong) UILabel *correctAnswersLabel;
+@property (nonatomic, strong) UIImageView *incorrectAnswersBackground;
 @property (nonatomic, strong) UILabel *incorrectAnswersLabel;
+@property (nonatomic, strong) UIImageView *currentRankBackground;
 @property (nonatomic, strong) UILabel *currentRankLabel;
-@property (nonatomic, strong) NSMutableArray *viewConstraints; 
+@property (nonatomic, strong) NSMutableArray *viewConstraints;
+
 @end
 
 @implementation QIStatsSummaryView
+
 + (BOOL)requiresConstraintBasedLayout {
   return YES;
 }
@@ -21,8 +26,11 @@
       _pieChartView = [self newPieChartView]; 
       _sorterSegmentedControl = [self newSorter];
       _leastQuizButton = [self newQuizButton];
+      _correctAnswersBackground = [self newLabelBackground];
       _correctAnswersLabel = [self newSummaryLabel];
+      _incorrectAnswersBackground = [self newLabelBackground];
       _incorrectAnswersLabel = [self newSummaryLabel];
+      _currentRankBackground = [self newLabelBackground];
       _currentRankLabel = [self newSummaryLabel];
       
       [self constructViewHierarchy];
@@ -83,10 +91,11 @@
   NSDictionary *views = NSDictionaryOfVariableBindings(_sorterSegmentedControl,_pieChartView,_correctAnswersLabel, _incorrectAnswersLabel,_leastQuizButton, _currentRankLabel);
   
   NSArray *hViewConstraints =
-  [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-5-[_sorterSegmentedControl]-5-|"
-                                          options:NSLayoutFormatAlignAllTop
+  [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-5-[_sorterSegmentedControl(==310)]"
+                                          options:0
                                           metrics:nil
                                             views:views];
+
   NSArray *vViewConstraints =
   [NSLayoutConstraint constraintsWithVisualFormat:  @"V:[_sorterSegmentedControl(==30)]-5-|"
                                           options:0
@@ -180,6 +189,11 @@
   return label;
 }
 
+- (UIImageView *)newLabelBackground{
+  UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"store_stattextbar"]];
+  [imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return imageView; 
+}
 
 #pragma mark Pie Chart Delegate
 

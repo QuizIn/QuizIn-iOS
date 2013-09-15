@@ -538,6 +538,8 @@
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_unlocked_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  //todo unhide when the item is purchased. 
+  [button setHidden:YES];
   [button setBackgroundColor:[UIColor clearColor]];
   return button;
 }

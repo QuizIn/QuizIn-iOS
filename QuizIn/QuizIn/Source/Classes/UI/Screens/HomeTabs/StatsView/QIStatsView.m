@@ -6,9 +6,9 @@
 @interface QIStatsView ()
 
 @property (nonatomic, strong) UIImageView *viewBackground;
-@property (nonatomic, retain) QIStatsTableHeaderView *headerView;
 @property (nonatomic, retain) NSMutableArray *viewConstraints;
 @property (nonatomic, strong) NSLayoutConstraint *vSummaryViewConstraint;
+@property (nonatomic, assign) BOOL toggleIndexForTable; 
 
 @end
 
@@ -22,9 +22,10 @@
     self = [super initWithFrame:frame];
     if (self) {
       _viewBackground = [self newViewBackground];
-      _headerView = [self newHeaderView];
-      _tableView = [self newStatsTable];
       _summaryView = [self newStatsSummaryView];
+      _tableView = [self newStatsTable];
+      _toggleIndexForTable = NO;
+ 
       
       _resetStatsButton = [self newResetStatsButton];
       _printStatsButton = [self newPrintStatsButton];
@@ -77,7 +78,6 @@
   [self addSubview:self.tableView];
   [self addSubview:self.resetStatsButton];
   [self addSubview:self.printStatsButton];
-  [self addSubview:self.summaryView];
 }
 
 - (void)layoutSubviews {
@@ -107,37 +107,23 @@
     
     
     //Constrain Main View Elements
-    NSDictionary *mainViews = NSDictionaryOfVariableBindings(_tableView,_summaryView);
+    NSDictionary *mainViews = NSDictionaryOfVariableBindings(_tableView);
     
     NSArray *hTableViewContraints =
     [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_tableView]|"
                                             options:NSLayoutFormatAlignAllTop
                                             metrics:nil
                                               views:mainViews];
+
     NSArray *vTableViewContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:[_summaryView(==200)][_tableView]|"
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_tableView]|"
                                             options:0
                                             metrics:nil
                                               views:mainViews];
     
     [self.viewConstraints addObjectsFromArray:hTableViewContraints];
     [self.viewConstraints addObjectsFromArray:vTableViewContraints];
-    
-    //Constrain SummaryView
-
-    NSArray *hSummaryViewContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_summaryView]|"
-                                            options:NSLayoutFormatAlignAllTop
-                                            metrics:nil
-                                              views:mainViews];
-
-    NSLayoutConstraint *heightSummaryViewConstraint = [NSLayoutConstraint constraintWithItem:_summaryView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:200.0f];
-   
-    _vSummaryViewConstraint = [NSLayoutConstraint constraintWithItem:_summaryView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
-    
-    [self.viewConstraints addObjectsFromArray:hSummaryViewContraints];
-    [self.viewConstraints addObjectsFromArray:@[_vSummaryViewConstraint,heightSummaryViewConstraint]];
-
+  
     [self addConstraints:self.viewConstraints];
   }
 }
@@ -150,15 +136,8 @@
   return background;
 }
 
--(QIStatsTableHeaderView *)newHeaderView{
-  QIStatsTableHeaderView *headerView = [[QIStatsTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 0)];
-  headerView.sectionTitle = @"Heading Title - Link to worst-known quiz";
-  return headerView;
-}
-
 -(QIStatsSummaryView *)newStatsSummaryView{
-  QIStatsSummaryView *summaryView = [[QIStatsSummaryView alloc] init];
-  [summaryView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  QIStatsSummaryView *summaryView = [[QIStatsSummaryView alloc] initWithFrame:CGRectMake(0,0,320,200)];
   return summaryView;
 }
 
@@ -170,7 +149,7 @@
   [tableView setShowsVerticalScrollIndicator:NO];
   [tableView setRowHeight:46];
   [tableView setSectionHeaderHeight:40];
-  [tableView setTableHeaderView:self.headerView];
+  [tableView setTableHeaderView:self.summaryView];
   [tableView setDataSource:self];
   [tableView setDelegate:self];
   return tableView;
@@ -196,20 +175,11 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
   
-  if (scrollView.contentOffset.y <= 0 & self.vSummaryViewConstraint.constant == SUMMARY_OFFSET){
-    [UIView animateWithDuration:.3 animations:^{
-      [self.vSummaryViewConstraint setConstant:0];
-      [self.tableView reloadData];
-      [self layoutIfNeeded];
-    }];
+  BOOL compare = self.toggleIndexForTable;
+  self.toggleIndexForTable = scrollView.contentOffset.y >= 200;
+  if (compare != self.toggleIndexForTable){
+    [self.tableView reloadData];
   }
-  else if (scrollView.contentOffset.y > 0 & self.vSummaryViewConstraint.constant == 0){
-    [UIView animateWithDuration:.3 animations:^{
-      [self.vSummaryViewConstraint setConstant:SUMMARY_OFFSET];
-      [self.tableView reloadData];
-      [self layoutIfNeeded];
-    }];
-  }  
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -232,14 +202,14 @@
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
-  if (self.vSummaryViewConstraint.constant == SUMMARY_OFFSET){
+  if (tableView.contentOffset.y >=200){
     return [self.connectionStats objectAtIndex:0];
   }
-  else{
+  else {
     return nil; 
   }
 }
-
+ 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
   static NSString *cellIdentifier = @"CustomCell";
