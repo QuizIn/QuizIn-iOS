@@ -51,6 +51,14 @@
   [tableHeader.buyAllButton addTarget:self action:@selector(buyAll) forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad
 {
   [super viewDidLoad];
@@ -61,8 +69,14 @@
   [super didReceiveMemoryWarning];
 }
 
+#pragma mark Properties
+
 - (QIStoreView *)storeView {
   return (QIStoreView *)self.view;
+}
+
+- (void)setParentTabBarController:(UITabBarController *)parentTabBarController{
+  _parentTabBarController = parentTabBarController;
 }
 
 
@@ -86,8 +100,13 @@
   NSInteger section = floor(button.tag/SECTION_INDEX_SPAN);
   NSInteger row = fmodf(button.tag,SECTION_INDEX_SPAN);
   NSLog(@"Buy: Tag-%d  Section-%d  Row-%d",button.tag, section, row);
-  QIStorePreviewViewController *previewController = [[QIStorePreviewViewController alloc] init];
-  [self presentViewController:previewController  animated:YES completion:nil];
+  SKProduct *product = [[[[self.storeData objectAtIndex:section] objectForKey:@"item"] objectAtIndex:row] objectForKey:@"product"];
+  [[QIIAPHelper sharedInstance] buyProduct:product]; 
+}
+
+- (void)productPurchased:(NSNotification *)notification {
+  self.storeData = [QIStoreData getStoreDataWithProducts:_products];
+  [self.tableView reloadData];
 }
 
 #pragma mark TableView
@@ -158,6 +177,7 @@
   [cell setPrice:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemPrice"]];
   [cell setDescription:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemShortDescription"]];
   [cell setIconImage:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemIcon"]];
+  [cell setPurchased:[[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemPurchased"] boolValue]];
   return cell;
 }
 

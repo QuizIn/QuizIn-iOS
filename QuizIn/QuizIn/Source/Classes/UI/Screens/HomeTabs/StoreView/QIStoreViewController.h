@@ -9,5 +9,6 @@
 
 @interface QIStoreViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, strong) UITabBarController *parentTabBarController;
 
 @end

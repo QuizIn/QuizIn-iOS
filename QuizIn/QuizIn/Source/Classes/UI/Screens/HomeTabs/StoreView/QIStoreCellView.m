@@ -11,6 +11,7 @@
 @property (nonatomic, strong) UILabel *priceLabel;
 @property (nonatomic, strong) UILabel *descriptionLabel;
 @property (nonatomic, strong) UIImageView *iconImageView;
+@property (nonatomic, strong) UIImageView *checkmark; 
 
 @end
 
@@ -32,6 +33,7 @@
       _priceLabel = [self newPriceLabel];
       _descriptionLabel = [self newDescriptionLabel];
       _iconImageView = [self newIconImageView];
+      _checkmark = [self newCheckMarkImage]; 
       
       [self constructViewHierarchy]; 
     }
@@ -54,9 +56,14 @@
   [self updateDescription];
 }
 
--(void)setIconImage:(UIImage *)image{
+- (void)setIconImage:(UIImage *)image{
   _iconImage = image;
   [self updateIconImage]; 
+}
+
+- (void) setPurchased:(BOOL)purchased{
+  _purchased = purchased;
+  [self updateCellForPurchasedState];
 }
 
 #pragma mark Layout
@@ -67,7 +74,8 @@
   [self.contentView addSubview:_titleLabel];
   [self.contentView addSubview:_priceLabel];
   [self.contentView addSubview:_descriptionLabel];
-  [self.contentView addSubview:_iconImageView]; 
+  [self.contentView addSubview:_iconImageView];
+  [self.contentView addSubview:_checkmark]; 
 }
 
 - (void)updateConstraints {
@@ -76,7 +84,7 @@
   if (!self.constraints){
     self.constraints = [NSMutableArray array];
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_backgroundImage,_previewButton,_buyButton,_titleLabel,_priceLabel,_descriptionLabel,_iconImageView);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_backgroundImage,_previewButton,_buyButton,_titleLabel,_priceLabel,_descriptionLabel,_iconImageView,_checkmark);
     
     NSArray *hBackground =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_backgroundImage]|"
@@ -97,16 +105,21 @@
                                               views:views];
     
     NSArray *vPreviewButton =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_backgroundImage]-(-41)-[_previewButton]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_backgroundImage]-(-41)-[_previewButton(==25)]"
                                             options:0
                                             metrics:nil
                                               views:views];
     
     NSArray *vBuyButton =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_backgroundImage]-(-41)-[_buyButton]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_backgroundImage]-(-41)-[_buyButton(==25)]"
                                             options:0
                                             metrics:nil
                                               views:views];
+    
+    NSLayoutConstraint *heightCheckmark = [NSLayoutConstraint constraintWithItem:_checkmark attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_buyButton attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *widthCheckmark = [NSLayoutConstraint constraintWithItem:_checkmark attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_buyButton attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *hCheckmark = [NSLayoutConstraint constraintWithItem:_checkmark attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_buyButton attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *vCheckmark = [NSLayoutConstraint constraintWithItem:_checkmark attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_buyButton attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f];
     
     NSArray *hTitleLabels =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_titleLabel(==200)][_priceLabel]-28-|"
@@ -146,7 +159,7 @@
     [self.constraints addObjectsFromArray:vDescriptionLabel];
     [self.constraints addObjectsFromArray:vIconLabel];
     [self.constraints addObjectsFromArray:hIconLabel];
-    [self.constraints addObjectsFromArray:@[hTitleLabel,vTitleLabel]];
+    [self.constraints addObjectsFromArray:@[hTitleLabel,vTitleLabel,heightCheckmark,widthCheckmark,hCheckmark,vCheckmark]];
     
     [self.contentView addConstraints:self.constraints];
   }
@@ -165,8 +178,14 @@
   self.descriptionLabel.text = self.description; 
 }
 
--(void)updateIconImage{
+- (void)updateIconImage{
   self.iconImageView.image = self.iconImage;
+}
+
+- (void)updateCellForPurchasedState{
+  [self.previewButton setHidden:self.purchased];
+  [self.buyButton setHidden:self.purchased];
+  [self.checkmark setHidden:!self.purchased]; 
 }
 
 #pragma mark Factory Methods
@@ -197,6 +216,13 @@
   [button setImage:[UIImage imageNamed:@"store_purchasel_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   return button;
+}
+
+-(UIImageView *)newCheckMarkImage{
+  UIImageView *check = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"calendar_checkmark"]];
+  [check setContentMode:UIViewContentModeScaleAspectFit];
+  [check setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return check;
 }
 
 -(UILabel *)newTitleLabel{

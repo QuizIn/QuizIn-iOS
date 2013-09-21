@@ -1,5 +1,6 @@
 
 #import "QIStoreData.h"
+#import "QIIAPHelper.h"
 
 @implementation QIStoreData
 
@@ -222,6 +223,10 @@
   }
 }
 
++ (NSNumber *)productPurchasedWithProduct:(SKProduct *)product{
+  return [NSNumber numberWithBool:[[QIIAPHelper sharedInstance] productPurchased:product.productIdentifier]];
+}
+
 + (NSDictionary *)storeItemWithProduct:(SKProduct *)product{
   return
     @{
@@ -229,7 +234,11 @@
       @"itemPrice":[self formattedPriceWithProduct:product],
       @"itemDescription":product.localizedDescription,
       @"itemShortDescription":[self shortDescrtptionWithProduct:product],
-      @"itemIcon":[self iconWithProduct:product]
+      @"itemIcon":[self iconWithProduct:product],
+      @"itemPurchased":[self productPurchasedWithProduct:product],
+      @"product":product
     };
 }
+
+
 @end

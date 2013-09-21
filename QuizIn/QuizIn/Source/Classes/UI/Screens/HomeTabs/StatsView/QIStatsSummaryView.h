@@ -13,5 +13,6 @@
 @property (nonatomic, strong) NSNumber *incorrectAnswers;
 @property (nonatomic, strong) NSNumber *currentRank;
 
+- (void)drawPieChart;
 
 @end

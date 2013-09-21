@@ -38,8 +38,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark Properties
+
 - (QIRankView *)rankView {
   return (QIRankView *)self.view;
+}
+
+- (void)setParentTabBarController:(UITabBarController *)parentTabBarController{
+  _parentTabBarController = parentTabBarController; 
 }
 
 @end

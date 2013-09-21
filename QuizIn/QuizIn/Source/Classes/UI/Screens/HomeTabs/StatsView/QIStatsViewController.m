@@ -31,8 +31,16 @@
   self.statsView.totalCorrectAnswers = [data getTotalCorrectAnswers];
   self.statsView.totalIncorrectAnswers = [data getTotalIncorrectAnswers];
   self.statsView.connectionStats = [data getConnectionStatsInOrderBy:lastName];
-  //[self.statsView.summaryView.pieChartView reloadData];
   [self.statsView.tableView reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+  [self.statsView.summaryView.pieChartView reloadData];
+  
+  if (self.statsView.totalCorrectAnswers + self.statsView.totalIncorrectAnswers == 0){
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Stats Yet" message:@"Build up knowledge data by Hobnob'n with your contacts." delegate:self cancelButtonTitle:@"Home" otherButtonTitles:nil];
+    [alert show];
+  }
 }
 
 - (void)sorter:(id)sender{
@@ -78,8 +86,19 @@
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark Properties
+
 - (QIStatsView *)statsView {
   return (QIStatsView *)self.view;
+}
+
+- (void)setParentTabBarController:(UITabBarController *)parentTabBarController{
+  _parentTabBarController = parentTabBarController; 
+}
+
+#pragma mark UIAlertViewDelegate Functions
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
+  [self.parentTabBarController setSelectedIndex:0];
 }
 
 @end

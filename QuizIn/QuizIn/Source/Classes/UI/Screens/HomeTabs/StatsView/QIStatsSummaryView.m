@@ -105,7 +105,10 @@
   [self addSubview:self.leastQuizButton];
   [self addSubview:self.leastQuizLockButton]; 
   [self addSubview:self.leastLabel];
-  
+  [self drawPieChart]; 
+}
+
+- (void)drawPieChart{
   [self.pieChartView customamizeDraw:self.pieChartView pieCentre:CGPointMake(60, 60) animationSpeed:2.0f labelRadius:60.0f];
 }
 

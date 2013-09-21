@@ -8,6 +8,7 @@
 @property (nonatomic, strong) NSString *description;
 @property (nonatomic, strong) UIButton *previewButton;
 @property (nonatomic, strong) UIButton *buyButton;
-@property (nonatomic, strong) UIImage *iconImage; 
+@property (nonatomic, strong) UIImage *iconImage;
+@property (nonatomic, assign) BOOL purchased;
 
 @end

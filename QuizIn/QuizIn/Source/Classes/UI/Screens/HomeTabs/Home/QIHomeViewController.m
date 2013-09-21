@@ -131,6 +131,10 @@
   return (QIHomeView *)self.view;
 }
 
+- (void)setParentTabBarController:(UITabBarController *)parentTabBarController {
+  _parentTabBarController = parentTabBarController; 
+}
+
 #pragma mark Factory Methods
 
 - (QIQuizViewController *)newQuizViewController {
