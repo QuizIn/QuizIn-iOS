@@ -10,5 +10,8 @@
 @interface QIStoreViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITabBarController *parentTabBarController;
+@property (nonatomic, assign) NSInteger highlightedCell; 
+
+- (void)highlightStoreItemAtIndex:(NSIndexPath *)indexPath;
 
 @end

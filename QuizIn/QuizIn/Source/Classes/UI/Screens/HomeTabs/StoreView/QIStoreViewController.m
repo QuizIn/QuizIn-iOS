@@ -35,7 +35,7 @@
           [self.tableView reloadData];
         }
       }];
-
+      _highlightedCell = 99; 
     }
     return self;
 }
@@ -55,8 +55,19 @@
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+  [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] animated:YES scrollPosition:0];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  for (NSInteger j = 0; j < [self.tableView numberOfSections]; ++j)
+  {
+    for (NSInteger i = 0; i < [self.tableView numberOfRowsInSection:j]; ++i)
+    {
+      [[(QIStoreCellView *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]] highlightTimer] invalidate];
+    }
+  }
 }
 
 - (void)viewDidLoad
@@ -73,6 +84,11 @@
 
 - (QIStoreView *)storeView {
   return (QIStoreView *)self.view;
+}
+
+- (void)setHighlightedCell:(NSInteger)highlightedCell{
+  _highlightedCell = highlightedCell;
+  [self updateCellHighlight]; 
 }
 
 - (void)setParentTabBarController:(UITabBarController *)parentTabBarController{
@@ -109,6 +125,13 @@
   [self.tableView reloadData];
 }
 
+- (void)updateCellHighlight{
+  NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.highlightedCell inSection:0];
+  QIStoreCellView *cell = (QIStoreCellView *)[self.tableView cellForRowAtIndexPath:indexPath];
+  [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES]; 
+  [cell highlight]; 
+}
+
 #pragma mark TableView
 
 -(UITableView *)newStoreTable{
@@ -120,6 +143,7 @@
   [tableView setSeparatorColor:[UIColor clearColor]];
   [tableView setShowsVerticalScrollIndicator:NO];
   [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+  [tableView setAllowsSelection:YES]; 
   tableView.rowHeight = 107;
   tableView.sectionHeaderHeight = 25;
   tableView.tableHeaderView = self.headerView;
@@ -178,7 +202,11 @@
   [cell setDescription:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemShortDescription"]];
   [cell setIconImage:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemIcon"]];
   [cell setPurchased:[[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemPurchased"] boolValue]];
+  if (indexPath.section == 0 & indexPath.row == self.highlightedCell){
+    [cell highlight]; 
+  }
   return cell;
 }
+
 
 @end

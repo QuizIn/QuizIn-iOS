@@ -10,5 +10,8 @@
 @property (nonatomic, strong) UIButton *buyButton;
 @property (nonatomic, strong) UIImage *iconImage;
 @property (nonatomic, assign) BOOL purchased;
+@property (nonatomic, strong) NSTimer *highlightTimer;
+
+-(void)highlight; 
 
 @end

@@ -1,5 +1,6 @@
 
 #import "QIStatsViewController.h"
+#import "QIStoreViewController.h"
 
 @interface QIStatsViewController ()
 
@@ -23,6 +24,7 @@
   [self.statsView.resetStatsButton addTarget:self action:@selector(resetStats) forControlEvents:UIControlEventTouchUpInside];
   [self.statsView.printStatsButton addTarget:self action:@selector(printStats) forControlEvents:UIControlEventTouchUpInside];
   [self.statsView.summaryView.sorterSegmentedControl addTarget:self action:@selector(sorter:) forControlEvents:UIControlEventValueChanged];
+  [self.statsView.summaryView.leastQuizLockButton addTarget:self action:@selector(goToStore:) forControlEvents:UIControlEventTouchUpInside]; 
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -94,6 +96,13 @@
 
 - (void)setParentTabBarController:(UITabBarController *)parentTabBarController{
   _parentTabBarController = parentTabBarController; 
+}
+#pragma mark Actions
+
+- (void)goToStore:(UIButton *)sender{
+  [self.parentTabBarController setSelectedIndex:3];
+  [(QIStoreViewController *)[[self.parentTabBarController viewControllers] objectAtIndex:3] setHighlightedCell:sender.tag];
+  
 }
 
 #pragma mark UIAlertViewDelegate Functions

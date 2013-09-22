@@ -188,6 +188,39 @@
   [self.checkmark setHidden:!self.purchased]; 
 }
 
+- (void)blinkButtons{
+  [UIView
+   animateWithDuration:1
+   delay:0.0
+   options:UIViewAnimationOptionAllowUserInteraction
+   animations:^{
+     self.backgroundImage.alpha = .2f;
+     self.titleLabel.alpha = .2f;
+     self.descriptionLabel.alpha = .2f;
+     self.priceLabel.alpha = .2f;
+     self.iconImageView.alpha = .2f;
+                  }
+   completion:^(BOOL finished){
+     [UIView
+      animateWithDuration:1
+      delay:0.0
+      options:UIViewAnimationOptionAllowUserInteraction
+      animations:^{
+        self.backgroundImage.alpha = 1.0f;
+        self.titleLabel.alpha = 1.0f;
+        self.descriptionLabel.alpha = 1.0f;
+        self.priceLabel.alpha = 1.0f;
+        self.iconImageView.alpha = 1.0f;      }
+      completion:nil];
+   }];
+}
+
+#pragma mark Actions
+- (void)highlight{
+  self.highlightTimer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(blinkButtons) userInfo:nil repeats:YES];
+  [self blinkButtons]; 
+}
+
 #pragma mark Factory Methods
 - (UIImageView *)newBackgroundImage{
   UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"store_productcard"]];

@@ -1,6 +1,7 @@
 #import "QIHomeViewController.h"
 #import "QIQuizViewController.h"
 #import "QIGroupSelectionViewController.h"
+#import "QIStoreViewController.h"
 #import "LinkedIn.h"
 #import "QIHomeView.h"
 
@@ -60,15 +61,15 @@
                                 forControlEvents:UIControlEventTouchUpInside];
 
   [self.homeView.companyQuizLockButton addTarget:self
-                                         action:@selector(groupPicker)
+                                         action:@selector(goToStore:)
                                forControlEvents:UIControlEventTouchUpInside];
   
   [self.homeView.localeQuizLockButton addTarget:self
-                                      action:@selector(groupPicker)
+                                      action:@selector(goToStore:)
                             forControlEvents:UIControlEventTouchUpInside];
   
   [self.homeView.industryQuizLockButton addTarget:self
-                                      action:@selector(groupPicker)
+                                      action:@selector(goToStore:)
                             forControlEvents:UIControlEventTouchUpInside];
   
   [self.homeView.groupQuizLockButton addTarget:self
@@ -86,6 +87,12 @@
 - (void)startConnectionsQuiz:(id)sender {
   QIQuizViewController *quizViewController = [self newQuizViewController];
   [self presentViewController:quizViewController animated:YES completion:nil];
+}
+
+- (void)goToStore:(UIButton *)sender{
+  [self.parentTabBarController setSelectedIndex:3];
+  [(QIStoreViewController *)[[self.parentTabBarController viewControllers] objectAtIndex:3] setHighlightedCell:sender.tag];
+  
 }
 
 - (void)groupPicker{

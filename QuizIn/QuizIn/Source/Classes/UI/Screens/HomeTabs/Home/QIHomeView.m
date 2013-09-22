@@ -67,10 +67,10 @@
     _topRightCard = [self newTopRightCard];
     _bottomLeftCard = [self newBottomLeftCard];
     _bottomRightCard = [self newBottomRightCard];
-    _companyQuizLockButton = [self newQuizLockButton];
-    _localeQuizLockButton = [self newQuizLockButton];
-    _industryQuizLockButton = [self newQuizLockButton];
-    _groupQuizLockButton = [self newQuizLockButton];
+    _companyQuizLockButton = [self newQuizLockButtonWithTag:0];
+    _localeQuizLockButton = [self newQuizLockButtonWithTag:4];
+    _industryQuizLockButton = [self newQuizLockButtonWithTag:2];
+    _groupQuizLockButton = [self newQuizLockButtonWithTag:1];
     _companyQuizBeginButton = [self newQuizBeginButton];
     _localeQuizBeginButton = [self newQuizBeginButton];
     _industryQuizBeginButton = [self newQuizBeginButton];
@@ -526,11 +526,12 @@
   return cardView;
 }
 
-- (UIButton *)newQuizLockButton{
+- (UIButton *)newQuizLockButtonWithTag:(NSInteger)tag{
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   [button setBackgroundColor:[UIColor clearColor]];
+  [button setTag:tag]; 
   return button;
 }
 

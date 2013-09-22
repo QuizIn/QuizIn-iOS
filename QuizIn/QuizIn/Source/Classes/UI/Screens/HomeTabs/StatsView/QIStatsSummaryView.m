@@ -28,7 +28,7 @@
       _pieChartView = [self newPieChartView]; 
       _sorterSegmentedControl = [self newSorter];
       _leastQuizButton = [self newQuizBeginButton];
-      _leastQuizLockButton = [self newQuizLockButton]; 
+      _leastQuizLockButton = [self newQuizLockButtonWithTag:3];
       _correctAnswersBackground = [self newLabelBackground];
       _correctAnswersLabel = [self newSummaryLabel];
       _incorrectAnswersBackground = [self newLabelBackground];
@@ -275,11 +275,12 @@
   return label;
 }
 
-- (UIButton *)newQuizLockButton{
+- (UIButton *)newQuizLockButtonWithTag:(NSInteger)tag{
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   [button setBackgroundColor:[UIColor clearColor]];
+  [button setTag:tag]; 
   return button;
 }
 
