@@ -4,11 +4,12 @@
 #import "QIStoreSectionHeaderView.h"
 #import "QIRankDefinition.h"
 #import "QIStoreData.h"
+#import "QIFontProvider.h"
 
 @interface QIStoreView ()
 
 @property (nonatomic, strong) UIImageView *viewBackground;
-@property (nonatomic, retain) NSMutableArray *viewConstraints;
+@property (nonatomic, strong) NSMutableArray *viewConstraints;
 
 @end
 
@@ -23,7 +24,8 @@
   self = [super initWithFrame:frame];
   if (self) {
     _viewBackground = [self newViewBackground];
-    
+    _activity = [self newActivityView]; 
+    _storeStatusLabel = [self newStoreStatusLabel]; 
     [self contstructViewHierarchy];
   }
   return self;
@@ -38,7 +40,8 @@
 #pragma mark Layout
 - (void)contstructViewHierarchy{
   [self addSubview:self.viewBackground];
-  //[self addSubview:self.tableView];
+  [self addSubview:self.activity];
+  [self addSubview:self.storeStatusLabel]; 
 }
 
 #pragma mark Layout
@@ -86,8 +89,19 @@
     [self.viewConstraints addObjectsFromArray:hTableViewContraints];
     [self.viewConstraints addObjectsFromArray:vTableViewContraints];
     
+    //Constrain Loading items
+    [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_activity attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+    [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_activity attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+    [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_storeStatusLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+    [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_storeStatusLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:30.0f]];
+    
     [self addConstraints:self.viewConstraints];
   }
+}
+
+#pragma mark strings
+- (NSString *)storeStatusString{
+  return @"Loading Store Items..."; 
 }
 
 #pragma mark factory methods
@@ -96,6 +110,27 @@
   UIImageView *background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"quizin_bg"]];
   [background setTranslatesAutoresizingMaskIntoConstraints:NO];
   return background;
+}
+
+- (UIActivityIndicatorView *)newActivityView{
+  UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  [activity setHidesWhenStopped:YES];
+  [activity setAlpha:.8f]; 
+  [activity startAnimating];
+  [activity setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return activity; 
+}
+
+- (UILabel *)newStoreStatusLabel{
+  UILabel *label = [[UILabel alloc] init];
+  [label setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [label setBackgroundColor:[UIColor clearColor]];
+  [label setFont:[QIFontProvider fontWithSize:20.0f style:Bold]];
+  [label setTextColor:[UIColor colorWithWhite:.5f alpha:.5f]];
+  [label setAdjustsFontSizeToFitWidth:YES];
+  [label setTextAlignment:NSTextAlignmentCenter];
+  [label setText:[self storeStatusString]];
+  return label;
 }
 
 @end

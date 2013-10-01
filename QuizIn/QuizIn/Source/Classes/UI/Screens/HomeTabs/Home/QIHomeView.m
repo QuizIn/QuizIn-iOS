@@ -475,7 +475,7 @@
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_hobnob_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
-  button.backgroundColor = [UIColor clearColor];
+  [button setBackgroundColor:[UIColor clearColor]];
   return button;
 }
 

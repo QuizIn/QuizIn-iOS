@@ -25,6 +25,7 @@ enum SortBy : NSInteger {
 - (int)getTotalIncorrectAnswers;
 - (NSArray *)getConnectionStats;
 - (NSArray *)getConnectionStatsInOrderBy:(SortBy)sortBy;
+- (NSArray *)getConnectionStatsByKnownGroupings;
 
 //update Stats
 - (void)updateStatsWithConnectionProfile:(QIPerson *)person correct:(BOOL)correct;

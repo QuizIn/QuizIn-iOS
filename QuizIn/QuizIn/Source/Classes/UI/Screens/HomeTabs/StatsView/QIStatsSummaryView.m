@@ -1,6 +1,8 @@
 
 #import "QIStatsSummaryView.h"
 #import "QIFontProvider.h"
+#import "QIStatsKeyView.h"
+#import "QIStatsData.h"
 
 @interface QIStatsSummaryView ()
 @property (nonatomic, strong) UIImageView *correctAnswersBackground;
@@ -10,7 +12,8 @@
 @property (nonatomic, strong) UIImageView *currentRankBackground;
 @property (nonatomic, strong) UILabel *currentRankLabel;
 @property (nonatomic, strong) UILabel *leastLabel;
-@property (nonatomic, strong) UIImageView *quizCard; 
+@property (nonatomic, strong) UIImageView *quizCard;
+@property (nonatomic, strong) QIStatsKeyView *keyView; 
 @property (nonatomic, strong) NSMutableArray *viewConstraints;
 
 @end
@@ -36,7 +39,8 @@
       _currentRankBackground = [self newLabelBackground];
       _currentRankLabel = [self newSummaryLabel];
       _leastLabel = [self newLeastLabelWithText:@"RefreshQuiz"];
-      _quizCard = [self newTopLeftCard]; 
+      _quizCard = [self newTopLeftCard];
+      _keyView = [self newKeyView]; 
       [self constructViewHierarchy];
     }
     return self;
@@ -105,6 +109,7 @@
   [self addSubview:self.leastQuizButton];
   [self addSubview:self.leastQuizLockButton]; 
   [self addSubview:self.leastLabel];
+  [self addSubview:self.keyView];
   [self drawPieChart]; 
 }
 
@@ -120,7 +125,7 @@
 - (void)updateConstraints {
   [super updateConstraints];
   
-  NSDictionary *views = NSDictionaryOfVariableBindings(_sorterSegmentedControl,_pieChartView,_correctAnswersBackground, _correctAnswersLabel, _incorrectAnswersBackground, _incorrectAnswersLabel, _currentRankBackground, _leastQuizButton, _leastQuizLockButton, _currentRankLabel, _leastLabel, _quizCard);
+  NSDictionary *views = NSDictionaryOfVariableBindings(_sorterSegmentedControl,_pieChartView,_correctAnswersBackground, _correctAnswersLabel, _incorrectAnswersBackground, _incorrectAnswersLabel, _currentRankBackground, _leastQuizButton, _leastQuizLockButton, _currentRankLabel, _leastLabel, _quizCard, _keyView);
   
   NSArray *hViewConstraints =
   [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-5-[_sorterSegmentedControl(==310)]"
@@ -140,7 +145,7 @@
                                           metrics:nil
                                             views:views];
   NSArray *vPieConstraints =
-  [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-10-[_pieChartView(==120)]"
+  [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-10-[_pieChartView(==120)]-10-[_keyView(==100)]"
                                           options:0
                                           metrics:nil
                                             views:views];
@@ -177,7 +182,7 @@
                                             views:views];
   
   NSArray *hCardConstraints =
-  [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-5-[_quizCard(==_correctAnswersLabel)]"
+  [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-5-[_quizCard(==_correctAnswersLabel)]-5-[_keyView(==100)]"
                                           options:0
                                           metrics:nil
                                             views:views];
@@ -192,7 +197,6 @@
                                           options:0
                                           metrics:nil
                                             views:views];
-  
   NSArray *vConstrainTopLeftCardContent =
   [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_quizCard]-(-94)-[_leastLabel(==25)][_leastQuizLockButton(==39)]"
                                           options:NSLayoutFormatAlignAllCenterX
@@ -237,8 +241,6 @@
   DLPieChart *view = [[DLPieChart alloc] initWithFrame:CGRectMake(0, 0, 120, 120) Center:CGPointMake(0,0) Radius:60];
   [view setTranslatesAutoresizingMaskIntoConstraints:NO]; 
   [view setShowLabel:NO];
-  [view setDelegate:self];
-  [view setDataSource:self];
   return view; 
 }
 
@@ -294,37 +296,11 @@
   return button;
 }
 
-#pragma mark Pie Chart Delegate
-
-- (NSUInteger)numberOfSlicesInPieChart:(DLPieChart *)pieChart{
-  return 3; 
-}
-- (CGFloat)pieChart:(DLPieChart *)pieChart valueForSliceAtIndex:(NSUInteger)index{
-  NSMutableArray *dataArray = [NSMutableArray arrayWithObjects:
-                               [NSNumber numberWithFloat:20.0f],
-                               [NSNumber numberWithFloat:30.0f],
-                               [NSNumber numberWithFloat:50.0f],
-                               nil];
-
-  return [[dataArray objectAtIndex:index] floatValue];
-}
-
-- (UIColor *)pieChart:(DLPieChart *)pieChart colorForSliceAtIndex:(NSUInteger)index{
-  NSMutableArray *colorArray = [NSMutableArray arrayWithObjects:
-                                [UIColor colorWithRed:1.0f green:.71f blue:.20f alpha:1.0f],
-                                [UIColor colorWithRed:.29f green:.51f blue:.72f alpha:1.0f],
-                                [UIColor colorWithWhite:.33f alpha:1.0f],
-                                nil];
-  return [colorArray objectAtIndex:index];
-}
-
-- (NSString *)pieChart:(DLPieChart *)pieChart textForSliceAtIndex:(NSUInteger)index{
-  NSMutableArray *textArray = [NSMutableArray arrayWithObjects:
-                          @"Well",
-                          @"Medium",
-                          @"Small",
-                          nil];
-  return [textArray objectAtIndex:index];
+- (QIStatsKeyView *)newKeyView{
+  QIStatsKeyView *view = [[QIStatsKeyView alloc] init];
+  [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [view setBackgroundColor:[UIColor clearColor]];
+  return view; 
 }
 
 @end

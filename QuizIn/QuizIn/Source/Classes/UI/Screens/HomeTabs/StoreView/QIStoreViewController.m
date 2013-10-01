@@ -8,8 +8,9 @@
 
 @interface QIStoreViewController ()
 
-@property (nonatomic, retain) UITableView *tableView;
-@property (nonatomic, retain) QIStoreTableHeaderView *headerView;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) QIStoreTableHeaderView *headerView;
+@property (nonatomic, strong) QIStoreView *storeView; 
 @property (nonatomic, strong) NSArray *storeData;
 @property (nonatomic, strong) NSArray *products;
 
@@ -31,8 +32,15 @@
       [[QIIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
           _products = products;
-          _storeData = [QIStoreData getStoreDataWithProducts:_products]; 
+          _storeData = [QIStoreData getStoreDataWithProducts:_products];
+          [[(QIStoreTableHeaderView *)self.tableView.tableHeaderView buyAllButton] setHidden:NO];
+          [self.storeView.storeStatusLabel setHidden:YES];
+          [self.storeView.activity stopAnimating]; 
           [self.tableView reloadData];
+        }
+        else {
+          [self.storeView.storeStatusLabel setText:@"Cannot Load Store"];
+          [self.storeView.activity stopAnimating];
         }
       }];
       _highlightedCell = 99; 
@@ -61,6 +69,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  self.highlightedCell = 99; 
   for (NSInteger j = 0; j < [self.tableView numberOfSections]; ++j)
   {
     for (NSInteger i = 0; i < [self.tableView numberOfRowsInSection:j]; ++i)
@@ -126,10 +135,12 @@
 }
 
 - (void)updateCellHighlight{
-  NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.highlightedCell inSection:0];
-  QIStoreCellView *cell = (QIStoreCellView *)[self.tableView cellForRowAtIndexPath:indexPath];
-  [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES]; 
-  [cell highlight]; 
+  if (self.highlightedCell !=99){
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.highlightedCell inSection:0];
+    QIStoreCellView *cell = (QIStoreCellView *)[self.tableView cellForRowAtIndexPath:indexPath];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    [cell highlight];
+  }
 }
 
 #pragma mark TableView
@@ -182,27 +193,21 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-  
-  static NSString *cellIdentifier = @"CustomCell";
-  QIStoreCellView *cell = (QIStoreCellView *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-  if (cell == nil){
-    cell = [[QIStoreCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    [cell setBackgroundView:nil];
-    [cell setBackgroundColor:[UIColor clearColor]];
-  }
-  
+
+  QIStoreCellView *cell = [[QIStoreCellView alloc] init];
+  [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+  [cell setBackgroundView:nil];
+  [cell setBackgroundColor:[UIColor clearColor]];
   [cell.previewButton setTag:indexPath.section*SECTION_INDEX_SPAN +indexPath.row];
   [cell.buyButton setTag:indexPath.section*SECTION_INDEX_SPAN+indexPath.row];
   [cell.previewButton addTarget:self action:@selector(preview:) forControlEvents:UIControlEventTouchUpInside];
   [cell.buyButton addTarget:self action:@selector(buy:) forControlEvents:UIControlEventTouchUpInside];
-  
   [cell setTitle:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemTitle"]];
   [cell setPrice:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemPrice"]];
   [cell setDescription:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemShortDescription"]];
   [cell setIconImage:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemIcon"]];
   [cell setPurchased:[[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemPurchased"] boolValue]];
-  if (indexPath.section == 0 & indexPath.row == self.highlightedCell){
+  if (indexPath.section == 0 && indexPath.row == self.highlightedCell){
     [cell highlight]; 
   }
   return cell;

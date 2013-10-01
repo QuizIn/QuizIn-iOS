@@ -1,52 +1,102 @@
 
 #import "QIRankDefinition.h"
+#import "QIStatsData.h"
 
 @implementation QIRankDefinition
 
 + (NSArray *)getRankDelineations{
   return  [NSArray arrayWithObjects:
-            [NSNumber numberWithInt:0],
+            [NSNumber numberWithInt:1],
             [NSNumber numberWithInt:3],
             [NSNumber numberWithInt:6],
             [NSNumber numberWithInt:9],
             [NSNumber numberWithInt:12],
             [NSNumber numberWithInt:15],
             [NSNumber numberWithInt:17],
-            [NSNumber numberWithInt:23],nil];
+            [NSNumber numberWithInt:23],
+            [NSNumber numberWithInt:25],
+            [NSNumber numberWithInt:27], nil];
 }
 
 + (UIImage *)getRankBadgeForRank:(int)rank{
-  switch (rank) {
-    case 0:
-      return [UIImage imageNamed:@"calendar_checkmark"];
-      break;
-    case 1:
-      return [UIImage imageNamed:@"calendar_expand_btn1"];
-      break;
-    case 2:
-      return [UIImage imageNamed:@"match_tape"];
-      break;
-    case 3:
-      return [UIImage imageNamed:@"match_answerbox_std"];
-      break;
-    case 4:
-      return [UIImage imageNamed:@"placeholderHead"];
-      break;
-    case 5:
-      return [UIImage imageNamed:@"quizin_exit_btn"];
-      break;
-    case 6:
-      return [UIImage imageNamed:@"calendar_checkmark"];
-      break;
-    case 7:
-      return [UIImage imageNamed:@"calendar_checkmark"];
-      break;
-    case 8:
-      return [UIImage imageNamed:@"calendar_checkmark"];
-      break;
-    default:
-      return [UIImage imageNamed:@"calendar_checkmark"];
-      break;
+  //todo: get actual userID
+  NSString *userID = @"12345";
+  QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:userID];
+  int currentRank = [data getCurrentRank];
+  if (rank > currentRank){
+    switch (rank) {
+      case 0:
+        return [UIImage imageNamed:@"hobnob_rankings_intern_inactive_btn"];
+        break;
+      case 1:
+        return [UIImage imageNamed:@"hobnob_rankings_associate_inactive_btn"];
+        break;
+      case 2:
+        return [UIImage imageNamed:@"hobnob_rankings_manager_inactive_btn"];
+        break;
+      case 3:
+        return [UIImage imageNamed:@"hobnob_rankings_supervisor_inactive_btn"];
+        break;
+      case 4:
+        return [UIImage imageNamed:@"hobnob_rankings_director_inactive_btn"];
+        break;
+      case 5:
+        return [UIImage imageNamed:@"hobnob_rankings_vicepresident_inactive_btn"];
+        break;
+      case 6:
+        return [UIImage imageNamed:@"hobnob_rankings_president_inactive_btn"];
+        break;
+      case 7:
+        return [UIImage imageNamed:@"hobnob_rankings_coo_inactive_btn"];
+        break;
+      case 8:
+        return [UIImage imageNamed:@"hobnob_rankings_ceo_inactive_btn"];
+        break;
+      case 9:
+        return [UIImage imageNamed:@"hobnob_rankings_chairman_inactive_btn"];
+        break;
+      default:
+        return [UIImage imageNamed:@"hobnob_rankings_chairman_inactive_btn"];
+        break;
+    }
+  }
+  else {
+    switch (rank) {
+      case 0:
+        return [UIImage imageNamed:@"hobnob_rankings_intern_active_btn"];
+        break;
+      case 1:
+        return [UIImage imageNamed:@"hobnob_rankings_associate_active_btn"];
+        break;
+      case 2:
+        return [UIImage imageNamed:@"hobnob_rankings_manager_active_btn"];
+        break;
+      case 3:
+        return [UIImage imageNamed:@"hobnob_rankings_supervisor_active_btn"];
+        break;
+      case 4:
+        return [UIImage imageNamed:@"hobnob_rankings_director_active_btn"];
+        break;
+      case 5:
+        return [UIImage imageNamed:@"hobnob_rankings_vicepresident_active_btn"];
+        break;
+      case 6:
+        return [UIImage imageNamed:@"hobnob_rankings_president_active_btn"];
+        break;
+      case 7:
+        return [UIImage imageNamed:@"hobnob_rankings_coo_active_btn"];
+        break;
+      case 8:
+        return [UIImage imageNamed:@"hobnob_rankings_ceo_active_btn"];
+        break;
+      case 9:
+        return [UIImage imageNamed:@"hobnob_rankings_chairman_active_btn"];
+        break;
+        
+      default:
+        return [UIImage imageNamed:@"hobnob_rankings_chairman_active_btn"];
+        break;
+    }
   }
 }
 
@@ -60,38 +110,8 @@
 }
 
 + (NSString *)getRankDescriptionForRank:(int)rank{
-  switch (rank) {
-    case 0:
-      return @"Zero Rank Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.";
-      break;
-    case 1:
-      return @"First Rank Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.";
-      break;
-    case 2:
-      return @"Second Rank Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.";
-      break;
-    case 3:
-      return @"Third Rank Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.";
-      break;
-    case 4:
-      return @"Fourth Rank Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.";
-      break;
-    case 5:
-      return @"Fifth Rank Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.";
-      break;
-    case 6:
-      return @"Sixth Rank Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.";
-      break;
-    case 7:
-      return @"Zeventh Rank Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.";
-      break;
-    case 8:
-      return @"Eigth Rank Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.";
-      break;
-    default:
-      return @"This Rank is Off the Charts";
-      break;
-  }
+  NSArray *delineations = [self getRankDelineations];
+  return [NSString stringWithFormat:@"%d Correct Answers",[[delineations objectAtIndex:rank] intValue]];
 }
 
 + (NSArray *)getAllRankDescriptions{

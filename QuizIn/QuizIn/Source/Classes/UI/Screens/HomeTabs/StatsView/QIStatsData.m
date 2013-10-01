@@ -10,6 +10,11 @@
 
 @implementation QIStatsData
 
+//Rules
+//Well Known Index - 3 or more
+//Sorta Known - 0-3
+//Needs Refresh - < 0
+
 /*
  //Quizzes Started
  //Quizzes Complete
@@ -22,16 +27,16 @@
 // key: UserID    Dictionary
   // key:CurrentRank              Integer
   // key:updateRank               BOOL
-  // key:TotalCorrectAnswers      Integer
-  // key:TotalIncorrectAnswers    Integer
-  // key:IndividualStats          Array
+  // key:totalCorrectAnswers      Integer
+  // key:totalIncorrectAnswers    Integer
+  // key:connectionStats          Array
         //Array Elements            Dictionary
-      //key:UserID              NSString
-      //key:UserPictureID       NSString
-      //key:UserFirstName       NSString
-      //key:UserLastName        NSString
-      //key:CorrectAnswers      Integer
-      //key:IncorrectAnswers    Integer
+      //key:userID              NSString
+      //key:userPictureID       NSString
+      //key:userFirstName       NSString
+      //key:userLastName        NSString
+      //key:correctAnswers      Integer
+      //key:incorrectAnswers    Integer
       //key:lastDirection       BOOL
 */
 
@@ -50,7 +55,7 @@
 
 
 
-//reset Stats
+#pragma mark Actions
 
 - (void)setUpStats{
   NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -73,9 +78,6 @@
   [prefs synchronize];
 }
 
-
-//debug functions
-
 - (void)printStats{
   NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
   NSMutableDictionary *stats = [[prefs objectForKey:self.userID] mutableCopy];
@@ -95,8 +97,7 @@
   }
 }
 
-
-//get stats (primary for stats view)
+#pragma mark Get Stats
 
 - (int)getCurrentRank{
   NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -194,6 +195,31 @@
   }
   return @[sections,connectionStatsAlphabetical];
 }
+
+- (NSArray *)getConnectionStatsByKnownGroupings{
+  NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+  NSMutableDictionary *stats = [[prefs objectForKey:self.userID] mutableCopy];
+  
+  NSMutableArray *connectionStats = [stats objectForKey:@"connectionStats"];
+  NSMutableIndexSet *wellKnownIndexes = [[NSMutableIndexSet alloc] init];
+  NSMutableIndexSet *middleKnownIndexes = [[NSMutableIndexSet alloc] init];
+  NSMutableIndexSet *needsRefreshIndexes = [[NSMutableIndexSet alloc] init];
+  for (int i = 0; i<[connectionStats count];i++){
+    NSDictionary *connection = [connectionStats objectAtIndex:i];
+    NSInteger correctAnswers = [[connection objectForKey:@"correctAnswers"] integerValue];
+    NSInteger incorrectAnswers = [[connection objectForKey:@"incorrectAnswers"] integerValue];
+    NSInteger knownIndex = correctAnswers - incorrectAnswers;
+    if (knownIndex >=3)
+      [wellKnownIndexes addIndex:i];
+    else if (knownIndex >=0 && knownIndex < 3)
+      [middleKnownIndexes addIndex:i];
+    else
+      [needsRefreshIndexes addIndex:i];
+  }
+  return @[wellKnownIndexes, middleKnownIndexes, needsRefreshIndexes];
+}
+
+#pragma Mark Update Stats
 
 //stats Analytics events
 - (void)updateStatsWithConnectionProfile:(QIPerson *)person correct:(BOOL)correct{

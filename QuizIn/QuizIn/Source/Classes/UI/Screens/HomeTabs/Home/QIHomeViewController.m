@@ -3,6 +3,8 @@
 #import "QIGroupSelectionViewController.h"
 #import "QIStoreViewController.h"
 #import "LinkedIn.h"
+#import "QIIAPHelper.h"
+#import "QIStoreData.h"
 #import "QIHomeView.h"
 
 

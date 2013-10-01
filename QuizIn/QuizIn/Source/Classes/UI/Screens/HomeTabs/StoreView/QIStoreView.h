@@ -6,5 +6,7 @@
 @interface QIStoreView : UIView 
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIActivityIndicatorView *activity;
+@property (nonatomic, strong) UILabel *storeStatusLabel;
 
 @end
