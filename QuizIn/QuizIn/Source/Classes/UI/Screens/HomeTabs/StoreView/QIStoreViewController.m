@@ -164,7 +164,7 @@
 }
 
 -(QIStoreTableHeaderView *)newHeaderView{
-  QIStoreTableHeaderView *headerView = [[QIStoreTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 165)];
+  QIStoreTableHeaderView *headerView = [[QIStoreTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 230)];
   headerView.backgroundColor = [UIColor clearColor];
   return headerView;
 }

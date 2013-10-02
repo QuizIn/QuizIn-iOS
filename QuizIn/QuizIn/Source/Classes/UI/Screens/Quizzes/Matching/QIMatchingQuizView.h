@@ -18,5 +18,6 @@
 @property(nonatomic, copy) NSArray *correctAnswers;
 @property(nonatomic, strong) NSString *loggedInUserID; 
 
+-(void)hideRankDisplay;
 
 @end

@@ -114,6 +114,7 @@
 
 - (void)setLoggedInUserID:(NSString *)loggedInUserID{
   _loggedInUserID = loggedInUserID;
+  _rankDisplayView.userID = loggedInUserID;
 }
 
 - (void)setPeople:(NSArray *)people{
@@ -126,16 +127,16 @@
 #pragma mark View Hierarchy
 
 - (void)constructViewHierarchy {
-  [self addSubview:_viewBackground];
-  [self addSubview:_divider];
-  [self addSubview:_progressView];
-  [self addSubview:_answerView];
-  [self addSubview:_questionView];
+  [self addSubview:self.viewBackground];
+  [self addSubview:self.divider];
+  [self addSubview:self.progressView];
+  [self addSubview:self.answerView];
+  [self addSubview:self.questionView];
   [self loadQuestionButtons];
   [self loadAnswerButtons];
-  [self addSubview:_checkAnswersView];
-  [self addSubview:_rankDisplayView];
-  [self addSubview:self.overlayMask]; 
+  [self addSubview:self.checkAnswersView];
+  [self addSubview:self.overlayMask];
+  [self addSubview:self.rankDisplayView];
 }
 
 - (void)loadQuestionButtons{
@@ -188,7 +189,7 @@
     [self.superview addConstraints:selfConstraints];
     
     //Constrain Background Image and Overlay Mask
-    NSDictionary *backgroundImageConstraintView = NSDictionaryOfVariableBindings(_viewBackground);
+    NSDictionary *backgroundImageConstraintView = NSDictionaryOfVariableBindings(_viewBackground,_overlayMask);
     
     NSArray *hBackgroundContraints =
     [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_viewBackground]|"
@@ -605,8 +606,7 @@
 -(void)showRankDisplay{
   [UIView animateWithDuration:0.5 animations:^{
     [self.topRank setConstant:100.0f];
-    [NSTimer scheduledTimerWithTimeInterval:7.0f target:self selector:@selector(hideRankDisplay) userInfo:nil repeats:NO];
-    [self.overlayMask setHidden:NO]; 
+    [self.overlayMask setHidden:NO];
     [self layoutIfNeeded];
   }];
 }

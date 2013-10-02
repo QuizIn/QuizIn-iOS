@@ -26,6 +26,7 @@ enum SortBy : NSInteger {
 - (NSArray *)getConnectionStats;
 - (NSArray *)getConnectionStatsInOrderBy:(SortBy)sortBy;
 - (NSArray *)getConnectionStatsByKnownGroupings;
+- (NSInteger)getWellKnownThreshold;
 
 //update Stats
 - (void)updateStatsWithConnectionProfile:(QIPerson *)person correct:(BOOL)correct;

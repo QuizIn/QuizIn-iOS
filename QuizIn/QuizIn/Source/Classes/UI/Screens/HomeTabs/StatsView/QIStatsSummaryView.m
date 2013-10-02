@@ -13,6 +13,7 @@
 @property (nonatomic, strong) UILabel *currentRankLabel;
 @property (nonatomic, strong) UILabel *leastLabel;
 @property (nonatomic, strong) UIImageView *quizCard;
+@property (nonatomic, strong) UIImageView *divider; 
 @property (nonatomic, strong) QIStatsKeyView *keyView; 
 @property (nonatomic, strong) NSMutableArray *viewConstraints;
 
@@ -40,7 +41,8 @@
       _currentRankLabel = [self newSummaryLabel];
       _leastLabel = [self newLeastLabelWithText:@"RefreshQuiz"];
       _quizCard = [self newTopLeftCard];
-      _keyView = [self newKeyView]; 
+      _keyView = [self newKeyView];
+      _divider = [self newDivider]; 
       [self constructViewHierarchy];
     }
     return self;
@@ -110,6 +112,7 @@
   [self addSubview:self.leastQuizLockButton]; 
   [self addSubview:self.leastLabel];
   [self addSubview:self.keyView];
+  [self addSubview:self.divider]; 
   [self drawPieChart]; 
 }
 
@@ -125,7 +128,7 @@
 - (void)updateConstraints {
   [super updateConstraints];
   
-  NSDictionary *views = NSDictionaryOfVariableBindings(_sorterSegmentedControl,_pieChartView,_correctAnswersBackground, _correctAnswersLabel, _incorrectAnswersBackground, _incorrectAnswersLabel, _currentRankBackground, _leastQuizButton, _leastQuizLockButton, _currentRankLabel, _leastLabel, _quizCard, _keyView);
+  NSDictionary *views = NSDictionaryOfVariableBindings(_sorterSegmentedControl,_pieChartView,_correctAnswersBackground, _correctAnswersLabel, _incorrectAnswersBackground, _incorrectAnswersLabel, _currentRankBackground, _leastQuizButton, _leastQuizLockButton, _currentRankLabel, _leastLabel, _quizCard, _keyView, _divider);
   
   NSArray *hViewConstraints =
   [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-5-[_sorterSegmentedControl(==310)]"
@@ -187,13 +190,19 @@
                                           metrics:nil
                                             views:views];
   
+  NSArray *hDividerConstraints =
+  [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_divider]|"
+                                          options:0
+                                          metrics:nil
+                                            views:views];
+  
   NSArray *vStatsConstraints =
   [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-10-[_correctAnswersLabel(==30)]-5-[_incorrectAnswersLabel(==30)]-5-[_currentRankLabel(==30)]"
                                           options:0
                                           metrics:nil
                                             views:views];
   NSArray *vStatsBackgroundConstraints =
-  [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-10-[_correctAnswersBackground(==30)]-5-[_incorrectAnswersBackground(==30)]-5-[_currentRankBackground(==30)][_quizCard]"
+  [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-10-[_correctAnswersBackground(==30)]-5-[_incorrectAnswersBackground(==30)]-5-[_currentRankBackground(==30)][_quizCard]-5-[_divider(==2)]"
                                           options:0
                                           metrics:nil
                                             views:views];
@@ -222,7 +231,8 @@
   [self.viewConstraints addObjectsFromArray:vStatsConstraints];
   [self.viewConstraints addObjectsFromArray:vConstrainTopLeftCardContent];
   [self.viewConstraints addObjectsFromArray:@[leastBeginCenterX, leastBeginCenterY]];
-  [self.viewConstraints addObjectsFromArray:hCardConstraints]; 
+  [self.viewConstraints addObjectsFromArray:hCardConstraints];
+  [self.viewConstraints addObjectsFromArray:hDividerConstraints];
   [self addConstraints:self.viewConstraints];
 }
 
@@ -301,6 +311,12 @@
   [view setTranslatesAutoresizingMaskIntoConstraints:NO];
   [view setBackgroundColor:[UIColor clearColor]];
   return view; 
+}
+
+- (UIImageView *)newDivider{
+  UIImageView *divider = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"quizin_divider"]];
+  [divider setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return divider;
 }
 
 @end

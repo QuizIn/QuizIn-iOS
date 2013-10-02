@@ -8,10 +8,11 @@
 
 @property (nonatomic, strong) QIStatsSummaryView *summaryView;
 
-@property (nonatomic,assign) int currentRank;
-@property (nonatomic,assign) int totalCorrectAnswers;
-@property (nonatomic,assign) int totalIncorrectAnswers;
-@property (nonatomic,strong) NSArray *connectionStats;
+@property (nonatomic, assign) int currentRank;
+@property (nonatomic, assign) int totalCorrectAnswers;
+@property (nonatomic, assign) int totalIncorrectAnswers;
+@property (nonatomic, strong) NSArray *connectionStats;
+@property (nonatomic, assign) int wellKnownThreshold;
 @property (nonatomic, retain) UITableView *tableView;
 
 @property (nonatomic,strong,readwrite) UIButton *resetStatsButton;

@@ -127,6 +127,7 @@
 
 - (void)setLoggedInUserID:(NSString *)loggedInUserID{
   _loggedInUserID = loggedInUserID;
+  _rankDisplayView.userID = loggedInUserID; 
 }
 
 #pragma mark View Hierarchy
@@ -152,8 +153,8 @@
   
   [self addSubview:self.answerSuperView];
   [self addSubview:self.checkAnswersView];
-  [self addSubview:self.rankDisplayView];
   [self addSubview:self.overlayMask]; 
+  [self addSubview:self.rankDisplayView];
 }
 
 #pragma mark Layout
@@ -193,7 +194,7 @@
     self.cardConstraints = [NSMutableArray array];
     
     //Constrain Background Image and Overlay Mask
-    NSDictionary *backgroundImageConstraintView = NSDictionaryOfVariableBindings(_viewBackground);
+    NSDictionary *backgroundImageConstraintView = NSDictionaryOfVariableBindings(_viewBackground,_overlayMask);
     
     NSString *hBackgroundView = @"H:|[_viewBackground]|"; 
     NSArray *hBackgroundContraints =
@@ -493,7 +494,6 @@
 -(void)showRankDisplay{
   [UIView animateWithDuration:0.5 animations:^{
     [self.topRank setConstant:100.0f];
-    [NSTimer scheduledTimerWithTimeInterval:7.0f target:self selector:@selector(hideRankDisplay) userInfo:nil repeats:NO];
     [self.overlayMask setHidden:NO]; 
     [self layoutIfNeeded];
   }];

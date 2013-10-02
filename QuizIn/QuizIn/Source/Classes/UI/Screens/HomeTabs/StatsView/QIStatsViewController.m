@@ -33,7 +33,8 @@
   [self.statsView setCurrentRank:[self.data getCurrentRank]];
   [self.statsView setTotalCorrectAnswers:[self.data getTotalCorrectAnswers]];
   [self.statsView setTotalIncorrectAnswers:[self.data getTotalIncorrectAnswers]];
-  [self.statsView setConnectionStats:[self.data getConnectionStatsInOrderBy:lastName]];
+  [self.statsView setConnectionStats:[self.data getConnectionStatsInOrderBy:knowledgeIndex]];
+  [self.statsView setWellKnownThreshold:[self.data getWellKnownThreshold]];
   [self.statsView.summaryView.pieChartView setDelegate:self];
   [self.statsView.summaryView.pieChartView setDataSource:self]; 
   [self.statsView.tableView reloadData];

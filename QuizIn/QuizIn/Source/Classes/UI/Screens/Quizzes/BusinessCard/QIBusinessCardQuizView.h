@@ -22,4 +22,6 @@
 @property(nonatomic, assign) NSUInteger numberOfQuestions;
 @property(nonatomic, strong) NSString *loggedInUserID; 
 
+-(void)hideRankDisplay;
+
 @end

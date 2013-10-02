@@ -40,6 +40,8 @@
       //key:lastDirection       BOOL
 */
 
+#define WELL_KNOWN_THRESHOLD 3 
+
 - (id)initWithLoggedInUserID:(NSString *)ID{
   self = [super init];
   if (self) {
@@ -123,6 +125,10 @@
   return [stats objectForKey:@"connectionStats"];
 }
 
+- (NSInteger)getWellKnownThreshold{
+  return WELL_KNOWN_THRESHOLD; 
+}
+
 - (NSArray *)getConnectionStatsInOrderBy:(SortBy)sortBy{
   
   NSString *sortKey = @"userLastName";
@@ -136,7 +142,8 @@
       break;
     }
     case knowledgeIndex:{
-      sortKey = @"correctAnswers";
+      sortKey = @"userLastName"; 
+      //sortKey = @"correctAnswers";
     }
     default:
       break;
@@ -180,6 +187,32 @@
     }
   }
   else if (sortBy == knowledgeIndex){
+    
+    NSMutableIndexSet *wellKnownIndexes = [[NSMutableIndexSet alloc] init];
+    NSMutableIndexSet *middleKnownIndexes = [[NSMutableIndexSet alloc] init];
+    NSMutableIndexSet *needsRefreshIndexes = [[NSMutableIndexSet alloc] init];
+    for (int i = 0; i<[sortedConnectionStats count];i++){
+      NSDictionary *connection = [sortedConnectionStats objectAtIndex:i];
+      NSInteger correctAnswers = [[connection objectForKey:@"correctAnswers"] integerValue];
+      NSInteger incorrectAnswers = [[connection objectForKey:@"incorrectAnswers"] integerValue];
+      NSInteger knownIndex = correctAnswers - incorrectAnswers;
+      if (knownIndex >= WELL_KNOWN_THRESHOLD)
+        [wellKnownIndexes addIndex:i];
+      else if (knownIndex >=0 && knownIndex < WELL_KNOWN_THRESHOLD)
+        [middleKnownIndexes addIndex:i];
+      else
+        [needsRefreshIndexes addIndex:i];
+    }
+    NSArray *wellKnownConnections = [sortedConnectionStats objectsAtIndexes:wellKnownIndexes];
+    NSArray *middleConnections = [sortedConnectionStats objectsAtIndexes:middleKnownIndexes];
+    NSArray *needsRefreshConnections = [sortedConnectionStats objectsAtIndexes:needsRefreshIndexes];
+    [sections addObjectsFromArray:@[@"Needs Refresh",@"Sorta Known",@"Well Known"]];
+    [connectionStatsAlphabetical setObject:needsRefreshConnections forKey:[sections objectAtIndex:0]];
+    [connectionStatsAlphabetical setObject:middleConnections forKey:[sections objectAtIndex:1]];
+    [connectionStatsAlphabetical setObject:wellKnownConnections forKey:[sections objectAtIndex:2]];
+
+    
+    /*
     for (NSDictionary *connection in sortedConnectionStats){
       NSString *sectionName = [NSString stringWithFormat:@"%d",[[connection objectForKey:sortKey] integerValue]];
       NSUInteger index = [sections indexOfObject:sectionName];
@@ -192,6 +225,7 @@
         [[connectionStatsAlphabetical objectForKey:sectionName] addObject:connection];
       }
     }
+    */
   }
   return @[sections,connectionStatsAlphabetical];
 }
@@ -209,9 +243,9 @@
     NSInteger correctAnswers = [[connection objectForKey:@"correctAnswers"] integerValue];
     NSInteger incorrectAnswers = [[connection objectForKey:@"incorrectAnswers"] integerValue];
     NSInteger knownIndex = correctAnswers - incorrectAnswers;
-    if (knownIndex >=3)
+    if (knownIndex >= WELL_KNOWN_THRESHOLD)
       [wellKnownIndexes addIndex:i];
-    else if (knownIndex >=0 && knownIndex < 3)
+    else if (knownIndex >=0 && knownIndex < WELL_KNOWN_THRESHOLD)
       [middleKnownIndexes addIndex:i];
     else
       [needsRefreshIndexes addIndex:i];

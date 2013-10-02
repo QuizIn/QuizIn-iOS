@@ -25,8 +25,6 @@
       _summaryView = [self newStatsSummaryView];
       _tableView = [self newStatsTable];
       _toggleIndexForTable = NO;
- 
-      
       _resetStatsButton = [self newResetStatsButton];
       _printStatsButton = [self newPrintStatsButton];
       
@@ -189,7 +187,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
   QIStatsSectionHeaderView *headerView = [[QIStatsSectionHeaderView alloc] init];
-  headerView.sectionTitle = @"Section Title"; 
+  headerView.sectionTitle = [[self.connectionStats objectAtIndex:0] objectAtIndex:section];
   return headerView;
 }
 
@@ -202,12 +200,14 @@
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
-  if (tableView.contentOffset.y >=200){
+  /*if (tableView.contentOffset.y >=200){
     return [self.connectionStats objectAtIndex:0];
   }
   else {
     return nil; 
   }
+   */
+  return nil;
 }
  
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -219,12 +219,18 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
   }
   NSDictionary *data = [[[self.connectionStats objectAtIndex:1] objectForKey:[[self.connectionStats objectAtIndex:0] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-  int knowledgeIndex = [[data objectForKey:@"correctAnswers"] integerValue]-[[data objectForKey:@"incorrectAnswers"] integerValue];
   [cell setConnectionName:[NSString stringWithFormat:@"%@ %@",[data objectForKey:@"userFirstName"],[data objectForKey:@"userLastName"]]];
-  [cell setKnowledgeIndex:[NSString stringWithFormat:@"%d",knowledgeIndex]];
   [cell setProfileImageURL:[NSURL URLWithString:[data objectForKey:@"userPictureURL"]]];
   [cell setRightAnswers:[NSString stringWithFormat:@"%d",[[data objectForKey:@"correctAnswers"] integerValue]]];
   [cell setWrongAnswers:[NSString stringWithFormat:@"%d",[[data objectForKey:@"incorrectAnswers"] integerValue]]];
+  [cell setUpTrend:[[data objectForKey:@"lastDirection"] boolValue]];
+  int knowledgeIndex = [[data objectForKey:@"correctAnswers"] integerValue]-[[data objectForKey:@"incorrectAnswers"] integerValue];
+  if (knowledgeIndex >= self.wellKnownThreshold)
+    [cell setKeyColorIndex:0];
+  else if (knowledgeIndex >=0 && knowledgeIndex < self.wellKnownThreshold)
+    [cell setKeyColorIndex:1];
+  else
+    [cell setKeyColorIndex:2];
   return cell;
 }
 

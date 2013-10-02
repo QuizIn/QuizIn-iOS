@@ -112,6 +112,7 @@
 
 - (void)setLoggedInUserID:(NSString *)loggedInUserID{
   _loggedInUserID = loggedInUserID;
+  _rankDisplayView.userID = loggedInUserID; 
 }
 
 #pragma mark View Hierarchy
@@ -125,7 +126,7 @@
   [self addSubview:self.questionLabel];
   [self addSubview:self.dividerTop];
   [self addSubview:self.dividerBottom];
-  [self addSubview:self.rankDisplayView];
+ 
 }
 
 - (void)loadAnswerButtons {
@@ -134,7 +135,8 @@
   }
   //TODO This should not go here, but I am not sure how to get it on top at this point. 
   [self addSubview:self.checkAnswersView];
-  [self addSubview:self.overlayMask]; 
+  [self addSubview:self.overlayMask];
+  [self addSubview:self.rankDisplayView];
 }
 
 #pragma mark Layout
@@ -331,7 +333,6 @@
 -(void)showRankDisplay{
   [UIView animateWithDuration:0.5 animations:^{
     [self.topRank setConstant:100.0f];
-    [NSTimer scheduledTimerWithTimeInterval:7.0f target:self selector:@selector(hideRankDisplay) userInfo:nil repeats:NO];
     [self.overlayMask setHidden:NO]; 
     [self layoutIfNeeded];
   }];

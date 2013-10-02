@@ -16,5 +16,8 @@
 @property(nonatomic, copy) NSArray *answers;
 @property(nonatomic, assign) NSUInteger correctAnswerIndex;
 @property(nonatomic, strong) QIPerson *answerPerson;
-@property(nonatomic, strong) NSString *loggedInUserID; 
+@property(nonatomic, strong) NSString *loggedInUserID;
+
+-(void)hideRankDisplay;
+
 @end

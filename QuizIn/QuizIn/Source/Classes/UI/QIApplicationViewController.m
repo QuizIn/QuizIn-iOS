@@ -44,8 +44,8 @@
   [super viewDidLoad];
   
   //SWTICH FOR OFFLINE USAGE
-  //[self.authController beginAuthenticationAttempt];
-  [self authControllerAccount:nil didAuthenticate:nil];
+  [self.authController beginAuthenticationAttempt];
+  //[self authControllerAccount:nil didAuthenticate:nil];
 }
 
 - (void)didReceiveMemoryWarning {
