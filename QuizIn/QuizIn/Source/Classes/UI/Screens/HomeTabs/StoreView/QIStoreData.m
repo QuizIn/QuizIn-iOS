@@ -25,7 +25,6 @@
  
  
  Kit and Caboodle - Get everything and all future updates	4.99
- 
 */
 
 + (NSArray *) getStoreDataWithProducts:(NSArray *)products{
@@ -115,8 +114,24 @@
      @"item":detailPurchasesItems,
      }];
   }
-  
   return storeItems; 
+}
+
++ (NSArray *)getBuyAllProductWithProducts:(NSArray *)products{
+  NSString *allKey = @"p_";
+  NSIndexSet *allIndexes = [products indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+    SKProduct *product = (SKProduct *)obj;
+    NSRange findKey = [product.productIdentifier rangeOfString:allKey];
+    NSUInteger found = findKey.location;
+    if (found == NSNotFound){
+      return NO;
+    }
+    else{
+      NSLog(@"BUY_ALL: %@",product.productIdentifier);
+      return YES;
+    }
+  }];
+  return [products objectsAtIndexes:allIndexes];
 }
 
 + (NSString *)formattedPriceWithProduct:(SKProduct *)product{

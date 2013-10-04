@@ -45,6 +45,7 @@
                                               selector:@selector(timedImageChange)
                                               userInfo:nil
                                                repeats:YES];
+  [self showHideLockButtons]; 
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -75,9 +76,24 @@
                             forControlEvents:UIControlEventTouchUpInside];
   
   [self.homeView.groupQuizLockButton addTarget:self
-                                      action:@selector(groupPicker)
+                                      action:@selector(goToStore:)
                             forControlEvents:UIControlEventTouchUpInside];
   
+  [self.homeView.companyQuizBeginButton addTarget:self
+                                           action:@selector(groupedPicker)
+                                 forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.homeView.localeQuizBeginButton addTarget:self
+                                           action:@selector(groupedPicker)
+                                 forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.homeView.industryQuizBeginButton addTarget:self
+                                           action:@selector(groupedPicker)
+                                 forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.homeView.groupQuizBeginButton addTarget:self
+                                           action:@selector(groupedPicker)
+                                 forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -94,7 +110,6 @@
 - (void)goToStore:(UIButton *)sender{
   [self.parentTabBarController setSelectedIndex:3];
   [(QIStoreViewController *)[[self.parentTabBarController viewControllers] objectAtIndex:3] setHighlightedCell:sender.tag];
-  
 }
 
 - (void)groupPicker{
@@ -103,6 +118,21 @@
 }
 
 #pragma mark Data
+- (void) showHideLockButtons{
+  QIIAPHelper *store = [QIIAPHelper sharedInstance];
+  BOOL companyPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_company"];
+  [self.homeView.companyQuizLockButton setHidden:companyPurchased];
+  [self.homeView.companyQuizBeginButton setHidden:!companyPurchased];
+  BOOL localePurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_locale"];
+  [self.homeView.localeQuizLockButton setHidden:localePurchased];
+  [self.homeView.localeQuizBeginButton setHidden:!localePurchased];
+  BOOL industryPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_industry"];
+  [self.homeView.industryQuizLockButton setHidden:industryPurchased];
+  [self.homeView.industryQuizBeginButton setHidden:!industryPurchased];
+  BOOL groupPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_group"];
+  [self.homeView.groupQuizLockButton setHidden:groupPurchased];
+  [self.homeView.groupQuizBeginButton setHidden:!groupPurchased];
+}
 - (NSArray *)getFourRandomURLs{
   
   //TODO Fix this to not be test data

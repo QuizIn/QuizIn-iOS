@@ -20,32 +20,16 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-      _headerView = [self newHeaderView];
-      _tableView = [self newStoreTable];
-      
-      //todo fix testing 
-      _storeData = nil; 
-      _products = nil;
-      [self.tableView reloadData];
-      [[QIIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
-        if (success) {
-          _products = products;
-          _storeData = [QIStoreData getStoreDataWithProducts:_products];
-          [[(QIStoreTableHeaderView *)self.tableView.tableHeaderView buyAllButton] setHidden:NO];
-          [self.storeView.storeStatusLabel setHidden:YES];
-          [self.storeView.activity stopAnimating]; 
-          [self.tableView reloadData];
-        }
-        else {
-          [self.storeView.storeStatusLabel setText:@"Cannot Load Store"];
-          [self.storeView.activity stopAnimating];
-        }
-      }];
-      _highlightedCell = 99; 
-    }
-    return self;
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    _headerView = [self newHeaderView];
+    _tableView = [self newStoreTable];
+    _storeData = nil;
+    _products = nil;
+
+    [self reloadView];
+  }
+  return self;
 }
 
 -(void)loadView{
@@ -55,11 +39,12 @@
   self.storeView.tableView = self.tableView;
   [self.storeView addSubview:self.tableView];
   
-  QIStoreTableHeaderView *tableHeader = (QIStoreTableHeaderView *)self.storeView.tableView.tableHeaderView; 
-  [tableHeader.buyAllButton addTarget:self action:@selector(buyAll) forControlEvents:UIControlEventTouchUpInside];
+  [self.headerView.buyAllButton addTarget:self action:@selector(buyAll) forControlEvents:UIControlEventTouchUpInside];
+  [self.storeView.refreshButton addTarget:self action:@selector(reloadView) forControlEvents:UIControlEventTouchUpInside]; 
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+  [self reloadView]; 
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
 }
 
@@ -109,8 +94,8 @@
 
 - (void)buyAll{
   NSLog(@"Buy All");
-  QIStorePreviewViewController *previewController = [[QIStorePreviewViewController alloc] init];
-  [self presentViewController:previewController  animated:YES completion:nil];
+  SKProduct *product = [[QIStoreData getBuyAllProductWithProducts:self.products] objectAtIndex:0];
+  [[QIIAPHelper sharedInstance] buyProduct:product];
 }
 
 - (void)preview:(UIButton *)button{
@@ -131,7 +116,7 @@
 
 - (void)productPurchased:(NSNotification *)notification {
   self.storeData = [QIStoreData getStoreDataWithProducts:_products];
-  [self.tableView reloadData];
+  [self reloadView];
 }
 
 - (void)updateCellHighlight{
@@ -141,6 +126,34 @@
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
     [cell highlight];
   }
+}
+
+- (void)reloadView{
+    
+  [[QIIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+    if (success) {
+      _products = products;
+      _storeData = [QIStoreData getStoreDataWithProducts:_products];
+      
+      NSDictionary *item = [QIStoreData storeItemWithProduct:[[QIStoreData getBuyAllProductWithProducts:products] objectAtIndex:0]];
+      [self.headerView.buyAllButton setHidden:NO];
+      [self.headerView.bestOfferLabel setHidden:NO];
+      [self.headerView.buyAllPriceLabel setHidden:NO];
+      [self.headerView setAllPurchased:[[item objectForKey:@"itemPurchased"] boolValue]];
+      [self.headerView setAllPrice:[item objectForKey:@"itemPrice"]];
+      
+      [self.storeView.storeStatusLabel setHidden:YES];
+      [self.storeView.activity stopAnimating];
+      [self.tableView reloadData]; 
+    }
+    else {
+      [self.storeView.storeStatusLabel setText:@"Cannot Load Store"];
+      [self.storeView.refreshButton setHidden:NO]; 
+      [self.storeView.activity stopAnimating];
+    }
+  }];
+  _highlightedCell = 99;
+  [self.tableView reloadData];
 }
 
 #pragma mark TableView
@@ -212,6 +225,5 @@
   }
   return cell;
 }
-
 
 @end

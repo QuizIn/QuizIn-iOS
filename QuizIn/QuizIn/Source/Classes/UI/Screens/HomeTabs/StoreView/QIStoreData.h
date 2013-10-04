@@ -4,6 +4,9 @@
 
 @interface QIStoreData : NSObject
 
-+ (NSArray *) getStoreDataWithProducts:(NSArray *)products;
++ (NSArray *)getStoreDataWithProducts:(NSArray *)products;
++ (NSArray *)getBuyAllProductWithProducts:(NSArray *)products;
++ (NSDictionary *)storeItemWithProduct:(SKProduct *)product;
+
 
 @end

@@ -8,5 +8,6 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIActivityIndicatorView *activity;
 @property (nonatomic, strong) UILabel *storeStatusLabel;
+@property (nonatomic, strong) UIButton *refreshButton;
 
 @end

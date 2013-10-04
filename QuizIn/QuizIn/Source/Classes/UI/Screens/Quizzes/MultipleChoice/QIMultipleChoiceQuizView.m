@@ -174,7 +174,7 @@
     //Constrain Background Image and Overlay
     self.multipleChoiceConstraints = [NSMutableArray array];
   
-    NSDictionary *backgroundImageConstraintView = NSDictionaryOfVariableBindings(_viewBackground);
+    NSDictionary *backgroundImageConstraintView = NSDictionaryOfVariableBindings(_viewBackground,_overlayMask);
     
     NSArray *hBackgroundContraints =
     [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_viewBackground]|"

@@ -38,6 +38,7 @@
   [self.statsView.summaryView.pieChartView setDelegate:self];
   [self.statsView.summaryView.pieChartView setDataSource:self]; 
   [self.statsView.tableView reloadData];
+  [self showHideRefreshLockButton]; 
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -104,12 +105,20 @@
   _data = [[QIStatsData alloc] initWithLoggedInUserID:self.userID];
 }
 
+#pragma mark Data Layout
+
+- (void) showHideRefreshLockButton{
+  QIIAPHelper *store = [QIIAPHelper sharedInstance];
+  BOOL refreshPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_least"];
+  [self.statsView.summaryView.leastQuizLockButton setHidden:refreshPurchased];
+  [self.statsView.summaryView.leastQuizButton setHidden:!refreshPurchased];
+}
+
 #pragma mark Actions
 
 - (void)goToStore:(UIButton *)sender{
   [self.parentTabBarController setSelectedIndex:3];
   [(QIStoreViewController *)[[self.parentTabBarController viewControllers] objectAtIndex:3] setHighlightedCell:sender.tag];
-  
 }
 
 #pragma mark UIAlertViewDelegate Functions

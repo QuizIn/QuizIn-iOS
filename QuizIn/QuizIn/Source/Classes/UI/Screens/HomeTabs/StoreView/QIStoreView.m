@@ -25,7 +25,8 @@
   if (self) {
     _viewBackground = [self newViewBackground];
     _activity = [self newActivityView]; 
-    _storeStatusLabel = [self newStoreStatusLabel]; 
+    _storeStatusLabel = [self newStoreStatusLabel];
+    _refreshButton = [self newRefreshButton]; 
     [self contstructViewHierarchy];
   }
   return self;
@@ -41,7 +42,8 @@
 - (void)contstructViewHierarchy{
   [self addSubview:self.viewBackground];
   [self addSubview:self.activity];
-  [self addSubview:self.storeStatusLabel]; 
+  [self addSubview:self.storeStatusLabel];
+  [self addSubview:self.refreshButton]; 
 }
 
 #pragma mark Layout
@@ -94,6 +96,8 @@
     [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_activity attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
     [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_storeStatusLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
     [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_storeStatusLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:30.0f]];
+    [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_refreshButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+    [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_refreshButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:50.0f]];
     
     [self addConstraints:self.viewConstraints];
   }
@@ -132,5 +136,18 @@
   [label setText:[self storeStatusString]];
   return label;
 }
+
+- (UIButton *)newRefreshButton {
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setTitle:@"Refresh" forState:UIControlStateNormal];
+  [button.titleLabel setFont:[QIFontProvider fontWithSize:12.0f style:Regular]];
+  [button setTitleColor:[UIColor colorWithWhite:0.33f alpha:1.0f] forState:UIControlStateNormal];
+  [button setTitleColor:[UIColor colorWithWhite:0.0f alpha:1.0f] forState:UIControlStateHighlighted];
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [button setHidden:YES]; 
+  button.backgroundColor = [UIColor clearColor];
+  return button;
+}
+
 
 @end

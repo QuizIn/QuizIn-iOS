@@ -103,7 +103,6 @@
   return @"Needs Refresh";
 }
 
-
 #pragma mark Factory Methods
 - (UIView *)newKeyViewWithColorIndex:(NSInteger)index{
   UIView *view = [[UIView alloc] init];
@@ -145,6 +144,5 @@
   [label setTranslatesAutoresizingMaskIntoConstraints:NO];
   return label;
 }
-
 
 @end
