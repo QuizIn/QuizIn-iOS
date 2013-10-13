@@ -6,6 +6,7 @@
 @interface QIBusinessCardQuizView ()
 
 @property (nonatomic, strong) UIImageView *viewBackground;
+@property (nonatomic, strong) UIView *overlayMask; 
 @property (nonatomic, strong) UIView *businessCardView;
 @property (nonatomic, strong) UIImageView *businessCardBackground;
 @property (nonatomic, strong) UIImageView *divider;
@@ -57,6 +58,7 @@
     _answerCompany = [self newAnswerView];
     _checkAnswersView = [self newCheckAnswersView];
     _rankDisplayView = [self newRankDisplayView];
+    _overlayMask = [self newOverlayMask]; 
     _resultClosed = YES;
     _allowAnalytics = YES;
     
@@ -125,6 +127,7 @@
 
 - (void)setLoggedInUserID:(NSString *)loggedInUserID{
   _loggedInUserID = loggedInUserID;
+  _rankDisplayView.userID = loggedInUserID; 
 }
 
 #pragma mark View Hierarchy
@@ -150,6 +153,7 @@
   
   [self addSubview:self.answerSuperView];
   [self addSubview:self.checkAnswersView];
+  [self addSubview:self.overlayMask]; 
   [self addSubview:self.rankDisplayView];
 }
 
@@ -189,8 +193,8 @@
     
     self.cardConstraints = [NSMutableArray array];
     
-    //Constrain Background Image
-    NSDictionary *backgroundImageConstraintView = NSDictionaryOfVariableBindings(_viewBackground);
+    //Constrain Background Image and Overlay Mask
+    NSDictionary *backgroundImageConstraintView = NSDictionaryOfVariableBindings(_viewBackground,_overlayMask);
     
     NSString *hBackgroundView = @"H:|[_viewBackground]|"; 
     NSArray *hBackgroundContraints =
@@ -205,9 +209,21 @@
                                             options:NSLayoutFormatAlignAllLeft
                                             metrics:nil
                                               views:backgroundImageConstraintView];
+    NSArray *hOverlayContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_overlayMask]|"
+                                            options:NSLayoutFormatAlignAllTop
+                                            metrics:nil
+                                              views:backgroundImageConstraintView];
+    NSArray *vOverlayContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_overlayMask]|"
+                                            options:0
+                                            metrics:nil
+                                              views:backgroundImageConstraintView];
     
     [self.cardConstraints addObjectsFromArray:hBackgroundContraints];
     [self.cardConstraints addObjectsFromArray:vBackgroundContraints];
+    [self.cardConstraints addObjectsFromArray:hOverlayContraints];
+    [self.cardConstraints addObjectsFromArray:vOverlayContraints];
 
     //Progress View
     NSDictionary *progressView = NSDictionaryOfVariableBindings(_progressView);
@@ -411,9 +427,9 @@
    //Constrain Rank Display
     NSLayoutConstraint *centerRankX = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
     NSLayoutConstraint *widthRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *heightRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:81.0f];
+    NSLayoutConstraint *heightRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:220.0f];
   
-    _topRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0f constant:-81.0f];
+    _topRank = [NSLayoutConstraint constraintWithItem:_rankDisplayView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0f constant:-220.0f];
     
     [self.cardConstraints addObjectsFromArray:@[centerRankX,widthRank,heightRank,_topRank]];
 
@@ -478,15 +494,18 @@
 -(void)showRankDisplay{
   [UIView animateWithDuration:0.5 animations:^{
     [self.topRank setConstant:100.0f];
-    [NSTimer scheduledTimerWithTimeInterval:7.0f target:self selector:@selector(hideRankDisplay) userInfo:nil repeats:NO];
+    [self.overlayMask setHidden:NO]; 
     [self layoutIfNeeded];
   }];
 }
 
 -(void)hideRankDisplay{
   [UIView animateWithDuration:0.5 animations:^{
-    [self.topRank setConstant:-81.0f];
+    [self.topRank setConstant:-220.0f];
     [self layoutIfNeeded];
+  }
+    completion:^(BOOL completion){
+      [self.overlayMask setHidden:YES];
   }];
 }
 
@@ -741,6 +760,14 @@
   view.rank = 1;
   [view setTranslatesAutoresizingMaskIntoConstraints:NO];
   [view setBackgroundColor:[UIColor clearColor]];
+  return view;
+}
+
+- (UIView *)newOverlayMask{
+  UIView *view = [[UIView alloc] init];
+  [view setHidden:YES];
+  [view setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:.8f]];
+  [view setTranslatesAutoresizingMaskIntoConstraints:NO];
   return view;
 }
 

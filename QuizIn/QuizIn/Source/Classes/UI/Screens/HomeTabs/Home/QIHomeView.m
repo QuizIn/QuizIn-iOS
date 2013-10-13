@@ -67,10 +67,14 @@
     _topRightCard = [self newTopRightCard];
     _bottomLeftCard = [self newBottomLeftCard];
     _bottomRightCard = [self newBottomRightCard];
-    _companyQuizButton = [self newQuizButton];
-    _localeQuizButton = [self newQuizButton];
-    _industryQuizButton = [self newQuizButton];
-    _groupQuizButton = [self newQuizButton];
+    _companyQuizLockButton = [self newQuizLockButtonWithTag:0];
+    _localeQuizLockButton = [self newQuizLockButtonWithTag:4];
+    _industryQuizLockButton = [self newQuizLockButtonWithTag:2];
+    _groupQuizLockButton = [self newQuizLockButtonWithTag:1];
+    _companyQuizBeginButton = [self newQuizBeginButton];
+    _localeQuizBeginButton = [self newQuizBeginButton];
+    _industryQuizBeginButton = [self newQuizBeginButton];
+    _groupQuizBeginButton = [self newQuizBeginButton];
     _companyQuizLabel = [self newQuizLabelWithText:@"CompanyQuiz"];
     _localeQuizLabel = [self newQuizLabelWithText:@"LocaleQuiz"];
     _industryQuizLabel = [self newQuizLabelWithText:@"IndustryQuiz"];
@@ -118,10 +122,17 @@
   [self.scrollView addSubview:self.topRightCard];
   [self.scrollView addSubview:self.bottomLeftCard];
   [self.scrollView addSubview:self.bottomRightCard];
-  [self.scrollView addSubview:self.companyQuizButton]; 
-  [self.scrollView addSubview:self.localeQuizButton];
-  [self.scrollView addSubview:self.groupQuizButton];
-  [self.scrollView addSubview:self.industryQuizButton];
+
+  [self.scrollView addSubview:self.companyQuizBeginButton];
+  [self.scrollView addSubview:self.localeQuizBeginButton];
+  [self.scrollView addSubview:self.groupQuizBeginButton];
+  [self.scrollView addSubview:self.industryQuizBeginButton];
+  
+  [self.scrollView addSubview:self.companyQuizLockButton];
+  [self.scrollView addSubview:self.localeQuizLockButton];
+  [self.scrollView addSubview:self.groupQuizLockButton];
+  [self.scrollView addSubview:self.industryQuizLockButton];
+  
   [self.scrollView addSubview:self.companyQuizLabel];
   [self.scrollView addSubview:self.localeQuizLabel];
   [self.scrollView addSubview:self.groupQuizLabel];
@@ -208,7 +219,7 @@
     //ConnectionsQuizStartView Constraints
     
     NSDictionary *connectionQuizViews = NSDictionaryOfVariableBindings(_connectionsQuizPaperImage,_connectionsQuizBinderImage,_connectionsQuizTitle,_connectionsQuizNumberOfConnectionsLabel,_connectionsQuizImagePreviewCollection,_connectionsQuizButton);
-    NSString *primaryVertical = @"V:|-40-[_connectionsQuizTitle][_connectionsQuizNumberOfConnectionsLabel]-15-[_connectionsQuizImagePreviewCollection(==60)]";
+    NSString *primaryVertical = @"V:|-40-[_connectionsQuizTitle]-(-3)-[_connectionsQuizNumberOfConnectionsLabel]-15-[_connectionsQuizImagePreviewCollection(==60)]";
     
     NSArray *vConstraintsConnectionsQuizPaperImageBottom =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_connectionsQuizPaperImage(==250)]"
@@ -298,7 +309,7 @@
     
     //Constain Group Picker Areas
     self.constraintsForGroupSelectionView = [NSMutableArray array];
-    NSDictionary *groupSelectionViews = NSDictionaryOfVariableBindings(_topLeftCard,_topRightCard,_bottomLeftCard,_bottomRightCard,_companyQuizLabel,_companyQuizButton,_localeQuizLabel,_localeQuizButton,_groupQuizLabel,_groupQuizButton,_industryQuizLabel,_industryQuizButton);
+    NSDictionary *groupSelectionViews = NSDictionaryOfVariableBindings(_topLeftCard,_topRightCard,_bottomLeftCard,_bottomRightCard,_companyQuizLabel,_companyQuizLockButton,_localeQuizLabel,_localeQuizLockButton,_groupQuizLabel,_groupQuizLockButton,_industryQuizLabel,_industryQuizLockButton);
     
     NSArray *hConstrainTopCards =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-1-[_topLeftCard(==163)]-(-8)-[_topRightCard(==_topLeftCard)]-1-|"
@@ -325,27 +336,37 @@
     NSLayoutConstraint *topLeftCardInitialPosition = [NSLayoutConstraint constraintWithItem:_topLeftCard attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_connectionsQuizStartView attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-15.0f];
     
     NSArray *vConstrainTopLeftCardContent =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topLeftCard]-(-87)-[_companyQuizLabel(==25)]-8-[_companyQuizButton(==22)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topLeftCard]-(-94)-[_companyQuizLabel(==25)][_companyQuizLockButton(==39)]"
                                             options:NSLayoutFormatAlignAllCenterX
                                             metrics:nil
                                               views:groupSelectionViews];
     NSArray *vConstrainTopRightCardContent =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topRightCard]-(-87)-[_localeQuizLabel(==25)]-8-[_localeQuizButton(==22)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topRightCard]-(-94)-[_localeQuizLabel(==25)][_localeQuizLockButton(==39)]"
                                             options:NSLayoutFormatAlignAllCenterX
                                             metrics:nil
                                               views:groupSelectionViews];
     NSArray *vConstrainBottomLeftCardContent =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_bottomLeftCard]-(-87)-[_groupQuizLabel(==25)]-8-[_groupQuizButton(==22)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_bottomLeftCard]-(-94)-[_groupQuizLabel(==25)][_groupQuizLockButton(==39)]"
                                             options:NSLayoutFormatAlignAllCenterX
                                             metrics:nil
                                               views:groupSelectionViews];
     NSArray *vConstrainBottomRightCardContent =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_bottomRightCard]-(-87)-[_industryQuizLabel(==25)]-8-[_industryQuizButton(==22)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_bottomRightCard]-(-94)-[_industryQuizLabel(==25)][_industryQuizLockButton(==39)]"
                                             options:NSLayoutFormatAlignAllCenterX
                                             metrics:nil
                                               views:groupSelectionViews];
     
+    NSLayoutConstraint *companyBeginCenterX = [NSLayoutConstraint constraintWithItem:_companyQuizBeginButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_companyQuizLockButton attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *companyBeginCenterY = [NSLayoutConstraint constraintWithItem:_companyQuizBeginButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_companyQuizLockButton attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *localeBeginCenterX = [NSLayoutConstraint constraintWithItem:_localeQuizBeginButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_localeQuizLockButton attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *localeBeginCenterY = [NSLayoutConstraint constraintWithItem:_localeQuizBeginButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_localeQuizLockButton attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *groupBeginCenterX = [NSLayoutConstraint constraintWithItem:_groupQuizBeginButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_groupQuizLockButton attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *groupBeginCenterY = [NSLayoutConstraint constraintWithItem:_groupQuizBeginButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_groupQuizLockButton attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *industryBeginCenterX = [NSLayoutConstraint constraintWithItem:_industryQuizBeginButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_industryQuizLockButton attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *industryBeginCenterY = [NSLayoutConstraint constraintWithItem:_industryQuizBeginButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_industryQuizLockButton attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f];
+    
     [self.constraintsForGroupSelectionView addObjectsFromArray:@[topLeftCardInitialPosition]];
+    [self.constraintsForGroupSelectionView addObjectsFromArray:@[companyBeginCenterX,companyBeginCenterY,localeBeginCenterX,localeBeginCenterY,groupBeginCenterX,groupBeginCenterY,industryBeginCenterX,industryBeginCenterY]];
     [self.constraintsForGroupSelectionView addObjectsFromArray:hConstrainTopCards];
     [self.constraintsForGroupSelectionView addObjectsFromArray:hConstrainBottomCards];
     [self.constraintsForGroupSelectionView addObjectsFromArray:vConstrainLeftCards];
@@ -422,10 +443,12 @@
 
 - (UILabel *)newConnectionsQuizTitle{
   UILabel *quizTitle = [[UILabel alloc] init];
-  [quizTitle setText:[self homeViewTitle]];
-  [quizTitle setFont:[QIFontProvider fontWithSize:16.0f style:Bold]];
-  [quizTitle setTextColor:[UIColor colorWithWhite:0.33f alpha:1.0f]];
-  [quizTitle setAdjustsFontSizeToFitWidth:YES];
+  NSMutableAttributedString *labelAttributes = [[NSMutableAttributedString alloc] initWithString:[self homeViewTitle]];
+  [labelAttributes addAttribute:NSFontAttributeName value:[QIFontProvider fontWithSize:16.0f style:Regular] range:NSMakeRange(labelAttributes.length-4, 4)];
+  [labelAttributes addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:0.33f alpha:1.0f] range:NSMakeRange(labelAttributes.length-4,4)];
+  [labelAttributes addAttribute:NSFontAttributeName value:[QIFontProvider fontWithSize:16.0f style:Bold] range:NSMakeRange(0,labelAttributes.length-4)];
+  [labelAttributes addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:0.33f alpha:1.0f] range:NSMakeRange(0,labelAttributes.length-4)];
+  [quizTitle setAttributedText:labelAttributes];
   [quizTitle setBackgroundColor:[UIColor clearColor]];
   [quizTitle setTranslatesAutoresizingMaskIntoConstraints:NO];
   return quizTitle;
@@ -435,7 +458,7 @@
   UILabel *quizConnections = [[UILabel alloc] init];
   [quizConnections setText:[self homeViewSubtext]];
   [quizConnections setFont:[QIFontProvider fontWithSize:13.0f style:Regular]];
-  [quizConnections setTextColor:[UIColor colorWithWhite:0.33f alpha:1.0f]];
+  [quizConnections setTextColor:[UIColor colorWithWhite:0.50f alpha:1.0f]];
   [quizConnections setAdjustsFontSizeToFitWidth:YES];
   [quizConnections setBackgroundColor:[UIColor clearColor]];
   [quizConnections setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -452,7 +475,7 @@
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_hobnob_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
-  button.backgroundColor = [UIColor clearColor];
+  [button setBackgroundColor:[UIColor clearColor]];
   return button;
 }
 
@@ -503,19 +526,34 @@
   return cardView;
 }
 
-- (UIButton *)newQuizButton{
+- (UIButton *)newQuizLockButtonWithTag:(NSInteger)tag{
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_locked_btn"] forState:UIControlStateNormal];
+  [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [button setBackgroundColor:[UIColor clearColor]];
+  [button setTag:tag]; 
+  return button;
+}
+
+- (UIButton *)newQuizBeginButton{
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_unlocked_btn"] forState:UIControlStateNormal];
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  //todo unhide when the item is purchased. 
+  [button setHidden:YES];
   [button setBackgroundColor:[UIColor clearColor]];
   return button;
 }
-   
+
 - (UILabel *)newQuizLabelWithText:(NSString *)text{
   UILabel *label = [[UILabel alloc] init];
-  [label setText:text];
-  [label setFont:[QIFontProvider fontWithSize:13.0f style:Regular]];
-  [label setTextColor:[UIColor colorWithWhite:0.33f alpha:1.0f]];
+  NSMutableAttributedString *labelAttributes = [[NSMutableAttributedString alloc] initWithString:text];
+  
+  [labelAttributes addAttribute:NSFontAttributeName value:[QIFontProvider fontWithSize:13.0f style:Regular] range:NSMakeRange(labelAttributes.length-4, 4)];
+  [labelAttributes addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:0.33f alpha:1.0f] range:NSMakeRange(labelAttributes.length-4,4)];
+  [labelAttributes addAttribute:NSFontAttributeName value:[QIFontProvider fontWithSize:13.0f style:Bold] range:NSMakeRange(0,labelAttributes.length-4)];
+  [labelAttributes addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:0.33f alpha:1.0f] range:NSMakeRange(0,labelAttributes.length-4)];
+  [label setAttributedText:labelAttributes];
   [label setBackgroundColor:[UIColor clearColor]];
   [label setTranslatesAutoresizingMaskIntoConstraints:NO];
   return label;
@@ -523,7 +561,7 @@
 
 #pragma mark Strings
 - (NSString *)homeViewTitle{
-  return @"Connections Quiz"; 
+  return @"ConnectionsQuiz"; 
 }
 - (NSString *)homeViewSubtext{
   return @"Connections"; 

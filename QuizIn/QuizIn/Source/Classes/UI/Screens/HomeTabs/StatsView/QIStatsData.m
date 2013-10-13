@@ -10,6 +10,11 @@
 
 @implementation QIStatsData
 
+//Rules
+//Well Known Index - 3 or more
+//Sorta Known - 0-3
+//Needs Refresh - < 0
+
 /*
  //Quizzes Started
  //Quizzes Complete
@@ -22,30 +27,37 @@
 // key: UserID    Dictionary
   // key:CurrentRank              Integer
   // key:updateRank               BOOL
-  // key:TotalCorrectAnswers      Integer
-  // key:TotalIncorrectAnswers    Integer
-  // key:IndividualStats          Array
+  // key:totalCorrectAnswers      Integer
+  // key:totalIncorrectAnswers    Integer
+  // key:connectionStats          Array
         //Array Elements            Dictionary
-      //key:UserID              NSString
-      //key:UserPictureID       NSString
-      //key:UserFirstName       NSString
-      //key:UserLastName        NSString
-      //key:CorrectAnswers      Integer
-      //key:IncorrectAnswers    Integer
+      //key:userID              NSString
+      //key:userPictureID       NSString
+      //key:userFirstName       NSString
+      //key:userLastName        NSString
+      //key:correctAnswers      Integer
+      //key:incorrectAnswers    Integer
+      //key:lastDirection       BOOL
 */
+
+#define WELL_KNOWN_THRESHOLD 3 
 
 - (id)initWithLoggedInUserID:(NSString *)ID{
   self = [super init];
   if (self) {
     _userID = ID;
     _ranks = [QIRankDefinition getRankDelineations];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if (![prefs objectForKey:_userID]){
+      [self setUpStats]; 
+    }
   }
   return self;
 }
 
 
 
-//reset Stats
+#pragma mark Actions
 
 - (void)setUpStats{
   NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -68,9 +80,6 @@
   [prefs synchronize];
 }
 
-
-//debug functions
-
 - (void)printStats{
   NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
   NSMutableDictionary *stats = [[prefs objectForKey:self.userID] mutableCopy];
@@ -90,8 +99,7 @@
   }
 }
 
-
-//get stats (primary for stats view)
+#pragma mark Get Stats
 
 - (int)getCurrentRank{
   NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -117,6 +125,10 @@
   return [stats objectForKey:@"connectionStats"];
 }
 
+- (NSInteger)getWellKnownThreshold{
+  return WELL_KNOWN_THRESHOLD; 
+}
+
 - (NSArray *)getConnectionStatsInOrderBy:(SortBy)sortBy{
   
   NSString *sortKey = @"userLastName";
@@ -130,7 +142,8 @@
       break;
     }
     case knowledgeIndex:{
-      sortKey = @"correctAnswers";
+      sortKey = @"userLastName"; 
+      //sortKey = @"correctAnswers";
     }
     default:
       break;
@@ -174,6 +187,32 @@
     }
   }
   else if (sortBy == knowledgeIndex){
+    
+    NSMutableIndexSet *wellKnownIndexes = [[NSMutableIndexSet alloc] init];
+    NSMutableIndexSet *middleKnownIndexes = [[NSMutableIndexSet alloc] init];
+    NSMutableIndexSet *needsRefreshIndexes = [[NSMutableIndexSet alloc] init];
+    for (int i = 0; i<[sortedConnectionStats count];i++){
+      NSDictionary *connection = [sortedConnectionStats objectAtIndex:i];
+      NSInteger correctAnswers = [[connection objectForKey:@"correctAnswers"] integerValue];
+      NSInteger incorrectAnswers = [[connection objectForKey:@"incorrectAnswers"] integerValue];
+      NSInteger knownIndex = correctAnswers - incorrectAnswers;
+      if (knownIndex >= WELL_KNOWN_THRESHOLD)
+        [wellKnownIndexes addIndex:i];
+      else if (knownIndex >=0 && knownIndex < WELL_KNOWN_THRESHOLD)
+        [middleKnownIndexes addIndex:i];
+      else
+        [needsRefreshIndexes addIndex:i];
+    }
+    NSArray *wellKnownConnections = [sortedConnectionStats objectsAtIndexes:wellKnownIndexes];
+    NSArray *middleConnections = [sortedConnectionStats objectsAtIndexes:middleKnownIndexes];
+    NSArray *needsRefreshConnections = [sortedConnectionStats objectsAtIndexes:needsRefreshIndexes];
+    [sections addObjectsFromArray:@[@"Needs Refresh",@"Sorta Known",@"Well Known"]];
+    [connectionStatsAlphabetical setObject:needsRefreshConnections forKey:[sections objectAtIndex:0]];
+    [connectionStatsAlphabetical setObject:middleConnections forKey:[sections objectAtIndex:1]];
+    [connectionStatsAlphabetical setObject:wellKnownConnections forKey:[sections objectAtIndex:2]];
+
+    
+    /*
     for (NSDictionary *connection in sortedConnectionStats){
       NSString *sectionName = [NSString stringWithFormat:@"%d",[[connection objectForKey:sortKey] integerValue]];
       NSUInteger index = [sections indexOfObject:sectionName];
@@ -186,9 +225,35 @@
         [[connectionStatsAlphabetical objectForKey:sectionName] addObject:connection];
       }
     }
+    */
   }
   return @[sections,connectionStatsAlphabetical];
 }
+
+- (NSArray *)getConnectionStatsByKnownGroupings{
+  NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+  NSMutableDictionary *stats = [[prefs objectForKey:self.userID] mutableCopy];
+  
+  NSMutableArray *connectionStats = [stats objectForKey:@"connectionStats"];
+  NSMutableIndexSet *wellKnownIndexes = [[NSMutableIndexSet alloc] init];
+  NSMutableIndexSet *middleKnownIndexes = [[NSMutableIndexSet alloc] init];
+  NSMutableIndexSet *needsRefreshIndexes = [[NSMutableIndexSet alloc] init];
+  for (int i = 0; i<[connectionStats count];i++){
+    NSDictionary *connection = [connectionStats objectAtIndex:i];
+    NSInteger correctAnswers = [[connection objectForKey:@"correctAnswers"] integerValue];
+    NSInteger incorrectAnswers = [[connection objectForKey:@"incorrectAnswers"] integerValue];
+    NSInteger knownIndex = correctAnswers - incorrectAnswers;
+    if (knownIndex >= WELL_KNOWN_THRESHOLD)
+      [wellKnownIndexes addIndex:i];
+    else if (knownIndex >=0 && knownIndex < WELL_KNOWN_THRESHOLD)
+      [middleKnownIndexes addIndex:i];
+    else
+      [needsRefreshIndexes addIndex:i];
+  }
+  return @[wellKnownIndexes, middleKnownIndexes, needsRefreshIndexes];
+}
+
+#pragma Mark Update Stats
 
 //stats Analytics events
 - (void)updateStatsWithConnectionProfile:(QIPerson *)person correct:(BOOL)correct{
@@ -198,7 +263,6 @@
   //Handle Total Correct and Incorrect Answers
   int totalCorrectAnswers = [[stats objectForKey:@"totalCorrectAnswers"] integerValue];
   int totalIncorrectAnswers = [[stats objectForKey:@"totalIncorrectAnswers"] integerValue];
-  
   if (correct) {
     totalCorrectAnswers++;
   }
@@ -230,29 +294,37 @@
                          }
                         }];
   if (connectionIndex != NSNotFound) {
+    BOOL lastDirection;
     NSMutableDictionary *individualConnectionStats = [[connectionStats objectAtIndex:connectionIndex] mutableCopy];
     if (correct) {
       int correctAnswers = [[individualConnectionStats objectForKey:@"correctAnswers"] integerValue];
       correctAnswers++;
+      lastDirection = YES; 
       [individualConnectionStats setObject:[NSNumber numberWithInt:correctAnswers] forKey:@"correctAnswers"];
+      [individualConnectionStats setObject:[NSNumber numberWithBool:lastDirection] forKey:@"lastDirection"];
     }
     else{
       int incorrectAnswers = [[individualConnectionStats objectForKey:@"incorrectAnswers"] integerValue];
       incorrectAnswers++;
+      lastDirection = NO;
       [individualConnectionStats setObject:[NSNumber numberWithInt:incorrectAnswers] forKey:@"incorrectAnswers"];
+      [individualConnectionStats setObject:[NSNumber numberWithBool:lastDirection] forKey:@"lastDirection"]; 
     }
     [connectionStats replaceObjectAtIndex:connectionIndex withObject:individualConnectionStats];
   }
   else {
     int correctAnswers;
     int incorrectAnswers;
+    BOOL lastDirection; 
     if (correct) {
       correctAnswers = 1;
       incorrectAnswers = 0;
+      lastDirection = YES; 
     }
     else{
       correctAnswers = 0;
       incorrectAnswers = 1;
+      lastDirection = NO; 
     }
     
     NSMutableDictionary *individualConnectionStatsNew = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -260,8 +332,10 @@
                                                          person.personID,                           @"userID",
                                                          person.firstName,                          @"userFirstName",
                                                          person.lastName,                           @"userLastName",
+                                                         person.publicProfileURL,                   @"profileURL",
                                                          [NSNumber numberWithInt:correctAnswers],   @"correctAnswers",
                                                          [NSNumber numberWithInt:incorrectAnswers], @"incorrectAnswers",
+                                                         [NSNumber numberWithBool:lastDirection],   @"lastDirection",
                                                          nil];
     [connectionStats addObject:individualConnectionStatsNew];
   }

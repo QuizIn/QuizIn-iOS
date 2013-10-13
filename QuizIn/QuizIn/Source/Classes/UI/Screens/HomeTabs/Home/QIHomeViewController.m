@@ -1,7 +1,10 @@
 #import "QIHomeViewController.h"
 #import "QIQuizViewController.h"
 #import "QIGroupSelectionViewController.h"
+#import "QIStoreViewController.h"
 #import "LinkedIn.h"
+#import "QIIAPHelper.h"
+#import "QIStoreData.h"
 #import "QIHomeView.h"
 
 
@@ -25,14 +28,14 @@
 
 - (void)loadView {
   self.view = [[QIHomeView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  [LinkedIn numberOfConnectionsForAuthenticatedUserOnCompletion:^(NSInteger numberOfConnections, NSError *error) {
+  /*[LinkedIn numberOfConnectionsForAuthenticatedUserOnCompletion:^(NSInteger numberOfConnections, NSError *error) {
     if (error == nil) {
       NSLog(@"Number of Connections: %d", numberOfConnections);
       self.homeView.numberOfConnections = numberOfConnections;
     } else {
       NSLog(@"Error: %@", error);
     }
-  }];
+  }];*/
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -42,6 +45,7 @@
                                               selector:@selector(timedImageChange)
                                               userInfo:nil
                                                repeats:YES];
+  [self showHideLockButtons]; 
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -59,22 +63,37 @@
                                           action:@selector(startConnectionsQuiz:)
                                 forControlEvents:UIControlEventTouchUpInside];
 
-  [self.homeView.companyQuizButton addTarget:self
-                                         action:@selector(groupPicker)
+  [self.homeView.companyQuizLockButton addTarget:self
+                                         action:@selector(goToStore:)
                                forControlEvents:UIControlEventTouchUpInside];
   
-  [self.homeView.localeQuizButton addTarget:self
-                                      action:@selector(groupPicker)
+  [self.homeView.localeQuizLockButton addTarget:self
+                                      action:@selector(goToStore:)
                             forControlEvents:UIControlEventTouchUpInside];
   
-  [self.homeView.industryQuizButton addTarget:self
-                                      action:@selector(groupPicker)
+  [self.homeView.industryQuizLockButton addTarget:self
+                                      action:@selector(goToStore:)
                             forControlEvents:UIControlEventTouchUpInside];
   
-  [self.homeView.groupQuizButton addTarget:self
-                                      action:@selector(groupPicker)
+  [self.homeView.groupQuizLockButton addTarget:self
+                                      action:@selector(goToStore:)
                             forControlEvents:UIControlEventTouchUpInside];
   
+  [self.homeView.companyQuizBeginButton addTarget:self
+                                           action:@selector(groupedPicker)
+                                 forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.homeView.localeQuizBeginButton addTarget:self
+                                           action:@selector(groupedPicker)
+                                 forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.homeView.industryQuizBeginButton addTarget:self
+                                           action:@selector(groupedPicker)
+                                 forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.homeView.groupQuizBeginButton addTarget:self
+                                           action:@selector(groupedPicker)
+                                 forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -88,12 +107,32 @@
   [self presentViewController:quizViewController animated:YES completion:nil];
 }
 
+- (void)goToStore:(UIButton *)sender{
+  [self.parentTabBarController setSelectedIndex:3];
+  [(QIStoreViewController *)[[self.parentTabBarController viewControllers] objectAtIndex:3] setHighlightedCell:sender.tag];
+}
+
 - (void)groupPicker{
   QIGroupSelectionViewController *groupSelectionViewController = [self newGroupSelectionViewController];
   [self presentViewController:groupSelectionViewController animated:YES completion:nil];
 }
 
 #pragma mark Data
+- (void) showHideLockButtons{
+  QIIAPHelper *store = [QIIAPHelper sharedInstance];
+  BOOL companyPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_company"];
+  [self.homeView.companyQuizLockButton setHidden:companyPurchased];
+  [self.homeView.companyQuizBeginButton setHidden:!companyPurchased];
+  BOOL localePurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_locale"];
+  [self.homeView.localeQuizLockButton setHidden:localePurchased];
+  [self.homeView.localeQuizBeginButton setHidden:!localePurchased];
+  BOOL industryPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_industry"];
+  [self.homeView.industryQuizLockButton setHidden:industryPurchased];
+  [self.homeView.industryQuizBeginButton setHidden:!industryPurchased];
+  BOOL groupPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_group"];
+  [self.homeView.groupQuizLockButton setHidden:groupPurchased];
+  [self.homeView.groupQuizBeginButton setHidden:!groupPurchased];
+}
 - (NSArray *)getFourRandomURLs{
   
   //TODO Fix this to not be test data
@@ -129,6 +168,10 @@
 
 - (QIHomeView *)homeView {
   return (QIHomeView *)self.view;
+}
+
+- (void)setParentTabBarController:(UITabBarController *)parentTabBarController {
+  _parentTabBarController = parentTabBarController; 
 }
 
 #pragma mark Factory Methods

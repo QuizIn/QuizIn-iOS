@@ -1,7 +1,6 @@
 #import "QIGroupSelectionView.h"
 #import "QIGroupSelectionCellView.h"
 #import "QIGroupSelectionData.h"
-#import "QIGroupSelectionTableFooterView.h"
 #import "QIFontProvider.h"
 
 #define FAST_ANIMATION_DURATION 0.35
@@ -17,7 +16,6 @@
 @property (nonatomic, strong) UIImageView *bottomSlit;
 @property (nonatomic, strong) UIImageView *viewBackground;
 @property (nonatomic, strong) NSMutableArray *viewConstraints;
-@property (nonatomic, strong) QIGroupSelectionTableFooterView *footerViewLoading;
 @property (nonatomic) float openCellLastTX;
 @property (nonatomic, strong) NSIndexPath *openCellIndexPath;
 
@@ -36,7 +34,7 @@
     self = [super initWithFrame:frame];
     if (self) {
       _viewLabel = [self newViewLabel];
-      _footerViewLoading = [self newFooterViewLoading];
+      _footerView = [self newFooterView];
       _tableView = [self newSelectionTable];
       _topSlit = [self newTopSlit];
       _bottomSlit = [self newBottomSlit];
@@ -74,7 +72,7 @@
   [self addSubview:self.bottomSlit];
   [self addSubview:self.quizButton];
   [self addSubview:self.backButton];
-  [self.tableView setTableFooterView:self.footerViewLoading];
+  [self.tableView setTableFooterView:self.footerView];
 }
 #pragma Data Display
 
@@ -210,8 +208,8 @@
   return background;
 }
 
--(QIGroupSelectionTableFooterView *)newFooterViewLoading{
-  QIGroupSelectionTableFooterView *footer = [[QIGroupSelectionTableFooterView alloc] initWithFrame:CGRectMake(0, 0, 100, 24)];
+-(QIGroupSelectionTableFooterView *)newFooterView{
+  QIGroupSelectionTableFooterView *footer = [[QIGroupSelectionTableFooterView alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
   return footer;
 }
 
@@ -298,19 +296,6 @@
   else{
     [self snapView:cell.frontView toX:PAN_OPEN_X animated:YES];
      [[self.selectionContent objectAtIndex:indexPath.row] setObject:@YES forKey:@"selected"];
-  }
-
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)aScrollView
-{
-  NSArray *visibleRows = [self.tableView visibleCells];
-  UITableViewCell *lastVisibleCell = [visibleRows lastObject];
-  NSIndexPath *path = [self.tableView indexPathForCell:lastVisibleCell];
-  if(path.row == [self.selectionContent count]-1)
-  {
-    [self.selectionContent addObjectsFromArray:[QIGroupSelectionData getSelectionData]];
-    [self.tableView reloadData];
   }
 }
 

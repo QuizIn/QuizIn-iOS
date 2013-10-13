@@ -1,15 +1,18 @@
-//
-//  QIStatsSummaryView.h
-//  QuizIn
-//
-//  Created by Rick Kuhlman on 7/30/13.
-//  Copyright (c) 2013 Kuhlmanation LLC. All rights reserved.
-//
-
+#import "DLPieChart.h"
 #import <UIKit/UIKit.h>
 
-@interface QIStatsSummaryView : UIView
+
+@interface QIStatsSummaryView : UIView 
 
 @property (nonatomic, strong) UISegmentedControl *sorterSegmentedControl;
+@property (nonatomic, strong) NSMutableArray *pieChartData;
+@property (nonatomic, retain) DLPieChart *pieChartView;
+@property (nonatomic, strong) UIButton *leastQuizButton;
+@property (nonatomic, strong) UIButton *leastQuizLockButton;
+@property (nonatomic, strong) NSNumber *correctAnswers;
+@property (nonatomic, strong) NSNumber *incorrectAnswers;
+@property (nonatomic, strong) NSNumber *currentRank;
+
+- (void)drawPieChart;
 
 @end

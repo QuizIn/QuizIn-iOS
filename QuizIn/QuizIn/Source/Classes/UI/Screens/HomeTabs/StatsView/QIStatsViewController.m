@@ -1,7 +1,10 @@
 
 #import "QIStatsViewController.h"
+#import "QIStoreViewController.h"
 
 @interface QIStatsViewController ()
+
+@property (nonatomic, strong) QIStatsData *data; 
 
 @end
 
@@ -23,34 +26,46 @@
   [self.statsView.resetStatsButton addTarget:self action:@selector(resetStats) forControlEvents:UIControlEventTouchUpInside];
   [self.statsView.printStatsButton addTarget:self action:@selector(printStats) forControlEvents:UIControlEventTouchUpInside];
   [self.statsView.summaryView.sorterSegmentedControl addTarget:self action:@selector(sorter:) forControlEvents:UIControlEventValueChanged];
+  [self.statsView.summaryView.leastQuizLockButton addTarget:self action:@selector(goToStore:) forControlEvents:UIControlEventTouchUpInside]; 
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-  QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:self.userID];
-  self.statsView.currentRank = [data getCurrentRank];
-  self.statsView.totalCorrectAnswers = [data getTotalCorrectAnswers];
-  self.statsView.totalIncorrectAnswers = [data getTotalIncorrectAnswers];
-  self.statsView.connectionStats = [data getConnectionStatsInOrderBy:lastName];
+  [self.statsView setCurrentRank:[self.data getCurrentRank]];
+  [self.statsView setTotalCorrectAnswers:[self.data getTotalCorrectAnswers]];
+  [self.statsView setTotalIncorrectAnswers:[self.data getTotalIncorrectAnswers]];
+  [self.statsView setConnectionStats:[self.data getConnectionStatsInOrderBy:knowledgeIndex]];
+  [self.statsView setWellKnownThreshold:[self.data getWellKnownThreshold]];
+  [self.statsView.summaryView.pieChartView setDelegate:self];
+  [self.statsView.summaryView.pieChartView setDataSource:self]; 
   [self.statsView.tableView reloadData];
+  [self showHideRefreshLockButton]; 
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+  [self.statsView.summaryView.pieChartView reloadData];
+  
+  if (self.statsView.totalCorrectAnswers + self.statsView.totalIncorrectAnswers == 0){
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Stats Yet" message:@"Build up knowledge data by Hobnob'n with your contacts." delegate:self cancelButtonTitle:@"Home" otherButtonTitles:nil];
+    [alert show];
+  }
 }
 
 - (void)sorter:(id)sender{
-  QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:self.userID];
   UISegmentedControl *sorter = (UISegmentedControl *)sender;
   int index = [sorter selectedSegmentIndex];
   switch (index) {
     case 0:{
-      self.statsView.connectionStats = [data getConnectionStatsInOrderBy:firstName];
+      self.statsView.connectionStats = [self.data getConnectionStatsInOrderBy:firstName];
       [self.statsView.tableView reloadData];
       break;
     }
     case 1:{
-      self.statsView.connectionStats = [data getConnectionStatsInOrderBy:lastName];
+      self.statsView.connectionStats = [self.data getConnectionStatsInOrderBy:lastName];
       [self.statsView.tableView reloadData];
       break;
     }
     case 2:{
-      self.statsView.connectionStats = [data getConnectionStatsInOrderBy:knowledgeIndex];
+      self.statsView.connectionStats = [self.data getConnectionStatsInOrderBy:knowledgeIndex];
       [self.statsView.tableView reloadData];
       break;
     }
@@ -60,13 +75,11 @@
 }
 
 - (void)resetStats{
-  QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:self.userID];
-  [data setUpStats];
+  [self.data setUpStats];
 }
 
 - (void)printStats{
-  QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:self.userID];
-  [data printStats];
+  [self.data printStats];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -74,11 +87,78 @@
 }
 
 - (void)didReceiveMemoryWarning{
-    [super didReceiveMemoryWarning];
+  [super didReceiveMemoryWarning];
 }
+
+#pragma mark Properties
 
 - (QIStatsView *)statsView {
   return (QIStatsView *)self.view;
+}
+
+- (void)setParentTabBarController:(UITabBarController *)parentTabBarController{
+  _parentTabBarController = parentTabBarController; 
+}
+
+- (void)setUserID:(NSString *)userID{
+  _userID = userID;
+  _data = [[QIStatsData alloc] initWithLoggedInUserID:self.userID];
+}
+
+#pragma mark Data Layout
+
+- (void) showHideRefreshLockButton{
+  QIIAPHelper *store = [QIIAPHelper sharedInstance];
+  BOOL refreshPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_least"];
+  [self.statsView.summaryView.leastQuizLockButton setHidden:refreshPurchased];
+  [self.statsView.summaryView.leastQuizButton setHidden:!refreshPurchased];
+}
+
+#pragma mark Actions
+
+- (void)goToStore:(UIButton *)sender{
+  [self.parentTabBarController setSelectedIndex:3];
+  [(QIStoreViewController *)[[self.parentTabBarController viewControllers] objectAtIndex:3] setHighlightedCell:sender.tag];
+}
+
+#pragma mark UIAlertViewDelegate Functions
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
+  [self.parentTabBarController setSelectedIndex:0];
+}
+
+#pragma mark Pie Chart Delegate
+
+- (NSUInteger)numberOfSlicesInPieChart:(DLPieChart *)pieChart{
+  return 3;
+}
+
+- (CGFloat)pieChart:(DLPieChart *)pieChart valueForSliceAtIndex:(NSUInteger)index{
+  NSArray *chartValues = [self.data getConnectionStatsByKnownGroupings]; 
+  NSMutableArray *dataArray = [NSMutableArray arrayWithObjects:
+                               [NSNumber numberWithFloat:[[chartValues objectAtIndex:0] count]],
+                               [NSNumber numberWithFloat:[[chartValues objectAtIndex:1] count]],
+                               [NSNumber numberWithFloat:[[chartValues objectAtIndex:2] count]],
+                               nil];
+  
+  return [[dataArray objectAtIndex:index] floatValue];
+}
+
+- (UIColor *)pieChart:(DLPieChart *)pieChart colorForSliceAtIndex:(NSUInteger)index{
+  NSMutableArray *colorArray = [NSMutableArray arrayWithObjects:
+                                [UIColor colorWithRed:1.0f green:.71f blue:.20f alpha:1.0f],
+                                [UIColor colorWithRed:.29f green:.51f blue:.72f alpha:1.0f],
+                                [UIColor colorWithWhite:.33f alpha:1.0f],
+                                nil];
+  return [colorArray objectAtIndex:index];
+}
+
+- (NSString *)pieChart:(DLPieChart *)pieChart textForSliceAtIndex:(NSUInteger)index{
+  NSMutableArray *textArray = [NSMutableArray arrayWithObjects:
+                               @"Well",
+                               @"Medium",
+                               @"Small",
+                               nil];
+  return [textArray objectAtIndex:index];
 }
 
 @end

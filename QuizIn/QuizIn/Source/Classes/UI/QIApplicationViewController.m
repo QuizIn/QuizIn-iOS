@@ -42,8 +42,10 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  //SWTICH FOR OFFLINE USAGE
   [self.authController beginAuthenticationAttempt];
-//  [self authControllerAccount:nil didAuthenticate:nil];
+  //[self authControllerAccount:nil didAuthenticate:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,7 +74,7 @@
   // TODO(rcacheaux): Check if exists.
   [self.loginViewController.view removeFromSuperview];
   [self.loginViewController removeFromParentViewController];
-  
+
   self.tabViewController = [self newTabBarController];
   [self addChildViewController:self.tabViewController];
   [self.view addSubview:self.tabViewController.view];
@@ -101,9 +103,19 @@
 - (UITabBarController *)newTabBarController{
   UITabBarController *tabController = [[UITabBarController alloc] init];
   [tabController setViewControllers:@[[self newHomeViewController],[self newStatsViewController],[self newRankViewController],[self newStoreViewController]]];
-  [tabController.tabBar setSelectedImageTintColor:[UIColor orangeColor]];
+  QIHomeViewController *homeViewController = (QIHomeViewController *)[tabController.viewControllers objectAtIndex:0];
+  homeViewController.parentTabBarController = tabController; 
+  QIStatsViewController *statsViewController = (QIStatsViewController *)[tabController.viewControllers objectAtIndex:1];
+  statsViewController.parentTabBarController = tabController;
+  QIRankViewController *rankViewController = (QIRankViewController *)[tabController.viewControllers objectAtIndex:2];
+  rankViewController.parentTabBarController = tabController;
+  QIStoreViewController *storeViewController = (QIStoreViewController *)[tabController.viewControllers objectAtIndex:3];
+  storeViewController.parentTabBarController = tabController;
+  [tabController.tabBar setSelectedImageTintColor:[UIColor colorWithRed:1.0f green:.71f blue:.20f alpha:1.0f]];
   [tabController.tabBar setTintColor:[UIColor colorWithWhite:.15f alpha:1.0f]];
-  return tabController; 
+    
+  //[tabController setModalPresentationStyle:UIModalPresentationCurrentContext];
+  return tabController;
 }
 - (QIDrawerController *)newDrawerController {
   QIDrawerController *drawerController = [[QIDrawerController alloc] init];

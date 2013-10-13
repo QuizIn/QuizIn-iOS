@@ -40,6 +40,9 @@
   [self.businessCardQuizView.checkAnswersView.seeProfilesButton addTarget:self
                                                                  action:@selector(showActionSheet:)
                                                        forControlEvents:UIControlEventTouchUpInside];
+  [self.businessCardQuizView.rankDisplayView.exitButton addTarget:self.businessCardQuizView
+                                                           action:@selector(hideRankDisplay)
+                                                 forControlEvents:UIControlEventTouchUpInside]; 
 }
 
 #pragma mark Action Sheet Functions

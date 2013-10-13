@@ -6,13 +6,13 @@
 
 @interface QIStatsCellView ()
 
-@property (nonatomic,strong) UILabel *connectionNameLabel;
-@property (nonatomic,strong) UILabel *rightLabel;
-@property (nonatomic,strong) UILabel *wrongLabel;
-@property (nonatomic,strong) UILabel *knowledgeIndexLabel;
-@property (nonatomic,strong) AsyncImageView *profileImageView;
-
-@property (nonatomic,strong) NSMutableArray *cellViewConstraints;
+@property (nonatomic, strong) UILabel *connectionNameLabel;
+@property (nonatomic, strong) UILabel *rightLabel;
+@property (nonatomic, strong) UILabel *wrongLabel;
+@property (nonatomic, strong) UIImageView *trendImage;
+@property (nonatomic, strong) UIView *keyKnown; 
+@property (nonatomic, strong) AsyncImageView *profileImageView;
+@property (nonatomic, strong) NSMutableArray *cellViewConstraints;
 
 @end
 
@@ -29,7 +29,8 @@
       _connectionNameLabel = [self newConnectionNameLabel];
       _rightLabel = [self newKnowledgeIndexLabel];
       _wrongLabel = [self newKnowledgeIndexLabel];
-      _knowledgeIndexLabel = [self newKnowledgeIndexLabel];
+      _trendImage = [self newTrendImage];
+      _keyKnown = [self newKeyKnownView];
       _profileImageView = [self newProfileImageView];
       
       [self constructViewHierarchy];
@@ -39,6 +40,11 @@
 
 #pragma properties
 
+- (void)setProfileImageURL:(NSURL *)profileImageURL{
+  _profileImageURL = profileImageURL;
+  [self updateProfileImage];
+}
+
 - (void)setConnectionName:(NSString *)connectionName{
   if ([self.connectionName isEqualToString:connectionName]){
     return;
@@ -46,25 +52,25 @@
   _connectionName = connectionName;
   [self updateConnectionNameLabel];
 }
+
 - (void)setRightAnswers:(NSString *)rightAnswers{
   _rightAnswers = rightAnswers;
   [self updateRightAnswers];
 }
--(void)setWrongAnswers:(NSString *)wrongAnswers{
+
+- (void)setWrongAnswers:(NSString *)wrongAnswers{
   _wrongAnswers = wrongAnswers;
   [self updateWrongAnswers];
 }
-- (void)setKnowledgeIndex:(NSString *)knowledgeIndex{
-  if([self.knowledgeIndex isEqualToString:knowledgeIndex]){
-    return;
-  }
-  _knowledgeIndex = knowledgeIndex;
-  [self updateKnowledgeIndexLabel];
+
+- (void)setUpTrend:(BOOL)upTrend{
+  _upTrend = upTrend;
+  [self updateTrendImage];
 }
 
-- (void)setProfileImageURL:(NSURL *)profileImageURL{
-  _profileImageURL = profileImageURL;
-  [self updateProfileImage];
+- (void)setKeyColorIndex:(NSInteger *)keyColorIndex{
+  _keyColorIndex = keyColorIndex;
+  [self updateKeyColor];
 }
 
 #pragma mark View Hierarchy
@@ -72,30 +78,49 @@
   [self.contentView addSubview:self.connectionNameLabel];
   [self.contentView addSubview:self.rightLabel];
   [self.contentView addSubview:self.wrongLabel];
-  [self.contentView addSubview:self.knowledgeIndexLabel];
+  [self.contentView addSubview:self.trendImage];
+  [self.contentView addSubview:self.keyKnown]; 
   [self.contentView addSubview:self.profileImageView];
 }
 
+#pragma mark Update
 -(void)updateProfileImage{
   [self.profileImageView setImageURL:self.profileImageURL];
 }
 
-
-#pragma Data Display
 - (void)updateConnectionNameLabel{
-  self.connectionNameLabel.text = self.connectionName;
+  [self.connectionNameLabel setText:self.connectionName];
 }
 
--(void)updateRightAnswers{
-  self.rightLabel.text = self.rightAnswers;
+- (void)updateRightAnswers{
+  [self.rightLabel setText:self.rightAnswers];
 }
 
--(void)updateWrongAnswers{
-  self.wrongLabel.text = self.wrongAnswers; 
+- (void)updateWrongAnswers{
+  [self.wrongLabel setText:self.wrongAnswers];
 }
 
--(void)updateKnowledgeIndexLabel{
-  self.knowledgeIndexLabel.text = self.knowledgeIndex;
+- (void)updateTrendImage{
+  if (self.upTrend)
+    [self.trendImage setImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"]];
+  else
+    [self.trendImage setImage:[UIImage imageNamed:@"calendar_checkmark"]];
+}
+
+- (void)updateKeyColor{
+  switch (self.keyColorIndex) {
+    case 0:
+      [self.keyKnown setBackgroundColor:[UIColor colorWithRed:1.0f green:.71f blue:.20f alpha:1.0f]];
+      break;
+    case 1:
+      [self.keyKnown setBackgroundColor:[UIColor colorWithRed:.29f green:.51f blue:.72f alpha:1.0f]];
+      break;
+    case 2:
+      [self.keyKnown setBackgroundColor:[UIColor colorWithWhite:.33f alpha:1.0f]];
+      break;
+    default:
+      break;
+  }
 }
 
 #pragma mark Layout
@@ -110,10 +135,10 @@
      self.cellViewConstraints = [NSMutableArray array];
     
     //Constrain CellView
-    NSDictionary *cellViews = NSDictionaryOfVariableBindings(_connectionNameLabel,_knowledgeIndexLabel,_profileImageView,_rightLabel,_wrongLabel);
+    NSDictionary *cellViews = NSDictionaryOfVariableBindings(_connectionNameLabel,_profileImageView,_rightLabel,_wrongLabel,_trendImage,_keyKnown);
     
     NSArray *hCellViewsConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-3-[_profileImageView(==40)]-3-[_connectionNameLabel(==100)]-(>=10)-[_rightLabel(==40)][_wrongLabel(==40)][_knowledgeIndexLabel(==40)]|"
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-3-[_profileImageView(==40)]-3-[_connectionNameLabel(==100)]-(>=4)-[_rightLabel(==30)][_wrongLabel(==30)]-5-[_trendImage(==25)]-10-[_keyKnown(==20)]-10-|"
                                             options:0
                                             metrics:nil
                                               views:cellViews];
@@ -137,20 +162,24 @@
                                             options:0
                                             metrics:nil
                                               views:cellViews];
-    NSArray *vKnowledgeConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_knowledgeIndexLabel]|"
+    NSArray *vTrendConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-10-[_trendImage]-10-|"
+                                            options:0
+                                            metrics:nil
+                                              views:cellViews];
+    NSArray *vKeyConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-13-[_keyKnown]-13-|"
                                             options:0
                                             metrics:nil
                                               views:cellViews];
     
-   
-    
     [self.cellViewConstraints addObjectsFromArray:hCellViewsConstraints];
     [self.cellViewConstraints addObjectsFromArray:vImageViewConstraints];
     [self.cellViewConstraints addObjectsFromArray:vNameConstraints];
-    [self.cellViewConstraints addObjectsFromArray:vKnowledgeConstraints];
     [self.cellViewConstraints addObjectsFromArray:vRightConstraints];
     [self.cellViewConstraints addObjectsFromArray:vWrongConstraints];
+    [self.cellViewConstraints addObjectsFromArray:vTrendConstraints];
+    [self.cellViewConstraints addObjectsFromArray:vKeyConstraints];
     
     [self.contentView addConstraints:self.cellViewConstraints];
   }
@@ -160,35 +189,50 @@
 
 -(UILabel *)newConnectionNameLabel{
   UILabel *title = [[UILabel alloc] init];
-  title.textAlignment = NSTextAlignmentLeft;
-  title.backgroundColor = [UIColor clearColor];
-  title.font = [QIFontProvider fontWithSize:10.0f style:Bold];
-  title.adjustsFontSizeToFitWidth = YES;
-  title.textColor = [UIColor colorWithWhite:0.33f alpha:1.0f];
+  [title setTextAlignment:NSTextAlignmentLeft];
+  [title setBackgroundColor:[UIColor clearColor]];
+  [title setFont:[QIFontProvider fontWithSize:10.0f style:Bold]];
+  [title setAdjustsFontSizeToFitWidth:YES];
+  [title setTextColor:[UIColor colorWithWhite:0.33f alpha:1.0f]];
   [title setTranslatesAutoresizingMaskIntoConstraints:NO];
   return title;
 }
 
 -(UILabel *)newKnowledgeIndexLabel{
-  UILabel *more= [[UILabel alloc] init];
-  more.backgroundColor = [UIColor clearColor];
-  more.font = [QIFontProvider fontWithSize:10.0f style:Bold];
-  more.adjustsFontSizeToFitWidth = YES;
-  more.textColor = [UIColor colorWithWhite:0.5f alpha:1.0f];
-  [more setTranslatesAutoresizingMaskIntoConstraints:NO];
-  return more;
+  UILabel *label= [[UILabel alloc] init];
+  [label setBackgroundColor:[UIColor clearColor]];
+  [label setFont:[QIFontProvider fontWithSize:10.0f style:Bold]];
+  [label setAdjustsFontSizeToFitWidth:YES];
+  [label setTextColor:[UIColor colorWithWhite:0.5f alpha:1.0f]];
+  [label setTextAlignment:NSTextAlignmentCenter]; 
+  [label setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return label;
 }
 
 - (AsyncImageView *)newProfileImageView{
   AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
-  profileImageView.layer.cornerRadius = 4.0f;
-  profileImageView.clipsToBounds = YES;
+  [profileImageView.layer setCornerRadius:4.0f];
+  [profileImageView setClipsToBounds:YES];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  profileImageView.contentMode = UIViewContentModeScaleAspectFit;
-  profileImageView.showActivityIndicator = YES;
-  profileImageView.crossfadeDuration = 0.3f;
-  profileImageView.crossfadeImages = YES;
+  [profileImageView setContentMode:UIViewContentModeScaleAspectFit];
+  [profileImageView setShowActivityIndicator:YES];
+  [profileImageView setCrossfadeDuration:0.3f];
+  [profileImageView setCrossfadeImages:YES];
   return profileImageView;
 }
+
+- (UIImageView *)newTrendImage{
+  UIImageView *imageView = [[UIImageView alloc] init];
+  [imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return imageView;
+}
+
+- (UIView *)newKeyKnownView{
+  UIView *view = [[UIView alloc] init];
+  [view setBackgroundColor:[UIColor colorWithRed:1.0f green:.71f blue:.20f alpha:1.0f]];
+  [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return view;
+}
+
        
 @end

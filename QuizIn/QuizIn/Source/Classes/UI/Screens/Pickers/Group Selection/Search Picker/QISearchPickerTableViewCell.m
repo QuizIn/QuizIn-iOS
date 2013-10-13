@@ -1,14 +1,14 @@
 //
-//  QIRankCellView.m
+//  QISearchPickerTableViewCell.m
 //  QuizIn
 //
-//  Created by Rick Kuhlman on 7/28/13.
+//  Created by Rick Kuhlman on 9/12/13.
 //  Copyright (c) 2013 Kuhlmanation LLC. All rights reserved.
 //
 
-#import "QIRankCellView.h"
+#import "QISearchPickerTableViewCell.h"
 
-@implementation QIRankCellView
+@implementation QISearchPickerTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

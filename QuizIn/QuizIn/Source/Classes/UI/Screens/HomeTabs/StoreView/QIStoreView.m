@@ -1,20 +1,20 @@
 #import "QIStoreView.h"
 #import "QIStoreCellView.h"
 #import "QIStoreTableHeaderView.h"
+#import "QIStoreSectionHeaderView.h"
 #import "QIRankDefinition.h"
 #import "QIStoreData.h"
+#import "QIFontProvider.h"
 
 @interface QIStoreView ()
 
 @property (nonatomic, strong) UIImageView *viewBackground;
-@property (nonatomic, retain) UITableView *tableView;
-@property (nonatomic, retain) QIStoreTableHeaderView *headerView;
-@property (nonatomic, retain) NSMutableArray *viewConstraints;
-@property (nonatomic, strong) NSArray *storeData; 
+@property (nonatomic, strong) NSMutableArray *viewConstraints;
 
 @end
 
 @implementation QIStoreView
+
 + (BOOL)requiresConstraintBasedLayout {
   return YES;
 }
@@ -24,10 +24,9 @@
   self = [super initWithFrame:frame];
   if (self) {
     _viewBackground = [self newViewBackground];
-    _headerView = [self newHeaderView];
-    _tableView = [self newRankTable];
-    _storeData = [QIStoreData getStoreData];
-    
+    _activity = [self newActivityView]; 
+    _storeStatusLabel = [self newStoreStatusLabel];
+    _refreshButton = [self newRefreshButton]; 
     [self contstructViewHierarchy];
   }
   return self;
@@ -35,11 +34,19 @@
 
 #pragma mark Properties
 
+- (void) setTableView:(UITableView *)tableView {
+  _tableView = tableView;
+}
+
 #pragma mark Layout
 - (void)contstructViewHierarchy{
   [self addSubview:self.viewBackground];
-  [self addSubview:self.tableView];
+  [self addSubview:self.activity];
+  [self addSubview:self.storeStatusLabel];
+  [self addSubview:self.refreshButton]; 
 }
+
+#pragma mark Layout
 
 - (void)layoutSubviews {
   [super layoutSubviews];
@@ -84,8 +91,21 @@
     [self.viewConstraints addObjectsFromArray:hTableViewContraints];
     [self.viewConstraints addObjectsFromArray:vTableViewContraints];
     
+    //Constrain Loading items
+    [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_activity attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+    [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_activity attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+    [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_storeStatusLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+    [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_storeStatusLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:30.0f]];
+    [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_refreshButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+    [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_refreshButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:50.0f]];
+    
     [self addConstraints:self.viewConstraints];
   }
+}
+
+#pragma mark strings
+- (NSString *)storeStatusString{
+  return @"Loading Store Items..."; 
 }
 
 #pragma mark factory methods
@@ -96,51 +116,38 @@
   return background;
 }
 
--(QIStoreTableHeaderView *)newHeaderView{
-  QIStoreTableHeaderView *headerView = [[QIStoreTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 165)];
-  headerView.backgroundColor = [UIColor clearColor];
-  return headerView;
+- (UIActivityIndicatorView *)newActivityView{
+  UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  [activity setHidesWhenStopped:YES];
+  [activity setAlpha:.8f]; 
+  [activity startAnimating];
+  [activity setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return activity; 
 }
 
--(UITableView *)newRankTable{
-  UITableView *tableView = [[UITableView alloc] init];
-  [tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [tableView setBackgroundColor:[UIColor clearColor]];
-  [tableView setSeparatorColor:[UIColor clearColor]];
-  [tableView setShowsVerticalScrollIndicator:NO];
-  tableView.rowHeight = 107;
-  tableView.sectionHeaderHeight = 25;
-  tableView.tableHeaderView = self.headerView;
-  tableView.dataSource = self;
-  tableView.delegate = self;
-  return tableView;
+- (UILabel *)newStoreStatusLabel{
+  UILabel *label = [[UILabel alloc] init];
+  [label setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [label setBackgroundColor:[UIColor clearColor]];
+  [label setFont:[QIFontProvider fontWithSize:20.0f style:Bold]];
+  [label setTextColor:[UIColor colorWithWhite:.5f alpha:.5f]];
+  [label setAdjustsFontSizeToFitWidth:YES];
+  [label setTextAlignment:NSTextAlignmentCenter];
+  [label setText:[self storeStatusString]];
+  return label;
 }
 
-#pragma mark - Table view data source
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-  return [self.storeData count];
+- (UIButton *)newRefreshButton {
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setTitle:@"Refresh" forState:UIControlStateNormal];
+  [button.titleLabel setFont:[QIFontProvider fontWithSize:12.0f style:Regular]];
+  [button setTitleColor:[UIColor colorWithWhite:0.33f alpha:1.0f] forState:UIControlStateNormal];
+  [button setTitleColor:[UIColor colorWithWhite:0.0f alpha:1.0f] forState:UIControlStateHighlighted];
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [button setHidden:YES]; 
+  button.backgroundColor = [UIColor clearColor];
+  return button;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-  return [[self.storeData objectAtIndex:section] objectForKey:@"type"];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-  return [[[self.storeData objectAtIndex:section] objectForKey:@"item"] count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-  
-  static NSString *cellIdentifier = @"CustomCell";
-  QIStoreCellView *cell = (QIStoreCellView *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-  if (cell == nil){
-    cell = [[QIStoreCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-  }
-  [cell setTitle:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemTitle"]];
-  [cell setPrice:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemPrice"]];
-  [cell setDescription:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemDescription"]];
-  return cell;
-}
 
 @end

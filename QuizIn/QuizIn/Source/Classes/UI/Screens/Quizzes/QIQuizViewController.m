@@ -71,7 +71,7 @@
         [self.currentQuestionViewController.checkAnswersView.nextButton addTarget:self
                                                                            action:@selector(nextPressed)
                                                                  forControlEvents:UIControlEventTouchUpInside];
-        [self.currentQuestionViewController.rankDisplayView.rankShareButton addTarget:self
+        [self.currentQuestionViewController.rankDisplayView.fbShareButton addTarget:self
                                                                                action:@selector(shareRankPressed)
                                                                      forControlEvents:UIControlEventTouchUpInside];
         [self.currentQuestionViewController.progressView.exitButton addTarget:self
@@ -102,7 +102,7 @@
   [nextQuestionViewController.checkAnswersView.nextButton addTarget:self
                                                              action:@selector(nextPressed)
                                                    forControlEvents:UIControlEventTouchUpInside];
-  [nextQuestionViewController.rankDisplayView.rankShareButton addTarget:self
+  [nextQuestionViewController.rankDisplayView.fbShareButton addTarget:self
                                                                  action:@selector(shareRankPressed)
                                                        forControlEvents:UIControlEventTouchUpInside];
   [nextQuestionViewController.progressView.exitButton addTarget:self

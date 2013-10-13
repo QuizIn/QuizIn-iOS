@@ -34,6 +34,9 @@
   [self.multipleChoiceView.checkAnswersView.seeProfilesButton addTarget:self
                                                                  action:@selector(showActionSheet:)
                                                        forControlEvents:UIControlEventTouchUpInside];
+  [self.multipleChoiceView.rankDisplayView.exitButton addTarget:self.multipleChoiceView
+                                                         action:@selector(hideRankDisplay)
+                                               forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning {
