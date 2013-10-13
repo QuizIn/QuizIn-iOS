@@ -71,10 +71,10 @@
     _localeQuizLockButton = [self newQuizLockButtonWithTag:4];
     _industryQuizLockButton = [self newQuizLockButtonWithTag:2];
     _groupQuizLockButton = [self newQuizLockButtonWithTag:1];
-    _companyQuizBeginButton = [self newQuizBeginButton];
-    _localeQuizBeginButton = [self newQuizBeginButton];
-    _industryQuizBeginButton = [self newQuizBeginButton];
-    _groupQuizBeginButton = [self newQuizBeginButton];
+    _companyQuizBeginButton = [self newQuizBeginButtonWithTag:0];
+    _localeQuizBeginButton = [self newQuizBeginButtonWithTag:4];
+    _industryQuizBeginButton = [self newQuizBeginButtonWithTag:2];
+    _groupQuizBeginButton = [self newQuizBeginButtonWithTag:1];
     _companyQuizLabel = [self newQuizLabelWithText:@"CompanyQuiz"];
     _localeQuizLabel = [self newQuizLabelWithText:@"LocaleQuiz"];
     _industryQuizLabel = [self newQuizLabelWithText:@"IndustryQuiz"];
@@ -535,7 +535,7 @@
   return button;
 }
 
-- (UIButton *)newQuizBeginButton{
+- (UIButton *)newQuizBeginButtonWithTag:(NSInteger)tag{
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_unlocked_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];

@@ -8,6 +8,7 @@
 @property (nonatomic, strong) UIImageView *viewBackground;
 @property (nonatomic, retain) NSMutableArray *viewConstraints;
 @property (nonatomic, strong) NSLayoutConstraint *vSummaryViewConstraint;
+@property (nonatomic, assign) NSInteger selectedSorter;
 @property (nonatomic, assign) BOOL toggleIndexForTable; 
 
 @end
@@ -24,6 +25,7 @@
       _viewBackground = [self newViewBackground];
       _summaryView = [self newStatsSummaryView];
       _tableView = [self newStatsTable];
+      _selectedSorter = 4; 
       _toggleIndexForTable = NO;
       _resetStatsButton = [self newResetStatsButton];
       _printStatsButton = [self newPrintStatsButton];
@@ -57,6 +59,10 @@
   _connectionStats = [connectionStats copy];
 }
 
+- (void)setData:(QIStatsData *)data{
+  _data = data; 
+}
+
 #pragma mark Data Layout
 - (void)updateCorrectAnswers{
   [self.summaryView setCorrectAnswers:[NSNumber numberWithInt:self.totalCorrectAnswers]];
@@ -68,6 +74,34 @@
 
 - (void)updateCurrentRank{
   [self.summaryView setCurrentRank:[NSNumber numberWithInt:self.currentRank]];
+}
+
+- (void)sortTable:(UIButton *)sender{
+  if (sender.selected)
+    return;
+  
+  self.selectedSorter = sender.tag; 
+  
+  switch (sender.tag) {
+    case 0:
+      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:lastName]];
+      break;
+    case 1:
+      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:correctAnswers]];
+      break;
+    case 2:
+      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:incorrectAnswers]];
+      break;
+    case 3:
+      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:trend]];
+      break;
+    case 4:
+      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:known]];
+      break;
+    default:
+      break;
+  }
+  [self.tableView reloadData];
 }
 
 #pragma mark Layout
@@ -188,6 +222,12 @@
 {
   QIStatsSectionHeaderView *headerView = [[QIStatsSectionHeaderView alloc] init];
   headerView.sectionTitle = [[self.connectionStats objectAtIndex:0] objectAtIndex:section];
+  headerView.selectedSorter = self.selectedSorter; 
+  [headerView.alphaHeader addTarget:self action:@selector(sortTable:) forControlEvents:UIControlEventTouchUpInside];
+  [headerView.correctHeader addTarget:self action:@selector(sortTable:) forControlEvents:UIControlEventTouchUpInside];
+  [headerView.incorrectHeader addTarget:self action:@selector(sortTable:) forControlEvents:UIControlEventTouchUpInside];
+  [headerView.trendHeader addTarget:self action:@selector(sortTable:) forControlEvents:UIControlEventTouchUpInside];
+  [headerView.knownHeader addTarget:self action:@selector(sortTable:) forControlEvents:UIControlEventTouchUpInside];
   return headerView;
 }
 

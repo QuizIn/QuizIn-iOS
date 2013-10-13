@@ -141,9 +141,23 @@
       sortKey = @"userFirstName";
       break;
     }
-    case knowledgeIndex:{
-      sortKey = @"userLastName"; 
-      //sortKey = @"correctAnswers";
+    case correctAnswers:{
+      //sortKey = @"userLastName";
+      sortKey = @"correctAnswers";
+      break;
+    }
+    case incorrectAnswers:{
+      //sortKey = @"userLastName";
+      sortKey = @"incorrectAnswers";
+      break; 
+    }
+    case trend:{
+      sortKey = @"lastDirection";
+      break; 
+    }
+    case known:{
+      sortKey = @"userLastName";
+      break; 
     }
     default:
       break;
@@ -156,8 +170,12 @@
   NSMutableDictionary *stats = [[prefs objectForKey:self.userID] mutableCopy];
   NSMutableArray *connectionStats = [stats objectForKey:@"connectionStats"];
   
+  NSSortDescriptor *intermediateSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"userLastName" ascending:YES];
+  //NSArray *intermediateSortDescriptors = @[intermediateSortDescriptor];
+  //NSArray *intermediateSortedConnectionStats = [connectionStats sortedArrayUsingDescriptors:intermediateSortDescriptors];
+
   NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
-  NSArray *sortDescriptors = @[sortDescriptor];
+  NSArray *sortDescriptors = @[intermediateSortDescriptor, sortDescriptor];
   NSArray *sortedConnectionStats = [connectionStats sortedArrayUsingDescriptors:sortDescriptors];
 
   NSMutableDictionary *connectionStatsAlphabetical = [NSMutableDictionary dictionary];
@@ -186,8 +204,51 @@
       }
     }
   }
-  else if (sortBy == knowledgeIndex){
+  
+  if (sortBy == correctAnswers | sortBy == incorrectAnswers){
+    NSString *referenceString; 
+    if (sortBy == correctAnswers)
+      referenceString = @"%d Correct Answers";
+    else if (sortBy == incorrectAnswers)
+      referenceString = @"%d Incorrect Answers";
     
+    for (NSDictionary *connection in sortedConnectionStats){
+      NSString *numberString = [NSString stringWithFormat:referenceString,[[connection objectForKey:sortKey] integerValue]];
+      NSUInteger index = [sections indexOfObject:numberString];
+      if (index == NSNotFound) {
+        [sections addObject:numberString];
+        NSMutableArray *sectionList = [NSMutableArray arrayWithObject:connection];
+        [connectionStatsAlphabetical setObject:sectionList forKey:numberString];
+      }
+      else{
+        [[connectionStatsAlphabetical objectForKey:numberString] addObject:connection];
+      }
+    }
+    NSString *misPluralizedString = [[sections objectAtIndex:1] copy];
+    [sections replaceObjectAtIndex:1 withObject:[misPluralizedString substringToIndex:[misPluralizedString length]-1]]; 
+  }
+  
+  if (sortBy == trend){
+    for (NSDictionary *connection in sortedConnectionStats){
+      NSString *sectionString;
+      if ([[connection objectForKey:sortKey] boolValue])
+        sectionString = @"Trending Up";
+      else
+        sectionString = @"Trending Down";
+      
+      NSUInteger index = [sections indexOfObject:sectionString];
+      if (index == NSNotFound) {
+        [sections addObject:sectionString];
+        NSMutableArray *sectionList = [NSMutableArray arrayWithObject:connection];
+        [connectionStatsAlphabetical setObject:sectionList forKey:sectionString];
+      }
+      else{
+        [[connectionStatsAlphabetical objectForKey:sectionString] addObject:connection];
+      }
+    }
+  }
+
+  else if (sortBy == known){
     NSMutableIndexSet *wellKnownIndexes = [[NSMutableIndexSet alloc] init];
     NSMutableIndexSet *middleKnownIndexes = [[NSMutableIndexSet alloc] init];
     NSMutableIndexSet *needsRefreshIndexes = [[NSMutableIndexSet alloc] init];

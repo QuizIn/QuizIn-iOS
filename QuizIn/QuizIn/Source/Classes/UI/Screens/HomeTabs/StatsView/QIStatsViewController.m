@@ -26,14 +26,14 @@
   [self.statsView.resetStatsButton addTarget:self action:@selector(resetStats) forControlEvents:UIControlEventTouchUpInside];
   [self.statsView.printStatsButton addTarget:self action:@selector(printStats) forControlEvents:UIControlEventTouchUpInside];
   [self.statsView.summaryView.sorterSegmentedControl addTarget:self action:@selector(sorter:) forControlEvents:UIControlEventValueChanged];
-  [self.statsView.summaryView.leastQuizLockButton addTarget:self action:@selector(goToStore:) forControlEvents:UIControlEventTouchUpInside]; 
+  [self.statsView.summaryView.leastQuizLockButton addTarget:self action:@selector(goToStore:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
   [self.statsView setCurrentRank:[self.data getCurrentRank]];
   [self.statsView setTotalCorrectAnswers:[self.data getTotalCorrectAnswers]];
   [self.statsView setTotalIncorrectAnswers:[self.data getTotalIncorrectAnswers]];
-  [self.statsView setConnectionStats:[self.data getConnectionStatsInOrderBy:knowledgeIndex]];
+  [self.statsView setConnectionStats:[self.data getConnectionStatsInOrderBy:known]];
   [self.statsView setWellKnownThreshold:[self.data getWellKnownThreshold]];
   [self.statsView.summaryView.pieChartView setDelegate:self];
   [self.statsView.summaryView.pieChartView setDataSource:self]; 
@@ -65,7 +65,7 @@
       break;
     }
     case 2:{
-      self.statsView.connectionStats = [self.data getConnectionStatsInOrderBy:knowledgeIndex];
+      self.statsView.connectionStats = [self.data getConnectionStatsInOrderBy:correctAnswers];
       [self.statsView.tableView reloadData];
       break;
     }
@@ -103,6 +103,7 @@
 - (void)setUserID:(NSString *)userID{
   _userID = userID;
   _data = [[QIStatsData alloc] initWithLoggedInUserID:self.userID];
+  [self.statsView setData:_data];
 }
 
 #pragma mark Data Layout

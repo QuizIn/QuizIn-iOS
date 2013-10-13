@@ -8,7 +8,10 @@ typedef enum SortBy: NSInteger SortBy;
 enum SortBy : NSInteger {
   lastName,
   firstName,
-  knowledgeIndex
+  correctAnswers,
+  incorrectAnswers,
+  trend,
+  known
 };
 
 - (id)initWithLoggedInUserID:(NSString *)ID;

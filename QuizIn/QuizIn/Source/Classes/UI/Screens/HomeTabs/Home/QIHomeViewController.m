@@ -80,19 +80,19 @@
                             forControlEvents:UIControlEventTouchUpInside];
   
   [self.homeView.companyQuizBeginButton addTarget:self
-                                           action:@selector(groupedPicker)
+                                           action:@selector(groupPicker:)
                                  forControlEvents:UIControlEventTouchUpInside];
   
   [self.homeView.localeQuizBeginButton addTarget:self
-                                           action:@selector(groupedPicker)
+                                          action:@selector(groupPicker:)
                                  forControlEvents:UIControlEventTouchUpInside];
   
   [self.homeView.industryQuizBeginButton addTarget:self
-                                           action:@selector(groupedPicker)
+                                            action:@selector(groupPicker:)
                                  forControlEvents:UIControlEventTouchUpInside];
   
   [self.homeView.groupQuizBeginButton addTarget:self
-                                           action:@selector(groupedPicker)
+                                         action:@selector(groupPicker:)
                                  forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -112,7 +112,7 @@
   [(QIStoreViewController *)[[self.parentTabBarController viewControllers] objectAtIndex:3] setHighlightedCell:sender.tag];
 }
 
-- (void)groupPicker{
+- (void)groupPicker:(UIButton *)sender{
   QIGroupSelectionViewController *groupSelectionViewController = [self newGroupSelectionViewController];
   [self presentViewController:groupSelectionViewController animated:YES completion:nil];
 }

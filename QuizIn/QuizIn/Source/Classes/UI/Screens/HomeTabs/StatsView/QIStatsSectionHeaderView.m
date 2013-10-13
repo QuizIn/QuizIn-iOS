@@ -6,10 +6,6 @@
 
 @property (nonatomic, strong) UIImageView *viewBackground;
 @property (nonatomic, strong) UILabel *sectionTitleLabel;
-@property (nonatomic, strong) UIButton *correctHeader;
-@property (nonatomic, strong) UIButton *incorrectHeader;
-@property (nonatomic, strong) UIButton *trendHeader;
-@property (nonatomic, strong) UIButton *knownHeader; 
 
 @property (nonatomic, strong) NSMutableArray *constraints; 
 
@@ -28,10 +24,11 @@
     if (self) {
       _viewBackground = [self newViewBackground]; 
       _sectionTitleLabel = [self newTitleLabel];
-      _correctHeader = [self newHeaderImageWithIndex:0];
-      _incorrectHeader = [self newHeaderImageWithIndex:1];
-      _trendHeader = [self newHeaderImageWithIndex:2];
-      _knownHeader = [self newHeaderImageWithIndex:3];
+      _alphaHeader = [self newHeaderImageWithIndex:0];
+      _correctHeader = [self newHeaderImageWithIndex:1];
+      _incorrectHeader = [self newHeaderImageWithIndex:2];
+      _trendHeader = [self newHeaderImageWithIndex:3];
+      _knownHeader = [self newHeaderImageWithIndex:4];
       
       [self constructViewHierarchy]; 
     }
@@ -43,19 +40,40 @@
   [self updateSectionTitleLabel];
 }
 
+- (void)setSelectedSorter:(NSInteger)selectedSorter{
+  _selectedSorter = selectedSorter;
+  [self updateSelectedSorter]; 
+}
 #pragma mark Data Layout
 - (void)updateSectionTitleLabel{
   self.sectionTitleLabel.text = self.sectionTitle; 
+}
+
+- (void)updateSelectedSorter{
+  NSArray *buttons = [NSArray arrayWithObjects:
+                      self.alphaHeader,
+                      self.correctHeader,
+                      self.incorrectHeader,
+                      self.trendHeader,
+                      self.knownHeader,
+                      nil];
+  for (UIButton *button in buttons){
+    if (self.selectedSorter == button.tag)
+      [button setSelected:YES];
+    else
+      [button setSelected:NO]; 
+  }
 }
 
 #pragma mark View Hierarchy
 - (void)constructViewHierarchy{
   [self addSubview:self.viewBackground]; 
   [self addSubview:self.sectionTitleLabel];
+  [self addSubview:self.alphaHeader]; 
   [self addSubview:self.correctHeader];
   [self addSubview:self.incorrectHeader];
   [self addSubview:self.trendHeader];
-  [self addSubview:self.knownHeader]; 
+  [self addSubview:self.knownHeader];
 }
 
 #pragma mark Constraints
@@ -69,7 +87,7 @@
   if (!self.constraints){
     self.constraints = [NSMutableArray array];
     
-    NSDictionary *headerViews = NSDictionaryOfVariableBindings(_sectionTitleLabel,_viewBackground, _correctHeader, _incorrectHeader, _trendHeader, _knownHeader);
+    NSDictionary *headerViews = NSDictionaryOfVariableBindings(_sectionTitleLabel,_viewBackground, _alphaHeader, _correctHeader, _incorrectHeader, _trendHeader, _knownHeader);
   
     //Place Sign
     NSArray *hBackgroundConstraints =
@@ -83,7 +101,7 @@
                                             metrics:nil
                                               views:headerViews];
     NSArray *hTitleConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_sectionTitleLabel]|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_sectionTitleLabel][_alphaHeader]"
                                             options:0
                                             metrics:nil
                                               views:headerViews];
@@ -93,8 +111,13 @@
                                             metrics:nil
                                               views:headerViews];
     NSArray *hHeaderConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_correctHeader(==30)][_incorrectHeader(==_correctHeader)][_trendHeader(==_correctHeader)][_knownHeader(==_correctHeader)]-10-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_alphaHeader(==30)][_correctHeader(==_alphaHeader)][_incorrectHeader(==_alphaHeader)][_trendHeader(==_alphaHeader)][_knownHeader(==_alphaHeader)]-10-|"
                                             options:NSLayoutFormatAlignAllTop
+                                            metrics:nil
+                                              views:headerViews];
+    NSArray *vAlphaConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_alphaHeader]-10-|"
+                                            options:0
                                             metrics:nil
                                               views:headerViews];
     NSArray *vCorrectConstraints =
@@ -123,6 +146,7 @@
     [self.constraints addObjectsFromArray:hTitleConstraints];
     [self.constraints addObjectsFromArray:vTitleConstraints];
     [self.constraints addObjectsFromArray:hHeaderConstraints];
+    [self.constraints addObjectsFromArray:vAlphaConstraints];
     [self.constraints addObjectsFromArray:vCorrectConstraints];
     [self.constraints addObjectsFromArray:vIncorrectConstraints];
     [self.constraints addObjectsFromArray:vTrendConstraints];
@@ -157,21 +181,30 @@
   switch (index) {
     case 0:
       [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"] forState:UIControlStateNormal];
+      [button setBackgroundImage:[UIImage imageNamed:@"quizin_exit_btn"] forState:UIControlStateSelected];
       break;
     case 1:
       [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"] forState:UIControlStateNormal];
+      [button setBackgroundImage:[UIImage imageNamed:@"quizin_exit_btn"] forState:UIControlStateSelected];
       break;
     case 2:
       [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"] forState:UIControlStateNormal];
+      [button setBackgroundImage:[UIImage imageNamed:@"quizin_exit_btn"] forState:UIControlStateSelected];
       break;
     case 3:
       [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"] forState:UIControlStateNormal];
+      [button setBackgroundImage:[UIImage imageNamed:@"quizin_exit_btn"] forState:UIControlStateSelected];
+      break;
+    case 4:
+      [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"] forState:UIControlStateNormal];
+      [button setBackgroundImage:[UIImage imageNamed:@"quizin_exit_btn"] forState:UIControlStateSelected];
       break;
     default:
       break;
   }
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   [button setBackgroundColor:[UIColor clearColor]];
+  [button setTag:index];
   return button;
 }
 
