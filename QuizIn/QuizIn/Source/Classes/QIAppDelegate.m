@@ -5,7 +5,7 @@
 
 #import "QIApplicationViewController.h"
 
-#import "QILISearch.h"
+#import "LinkedIn.h"
 
 int ddLogLevel;
 
@@ -21,13 +21,64 @@ int ddLogLevel;
   [self.window makeKeyAndVisible];
   
   /*
-  //facets:(code,buckets:(code,name,count))
-  [QILISearch getPeopleSearchWithFieldSelector:@"(people:(first-name))"
-                              searchParameters:@{@"facets": @"current-company",
-                                                 @"facet": @[@"network,F", @"location,us:84"]}
-                                  onCompletion:^(NSArray *people, NSError *error) {
-    NSLog(@"DONE");
-  }];*/
+   {
+   code = "us:0";
+   count = 204;
+   name = "United States";
+   },
+   {
+   code = "us:64";
+   count = 176;
+   name = "Austin, Texas Area";
+   },
+   {
+   code = "in:0";
+   count = 7;
+   name = India;
+   },
+   {
+   code = "in:6508";
+   count = 6;
+   name = "Hyderabad Area, India";
+   },
+   {
+   code = "us:84";
+   count = 5;
+   name = "San Francisco Bay Area";
+   },
+   {
+   code = "us:724";
+   count = 4;
+   name = "San Antonio, Texas Area";
+   },
+   {
+   code = "hu:0";
+   count = 3;
+   name = Hungary;
+   },
+   {
+   code = "mx:0";
+   count = 2;
+   name = Mexico;
+   },
+   {
+   code = "us:31";
+   count = 2;
+   name = "Dallas/Fort Worth Area";
+   },
+   {
+   code = "us:70";
+   count = 2;
+   name = "Greater New York City Area";
+   }*/
+  
+  
+  //facets:(code,buckets:(code,name,count)) //  // current-company //@"facets": @"location",
+  [LinkedIn
+   allFirstDegreeConnectionsForAuthenticatedUserInLocations:@[@"us:0"]
+   onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
+    NSLog(@"Done");
+  }];
   
   
   return YES;
