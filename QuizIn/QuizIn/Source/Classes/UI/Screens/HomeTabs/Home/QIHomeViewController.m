@@ -135,9 +135,6 @@
   [self.homeView.industryQuizBeginButton setHidden:!filterPurchased];
   [self.homeView.groupQuizLockButton setHidden:filterPurchased];
   [self.homeView.groupQuizBeginButton setHidden:!filterPurchased];
-  
-  // DO NOT COMMIT
-  [self.homeView.companyQuizBeginButton setHidden:NO];
 }
 
 - (NSArray *)getFourRandomURLs{
