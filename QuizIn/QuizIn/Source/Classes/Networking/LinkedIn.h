@@ -9,6 +9,9 @@ typedef void (^LIConnectionsResponse)(QIConnectionsStore *connectionsStore, NSEr
 typedef void (^LIConnectionsCountResult)(NSInteger numberOfConnections, NSError *error);
 
 @interface LinkedIn : NSObject
+
++ (NSString *)peopleFieldSelector;
+
 + (void)randomConnectionsForAuthenticatedUserWithNumberOfConnectionsToFetch:(NSInteger)numberOfConnectionsToFetch
                                                                onCompletion:(LIConnectionsResponse)onCompletion;
 
@@ -16,4 +19,6 @@ typedef void (^LIConnectionsCountResult)(NSInteger numberOfConnections, NSError 
 
 + (void)allFirstDegreeConnectionsForAuthenticatedUserInLocations:(NSArray *)locationCodes
                                                     onCompletion:(LIConnectionsResponse)onCompletion;
++ (void)allFirstDegreeConnectionsForAuthenticatedUserInIndustries:(NSArray *)industryCodes
+                                                     onCompletion:(LIConnectionsResponse)onCompletion;
 @end

@@ -15,6 +15,82 @@
 
 @implementation QIQuizFactory
 
+/*
+ {
+ code = "us:0";
+ count = 204;
+ name = "United States";
+ },
+ {
+ code = "us:64";
+ count = 176;
+ name = "Austin, Texas Area";
+ },
+ {
+ code = "in:0";
+ count = 7;
+ name = India;
+ },
+ {
+ code = "in:6508";
+ count = 6;
+ name = "Hyderabad Area, India";
+ },
+ {
+ code = "us:84";
+ count = 5;
+ name = "San Francisco Bay Area";
+ },
+ {
+ code = "us:724";
+ count = 4;
+ name = "San Antonio, Texas Area";
+ },
+ {
+ code = "hu:0";
+ count = 3;
+ name = Hungary;
+ },
+ {
+ code = "mx:0";
+ count = 2;
+ name = Mexico;
+ },
+ {
+ code = "us:31";
+ count = 2;
+ name = "Dallas/Fort Worth Area";
+ },
+ {
+ code = "us:70";
+ count = 2;
+ name = "Greater New York City Area";
+ }*/
+
+
+//facets:(code,buckets:(code,name,count)) //  // current-company //@"facets": @"location",
+
++ (void)newFirstDegreeQuizForIndustry:(NSString *)industryCode
+                  withCompletionBlock:(void (^)(QIQuiz *, NSError*))completionBlock {
+  [LinkedIn
+   allFirstDegreeConnectionsForAuthenticatedUserInLocations:@[@"us:0"]
+   onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
+     NSLog(@"Done");
+   }];
+  
+  [LinkedIn allFirstDegreeConnectionsForAuthenticatedUserInIndustries:@[industryCode] onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
+    QIQuiz *quiz = [self quizWithConnections:connectionsStore];
+    if (quiz) {
+      completionBlock? completionBlock(quiz, nil) :  NULL;
+    } else {
+      DDLogError(@"Could not create quiz for industry: ");
+      // TODO(Rene): Setup errors to use one domain and define error codes.
+      NSError *error = [NSError errorWithDomain:@"com.quizin.errors" code:-3 userInfo:nil];
+      completionBlock ? completionBlock(nil, error) : NULL;
+    }
+  }];
+}
+
 + (void)quizFromRandomConnectionsWithCompletionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {
   [LinkedIn randomConnectionsForAuthenticatedUserWithNumberOfConnectionsToFetch:40 onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
     QIQuiz *quiz = [self quizWithConnections:connectionsStore];

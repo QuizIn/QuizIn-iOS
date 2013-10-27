@@ -6,7 +6,7 @@
 #import "QIIAPHelper.h"
 #import "QIStoreData.h"
 #import "QIHomeView.h"
-
+#import "QIQuizFactory.h"
 
 #define MAX_TIMED_IMAGES 4
 
@@ -103,8 +103,14 @@
 #pragma mark Actions
 
 - (void)startConnectionsQuiz:(id)sender {
-  QIQuizViewController *quizViewController = [self newQuizViewController];
-  [self presentViewController:quizViewController animated:YES completion:nil];
+  [QIQuizFactory quizFromRandomConnectionsWithCompletionBlock:^(QIQuiz *quiz, NSError *error) {
+    if (error == nil) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];
+        [self presentViewController:quizViewController animated:YES completion:nil];
+      });
+    }
+  }];
 }
 
 - (void)goToStore:(UIButton *)sender{
@@ -132,6 +138,9 @@
   BOOL groupPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_group"];
   [self.homeView.groupQuizLockButton setHidden:groupPurchased];
   [self.homeView.groupQuizBeginButton setHidden:!groupPurchased];
+  
+  // DO NOT COMMIT
+  [self.homeView.companyQuizBeginButton setHidden:NO];
 }
 - (NSArray *)getFourRandomURLs{
   
@@ -176,8 +185,8 @@
 
 #pragma mark Factory Methods
 
-- (QIQuizViewController *)newQuizViewController {
-  QIQuizViewController *quizViewController = [[QIQuizViewController alloc] init];
+- (QIQuizViewController *)newQuizViewControllerWithQuiz:(QIQuiz *)quiz {
+  QIQuizViewController *quizViewController = [[QIQuizViewController alloc] initWithQuiz:quiz];
   quizViewController.modalPresentationStyle = UIModalPresentationFullScreen;
   quizViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
   return quizViewController;

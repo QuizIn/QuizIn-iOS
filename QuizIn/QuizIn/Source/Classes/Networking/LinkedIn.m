@@ -16,16 +16,18 @@
 #import "QILISearch.h"
 #import "QIConnectionsStore+Factory.h"
 
+#import "QILIPagedSearch.h"
 
 typedef void (^AFHTTPRequestOperationSuccess)(AFHTTPRequestOperation *operation,
                                               id responseObject);
 typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
                                               NSError *error);
 
-NSString * const kPeopleFieldSelector =
-    @"id,first-name,last-name,formatted-name,positions,location,industry,picture-url,public-profile-url";
-
 @implementation LinkedIn
+
++ (NSString *)peopleFieldSelector {
+  return @"id,first-name,last-name,formatted-name,positions,location,industry,picture-url,public-profile-url";
+}
 
 + (void)randomConnectionsForAuthenticatedUserWithNumberOfConnectionsToFetch:(NSInteger)numberOfConnectionsToFetch
                                                                onCompletion:(LIConnectionsResponse)onCompletion {
@@ -80,7 +82,7 @@ NSString * const kPeopleFieldSelector =
     QILIConnectionsParameters *parameters = [QILIConnectionsParameters new];
     parameters.start = [batch[@"start"] integerValue];
     parameters.count = [batch[@"size"] integerValue];
-    parameters.fieldSelector = [NSString stringWithFormat:@"(%@)", kPeopleFieldSelector];
+    parameters.fieldSelector = [NSString stringWithFormat:@"(%@)", [self peopleFieldSelector]];
     // Completion.
     QIConnectionsJSONResult JSONCompletion = ^(NSArray *connectionsJSON, NSError *error) {
       resultCount++;
@@ -113,60 +115,36 @@ NSString * const kPeopleFieldSelector =
                                                  onCompletion:profileOnCompletion];
 }
 
-static NSString * const kSearchResultsPerPage = @"25";
-
 + (void)allFirstDegreeConnectionsForAuthenticatedUserInLocations:(NSArray *)locationCodes
                                                     onCompletion:(LIConnectionsResponse)onCompletion {
   NSString *locationCodeString = [locationCodes componentsJoinedByString:@","];
   NSString *locationFacetString = [NSString stringWithFormat:@"location,%@", locationCodeString];
   
-  QISearchResult searchFirstPageOnCompletion = ^(QILISearchResultData *result, NSError *error){
-    if (error != nil) {
-      NSLog(@"Error fetching first page of search results, %@", error);
-      onCompletion(nil, error);
-    }
-    
-    __block NSMutableArray *connections = [NSMutableArray arrayWithCapacity:result.total];
-    [connections addObjectsFromArray:result.peopleJSON];
-    
-    NSInteger numberOfResultsPerPage = [kSearchResultsPerPage integerValue];
-    if (result.total > numberOfResultsPerPage) {
-      // Keep paging.
-      NSLog(@"Page");
-      
-      NSInteger numberOfPages = ceilf((float)result.total / (float)numberOfResultsPerPage) - 1;
-      __block NSInteger numberOfPagesReturned = 0;
-      for (NSInteger i = numberOfResultsPerPage; i < result.total; i+=numberOfResultsPerPage) {
-        QISearchResult searchPageOnCompletion = ^(QILISearchResultData *result, NSError *error){
-          numberOfPagesReturned++;
-          if (error == nil) {
-            [connections addObjectsFromArray:result.peopleJSON];
-          } // TODO(Rene): Handle error if one is returned.
-          if (numberOfPagesReturned == numberOfPages) {
-            QIConnectionsStore *connectionsStore = [QIConnectionsStore storeWithJSON:[connections copy]];
-            onCompletion ? onCompletion(connectionsStore, nil) : NULL;
-          }
-        };
-        
-        [QILISearch getPeopleSearchWithFieldSelector:[NSString stringWithFormat:@"people:(%@)", kPeopleFieldSelector]
-                                    searchParameters:@{@"start": [NSString stringWithFormat:@"%@", @(i)],
-                                                       @"count": kSearchResultsPerPage,
-                                                       @"facet": @[@"network,F", locationFacetString]}
-                                        onCompletion:searchPageOnCompletion];
-      }
+  QILIPagedSearch *pagedSearch = [[QILIPagedSearch alloc] initWithFacetValues:@[locationFacetString]];
+  [pagedSearch searchWithOnCompletion:^(NSError *error) {
+    if (error == nil) {
+      onCompletion? onCompletion(pagedSearch.resultsConnectionsStore, nil) : NULL;
     } else {
-      // Done paging.
-      NSLog(@"Done");
-      QIConnectionsStore *connectionsStore = [QIConnectionsStore storeWithJSON:[connections copy]];
-      onCompletion ? onCompletion(connectionsStore, nil) : NULL;
+      NSLog(@"LinkedIn API Call Error searching for people: %@", error);
+      onCompletion? onCompletion(nil, error) : NULL;
     }
-  };
+  }];
+}
+
++ (void)allFirstDegreeConnectionsForAuthenticatedUserInIndustries:(NSArray *)industryCodes
+                                                     onCompletion:(LIConnectionsResponse)onCompletion {
+  NSString *industryCodeString = [industryCodes componentsJoinedByString:@","];
+  NSString *industryFacetString = [NSString stringWithFormat:@"industry,%@", industryCodeString];
   
-  [QILISearch getPeopleSearchWithFieldSelector:[NSString stringWithFormat:@"people:(%@)", kPeopleFieldSelector]
-                              searchParameters:@{@"start": @"0",
-                                                 @"count": kSearchResultsPerPage,
-                                                 @"facet": @[@"network,F", locationFacetString]}
-                                  onCompletion:searchFirstPageOnCompletion];
+  QILIPagedSearch *pagedSearch = [[QILIPagedSearch alloc] initWithFacetValues:@[industryFacetString]];
+  [pagedSearch searchWithOnCompletion:^(NSError *error) {
+    if (error == nil) {
+      onCompletion? onCompletion(pagedSearch.resultsConnectionsStore, nil) : NULL;
+    } else {
+      DDLogError(@"LinkedIn API Call Error searching for people: %@", error);
+      onCompletion? onCompletion(nil, error) : NULL;
+    }
+  }];
 }
 
 @end

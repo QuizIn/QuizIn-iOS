@@ -21,16 +21,20 @@
 
 @implementation QIQuizViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (instancetype)initWithQuiz:(QIQuiz *)quiz {
+  self = [super initWithNibName:nil bundle:nil];
   if (self) {
+    _quiz = quiz;
     _businessCard = NO;
     _matching = NO;
   }
   return self;
 }
 
+
 - (void)loadView {
+  NSAssert(self.quiz != nil,
+           @"Cannot load Quiz View Controller if it's not instantiated with a QIQuiz.");
   self.view = [[QIQuizView alloc] init];
 }
 
@@ -57,30 +61,21 @@
     return;
   }
   
+  self.currentQuestionViewController =
+  [QIQuizQuestionViewControllerFactory
+   questionViewControllerForQuestion:(QIQuizQuestion *)[self.quiz nextQuestion]];
   
-  [QIQuizFactory quizFromRandomConnectionsWithCompletionBlock:^(QIQuiz *quiz, NSError *error) {
-    if (error == nil) {
-      dispatch_async(dispatch_get_main_queue(), ^{
-        self.quiz = quiz;
-        self.currentQuestionViewController =
-            [QIQuizQuestionViewControllerFactory
-             questionViewControllerForQuestion:(QIQuizQuestion *)[self.quiz nextQuestion]];
-
-        [self addChildViewController:self.currentQuestionViewController];
-        [self.view addSubview:self.currentQuestionViewController.view];
-        [self.currentQuestionViewController.checkAnswersView.nextButton addTarget:self
-                                                                           action:@selector(nextPressed)
-                                                                 forControlEvents:UIControlEventTouchUpInside];
-        [self.currentQuestionViewController.rankDisplayView.fbShareButton addTarget:self
-                                                                               action:@selector(shareRankPressed)
-                                                                     forControlEvents:UIControlEventTouchUpInside];
-        [self.currentQuestionViewController.progressView.exitButton addTarget:self
-                                                                       action:@selector(userDidCloseQuiz)
+  [self addChildViewController:self.currentQuestionViewController];
+  [self.view addSubview:self.currentQuestionViewController.view];
+  [self.currentQuestionViewController.checkAnswersView.nextButton addTarget:self
+                                                                     action:@selector(nextPressed)
+                                                           forControlEvents:UIControlEventTouchUpInside];
+  [self.currentQuestionViewController.rankDisplayView.fbShareButton addTarget:self
+                                                                       action:@selector(shareRankPressed)
                                                              forControlEvents:UIControlEventTouchUpInside];
-
-      });
-    }
-  }];
+  [self.currentQuestionViewController.progressView.exitButton addTarget:self
+                                                                 action:@selector(userDidCloseQuiz)
+                                                       forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark Actions
