@@ -110,7 +110,7 @@
 
 - (void) showHideRefreshLockButton{
   QIIAPHelper *store = [QIIAPHelper sharedInstance];
-  BOOL refreshPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_least"];
+  BOOL refreshPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.r_pack"];
   [self.statsView.summaryView.leastQuizLockButton setHidden:refreshPurchased];
   [self.statsView.summaryView.leastQuizButton setHidden:!refreshPurchased];
 }
@@ -119,7 +119,7 @@
 
 - (void)goToStore:(UIButton *)sender{
   [self.parentTabBarController setSelectedIndex:3];
-  [(QIStoreViewController *)[[self.parentTabBarController viewControllers] objectAtIndex:3] setHighlightedCell:sender.tag];
+  //[(QIStoreViewController *)[[self.parentTabBarController viewControllers] objectAtIndex:3] setHighlightedCell:sender.tag];
 }
 
 #pragma mark UIAlertViewDelegate Functions

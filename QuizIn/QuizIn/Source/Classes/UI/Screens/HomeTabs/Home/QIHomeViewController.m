@@ -115,7 +115,7 @@
 
 - (void)goToStore:(UIButton *)sender{
   [self.parentTabBarController setSelectedIndex:3];
-  [(QIStoreViewController *)[[self.parentTabBarController viewControllers] objectAtIndex:3] setHighlightedCell:sender.tag];
+  //[(QIStoreViewController *)[[self.parentTabBarController viewControllers] objectAtIndex:3] setHighlightedCell:sender.tag];
 }
 
 - (void)groupPicker:(UIButton *)sender{
@@ -126,22 +126,20 @@
 #pragma mark Data
 - (void) showHideLockButtons{
   QIIAPHelper *store = [QIIAPHelper sharedInstance];
-  BOOL companyPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_company"];
-  [self.homeView.companyQuizLockButton setHidden:companyPurchased];
-  [self.homeView.companyQuizBeginButton setHidden:!companyPurchased];
-  BOOL localePurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_locale"];
-  [self.homeView.localeQuizLockButton setHidden:localePurchased];
-  [self.homeView.localeQuizBeginButton setHidden:!localePurchased];
-  BOOL industryPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_industry"];
-  [self.homeView.industryQuizLockButton setHidden:industryPurchased];
-  [self.homeView.industryQuizBeginButton setHidden:!industryPurchased];
-  BOOL groupPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_group"];
-  [self.homeView.groupQuizLockButton setHidden:groupPurchased];
-  [self.homeView.groupQuizBeginButton setHidden:!groupPurchased];
+  BOOL filterPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_pack"];
+  [self.homeView.companyQuizLockButton setHidden:filterPurchased];
+  [self.homeView.companyQuizBeginButton setHidden:!filterPurchased];
+  [self.homeView.localeQuizLockButton setHidden:filterPurchased];
+  [self.homeView.localeQuizBeginButton setHidden:!filterPurchased];
+  [self.homeView.industryQuizLockButton setHidden:filterPurchased];
+  [self.homeView.industryQuizBeginButton setHidden:!filterPurchased];
+  [self.homeView.groupQuizLockButton setHidden:filterPurchased];
+  [self.homeView.groupQuizBeginButton setHidden:!filterPurchased];
   
   // DO NOT COMMIT
   [self.homeView.companyQuizBeginButton setHidden:NO];
 }
+
 - (NSArray *)getFourRandomURLs{
   
   //TODO Fix this to not be test data
