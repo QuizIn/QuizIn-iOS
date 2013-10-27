@@ -25,7 +25,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (>= 1.1.0)
-  - AuthKit (from `../../AuthKit`)
+  - AuthKit (from `https://github.com/RCacheaux/AuthKit.git`)
   - CocoaLumberjack (>= 1.6)
   - gtm-oauth2 (>= 0.0.1)
   - MagicalRecord (>= 2.1)
@@ -33,16 +33,16 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   AuthKit:
-    :local: ../../AuthKit
+    :git: https://github.com/RCacheaux/AuthKit.git
 
 SPEC CHECKSUMS:
-  AFNetworking: 616da0028916ce296f5c3cef74e5552eb4e10e13
+  AFNetworking: a44069e3c9c89867544f6639482f155c7e5f9b41
   AuthKit: fc15e656eba449c52ae99fb18dc3e4db5e5c6c1e
   CocoaLumberjack: d73e1e317ced14ab930797dda6c17156ff17aaa1
-  gtm-oauth2: c4824003b569bc9b96446661fb92dbc681335499
-  GTMHTTPFetcher: 563425df0ff2127edba46985df62ef60acd441e5
+  gtm-oauth2: af6d1ff3d4b14b35d3709f7f4bf2be8b43e45e62
+  GTMHTTPFetcher: b0af09f18ec87e7a5edeffcc8cb6449fdbf0e83f
   MagicalRecord: 64e7184c240087a45e9588a722eaf05b0ad837f7
   Objection: 9afb32da171ffca51a74321aeae3f8612da1570d
-  SBJson: 4971016670e7b3fa04a36d4e72ab0fb1ad3a9f69
+  SBJson: e60b4dc22448c2ae1e754b523a4ab53408e85c8d
 
-COCOAPODS: 0.18.1
+COCOAPODS: 0.26.2

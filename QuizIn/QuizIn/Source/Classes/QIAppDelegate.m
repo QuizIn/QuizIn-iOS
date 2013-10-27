@@ -76,11 +76,12 @@ int ddLogLevel;
   
   
   //facets:(code,buckets:(code,name,count)) //  // current-company //@"facets": @"location",
+  /*
   [LinkedIn
    allFirstDegreeConnectionsForAuthenticatedUserInLocations:@[@"us:0"]
    onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
     NSLog(@"Done");
-  }];
+  }];*/
   
   
   return YES;

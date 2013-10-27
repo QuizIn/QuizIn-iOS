@@ -1,1 +1,1 @@
-../../../../../AuthKit/AuthKit/AuthKit/Source/Classes/AuthController/AKAuthController.h
+../../AuthKit/AuthKit/AuthKit/Source/Classes/AuthController/AKAuthController.h

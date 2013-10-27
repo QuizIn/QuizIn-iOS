@@ -1,1 +1,1 @@
-../../../../../AuthKit/AuthKit/AuthKit/Source/Classes/DataPartitions/AKDataPartitions.h
+../../AuthKit/AuthKit/AuthKit/Source/Classes/DataPartitions/AKDataPartitions.h
