@@ -63,7 +63,7 @@
 }
 
 - (void)startQuiz:(id)sender {
-  [QIQuizFactory newFirstDegreeQuizForIndustry:@"96" withCompletionBlock:^(QIQuiz *quiz, NSError *error) {
+  [QIQuizFactory newFirstDegreeQuizForLocations:@[@"in:0", @"us:84", @"hu:0", @"us:70", @"mx:0"] withCompletionBlock:^(QIQuiz *quiz, NSError *error) {
     if (error == nil) {
       dispatch_async(dispatch_get_main_queue(), ^{
         QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];

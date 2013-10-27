@@ -72,12 +72,6 @@
 
 + (void)newFirstDegreeQuizForIndustry:(NSString *)industryCode
                   withCompletionBlock:(void (^)(QIQuiz *, NSError*))completionBlock {
-  [LinkedIn
-   allFirstDegreeConnectionsForAuthenticatedUserInLocations:@[@"us:0"]
-   onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
-     NSLog(@"Done");
-   }];
-  
   [LinkedIn allFirstDegreeConnectionsForAuthenticatedUserInIndustries:@[industryCode] onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
     QIQuiz *quiz = [self quizWithConnections:connectionsStore];
     if (quiz) {
@@ -89,6 +83,57 @@
       completionBlock ? completionBlock(nil, error) : NULL;
     }
   }];
+}
+
++ (void)newFirstDegreeQuizForCurrentCompanies:(NSArray *)companyCodes
+                          withCompletionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {
+  [LinkedIn
+   allFirstDegreeConnectionsForAuthenticatedUserInCurrentCompanies:[companyCodes copy]
+   onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
+    QIQuiz *quiz = [self quizWithConnections:connectionsStore];
+    if (quiz) {
+      completionBlock? completionBlock(quiz, nil) :  NULL;
+    } else {
+      DDLogError(@"Could not create quiz for industry: ");
+      // TODO(Rene): Setup errors to use one domain and define error codes.
+      NSError *error = [NSError errorWithDomain:@"com.quizin.errors" code:-3 userInfo:nil];
+      completionBlock ? completionBlock(nil, error) : NULL;
+    }
+  }];
+}
+
++ (void)newFirstDegreeQuizForSchools:(NSArray *)schoolCodes
+                 withCompletionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {
+  [LinkedIn
+   allFirstDegreeConnectionsForAuthenticatedUserInSchools:[schoolCodes copy]
+   onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
+     QIQuiz *quiz = [self quizWithConnections:connectionsStore];
+     if (quiz) {
+       completionBlock? completionBlock(quiz, nil) :  NULL;
+     } else {
+       DDLogError(@"Could not create quiz for industry: ");
+       // TODO(Rene): Setup errors to use one domain and define error codes.
+       NSError *error = [NSError errorWithDomain:@"com.quizin.errors" code:-3 userInfo:nil];
+       completionBlock ? completionBlock(nil, error) : NULL;
+     }
+   }];
+}
+
++ (void)newFirstDegreeQuizForLocations:(NSArray *)locationCodes
+                   withCompletionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {
+  [LinkedIn
+   allFirstDegreeConnectionsForAuthenticatedUserInLocations:[locationCodes copy]
+   onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
+     QIQuiz *quiz = [self quizWithConnections:connectionsStore];
+     if (quiz) {
+       completionBlock? completionBlock(quiz, nil) :  NULL;
+     } else {
+       DDLogError(@"Could not create quiz for industry: ");
+       // TODO(Rene): Setup errors to use one domain and define error codes.
+       NSError *error = [NSError errorWithDomain:@"com.quizin.errors" code:-3 userInfo:nil];
+       completionBlock ? completionBlock(nil, error) : NULL;
+     }
+   }];
 }
 
 + (void)quizFromRandomConnectionsWithCompletionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {

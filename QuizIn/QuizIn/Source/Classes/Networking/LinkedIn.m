@@ -147,4 +147,36 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
   }];
 }
 
++ (void)allFirstDegreeConnectionsForAuthenticatedUserInSchools:(NSArray *)schoolCodes
+                                                  onCompletion:(LIConnectionsResponse)onCompletion {
+  NSString *schoolCodeString = [schoolCodes componentsJoinedByString:@","];
+  NSString *schoolFacetString = [NSString stringWithFormat:@"school,%@", schoolCodeString];
+  
+  QILIPagedSearch *pagedSearch = [[QILIPagedSearch alloc] initWithFacetValues:@[schoolFacetString]];
+  [pagedSearch searchWithOnCompletion:^(NSError *error) {
+    if (error == nil) {
+      onCompletion? onCompletion(pagedSearch.resultsConnectionsStore, nil) : NULL;
+    } else {
+      DDLogError(@"LinkedIn API Call Error searching for people: %@", error);
+      onCompletion? onCompletion(nil, error) : NULL;
+    }
+  }];
+}
+
++ (void)allFirstDegreeConnectionsForAuthenticatedUserInCurrentCompanies:(NSArray *)companyCodes
+                                                           onCompletion:(LIConnectionsResponse)onCompletion {
+  NSString *companyCodeString = [companyCodes componentsJoinedByString:@","];
+  NSString *currentCompanyFacetString = [NSString stringWithFormat:@"current-company,%@", companyCodeString];
+  
+  QILIPagedSearch *pagedSearch = [[QILIPagedSearch alloc] initWithFacetValues:@[currentCompanyFacetString]];
+  [pagedSearch searchWithOnCompletion:^(NSError *error) {
+    if (error == nil) {
+      onCompletion? onCompletion(pagedSearch.resultsConnectionsStore, nil) : NULL;
+    } else {
+      DDLogError(@"LinkedIn API Call Error searching for people: %@", error);
+      onCompletion? onCompletion(nil, error) : NULL;
+    }
+  }];
+}
+
 @end
