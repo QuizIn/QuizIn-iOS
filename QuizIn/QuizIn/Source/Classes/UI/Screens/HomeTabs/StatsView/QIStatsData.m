@@ -215,11 +215,11 @@
     for (NSDictionary *connection in sortedConnectionStats){
       int sectionNumber = [[connection objectForKey:sortKey] integerValue];
       NSString *numberString = [NSString stringWithFormat:referenceString,sectionNumber];
+      if (sectionNumber == 1){
+        numberString = [numberString substringToIndex:[numberString length] -1]; 
+      }
       NSUInteger index = [sections indexOfObject:numberString];
       if (index == NSNotFound) {
-        if([[numberString substringToIndex:1] isEqualToString:@"1"]){
-          NSLog(@"found the oner"); 
-        }
         [sections addObject:numberString];
         NSMutableArray *sectionList = [NSMutableArray arrayWithObject:connection];
         [connectionStatsAlphabetical setObject:sectionList forKey:numberString];

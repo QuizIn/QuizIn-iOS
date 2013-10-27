@@ -80,6 +80,8 @@
     _industryQuizLabel = [self newQuizLabelWithText:@"IndustryQuiz"];
     _groupQuizLabel = [self newQuizLabelWithText:@"GroupQuiz"];
 
+    _testButton = [self newQuizLockButtonWithTag:99];
+    
     [self constructViewHierachy];
   }
   return self;
@@ -136,7 +138,9 @@
   [self.scrollView addSubview:self.companyQuizLabel];
   [self.scrollView addSubview:self.localeQuizLabel];
   [self.scrollView addSubview:self.groupQuizLabel];
-  [self.scrollView addSubview:self.industryQuizLabel]; 
+  [self.scrollView addSubview:self.industryQuizLabel];
+  
+  [self.scrollView addSubview:self.testButton]; 
 }
 
 #pragma mark Layout

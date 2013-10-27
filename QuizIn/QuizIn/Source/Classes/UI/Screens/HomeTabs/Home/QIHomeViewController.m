@@ -1,3 +1,4 @@
+#import "QIQuizFinishViewController.h" 
 #import "QIHomeViewController.h"
 #import "QIQuizViewController.h"
 #import "QIGroupSelectionViewController.h"
@@ -94,6 +95,11 @@
   [self.homeView.groupQuizBeginButton addTarget:self
                                          action:@selector(groupPicker:)
                                  forControlEvents:UIControlEventTouchUpInside];
+  
+  //Todo Test
+  [self.homeView.testButton addTarget:self
+                               action:@selector(showQuizFinish)
+                     forControlEvents:UIControlEventTouchUpInside]; 
 }
 
 - (void)didReceiveMemoryWarning {
@@ -121,6 +127,12 @@
 - (void)groupPicker:(UIButton *)sender{
   QIGroupSelectionViewController *groupSelectionViewController = [self newGroupSelectionViewController];
   [self presentViewController:groupSelectionViewController animated:YES completion:nil];
+}
+
+//Todo Test
+- (void)showQuizFinish{
+  QIQuizFinishViewController *finishViewController = [[QIQuizFinishViewController alloc] init];
+  [self presentViewController:finishViewController animated:YES completion:nil];
 }
 
 #pragma mark Data

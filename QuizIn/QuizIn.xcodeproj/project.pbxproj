@@ -34,6 +34,8 @@
 		20E0203417A5BED800CB9D43 /* QILIPeople.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E0203017A5BED800CB9D43 /* QILIPeople.m */; };
 		20E0203717A5CAC300CB9D43 /* QIQuizQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E0203617A5CAC200CB9D43 /* QIQuizQuestionViewController.m */; };
 		20E0203A17A5CC1C00CB9D43 /* QIQuizQuestionViewControllerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20E0203917A5CC1B00CB9D43 /* QIQuizQuestionViewControllerFactory.m */; };
+		3402C746181D903F004F3B1D /* QIQuizFinishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3402C745181D903F004F3B1D /* QIQuizFinishViewController.m */; };
+		3402C749181D9065004F3B1D /* QIQuizFinishView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3402C748181D9064004F3B1D /* QIQuizFinishView.m */; };
 		340896B817513D4D00398230 /* Tahoma.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 340896B717513D4D00398230 /* Tahoma.ttf */; };
 		340896BA1751443800398230 /* tahomabd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 340896B91751443800398230 /* tahomabd.ttf */; };
 		340896BD1751712900398230 /* progressView_tracker.png in Resources */ = {isa = PBXBuildFile; fileRef = 340896BB1751712400398230 /* progressView_tracker.png */; };
@@ -447,6 +449,10 @@
 		20E0203817A5CC1900CB9D43 /* QIQuizQuestionViewControllerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuizQuestionViewControllerFactory.h; sourceTree = "<group>"; };
 		20E0203917A5CC1B00CB9D43 /* QIQuizQuestionViewControllerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIQuizQuestionViewControllerFactory.m; sourceTree = "<group>"; };
 		20E0203B17A5D05000CB9D43 /* QIQuizQuestionViewController_Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QIQuizQuestionViewController_Protected.h; sourceTree = "<group>"; };
+		3402C744181D903F004F3B1D /* QIQuizFinishViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuizFinishViewController.h; sourceTree = "<group>"; };
+		3402C745181D903F004F3B1D /* QIQuizFinishViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIQuizFinishViewController.m; sourceTree = "<group>"; };
+		3402C747181D9064004F3B1D /* QIQuizFinishView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuizFinishView.h; sourceTree = "<group>"; };
+		3402C748181D9064004F3B1D /* QIQuizFinishView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIQuizFinishView.m; sourceTree = "<group>"; };
 		340896B717513D4D00398230 /* Tahoma.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tahoma.ttf; sourceTree = "<group>"; };
 		340896B91751443800398230 /* tahomabd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tahomabd.ttf; sourceTree = "<group>"; };
 		340896BB1751712400398230 /* progressView_tracker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressView_tracker.png; sourceTree = "<group>"; };
@@ -964,6 +970,17 @@
 				20876202181D77340089C165 /* QILIPagedSearch.m */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		3402C743181D8F1D004F3B1D /* QuizFinishView */ = {
+			isa = PBXGroup;
+			children = (
+				3402C744181D903F004F3B1D /* QIQuizFinishViewController.h */,
+				3402C745181D903F004F3B1D /* QIQuizFinishViewController.m */,
+				3402C747181D9064004F3B1D /* QIQuizFinishView.h */,
+				3402C748181D9064004F3B1D /* QIQuizFinishView.m */,
+			);
+			path = QuizFinishView;
 			sourceTree = "<group>";
 		};
 		340896B617513D4D00398230 /* Fonts */ = {
@@ -1829,6 +1846,7 @@
 		8886799A172DAFC700DCE3D0 /* Quizzes */ = {
 			isa = PBXGroup;
 			children = (
+				3402C743181D8F1D004F3B1D /* QuizFinishView */,
 				344B62D517A38EC800EE85A9 /* RankDisplayView */,
 				3478FFA5173FD6BF002B29DB /* ProgressView */,
 				888679A5172DD57F00DCE3D0 /* MultipleChoice */,
@@ -2348,6 +2366,8 @@
 				20A78E0E180B3EDC0037F8E3 /* QIPerson+Factory.m in Sources */,
 				20A78E0F180B3EDC0037F8E3 /* QIPosition+Factory.m in Sources */,
 				20A78E10180B3EDC0037F8E3 /* QIQuizFactory.m in Sources */,
+				3402C746181D903F004F3B1D /* QIQuizFinishViewController.m in Sources */,
+				3402C749181D9065004F3B1D /* QIQuizFinishView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

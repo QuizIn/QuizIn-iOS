@@ -15,6 +15,8 @@
 @property (nonatomic, strong, readonly) UIButton *industryQuizBeginButton;
 @property (nonatomic, strong, readonly) UIButton *groupQuizBeginButton;
 
+@property (nonatomic, strong, readonly) UIButton *testButton;
+
 @property (nonatomic, strong) UIScrollView *scrollView; 
 @property (nonatomic, strong) NSArray *imageURLs;
 @property (nonatomic, assign) NSInteger numberOfConnections;

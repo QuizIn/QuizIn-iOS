@@ -429,12 +429,12 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
         
         NSNumber *presentationLayerStartAngle = [[obj presentationLayer] valueForKey:@"startAngle"];
         CGFloat interpolatedStartAngle = [presentationLayerStartAngle doubleValue];
-        
+      
         NSNumber *presentationLayerEndAngle = [[obj presentationLayer] valueForKey:@"endAngle"];
         CGFloat interpolatedEndAngle = [presentationLayerEndAngle doubleValue];
 
         CGPathRef path = CGPathCreateArc(_pieCenter, _pieRadius, interpolatedStartAngle, interpolatedEndAngle);
-        [obj setPath:(__bridge NSString *)(path)];
+        [obj setPath:(__bridge CGPathRef)((__bridge NSString *)(path))];
         CFRelease(path);
         
         {
