@@ -213,9 +213,13 @@
       referenceString = @"%d Incorrect Answers";
     
     for (NSDictionary *connection in sortedConnectionStats){
-      NSString *numberString = [NSString stringWithFormat:referenceString,[[connection objectForKey:sortKey] integerValue]];
+      int sectionNumber = [[connection objectForKey:sortKey] integerValue];
+      NSString *numberString = [NSString stringWithFormat:referenceString,sectionNumber];
       NSUInteger index = [sections indexOfObject:numberString];
       if (index == NSNotFound) {
+        if([[numberString substringToIndex:1] isEqualToString:@"1"]){
+          NSLog(@"found the oner"); 
+        }
         [sections addObject:numberString];
         NSMutableArray *sectionList = [NSMutableArray arrayWithObject:connection];
         [connectionStatsAlphabetical setObject:sectionList forKey:numberString];
@@ -224,8 +228,6 @@
         [[connectionStatsAlphabetical objectForKey:numberString] addObject:connection];
       }
     }
-    NSString *misPluralizedString = [[sections objectAtIndex:1] copy];
-    [sections replaceObjectAtIndex:1 withObject:[misPluralizedString substringToIndex:[misPluralizedString length]-1]]; 
   }
   
   if (sortBy == trend){
