@@ -193,7 +193,10 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
          if ([facet.code isEqualToString:@"current-company"]) {
            NSMutableArray *companies = [NSMutableArray arrayWithCapacity:[facet.buckets count]];
            for (QISearchFacetBucket *bucket in facet.buckets) {
-             [companies addObject:bucket.name];
+             QICompany *company = [QICompany new];
+             company.companyID = bucket.code;
+             company.name = bucket.name;
+             [companies addObject:company];
            }
            companyNames = [companies copy];
          }

@@ -94,7 +94,7 @@
     if (quiz) {
       completionBlock? completionBlock(quiz, nil) :  NULL;
     } else {
-      DDLogError(@"Could not create quiz for industry: ");
+      DDLogError(@"Could not create quiz for current-company: ");
       // TODO(Rene): Setup errors to use one domain and define error codes.
       NSError *error = [NSError errorWithDomain:@"com.quizin.errors" code:-3 userInfo:nil];
       completionBlock ? completionBlock(nil, error) : NULL;
