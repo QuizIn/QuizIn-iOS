@@ -53,6 +53,7 @@
     return;
   }
   _selectionContent = [selectionContent mutableCopy];
+  [self.tableView reloadData];
 }
 
 -(void) setSelectionViewLabelString:(NSString *)selectionViewLabelString {
@@ -261,14 +262,14 @@
   QIGroupSelectionCellView *cell = (QIGroupSelectionCellView *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
   if (cell == nil){
     cell = [[QIGroupSelectionCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    [cell.backView setBackgroundColor:[UIColor colorWithRed:80.0f/255.0f green:125.0f/255.0f blue:144.0f/255.0f alpha:1.0f]];
-    [cell setImageURLs:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"images"]];
-    [cell setSelectionTitle:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"title"]];
-    [cell setSelectionSubtitle:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"subtitle"]];
-    [cell setLogoURL:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"logo"]];
-    [cell setNumberOfContacts:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"contacts"]];
   }
+  [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+  [cell.backView setBackgroundColor:[UIColor colorWithRed:80.0f/255.0f green:125.0f/255.0f blue:144.0f/255.0f alpha:1.0f]];
+  [cell setImageURLs:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"images"]];
+  [cell setSelectionTitle:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"title"]];
+  [cell setSelectionSubtitle:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"subtitle"]];
+  [cell setLogoURL:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"logo"]];
+  [cell setNumberOfContacts:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"contacts"]];
   
   BOOL selected = [[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"selected"] boolValue];
   if (selected){
