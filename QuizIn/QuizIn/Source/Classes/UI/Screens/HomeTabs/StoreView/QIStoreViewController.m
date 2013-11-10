@@ -9,7 +9,6 @@
 @interface QIStoreViewController ()
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) QIStoreTableHeaderView *headerView;
 @property (nonatomic, strong) QIStoreView *storeView; 
 @property (nonatomic, strong) NSArray *storeData;
 @property (nonatomic, strong) NSArray *products;
@@ -22,8 +21,6 @@
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    _headerView = [self newHeaderView];
-    _tableView = [self newStoreTable];
     _storeData = nil;
     _products = nil;
 
@@ -36,32 +33,24 @@
   self.view = [[QIStoreView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   self.title = @"Store";
   
-  self.storeView.tableView = self.tableView;
-  [self.storeView addSubview:self.tableView];
+  self.storeView.tableView.dataSource = self;
+  self.storeView.tableView.delegate = self;
   
-  [self.headerView.buyAllButton addTarget:self action:@selector(buyAll) forControlEvents:UIControlEventTouchUpInside];
-  [self.storeView.refreshButton addTarget:self action:@selector(reloadView) forControlEvents:UIControlEventTouchUpInside]; 
+  [self.storeView.headerView.buyAllButton addTarget:self action:@selector(buyAll) forControlEvents:UIControlEventTouchUpInside];
+  [self.storeView.refreshButton addTarget:self action:@selector(reloadView) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-  [self reloadView]; 
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productFailed:) name:IAPHelperProductFailedNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-  [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] animated:YES scrollPosition:0];
+  [self reloadView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  self.highlightedCell = 99; 
-  for (NSInteger j = 0; j < [self.tableView numberOfSections]; ++j)
-  {
-    for (NSInteger i = 0; i < [self.tableView numberOfRowsInSection:j]; ++i)
-    {
-      [[(QIStoreCellView *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:j]] highlightTimer] invalidate];
-    }
-  }
 }
 
 - (void)viewDidLoad
@@ -80,11 +69,6 @@
   return (QIStoreView *)self.view;
 }
 
-- (void)setHighlightedCell:(NSInteger)highlightedCell{
-  _highlightedCell = highlightedCell;
-  [self updateCellHighlight]; 
-}
-
 - (void)setParentTabBarController:(UITabBarController *)parentTabBarController{
   _parentTabBarController = parentTabBarController;
 }
@@ -95,6 +79,7 @@
 - (void)buyAll{
   NSLog(@"Buy All");
   SKProduct *product = [[QIStoreData getBuyAllProductWithProducts:self.products] objectAtIndex:0];
+  [self.storeView.spinningOverlay setHidden:NO];
   [[QIIAPHelper sharedInstance] buyProduct:product];
 }
 
@@ -111,77 +96,58 @@
   NSInteger row = fmodf(button.tag,SECTION_INDEX_SPAN);
   NSLog(@"Buy: Tag-%d  Section-%d  Row-%d",button.tag, section, row);
   SKProduct *product = [[[[self.storeData objectAtIndex:section] objectForKey:@"item"] objectAtIndex:row] objectForKey:@"product"];
+  [self.storeView.spinningOverlay setHidden:NO];
   [[QIIAPHelper sharedInstance] buyProduct:product]; 
 }
 
 - (void)productPurchased:(NSNotification *)notification {
-  self.storeData = [QIStoreData getStoreDataWithProducts:_products];
   [self reloadView];
 }
 
-- (void)updateCellHighlight{
-  if (self.highlightedCell !=99){
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.highlightedCell inSection:0];
-    QIStoreCellView *cell = (QIStoreCellView *)[self.tableView cellForRowAtIndexPath:indexPath];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-    [cell highlight];
-  }
+- (void)productFailed:(NSNotification *)notification {
+  NSString *errorMessage = [notification.userInfo objectForKey:@"errorMessage"];
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Purchasing Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  [alert show];
+  [self reloadView];
 }
 
 - (void)reloadView{
     
   [[QIIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
-    if (success) {
-      _products = products;
-      _storeData = [QIStoreData getStoreDataWithProducts:_products];
-      
-      NSDictionary *item = [QIStoreData storeItemWithProduct:[[QIStoreData getBuyAllProductWithProducts:products] objectAtIndex:0]];
-      [self.headerView.buyAllButton setHidden:NO];
-      [self.headerView.bestOfferLabel setHidden:NO];
-      [self.headerView.buyAllPriceLabel setHidden:NO];
-      [self.headerView setAllPurchased:[[item objectForKey:@"itemPurchased"] boolValue]];
-      [self.headerView setAllPrice:[item objectForKey:@"itemPrice"]];
-      
-      [self.storeView.storeStatusLabel setHidden:YES];
-      [self.storeView.activity stopAnimating];
-      [self.tableView reloadData]; 
-    }
-    else {
-      [self.storeView.storeStatusLabel setText:@"Cannot Load Store"];
-      [self.storeView.refreshButton setHidden:NO]; 
-      [self.storeView.activity stopAnimating];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+      if (success) {
+        _products = products;
+        _storeData = [QIStoreData getStoreDataWithProducts:_products];
+        
+        NSDictionary *item = [QIStoreData storeItemWithProduct:[[QIStoreData getBuyAllProductWithProducts:products] objectAtIndex:0]];
+        [self.storeView.headerView.buyAllButton setHidden:NO];
+        [self.storeView.headerView.bestOfferLabel setHidden:NO];
+        [self.storeView.headerView.buyAllPriceLabel setHidden:NO];
+        [self.storeView.tableView setHidden:NO];
+        [self.storeView.headerView setAllPurchased:[[item objectForKey:@"itemPurchased"] boolValue]];
+        [self.storeView.headerView setAllPrice:[item objectForKey:@"itemPrice"]];
+        
+        [self.storeView.storeStatusLabel setHidden:YES];
+        [self.storeView.refreshButton setHidden:YES];
+        [self.storeView.activity stopAnimating];
+      }
+      else {
+         _storeData = nil;
+        [self.storeView.storeStatusLabel setText:@"Cannot Load Store"];
+        [self.storeView.storeStatusLabel setHidden:NO];
+        [self.storeView.refreshButton setHidden:NO];
+        [self.storeView.activity stopAnimating];
+        [self.storeView.headerView.buyAllButton setHidden:YES];
+        [self.storeView.headerView.bestOfferLabel setHidden:YES];
+        [self.storeView.headerView.buyAllPriceLabel setHidden:YES];
+        [self.storeView.tableView setHidden:YES];
+      }
+      [self.storeView.spinningOverlay setHidden:YES];
+      _highlightedCell = 99;
+      [self.storeView.tableView reloadData];
+    });
   }];
-  _highlightedCell = 99;
-  [self.tableView reloadData];
 }
-
-#pragma mark TableView
-
--(UITableView *)newStoreTable{
-  UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-  [tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [tableView setBackgroundColor:[UIColor clearColor]];
-  [tableView setBackgroundView:nil];
-  [tableView setOpaque:NO];
-  [tableView setSeparatorColor:[UIColor clearColor]];
-  [tableView setShowsVerticalScrollIndicator:NO];
-  [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-  [tableView setAllowsSelection:YES]; 
-  tableView.rowHeight = 107;
-  tableView.sectionHeaderHeight = 25;
-  tableView.tableHeaderView = self.headerView;
-  tableView.dataSource = self;
-  tableView.delegate = self;
-  return tableView;
-}
-
--(QIStoreTableHeaderView *)newHeaderView{
-  QIStoreTableHeaderView *headerView = [[QIStoreTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 230)];
-  headerView.backgroundColor = [UIColor clearColor];
-  return headerView;
-}
-
 
 #pragma mark tableView Delegate Functions
 #pragma mark - Table view data source

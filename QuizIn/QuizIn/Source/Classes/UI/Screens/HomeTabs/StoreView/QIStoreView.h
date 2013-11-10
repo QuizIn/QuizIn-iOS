@@ -9,5 +9,7 @@
 @property (nonatomic, strong) UIActivityIndicatorView *activity;
 @property (nonatomic, strong) UILabel *storeStatusLabel;
 @property (nonatomic, strong) UIButton *refreshButton;
+@property (nonatomic, strong) QIStoreTableHeaderView *headerView;
+@property (nonatomic, strong) UIView *spinningOverlay;
 
 @end

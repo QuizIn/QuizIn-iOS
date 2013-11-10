@@ -121,7 +121,6 @@
 
 - (void)goToStore:(UIButton *)sender{
   [self.parentTabBarController setSelectedIndex:3];
-  //[(QIStoreViewController *)[[self.parentTabBarController viewControllers] objectAtIndex:3] setHighlightedCell:sender.tag];
 }
 
 - (void)groupPicker:(UIButton *)sender{
@@ -129,7 +128,7 @@
   [self presentViewController:groupSelectionViewController animated:YES completion:nil];
 }
 
-//Todo Test
+//Todo Test Quiz Finish View
 - (void)showQuizFinish{
   QIQuizFinishViewController *finishViewController = [[QIQuizFinishViewController alloc] init];
   [self presentViewController:finishViewController animated:YES completion:nil];
