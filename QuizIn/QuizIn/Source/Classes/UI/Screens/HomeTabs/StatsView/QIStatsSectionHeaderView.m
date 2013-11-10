@@ -180,24 +180,24 @@
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   switch (index) {
     case 0:
-      [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"] forState:UIControlStateNormal];
-      [button setBackgroundImage:[UIImage imageNamed:@"quizin_exit_btn"] forState:UIControlStateSelected];
+      [button setBackgroundImage:[UIImage imageNamed:@"stats_alphabetical_icon_selected"] forState:UIControlStateNormal];
+      [button setBackgroundImage:[UIImage imageNamed:@"stats_alphabetical_icon"] forState:UIControlStateSelected];
       break;
     case 1:
-      [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"] forState:UIControlStateNormal];
-      [button setBackgroundImage:[UIImage imageNamed:@"quizin_exit_btn"] forState:UIControlStateSelected];
+      [button setBackgroundImage:[UIImage imageNamed:@"stats_correct_icon_selected"] forState:UIControlStateNormal];
+      [button setBackgroundImage:[UIImage imageNamed:@"stats_correct_icon"] forState:UIControlStateSelected];
       break;
     case 2:
-      [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"] forState:UIControlStateNormal];
-      [button setBackgroundImage:[UIImage imageNamed:@"quizin_exit_btn"] forState:UIControlStateSelected];
+      [button setBackgroundImage:[UIImage imageNamed:@"stats_incorrect_icon_selected"] forState:UIControlStateNormal];
+      [button setBackgroundImage:[UIImage imageNamed:@"stats_incorrect_icon"] forState:UIControlStateSelected];
       break;
     case 3:
-      [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"] forState:UIControlStateNormal];
-      [button setBackgroundImage:[UIImage imageNamed:@"quizin_exit_btn"] forState:UIControlStateSelected];
+      [button setBackgroundImage:[UIImage imageNamed:@"stats_trend_icon_selected"] forState:UIControlStateNormal];
+      [button setBackgroundImage:[UIImage imageNamed:@"stats_trend_icon"] forState:UIControlStateSelected];
       break;
     case 4:
-      [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"] forState:UIControlStateNormal];
-      [button setBackgroundImage:[UIImage imageNamed:@"quizin_exit_btn"] forState:UIControlStateSelected];
+      [button setBackgroundImage:[UIImage imageNamed:@"stats_graph_icon_selected"] forState:UIControlStateNormal];
+      [button setBackgroundImage:[UIImage imageNamed:@"stats_graph_icon"] forState:UIControlStateSelected];
       break;
     default:
       break;

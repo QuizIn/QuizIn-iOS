@@ -274,4 +274,10 @@
   return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+   NSDictionary *data = [[[self.connectionStats objectAtIndex:1] objectForKey:[[self.connectionStats objectAtIndex:0] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+  NSURL *profileURL = [NSURL URLWithString:[data objectForKey:@"profileURL"]];
+  [[UIApplication sharedApplication] openURL:profileURL];
+}
+
 @end

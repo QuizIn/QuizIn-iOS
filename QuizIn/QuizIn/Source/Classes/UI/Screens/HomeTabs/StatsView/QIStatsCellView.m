@@ -68,7 +68,7 @@
   [self updateTrendImage];
 }
 
-- (void)setKeyColorIndex:(NSInteger *)keyColorIndex{
+- (void)setKeyColorIndex:(NSInteger )keyColorIndex{
   _keyColorIndex = keyColorIndex;
   [self updateKeyColor];
 }
@@ -102,9 +102,9 @@
 
 - (void)updateTrendImage{
   if (self.upTrend)
-    [self.trendImage setImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"]];
+    [self.trendImage setImage:[UIImage imageNamed:@"up_arrow_icon"]];
   else
-    [self.trendImage setImage:[UIImage imageNamed:@"calendar_checkmark"]];
+    [self.trendImage setImage:[UIImage imageNamed:@"down_arrow_icon"]];
 }
 
 - (void)updateKeyColor{
@@ -138,7 +138,7 @@
     NSDictionary *cellViews = NSDictionaryOfVariableBindings(_connectionNameLabel,_profileImageView,_rightLabel,_wrongLabel,_trendImage,_keyKnown);
     
     NSArray *hCellViewsConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-3-[_profileImageView(==40)]-3-[_connectionNameLabel(==100)]-(>=4)-[_rightLabel(==30)][_wrongLabel(==30)]-5-[_trendImage(==25)]-10-[_keyKnown(==20)]-10-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-3-[_profileImageView(==40)]-3-[_connectionNameLabel(==100)]-(>=4)-[_rightLabel(==30)][_wrongLabel(==30)]-5-[_trendImage(==25)]-10-[_keyKnown(==18)]-10-|"
                                             options:0
                                             metrics:nil
                                               views:cellViews];
@@ -163,12 +163,12 @@
                                             metrics:nil
                                               views:cellViews];
     NSArray *vTrendConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-10-[_trendImage]-10-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-15-[_trendImage]-15-|"
                                             options:0
                                             metrics:nil
                                               views:cellViews];
     NSArray *vKeyConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-13-[_keyKnown]-13-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-14-[_keyKnown]-14-|"
                                             options:0
                                             metrics:nil
                                               views:cellViews];
@@ -223,6 +223,7 @@
 
 - (UIImageView *)newTrendImage{
   UIImageView *imageView = [[UIImageView alloc] init];
+  [imageView setContentMode:UIViewContentModeScaleAspectFit];   
   [imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   return imageView;
 }
