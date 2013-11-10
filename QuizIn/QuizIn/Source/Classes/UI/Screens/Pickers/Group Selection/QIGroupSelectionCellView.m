@@ -161,7 +161,9 @@
 }
 
 -(void)updateLogoImage{
-  [self.logoImageView setImageURL:self.logoURL];
+  if (self.logoURL && ![self.logoURL isKindOfClass:[NSNull class]]) {
+    [self.logoImageView setImageURL:self.logoURL];
+  }
 }
 
 #pragma mark Layout

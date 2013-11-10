@@ -49,8 +49,8 @@
         NSMutableDictionary *companySelection = [@{@"contacts": @"123",
                                                    @"title": companyName,
                                                    @"subtitle": @"",
-                                                   @"images": imageURLs,
-                                                   @"logo": logo1,
+                                                   @"images": @[],
+                                                   @"logo": [NSNull null],
                                                    @"selected": @NO} mutableCopy];
         [companySelectionContent addObject:companySelection];
       }
