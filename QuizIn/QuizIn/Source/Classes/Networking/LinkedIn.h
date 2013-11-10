@@ -7,6 +7,7 @@ typedef void (^LIGetPeopleCurrentConnectionsResponse)(NSArray *connections,
                                                       NSError *error);
 typedef void (^LIConnectionsResponse)(QIConnectionsStore *connectionsStore, NSError *error);
 typedef void (^LIConnectionsCountResult)(NSInteger numberOfConnections, NSError *error);
+typedef void (^LICompaniesResponse)(NSArray *companies, NSError *error);
 
 @interface LinkedIn : NSObject
 
@@ -26,4 +27,6 @@ typedef void (^LIConnectionsCountResult)(NSInteger numberOfConnections, NSError 
                                                            onCompletion:(LIConnectionsResponse)onCompletion;
 + (void)allFirstDegreeConnectionsForAuthenticatedUserInSchools:(NSArray *)schoolCodes
                                                   onCompletion:(LIConnectionsResponse)onCompletion;
+
++ (void)topFirstDegreeConnectionCompaniesForAuthentedUserWithOnCompletion:(LICompaniesResponse)onCompletion;
 @end

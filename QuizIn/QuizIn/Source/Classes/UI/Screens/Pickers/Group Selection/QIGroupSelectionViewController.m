@@ -3,6 +3,7 @@
 #import "QIGroupSelectionViewController.h"
 #import "QIQuizFactory.h"
 #import "QIQuizViewController.h"
+#import "LinkedIn.h"
 
 @interface QIGroupSelectionViewController ()
 
@@ -24,6 +25,19 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  
+  [LinkedIn topFirstDegreeConnectionCompaniesForAuthentedUserWithOnCompletion:^(NSArray *companies,
+                                                                                NSError *error) {
+    if (error) {
+      return;
+    }
+    
+    NSLog(@"Company Names: %@", companies);
+  }];
+  
+  
+  
   NSMutableArray *selectionContent = [QIGroupSelectionData getSelectionData];
   [self.groupSelectionView setSelectionContent:selectionContent];
   [self.groupSelectionView setSelectionViewLabelString:@"Create Your Next Quiz"];

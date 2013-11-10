@@ -10,6 +10,8 @@
 #import "QILocation.h"
 #import "QIPosition.h"
 #import "QICompany.h"
+#import "QISearchFacet.h"
+#import "QISearchFacetBucket.h"
 
 #import "QILIPeople.h"
 #import "QILIConnections.h"
@@ -177,6 +179,30 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
       onCompletion? onCompletion(nil, error) : NULL;
     }
   }];
+}
+
++ (void)topFirstDegreeConnectionCompaniesForAuthentedUserWithOnCompletion:(LICompaniesResponse)onCompletion {
+  
+  [QILISearch
+   getPeopleSearchFacets:@[@"current-company"]
+   withSearchParameters:@{@"facet": @"network,F"}
+   onCompletion:^(NSArray *facets, NSError *error) {
+     if (!error) {
+       NSArray *companyNames = @[];
+       for (QISearchFacet *facet in facets) {
+         if ([facet.code isEqualToString:@"current-company"]) {
+           NSMutableArray *companies = [NSMutableArray arrayWithCapacity:[facet.buckets count]];
+           for (QISearchFacetBucket *bucket in facet.buckets) {
+             [companies addObject:bucket.name];
+           }
+           companyNames = [companies copy];
+         }
+       }
+       onCompletion? onCompletion(companyNames, nil) : NULL;
+     } else {
+       onCompletion? onCompletion(nil, error) : NULL;
+     }
+   }];
 }
 
 @end
