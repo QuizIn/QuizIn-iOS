@@ -16,7 +16,7 @@
   // Construct path.
   NSMutableString *resourcePath = [@"people/~" mutableCopy];
   if (fieldSelector) {
-    [resourcePath appendFormat:@":%@", fieldSelector];
+    [resourcePath appendFormat:@":(%@)", fieldSelector];
   }
   
   // Build query parameter dictionary.

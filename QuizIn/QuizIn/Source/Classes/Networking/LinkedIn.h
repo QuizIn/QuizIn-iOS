@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 
 @class QIConnectionsStore;
+@class QIPerson;
 
 typedef void (^LIGetPeopleResponse)(NSDictionary *profile, NSError *error);
 typedef void (^LIGetPeopleCurrentConnectionsResponse)(NSArray *connections,
@@ -8,8 +9,13 @@ typedef void (^LIGetPeopleCurrentConnectionsResponse)(NSArray *connections,
 typedef void (^LIConnectionsResponse)(QIConnectionsStore *connectionsStore, NSError *error);
 typedef void (^LIConnectionsCountResult)(NSInteger numberOfConnections, NSError *error);
 typedef void (^LICompaniesResponse)(NSArray *companies, NSError *error);
+typedef void (^LIAuthenticatedUserResponse)(QIPerson *authenticatedUser, NSError *error);
 
 @interface LinkedIn : NSObject
+
++ (QIPerson *)authenticatedUser;
+
++ (void)updateAuthenticatedUserWithOnCompletion:(LIAuthenticatedUserResponse)onCompletion;
 
 + (NSString *)peopleFieldSelector;
 

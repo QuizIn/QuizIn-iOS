@@ -18,6 +18,9 @@
 #import "QILISearch.h"
 #import "QIConnectionsStore+Factory.h"
 
+
+#import <AuthKit/AKAccountStore.h>
+
 #import "QILIPagedSearch.h"
 
 typedef void (^AFHTTPRequestOperationSuccess)(AFHTTPRequestOperation *operation,
@@ -25,7 +28,30 @@ typedef void (^AFHTTPRequestOperationSuccess)(AFHTTPRequestOperation *operation,
 typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
                                               NSError *error);
 
+static QIPerson *authenticatedUser;
+
 @implementation LinkedIn
+
++ (QIPerson *)authenticatedUser {
+  return [authenticatedUser copy];
+}
+
++ (void)updateAuthenticatedUserWithOnCompletion:(LIAuthenticatedUserResponse)onCompletion {
+  AKAccountStore *store = [AKAccountStore sharedStore];
+  if ([store authenticatedAccount]) {
+    [QILIPeople
+     getProfileForAuthenticatedUserWithFieldSelector:[self peopleFieldSelector]
+     onCompletion:^(QIPerson *person, NSError *error) {
+        if (!error) {
+          authenticatedUser = [person copy];
+        }
+        onCompletion? onCompletion(authenticatedUser, error) : NULL;
+    }];
+  } else {
+    authenticatedUser = nil;
+    onCompletion? onCompletion(nil, nil) : NULL;
+  }
+}
 
 + (NSString *)peopleFieldSelector {
   return @"id,first-name,last-name,formatted-name,positions,location,industry,picture-url,public-profile-url";
@@ -113,7 +139,7 @@ typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
     }
   };
   
-  [QILIPeople getProfileForAuthenticatedUserWithFieldSelector:@"(num-connections)"
+  [QILIPeople getProfileForAuthenticatedUserWithFieldSelector:@"num-connections"
                                                  onCompletion:profileOnCompletion];
 }
 

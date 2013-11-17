@@ -19,7 +19,6 @@
 #define USERID @"12345"
 
 @interface QIApplicationViewController ()<AKAuthHandler>
-//@property(nonatomic, strong) QIDrawerController *drawerController;
 @property(nonatomic, strong) UIViewController *loginViewController;
 @property(nonatomic, strong) AKLinkedInAuthController *authController;
 @property(nonatomic, strong) UITabBarController *tabViewController;
@@ -71,25 +70,28 @@
 
 - (void)authControllerAccount:(AKAccount *)account
               didAuthenticate:(id<AKAuthControl>)authController {
-  // TODO(rcacheaux): Check if exists.
-  [self.loginViewController.view removeFromSuperview];
-  [self.loginViewController removeFromParentViewController];
-
-  self.tabViewController = [self newTabBarController];
-  [self addChildViewController:self.tabViewController];
-  [self.view addSubview:self.tabViewController.view];
-  //self.drawerController = [self newDrawerController];
-  //[self addChildViewController:self.drawerController];
-  //[self.view addSubview:self.drawerController.view];
+  [LinkedIn updateAuthenticatedUserWithOnCompletion:^(QIPerson *authenticatedUser, NSError *error) {
+    // TODO(rcacheaux): Check if exists.
+    [self.loginViewController.view removeFromSuperview];
+    [self.loginViewController removeFromParentViewController];
+    
+    self.tabViewController = [self newTabBarController];
+    [self addChildViewController:self.tabViewController];
+    [self.view addSubview:self.tabViewController.view];
+    //self.drawerController = [self newDrawerController];
+    //[self addChildViewController:self.drawerController];
+    //[self.view addSubview:self.drawerController.view];
+  }];
 }
 
 - (void)authControllerAccount:(AKAccount *)account
             didUnauthenticate:(id<AKAuthControl>)authController {
-  
   [self.tabBarController.view removeFromSuperview];
   [self.tabBarController removeFromParentViewController];
   //[self.drawerController.view removeFromSuperview];
   //[self.drawerController removeFromParentViewController];
+  
+  [LinkedIn updateAuthenticatedUserWithOnCompletion:nil];
 }
 
 #pragma mark Factory Methods
