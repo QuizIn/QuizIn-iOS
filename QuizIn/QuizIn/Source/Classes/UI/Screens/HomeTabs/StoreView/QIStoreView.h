@@ -10,6 +10,7 @@
 @property (nonatomic, strong) UILabel *storeStatusLabel;
 @property (nonatomic, strong) UIButton *refreshButton;
 @property (nonatomic, strong) QIStoreTableHeaderView *headerView;
+@property (nonatomic, strong) QIStoreTableFooterView *footerView;
 @property (nonatomic, strong) UIView *spinningOverlay;
 
 @end

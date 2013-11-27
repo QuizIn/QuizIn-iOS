@@ -142,12 +142,10 @@
       break;
     }
     case correctAnswers:{
-      //sortKey = @"userLastName";
       sortKey = @"correctAnswers";
       break;
     }
     case incorrectAnswers:{
-      //sortKey = @"userLastName";
       sortKey = @"incorrectAnswers";
       break; 
     }
@@ -169,13 +167,9 @@
   NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
   NSMutableDictionary *stats = [[prefs objectForKey:self.userID] mutableCopy];
   NSMutableArray *connectionStats = [stats objectForKey:@"connectionStats"];
-  
   NSSortDescriptor *intermediateSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"userLastName" ascending:YES];
-  //NSArray *intermediateSortDescriptors = @[intermediateSortDescriptor];
-  //NSArray *intermediateSortedConnectionStats = [connectionStats sortedArrayUsingDescriptors:intermediateSortDescriptors];
-
   NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
-  NSArray *sortDescriptors = @[intermediateSortDescriptor, sortDescriptor];
+  NSArray *sortDescriptors = @[sortDescriptor, intermediateSortDescriptor];
   NSArray *sortedConnectionStats = [connectionStats sortedArrayUsingDescriptors:sortDescriptors];
 
   NSMutableDictionary *connectionStatsAlphabetical = [NSMutableDictionary dictionary];
@@ -273,22 +267,6 @@
     [connectionStatsAlphabetical setObject:needsRefreshConnections forKey:[sections objectAtIndex:0]];
     [connectionStatsAlphabetical setObject:middleConnections forKey:[sections objectAtIndex:1]];
     [connectionStatsAlphabetical setObject:wellKnownConnections forKey:[sections objectAtIndex:2]];
-
-    
-    /*
-    for (NSDictionary *connection in sortedConnectionStats){
-      NSString *sectionName = [NSString stringWithFormat:@"%d",[[connection objectForKey:sortKey] integerValue]];
-      NSUInteger index = [sections indexOfObject:sectionName];
-      if (index == NSNotFound) {
-        [sections addObject:sectionName];
-        NSMutableArray *sectionList = [NSMutableArray arrayWithObject:connection];
-        [connectionStatsAlphabetical setObject:sectionList forKey:sectionName];
-      }
-      else{
-        [[connectionStatsAlphabetical objectForKey:sectionName] addObject:connection];
-      }
-    }
-    */
   }
   return @[sections,connectionStatsAlphabetical];
 }

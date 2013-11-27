@@ -34,6 +34,7 @@
     _storeStatusLabel = [self newStoreStatusLabel];
     _refreshButton = [self newRefreshButton];
     _headerView = [self newHeaderView];
+    _footerView = [self newFooterView];
     _tableView = [self newStoreTable];
     [self contstructViewHierarchy];
   }
@@ -229,13 +230,20 @@
   tableView.rowHeight = 107;
   tableView.sectionHeaderHeight = 25;
   tableView.tableHeaderView = self.headerView;
+  tableView.tableFooterView = self.footerView; 
   return tableView;
 }
 
--(QIStoreTableHeaderView *)newHeaderView{
+- (QIStoreTableHeaderView *)newHeaderView{
   QIStoreTableHeaderView *headerView = [[QIStoreTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 230)];
-  headerView.backgroundColor = [UIColor clearColor];
+  [headerView setBackgroundColor:[UIColor clearColor]];
   return headerView;
+}
+
+- (QIStoreTableFooterView *)newFooterView{
+  QIStoreTableFooterView *footerView = [[QIStoreTableFooterView alloc] initWithFrame:CGRectMake(0,0, 320, 30)];
+  [footerView setBackgroundColor:[UIColor colorWithWhite:.33f alpha:0.2f]];
+  return footerView; 
 }
 
 

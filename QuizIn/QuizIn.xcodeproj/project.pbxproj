@@ -373,6 +373,7 @@
 		348901C91786F78C0004F604 /* calendar_slitbottom1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901BA1786F78C0004F604 /* calendar_slitbottom1@2x.png */; };
 		348901CA1786F78C0004F604 /* calendar_slittop1.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901BB1786F78C0004F604 /* calendar_slittop1.png */; };
 		348901CB1786F78C0004F604 /* calendar_slittop1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 348901BC1786F78C0004F604 /* calendar_slittop1@2x.png */; };
+		34B19B661837C69400266FAF /* QIStoreTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34B19B651837C69400266FAF /* QIStoreTableFooterView.m */; };
 		34B1D24B176958D300D38EF2 /* cardquiz_businesscard_v3.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B1D249176958D300D38EF2 /* cardquiz_businesscard_v3.png */; };
 		34B1D24C176958D300D38EF2 /* cardquiz_businesscard_v3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B1D24A176958D300D38EF2 /* cardquiz_businesscard_v3@2x.png */; };
 		34E9774C1764FAC900086673 /* QI_QuizBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E9774B1764FAC900086673 /* QI_QuizBuilder.m */; };
@@ -866,6 +867,8 @@
 		348901BA1786F78C0004F604 /* calendar_slitbottom1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_slitbottom1@2x.png"; sourceTree = "<group>"; };
 		348901BB1786F78C0004F604 /* calendar_slittop1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_slittop1.png; sourceTree = "<group>"; };
 		348901BC1786F78C0004F604 /* calendar_slittop1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_slittop1@2x.png"; sourceTree = "<group>"; };
+		34B19B641837C69400266FAF /* QIStoreTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIStoreTableFooterView.h; sourceTree = "<group>"; };
+		34B19B651837C69400266FAF /* QIStoreTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIStoreTableFooterView.m; sourceTree = "<group>"; };
 		34B1D249176958D300D38EF2 /* cardquiz_businesscard_v3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardquiz_businesscard_v3.png; sourceTree = "<group>"; };
 		34B1D24A176958D300D38EF2 /* cardquiz_businesscard_v3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardquiz_businesscard_v3@2x.png"; sourceTree = "<group>"; };
 		34E9774A1764FAC900086673 /* QI_QuizBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QI_QuizBuilder.h; sourceTree = "<group>"; };
@@ -1379,6 +1382,8 @@
 				345A1B1F17C9461000FFDFA1 /* QIStorePreviewViewController.m */,
 				345A1B2117C9462B00FFDFA1 /* QIStorePreviewView.h */,
 				345A1B2217C9462B00FFDFA1 /* QIStorePreviewView.m */,
+				34B19B641837C69400266FAF /* QIStoreTableFooterView.h */,
+				34B19B651837C69400266FAF /* QIStoreTableFooterView.m */,
 			);
 			path = StoreView;
 			sourceTree = "<group>";
@@ -2482,6 +2487,7 @@
 				20A78E10180B3EDC0037F8E3 /* QIQuizFactory.m in Sources */,
 				3402C746181D903F004F3B1D /* QIQuizFinishViewController.m in Sources */,
 				3402C749181D9065004F3B1D /* QIQuizFinishView.m in Sources */,
+				34B19B661837C69400266FAF /* QIStoreTableFooterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

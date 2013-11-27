@@ -102,6 +102,11 @@ NSString *const IAPHelperProductFailedNotification = @"IAPHelperProductFailedNot
   };
 }
 
+- (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error{
+  NSDictionary *userInfo = [NSDictionary dictionaryWithObject:error.localizedDescription forKey:@"errorMessage"];
+  [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductFailedNotification object:nil userInfo:userInfo];
+}
+
 - (void)completeTransaction:(SKPaymentTransaction *)transaction {
   NSLog(@"completeTransaction...");
   

@@ -38,6 +38,7 @@
   
   [self.storeView.headerView.buyAllButton addTarget:self action:@selector(buyAll) forControlEvents:UIControlEventTouchUpInside];
   [self.storeView.refreshButton addTarget:self action:@selector(reloadView) forControlEvents:UIControlEventTouchUpInside];
+  [self.storeView.footerView.restoreButton addTarget:self action:@selector(restore) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -98,6 +99,11 @@
   SKProduct *product = [[[[self.storeData objectAtIndex:section] objectForKey:@"item"] objectAtIndex:row] objectForKey:@"product"];
   [self.storeView.spinningOverlay setHidden:NO];
   [[QIIAPHelper sharedInstance] buyProduct:product]; 
+}
+
+- (void)restore{
+  [self.storeView.spinningOverlay setHidden:NO];
+  [[QIIAPHelper sharedInstance] restoreCompletedTransactions];
 }
 
 - (void)productPurchased:(NSNotification *)notification {

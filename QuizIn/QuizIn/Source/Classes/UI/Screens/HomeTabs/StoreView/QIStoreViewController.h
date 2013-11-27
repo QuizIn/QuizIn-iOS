@@ -2,6 +2,7 @@
 #import "QIIAPHelper.h"
 #import "QIStoreTableHeaderView.h"
 #import "QIStoreSectionHeaderView.h"
+#import "QIStoreTableFooterView.h"
 #import "QIStoreCellView.h"
 #import "QIStoreView.h"
 
