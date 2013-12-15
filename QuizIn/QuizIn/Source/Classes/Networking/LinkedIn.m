@@ -11,6 +11,7 @@
 #import "QIPosition.h"
 #import "QICompany.h"
 #import "QIIndustry.h"
+#import "QISchool.h"
 #import "QISearchFacet.h"
 #import "QISearchFacetBucket.h"
 
@@ -208,7 +209,7 @@ static QIPerson *authenticatedUser;
   }];
 }
 
-// TODO: Consolidate the following three methods, they contain the same logic.
+// TODO: Consolidate the following four methods, they contain the same logic.
 + (void)topFirstDegreeConnectionCompaniesForAuthentedUserWithOnCompletion:(LICompaniesResponse)onCompletion {
   
   [QILISearch
@@ -286,6 +287,33 @@ static QIPerson *authenticatedUser;
        onCompletion? onCompletion(nil, error) : NULL;
      }
    }];
+}
+
++ (void)topFirstDegreeConnectionSchoolsForAuthenticatedUserWithOnCompletion:(LISchoolsResponse)onCompletion {
+  [QILISearch
+   getPeopleSearchFacets:@[@"school"]
+   withSearchParameters:@{@"facet": @"network,F"}
+   onCompletion:^(NSArray *facets, NSError *error) {
+     if (!error) {
+       NSArray *schools = @[];
+       for (QISearchFacet *facet in facets) {
+         if ([facet.code isEqualToString:@"school"]) {
+           NSMutableArray *mutableSchools = [NSMutableArray arrayWithCapacity:[facet.buckets count]];
+           for (QISearchFacetBucket *bucket in facet.buckets) {
+             QISchool *school = [QISchool new];
+             school.code = bucket.code;
+             school.name = bucket.name;
+             [mutableSchools addObject:school];
+           }
+           schools = [mutableSchools copy];
+         }
+       }
+       onCompletion? onCompletion(schools, nil) : NULL;
+     } else {
+       onCompletion? onCompletion(nil, error) : NULL;
+     }
+
+  }];
 }
 
 @end

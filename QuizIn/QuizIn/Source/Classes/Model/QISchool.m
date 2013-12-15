@@ -1,14 +1,14 @@
-#import "QIIndustry.h"
+#import "QISchool.h"
 
-@implementation QIIndustry
+@implementation QISchool
 
 - (id)copyWithZone:(NSZone *)zone {
-  QIIndustry *industry = [[[self class] allocWithZone:zone] init];
+  QISchool *school = [[[self class] allocWithZone:zone] init];
   
-  industry.code = [self.code copy];
-  industry.name = [self.name copy];
+  school.code = [self.code copy];
+  school.name = [self.name copy];
   
-  return industry;
+  return school;
 }
 
 - (NSString *)description {
