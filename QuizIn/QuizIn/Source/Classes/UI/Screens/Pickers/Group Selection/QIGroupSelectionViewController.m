@@ -2,6 +2,7 @@
 #import "QIQuizFactory.h"
 #import "QIQuizViewController.h"
 #import "QICompany.h"
+#import "QIIndustry.h"
 #import "LinkedIn.h"
 
 @interface QIGroupSelectionViewController ()
@@ -26,6 +27,30 @@
   [super viewDidLoad];
   
   
+  [LinkedIn
+   topFirstDegreeConnectionIndustriesForAuthenticatedUserWithOnCompletion:^(NSArray *industries, NSError *error) {
+     dispatch_async(dispatch_get_main_queue(), ^{
+       if (error) {
+         return;
+       }
+       
+       NSMutableArray *industrySelectionContent = [NSMutableArray arrayWithCapacity:[industries count]];
+       for (QIIndustry *industry in industries) {
+         NSMutableDictionary *industrySelection = [@{@"contacts": industry.code,
+                                                     @"title": industry.name,
+                                                     @"subtitle": @"",
+                                                     @"images": @[],
+                                                     @"logo": [NSNull null],
+                                                     @"selected": @NO} mutableCopy];
+         [industrySelectionContent addObject:industrySelection];
+       }
+       [self.groupSelectionView setSelectionContent:[industrySelectionContent copy]];
+       
+       
+     });
+   }];
+  
+  /*
   [LinkedIn topFirstDegreeConnectionCompaniesForAuthentedUserWithOnCompletion:^(NSArray *companies,
                                                                                 NSError *error) {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -46,7 +71,7 @@
       }
       [self.groupSelectionView setSelectionContent:[companySelectionContent copy]];
     });
-  }];
+  }];*/
   
   [self.groupSelectionView setSelectionContent:[@[] mutableCopy]];
   [self.groupSelectionView setSelectionViewLabelString:@"Create Your Next Quiz"];

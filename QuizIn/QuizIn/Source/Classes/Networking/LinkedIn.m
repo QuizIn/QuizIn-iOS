@@ -10,6 +10,7 @@
 #import "QILocation.h"
 #import "QIPosition.h"
 #import "QICompany.h"
+#import "QIIndustry.h"
 #import "QISearchFacet.h"
 #import "QISearchFacetBucket.h"
 
@@ -232,6 +233,32 @@ static QIPerson *authenticatedUser;
        onCompletion? onCompletion(nil, error) : NULL;
      }
    }];
+}
+
++ (void)topFirstDegreeConnectionIndustriesForAuthenticatedUserWithOnCompletion:(LIIndustriesResponse)onCompletion {
+  [QILISearch
+   getPeopleSearchFacets:@[@"industry"]
+   withSearchParameters:@{@"facet": @"network,F"}
+   onCompletion:^(NSArray *facets, NSError *error) {
+     if (!error) {
+       NSArray *industries = @[];
+       for (QISearchFacet *facet in facets) {
+         if ([facet.code isEqualToString:@"industry"]) {
+           NSMutableArray *mutableIndustries = [NSMutableArray arrayWithCapacity:[facet.buckets count]];
+           for (QISearchFacetBucket *bucket in facet.buckets) {
+             QIIndustry *industry = [QIIndustry new];
+             industry.code = bucket.code;
+             industry.name = bucket.name;
+             [mutableIndustries addObject:industry];
+           }
+           industries = [mutableIndustries copy];
+         }
+       }
+       onCompletion? onCompletion(industries, nil) : NULL;
+     } else {
+       onCompletion? onCompletion(nil, error) : NULL;
+     }
+  }];
 }
 
 @end
