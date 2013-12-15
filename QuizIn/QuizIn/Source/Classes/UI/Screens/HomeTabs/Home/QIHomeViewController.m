@@ -107,11 +107,6 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
   [self.homeView.groupQuizBeginButton addTarget:self
                                          action:@selector(groupPicker:)
                                  forControlEvents:UIControlEventTouchUpInside];
-  
-  //Todo Test
-  [self.homeView.testButton addTarget:self
-                               action:@selector(showQuizFinish)
-                     forControlEvents:UIControlEventTouchUpInside]; 
 }
 
 - (void)didReceiveMemoryWarning {
@@ -149,12 +144,6 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
   
   QIGroupSelectionViewController *groupSelectionViewController = [self newGroupSelectionViewControllerForType:type];
   [self presentViewController:groupSelectionViewController animated:YES completion:nil];
-}
-
-//Todo Test Quiz Finish View
-- (void)showQuizFinish{
-  QIQuizFinishViewController *finishViewController = [[QIQuizFinishViewController alloc] init];
-  [self presentViewController:finishViewController animated:YES completion:nil];
 }
 
 #pragma mark Data

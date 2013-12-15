@@ -6,6 +6,7 @@
 #import "QIMatchingQuizViewController.h"
 #import "QIQuizQuestionViewControllerFactory.h"
 #import "QIProgressView.h"
+#import "QIQuizFinishViewController.h"
 
 #import "QIQuizFactory.h"
 #import "QIQuiz.h"
@@ -96,7 +97,11 @@
   
   
   if (nextQuestion == nil) {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    QIQuizFinishViewController *finishViewController = [[QIQuizFinishViewController alloc] init];
+    [self addChildViewController:finishViewController];
+    [self.view addSubview:finishViewController.view];
+    finishViewController.view.frame = self.view.bounds;
+    [finishViewController.view setNeedsUpdateConstraints];
     return;
   }
   
@@ -117,6 +122,7 @@
                                                          action:@selector(userDidCloseQuiz)
                                                forControlEvents:UIControlEventTouchUpInside];
   
+  // TODO: Need to get rid of old view controllers.
   self.currentQuestionViewController = nextQuestionViewController;
   [self addChildViewController:nextQuestionViewController];
   [self.view addSubview:nextQuestionViewController.view];
