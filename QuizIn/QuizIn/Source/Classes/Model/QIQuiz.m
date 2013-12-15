@@ -34,4 +34,8 @@
   return self.questions[self.currentQuestionIndex++];
 }
 
+- (NSInteger)numberOfQuestions {
+  return [self.questions count];
+}
+
 @end

@@ -5,12 +5,14 @@
 #import "QIBusinessCardViewController.h"
 #import "QIMatchingQuizViewController.h"
 #import "QIQuizQuestionViewControllerFactory.h"
+#import "QIProgressView.h"
 
 #import "QIQuizFactory.h"
 #import "QIQuiz.h"
 
 @interface QIQuizViewController ()
 @property(nonatomic, strong) QIQuiz *quiz;
+@property(nonatomic, assign) NSUInteger questionIndex;
 @property(nonatomic, strong, readonly) QIQuizView *quizView;
 @property(nonatomic, strong) QIQuizQuestionViewController *currentQuestionViewController;
 
@@ -27,6 +29,7 @@
     _quiz = quiz;
     _businessCard = NO;
     _matching = NO;
+    _questionIndex = 0;
   }
   return self;
 }
@@ -61,9 +64,14 @@
     return;
   }
   
+  
+  
   self.currentQuestionViewController =
   [QIQuizQuestionViewControllerFactory
    questionViewControllerForQuestion:(QIQuizQuestion *)[self.quiz nextQuestion]];
+  self.questionIndex++;
+  self.currentQuestionViewController.progressView.numberOfQuestions = self.quiz.numberOfQuestions;
+  self.currentQuestionViewController.progressView.quizProgress = self.questionIndex;
   
   [self addChildViewController:self.currentQuestionViewController];
   [self.view addSubview:self.currentQuestionViewController.view];
@@ -84,6 +92,8 @@
   [self.currentQuestionViewController removeFromParentViewController];
   
   QIQuizQuestion *nextQuestion = (QIQuizQuestion *)[self.quiz nextQuestion];
+  self.questionIndex++;
+  
   
   if (nextQuestion == nil) {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -92,6 +102,9 @@
   
   QIQuizQuestionViewController *nextQuestionViewController =
       [QIQuizQuestionViewControllerFactory questionViewControllerForQuestion:nextQuestion];
+  // TODO: Place this in a method.
+  nextQuestionViewController.progressView.numberOfQuestions = self.quiz.numberOfQuestions;
+  nextQuestionViewController.progressView.quizProgress = self.questionIndex;
   
   [nextQuestionViewController.checkAnswersView.nextButton addTarget:self action:@selector(nextPressed) forControlEvents:UIControlEventTouchUpInside];
   [nextQuestionViewController.checkAnswersView.nextButton addTarget:self
@@ -104,6 +117,7 @@
                                                          action:@selector(userDidCloseQuiz)
                                                forControlEvents:UIControlEventTouchUpInside];
   
+  self.currentQuestionViewController = nextQuestionViewController;
   [self addChildViewController:nextQuestionViewController];
   [self.view addSubview:nextQuestionViewController.view];
 }

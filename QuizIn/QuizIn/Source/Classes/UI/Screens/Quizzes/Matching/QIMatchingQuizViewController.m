@@ -25,8 +25,6 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  self.matchingQuizView.numberOfQuestions = 10;
-  self.matchingQuizView.quizProgress = 4;
   
   NSMutableArray *imageURLs = [NSMutableArray arrayWithCapacity:[self.matchingQuestion.people count]];
   for (QIPerson *person in self.matchingQuestion.people) {
