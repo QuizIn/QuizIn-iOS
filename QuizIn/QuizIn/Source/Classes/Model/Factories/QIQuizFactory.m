@@ -295,7 +295,7 @@
         [titleAnswers shuffleAddObject:answer];
       }
       question.titles = [titleAnswers shuffledArray];
-      question.correctTitleIndex = [question.companies indexOfObject:title];
+      question.correctTitleIndex = [question.titles indexOfObject:title];
       
       [questions addObject:question];
       
