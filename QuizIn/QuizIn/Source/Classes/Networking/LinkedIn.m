@@ -208,6 +208,7 @@ static QIPerson *authenticatedUser;
   }];
 }
 
+// TODO: Consolidate the following three methods, they contain the same logic.
 + (void)topFirstDegreeConnectionCompaniesForAuthentedUserWithOnCompletion:(LICompaniesResponse)onCompletion {
   
   [QILISearch
@@ -259,6 +260,32 @@ static QIPerson *authenticatedUser;
        onCompletion? onCompletion(nil, error) : NULL;
      }
   }];
+}
+
++ (void)topFirstDegreeConnectionLocationsForAuthenticatedUserWithOnCompletion:(LILocationsResponse)onCompletion {
+  [QILISearch
+   getPeopleSearchFacets:@[@"location"]
+   withSearchParameters:@{@"facet": @"network, F"}
+   onCompletion:^(NSArray *facets, NSError *error) {
+     if (!error) {
+       NSArray *locations = @[];
+       for (QISearchFacet *facet in facets) {
+         if ([facet.code isEqualToString:@"location"]) {
+           NSMutableArray *mutableLocations = [NSMutableArray arrayWithCapacity:[facet.buckets count]];
+           for (QISearchFacetBucket *bucket in facet.buckets) {
+             QILocation *location = [QILocation new];
+             location.countryCode = bucket.code;
+             location.name = bucket.name;
+             [mutableLocations addObject:location];
+           }
+           locations = [mutableLocations copy];
+         }
+       }
+       onCompletion? onCompletion(locations, nil) : NULL;
+     } else {
+       onCompletion? onCompletion(nil, error) : NULL;
+     }
+   }];
 }
 
 @end

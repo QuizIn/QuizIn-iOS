@@ -10,6 +10,7 @@ typedef void (^LIConnectionsResponse)(QIConnectionsStore *connectionsStore, NSEr
 typedef void (^LIConnectionsCountResult)(NSInteger numberOfConnections, NSError *error);
 typedef void (^LICompaniesResponse)(NSArray *companies, NSError *error);
 typedef void (^LIIndustriesResponse)(NSArray *industries, NSError *error);
+typedef void (^LILocationsResponse)(NSArray *locations, NSError *error);
 typedef void (^LIAuthenticatedUserResponse)(QIPerson *authenticatedUser, NSError *error);
 
 @interface LinkedIn : NSObject
@@ -38,4 +39,6 @@ typedef void (^LIAuthenticatedUserResponse)(QIPerson *authenticatedUser, NSError
 + (void)topFirstDegreeConnectionCompaniesForAuthentedUserWithOnCompletion:(LICompaniesResponse)onCompletion;
 
 + (void)topFirstDegreeConnectionIndustriesForAuthenticatedUserWithOnCompletion:(LIIndustriesResponse)onCompletion;
+
++ (void)topFirstDegreeConnectionLocationsForAuthenticatedUserWithOnCompletion:(LILocationsResponse)onCompletion;
 @end

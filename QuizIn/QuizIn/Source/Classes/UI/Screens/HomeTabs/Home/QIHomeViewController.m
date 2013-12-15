@@ -137,7 +137,7 @@
 #pragma mark Data
 - (void) showHideLockButtons{
   QIIAPHelper *store = [QIIAPHelper sharedInstance];
-  BOOL filterPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_pack"]; //YES
+  BOOL filterPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_pack"]; 
   [self.homeView.companyQuizLockButton setHidden:filterPurchased];
   [self.homeView.companyQuizBeginButton setHidden:!filterPurchased];
   [self.homeView.localeQuizLockButton setHidden:filterPurchased];

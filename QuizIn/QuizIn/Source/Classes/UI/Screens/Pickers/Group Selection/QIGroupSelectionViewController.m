@@ -3,6 +3,7 @@
 #import "QIQuizViewController.h"
 #import "QICompany.h"
 #import "QIIndustry.h"
+#import "QILocation.h"
 #import "LinkedIn.h"
 
 @interface QIGroupSelectionViewController ()
@@ -27,6 +28,29 @@
   [super viewDidLoad];
   
   
+  
+  [LinkedIn topFirstDegreeConnectionLocationsForAuthenticatedUserWithOnCompletion:^(NSArray *locations, NSError *error) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      if (error) {
+        return;
+      }
+      
+      NSMutableArray *locationSelectionContent = [NSMutableArray arrayWithCapacity:[locations count]];
+      for (QILocation *location in locations) {
+        NSMutableDictionary *locationSelection = [@{@"contacts": location.countryCode,
+                                                    @"title": location.name,
+                                                    @"subtitle": @"",
+                                                    @"images": @[],
+                                                    @"logo": [NSNull null],
+                                                    @"selected": @NO} mutableCopy];
+        [locationSelectionContent addObject:locationSelection];
+      }
+      [self.groupSelectionView setSelectionContent:[locationSelectionContent copy]];
+    });
+  }];
+  
+  
+  /*
   [LinkedIn
    topFirstDegreeConnectionIndustriesForAuthenticatedUserWithOnCompletion:^(NSArray *industries, NSError *error) {
      dispatch_async(dispatch_get_main_queue(), ^{
@@ -48,7 +72,7 @@
        
        
      });
-   }];
+   }];*/
   
   /*
   [LinkedIn topFirstDegreeConnectionCompaniesForAuthentedUserWithOnCompletion:^(NSArray *companies,
