@@ -16,12 +16,11 @@
 #import "QIQuizFactory.h"
 #import "QIQuiz.h"
 
-#define USERID @"12345"
-
 @interface QIApplicationViewController ()<AKAuthHandler>
-@property(nonatomic, strong) UIViewController *loginViewController;
-@property(nonatomic, strong) AKLinkedInAuthController *authController;
-@property(nonatomic, strong) UITabBarController *tabViewController;
+@property (nonatomic, strong) UIViewController *loginViewController;
+@property (nonatomic, strong) AKLinkedInAuthController *authController;
+@property (nonatomic, strong) UITabBarController *tabViewController;
+@property (nonatomic, strong) QIPerson *loggedInUser; 
 @end
 
 @implementation QIApplicationViewController
@@ -72,6 +71,7 @@
               didAuthenticate:(id<AKAuthControl>)authController {
   [LinkedIn updateAuthenticatedUserWithOnCompletion:^(QIPerson *authenticatedUser, NSError *error) {
     // TODO(rcacheaux): Check if exists.
+    self.loggedInUser = [LinkedIn authenticatedUser]; 
     [self.loginViewController.view removeFromSuperview];
     [self.loginViewController removeFromParentViewController];
     
@@ -128,8 +128,8 @@
 - (QIHomeViewController *)newHomeViewController {
   QIHomeViewController *homeViewController = [[QIHomeViewController alloc] init];
   [homeViewController setTitle:@"Home"];
-  [homeViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Home" image:[UIImage imageNamed:@"connectionsquiz_home_btn"] tag:0]];
-  [homeViewController setUserID:USERID];
+  [homeViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Start" image:[UIImage imageNamed:@"connectionsquiz_home_btn"] tag:0]];
+  [homeViewController setUserID:self.loggedInUser.personID];
   return homeViewController;
 }
 
@@ -137,7 +137,7 @@
   QIStatsViewController *statsViewController = [[QIStatsViewController alloc] init];
   [statsViewController setTitle:@"Stats"];
   [statsViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Stats" image:[UIImage imageNamed:@"connectionsquiz_stats_btn"] tag:1]];
-  [statsViewController setUserID:USERID];
+  [statsViewController setUserID:self.loggedInUser.personID];
   return statsViewController;
 }
 
@@ -145,7 +145,7 @@
   QIRankViewController *rankViewController = [[QIRankViewController alloc] init];
   [rankViewController setTitle:@"Rank"];
   [rankViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Rank" image:[UIImage imageNamed:@"connectionsquiz_rank_btn"] tag:2]];
-  [rankViewController setUserID:USERID];
+  [rankViewController setUserID:self.loggedInUser.personID];
   return rankViewController;
 }
 

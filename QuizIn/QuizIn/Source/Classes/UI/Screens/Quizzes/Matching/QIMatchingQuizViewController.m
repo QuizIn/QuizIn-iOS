@@ -3,9 +3,11 @@
 #import "QIQuizQuestionViewController_Protected.h"
 #import "QIMatchingQuestion.h"
 #import "QIPerson.h"
+#import "LinkedIn.h"
 
 @interface QIMatchingQuizViewController ()
 @property(nonatomic, strong, readonly) QIMatchingQuestion *matchingQuestion;
+@property (nonatomic, strong) QIPerson *loggedInUser; 
 @end
 
 @implementation QIMatchingQuizViewController
@@ -14,7 +16,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+      _loggedInUser = [LinkedIn authenticatedUser];
     }
     return self;
 }
@@ -35,7 +37,11 @@
   self.matchingQuizView.answers = self.matchingQuestion.answers;
   self.matchingQuizView.correctAnswers = self.matchingQuestion.correctAnswers;
   self.matchingQuizView.people = self.matchingQuestion.people;
-  self.matchingQuizView.loggedInUserID = @"12345";
+  self.matchingQuizView.loggedInUserID = [LinkedIn authenticatedUser].personID;
+  
+  [self setLoggedInUser:[LinkedIn authenticatedUser]];
+  [self.matchingQuizView.rankDisplayView setProfileImageURL:[NSURL URLWithString:self.loggedInUser.pictureURL]];
+  [self.matchingQuizView.rankDisplayView setProfileName:self.loggedInUser.formattedName];
   
   [self.matchingQuizView.checkAnswersView.helpButton addTarget:self
                                                             action:@selector(helpDialog)

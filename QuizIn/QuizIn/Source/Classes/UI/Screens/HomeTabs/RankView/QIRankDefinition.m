@@ -1,6 +1,7 @@
 
 #import "QIRankDefinition.h"
 #import "QIStatsData.h"
+#import "LinkedIn.h"
 
 @implementation QIRankDefinition
 
@@ -20,7 +21,7 @@
 
 + (UIImage *)getRankBadgeForRank:(int)rank{
   //todo: get actual userID
-  NSString *userID = @"12345";
+  NSString *userID = [LinkedIn authenticatedUser].personID;
   QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:userID];
   int currentRank = [data getCurrentRank];
   if (rank > currentRank){

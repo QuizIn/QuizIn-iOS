@@ -78,7 +78,7 @@
     _companyQuizLabel = [self newQuizLabelWithText:@"CompanyQuiz"];
     _localeQuizLabel = [self newQuizLabelWithText:@"LocaleQuiz"];
     _industryQuizLabel = [self newQuizLabelWithText:@"IndustryQuiz"];
-    _groupQuizLabel = [self newQuizLabelWithText:@"GroupQuiz"];
+    _groupQuizLabel = [self newQuizLabelWithText:@"SchoolQuiz"];
     
     [self constructViewHierachy];
   }

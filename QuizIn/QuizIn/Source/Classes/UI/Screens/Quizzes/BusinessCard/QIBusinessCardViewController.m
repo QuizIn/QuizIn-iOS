@@ -1,12 +1,12 @@
 #import "QIBusinessCardViewController.h"
-
 #import "QIQuizQuestionViewController_Protected.h"
-
 #import "QIBusinessCardQuestion.h"
 #import "QIPerson.h"
+#import "LinkedIn.h"
 
 @interface QIBusinessCardViewController ()
 @property(nonatomic, strong, readonly) QIBusinessCardQuestion *businessCardQuestion;
+@property(nonatomic, strong) QIPerson *loggedInUser; 
 @end
 
 @implementation QIBusinessCardViewController
@@ -14,12 +14,15 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
+    _loggedInUser = [LinkedIn authenticatedUser];
   }
   return self;
 }
+
 - (void)loadView{
   self.view = [[QIBusinessCardQuizView alloc] init];
 }
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.businessCardQuizView.numberOfQuestions = 10;
@@ -32,7 +35,11 @@
   self.businessCardQuizView.correctNameIndex = self.businessCardQuestion.correctNameIndex;
   self.businessCardQuizView.correctCompanyIndex = self.businessCardQuestion.correctCompanyIndex;
   self.businessCardQuizView.correctTitleIndex = self.businessCardQuestion.correctTitleIndex;
-  self.businessCardQuizView.loggedInUserID = @"12345";
+  
+  [self setLoggedInUser:[LinkedIn authenticatedUser]]; 
+  [self.businessCardQuizView setLoggedInUserID:self.loggedInUser.personID];
+  [self.businessCardQuizView.rankDisplayView setProfileImageURL:[NSURL URLWithString:self.loggedInUser.pictureURL]];
+  [self.businessCardQuizView.rankDisplayView setProfileName:self.loggedInUser.formattedName];
   
   [self.businessCardQuizView.checkAnswersView.helpButton addTarget:self
                                                           action:@selector(helpDialog)

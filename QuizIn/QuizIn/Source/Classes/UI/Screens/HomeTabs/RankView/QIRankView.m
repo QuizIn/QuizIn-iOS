@@ -48,7 +48,8 @@
 #pragma mark Properties
 
 - (void)setRank:(NSString *)rank{
-  _rank = rank; 
+  _rank = rank;
+  [self updateRankButtonStates]; 
 }
 
 - (void)setUserID:(NSString *)userID{
@@ -194,6 +195,13 @@
     completion:^(BOOL completion){
       [self.overlayMask setHidden:YES];
   }];
+}
+
+-(void)updateRankButtonStates{
+ self.rankBadges = [QIRankDefinition getAllRankBadges];
+  for (int i = 0; i<[self.rankButtons count]; i++){
+    [[self.rankButtons objectAtIndex:i] setBackgroundImage:[self.rankBadges objectAtIndex:i]forState:UIControlStateNormal];
+  }
 }
 
 #pragma mark factory methods

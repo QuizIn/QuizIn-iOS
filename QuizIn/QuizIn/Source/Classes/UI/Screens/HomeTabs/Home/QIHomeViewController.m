@@ -1,4 +1,4 @@
-#import "QIQuizFinishViewController.h" 
+
 #import "QIHomeViewController.h"
 #import "QIQuizViewController.h"
 #import "QIGroupSelectionViewController.h"
@@ -12,6 +12,10 @@
 #import "QIStoreData.h"
 #import "QIHomeView.h"
 #import "QIQuizFactory.h"
+
+//todo kill these
+#import "QIQuizFinishViewController.h"
+#import "QILoginScreenViewController.h" 
 
 #define MAX_TIMED_IMAGES 4
 
@@ -145,6 +149,17 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
   QIGroupSelectionViewController *groupSelectionViewController = [self newGroupSelectionViewControllerForType:type];
   [self presentViewController:groupSelectionViewController animated:YES completion:nil];
 }
+
+//Todo Test Quiz Finish View
+- (void)showQuizFinish{
+  QIQuizFinishViewController *finishViewController = [[QIQuizFinishViewController alloc] init];
+  [self presentViewController:finishViewController animated:YES completion:nil];
+}
+- (void)showLoginScreen{
+  QILoginScreenViewController *loginScreenViewController = [[QILoginScreenViewController alloc] init];
+  [self presentViewController:loginScreenViewController animated:YES completion:nil];
+}
+
 
 #pragma mark Data
 - (void) showHideLockButtons{
