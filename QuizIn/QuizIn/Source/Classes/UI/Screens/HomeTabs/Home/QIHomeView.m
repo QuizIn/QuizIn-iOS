@@ -78,9 +78,12 @@
     _companyQuizLabel = [self newQuizLabelWithText:@"CompanyQuiz"];
     _localeQuizLabel = [self newQuizLabelWithText:@"LocaleQuiz"];
     _industryQuizLabel = [self newQuizLabelWithText:@"IndustryQuiz"];
-    _groupQuizLabel = [self newQuizLabelWithText:@"GroupQuiz"];
+    _groupQuizLabel = [self newQuizLabelWithText:@"SchoolQuiz"];
 
+    //todo kill test buttons
     _testButton = [self newQuizLockButtonWithTag:99];
+    _testButton1 = [self newQuizBeginButtonWithTag:100];
+    _testButton1.hidden = NO; 
     
     [self constructViewHierachy];
   }
@@ -140,7 +143,8 @@
   [self.scrollView addSubview:self.groupQuizLabel];
   [self.scrollView addSubview:self.industryQuizLabel];
   
-  [self.scrollView addSubview:self.testButton]; 
+  [self.scrollView addSubview:self.testButton];
+  [self.scrollView addSubview:self.testButton1];
 }
 
 #pragma mark Layout

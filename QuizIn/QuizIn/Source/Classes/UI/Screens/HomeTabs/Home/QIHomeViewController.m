@@ -1,4 +1,4 @@
-#import "QIQuizFinishViewController.h" 
+
 #import "QIHomeViewController.h"
 #import "QIQuizViewController.h"
 #import "QIGroupSelectionViewController.h"
@@ -12,6 +12,10 @@
 #import "QIStoreData.h"
 #import "QIHomeView.h"
 #import "QIQuizFactory.h"
+
+//todo kill these
+#import "QIQuizFinishViewController.h"
+#import "QILoginScreenViewController.h" 
 
 #define MAX_TIMED_IMAGES 4
 
@@ -111,7 +115,13 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
   //Todo Test
   [self.homeView.testButton addTarget:self
                                action:@selector(showQuizFinish)
-                     forControlEvents:UIControlEventTouchUpInside]; 
+                     forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.homeView.testButton1 addTarget:self
+                               action:@selector(showLoginScreen)
+                     forControlEvents:UIControlEventTouchUpInside];
+
+  
 }
 
 - (void)didReceiveMemoryWarning {
@@ -156,6 +166,11 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
   QIQuizFinishViewController *finishViewController = [[QIQuizFinishViewController alloc] init];
   [self presentViewController:finishViewController animated:YES completion:nil];
 }
+- (void)showLoginScreen{
+  QILoginScreenViewController *loginScreenViewController = [[QILoginScreenViewController alloc] init];
+  [self presentViewController:loginScreenViewController animated:YES completion:nil];
+}
+
 
 #pragma mark Data
 - (void) showHideLockButtons{

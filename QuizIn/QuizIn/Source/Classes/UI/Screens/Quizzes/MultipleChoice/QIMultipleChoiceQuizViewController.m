@@ -1,17 +1,19 @@
 #import "QIMultipleChoiceQuizViewController.h"
-
 #import "QIQuizQuestionViewController_Protected.h"
 #import "QIMultipleChoiceQuestion.h"
 #import "QIPerson.h"
+#import "LinkedIn.h"
 
 @interface QIMultipleChoiceQuizViewController ()
 @property(nonatomic, strong, readonly) QIMultipleChoiceQuestion *multipleChoiceQuestion;
+@property(nonatomic, strong) QIPerson *loggedInUser; 
 @end
 
 @implementation QIMultipleChoiceQuizViewController
 
 - (void)loadView {
   self.view = [[QIMultipleChoiceQuizView alloc] init];
+  self.loggedInUser = [LinkedIn authenticatedUser];
 }
 
 - (void)viewDidLoad {
@@ -24,9 +26,11 @@
   self.multipleChoiceView.correctAnswerIndex = self.multipleChoiceQuestion.correctAnswerIndex;
   self.multipleChoiceView.profileImageURL = [NSURL URLWithString:self.multipleChoiceQuestion.person.pictureURL];
   
-  //todo loggedinuserID
-  self.multipleChoiceView.loggedInUserID = @"12345";
-  self.multipleChoiceView.answerPerson = self.multipleChoiceQuestion.person;
+  
+  [self.multipleChoiceView setLoggedInUserID:self.loggedInUser.personID];
+  [self.multipleChoiceView.rankDisplayView setProfileImageURL:[NSURL URLWithString:self.loggedInUser.pictureURL]];
+  [self.multipleChoiceView.rankDisplayView setProfileName:self.loggedInUser.formattedName]; 
+  [self.multipleChoiceView setAnswerPerson:self.multipleChoiceQuestion.person];
 
   [self.multipleChoiceView.checkAnswersView.helpButton addTarget:self
                                                           action:@selector(helpDialog)
@@ -37,6 +41,7 @@
   [self.multipleChoiceView.rankDisplayView.exitButton addTarget:self.multipleChoiceView
                                                          action:@selector(hideRankDisplay)
                                                forControlEvents:UIControlEventTouchUpInside];
+  
 }
 
 - (void)didReceiveMemoryWarning {

@@ -2,6 +2,7 @@
 #import "QIFontProvider.h"
 #import "QIRankDefinition.h"
 #import "QIStatsData.h"
+#import "AsyncImageView.h"
 
 @interface QIRankDisplayView ()
 
@@ -10,7 +11,7 @@
 @property (nonatomic, strong) UILabel *nameLabel; 
 @property (nonatomic, strong) UIImageView *backgroundImage;
 @property (nonatomic, strong) UIImageView *rankBadgeImage;
-@property (nonatomic, strong) UIImageView *profileImage;
+@property (nonatomic, strong) AsyncImageView *profileImageView;
 @property (nonatomic, strong) NSMutableArray *rankDisplayViewConstraints;
 
 @end
@@ -29,7 +30,7 @@
     _backgroundImage = [self newBackgroundImage];
     _rankDescriptionLabel = [self newRankDescriptionLabel];
     _rankBadgeImage = [self newRankBadgeImage];
-    _profileImage = [self newProfileImage];
+    _profileImageView = [self newProfileImageView];
     _nameLabel = [self newNameLabel]; 
     _fbShareButton = [self newRankShareButtonWithSharingIndex:0];
     _twitterShareButton = [self newRankShareButtonWithSharingIndex:1];
@@ -53,6 +54,17 @@
   _userID = userID;
   [self updateLockedStatusLabel]; 
 }
+
+- (void)setProfileImageURL:(NSURL *)profileImageURL{
+  _profileImageURL = profileImageURL; 
+  [self updateProfileImageView];
+}
+
+- (void)setProfileName:(NSString *)profileName{
+  _profileName = profileName;
+  [self updateProfileNameLabel];
+}
+
 #pragma mark Data Update
 
 - (void) updateRankBadgeImage{
@@ -74,6 +86,14 @@
   }
 }
 
+- (void)updateProfileImageView{
+  [self.profileImageView setImageURL:self.profileImageURL];
+}
+
+- (void)updateProfileNameLabel{
+  [self.nameLabel setText:self.profileName]; 
+}
+
 #pragma mark View Hierarchy
 
 - (void)constructViewHierarchy {
@@ -81,7 +101,7 @@
   [self addSubview:self.lockedStatusLabel];
   [self addSubview:self.rankDescriptionLabel];
   [self addSubview:self.rankBadgeImage];
-  [self addSubview:self.profileImage];
+  [self addSubview:self.profileImageView];
   [self addSubview:self.nameLabel]; 
   [self addSubview:self.fbShareButton];
   [self addSubview:self.twitterShareButton];
@@ -98,7 +118,7 @@
     
     self.rankDisplayViewConstraints = [NSMutableArray array];
     //Constrain Background Image
-    NSDictionary *rankViews = NSDictionaryOfVariableBindings(_backgroundImage,_lockedStatusLabel,_rankBadgeImage,_rankDescriptionLabel,_fbShareButton,_twitterShareButton,_linkedInShareButton,_profileImage,_nameLabel,_exitButton);
+    NSDictionary *rankViews = NSDictionaryOfVariableBindings(_backgroundImage,_lockedStatusLabel,_rankBadgeImage,_rankDescriptionLabel,_fbShareButton,_twitterShareButton,_linkedInShareButton,_profileImageView,_nameLabel,_exitButton);
     
     NSArray *hLockedLabelStatus =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_lockedStatusLabel]|"
@@ -137,13 +157,13 @@
                                               views:rankViews];
     
     NSArray *hProfileImage =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-47-[_profileImage(==80)]-(-80)-[_nameLabel]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-47-[_profileImageView(==80)]-(-80)-[_nameLabel]"
                                             options:0
                                             metrics:nil
                                               views:rankViews];
 
     NSArray *vProfileImage =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-49-[_profileImage(==80)][_nameLabel(==20)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-49-[_profileImageView(==80)]-10-[_nameLabel(==20)]"
                                             options:0
                                             metrics:nil
                                               views:rankViews];
@@ -218,8 +238,8 @@
   return imageView;
 }
 
--(UIImageView *)newProfileImage{
-  UIImageView *imageView = [[UIImageView alloc] init];
+-(AsyncImageView *)newProfileImageView{
+  AsyncImageView *imageView = [[AsyncImageView alloc] init];
   [imageView setContentMode:UIViewContentModeScaleAspectFill];
   [imageView setBackgroundColor:[UIColor blackColor]]; 
   [imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -246,7 +266,7 @@
   [label setTextColor:[UIColor colorWithWhite:.33f alpha:1.0f]];
   [label setAdjustsFontSizeToFitWidth:YES];
   [label setTextAlignment:NSTextAlignmentLeft];
-  [label setText:@"Rick Kuhlman"];
+  [label setText:@"Your Name"];
   return label;
 }
 

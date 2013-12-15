@@ -1,8 +1,10 @@
 #import "QIRankViewController.h"
 #import "QIStatsData.h"
+#import "LinkedIn.h"
 
 @interface QIRankViewController ()
 
+@property (nonatomic,strong) QIPerson *loggedInUser; 
 @end
 
 @implementation QIRankViewController
@@ -11,15 +13,18 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+      _loggedInUser = [LinkedIn authenticatedUser];
     }
     return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
   QIStatsData *stats = [[QIStatsData alloc] initWithLoggedInUserID:self.userID];
-  self.rankView.rank = [NSString stringWithFormat:@"%d",[stats getCurrentRank]];
+  [self.rankView setRank:[NSString stringWithFormat:@"%d",[stats getCurrentRank]]];
   [self.rankView.rankDisplayView.exitButton addTarget:self.rankView action:@selector(hideRankDisplay) forControlEvents:UIControlEventTouchUpInside];
+  [self setLoggedInUser:[LinkedIn authenticatedUser]];
+  [self.rankView.rankDisplayView setProfileImageURL:[NSURL URLWithString:self.loggedInUser.pictureURL]];
+  [self.rankView.rankDisplayView setProfileName:self.loggedInUser.formattedName];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
