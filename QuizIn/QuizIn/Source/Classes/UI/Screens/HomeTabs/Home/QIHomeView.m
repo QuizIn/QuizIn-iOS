@@ -4,8 +4,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface QIHomeView ()
-
-@property (nonatomic, strong) UIImageView *headerBar; 
+ 
 @property (nonatomic, strong) UIImageView *viewBackground;
 
 //Connections Quiz Start Area
@@ -48,7 +47,6 @@
     self.backgroundColor = [UIColor whiteColor];
     
     //Connections Quiz Start Area Init
-    _headerBar = [self newHeaderBar];
     _viewBackground = [self newViewBackground];
     _scrollView = [self newScrollView];
     
@@ -103,7 +101,6 @@
   
   // Construct Connections Quiz Start Area
   [self addSubview:self.viewBackground];
-  [self addSubview:self.headerBar]; 
   [self addSubview:self.scrollView];
 
   [self.connectionsQuizStartView addSubview:self.connectionsQuizPaperImage];
@@ -152,7 +149,7 @@
     //scrollView Constraints
     self.constraintsForTopLevelViews = [NSMutableArray array];
     
-    NSDictionary *topLevelViews = NSDictionaryOfVariableBindings(_scrollView,_viewBackground,_headerBar);
+    NSDictionary *topLevelViews = NSDictionaryOfVariableBindings(_scrollView,_viewBackground);
     
     NSArray *hScrollContraints =
     [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_scrollView]|"
@@ -166,18 +163,6 @@
                                             metrics:nil
                                               views:topLevelViews];
     
-    NSArray *hHeaderContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_headerBar]|"
-                                            options:NSLayoutFormatAlignAllTop
-                                            metrics:nil
-                                              views:topLevelViews];
-    NSArray *vHeaderContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_headerBar(==35)]"
-                                            options:NSLayoutFormatAlignAllLeft
-                                            metrics:nil
-                                              views:topLevelViews];
-
-    
     NSArray *hBackgroundContraints =
     [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_viewBackground]|"
                                             options:NSLayoutFormatAlignAllTop
@@ -188,8 +173,7 @@
                                             options:NSLayoutFormatAlignAllLeft
                                             metrics:nil
                                               views:topLevelViews];
-    [self.constraintsForTopLevelViews addObjectsFromArray:hHeaderContraints];
-    [self.constraintsForTopLevelViews addObjectsFromArray:vHeaderContraints];
+
     [self.constraintsForTopLevelViews addObjectsFromArray:hBackgroundContraints];
     [self.constraintsForTopLevelViews addObjectsFromArray:vBackgroundContraints];
     [self.constraintsForTopLevelViews addObjectsFromArray:hScrollContraints];
@@ -415,12 +399,6 @@
   [scrollView setAlwaysBounceVertical:YES];
   [scrollView setAlwaysBounceHorizontal:NO];
   return scrollView;
-}
-
-- (UIImageView *)newHeaderBar{
-  UIImageView *header = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"headerbar"]];
-  [header setTranslatesAutoresizingMaskIntoConstraints:NO];
-  return header;
 }
 
 - (UIImageView *)newViewBackground{
