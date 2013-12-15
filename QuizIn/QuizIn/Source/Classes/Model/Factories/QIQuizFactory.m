@@ -70,9 +70,9 @@
 
 //facets:(code,buckets:(code,name,count)) //  // current-company //@"facets": @"location",
 
-+ (void)newFirstDegreeQuizForIndustry:(NSString *)industryCode
++ (void)newFirstDegreeQuizForIndustries:(NSArray *)industryCodes
                   withCompletionBlock:(void (^)(QIQuiz *, NSError*))completionBlock {
-  [LinkedIn allFirstDegreeConnectionsForAuthenticatedUserInIndustries:@[industryCode] onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
+  [LinkedIn allFirstDegreeConnectionsForAuthenticatedUserInIndustries:[industryCodes copy] onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
     QIQuiz *quiz = [self quizWithConnections:connectionsStore];
     if (quiz) {
       completionBlock? completionBlock(quiz, nil) :  NULL;
@@ -151,7 +151,7 @@
 }
 
 + (QIQuiz *)quizWithConnections:(QIConnectionsStore *)connections {
-  NSAssert([connections.people count] >= 20, @"Must have at least 20 people to make Quiz");
+  NSAssert([connections.people count] >= 10, @"Must have at least 10 people to make Quiz");
   // TODO(Rene): Remove this requirement, simply include less multiple choice what's my name questions.
   NSAssert([connections.personIDsWithProfilePics count] >= 10,
            @"Must have at least 10 people with profile pics to make Quiz");

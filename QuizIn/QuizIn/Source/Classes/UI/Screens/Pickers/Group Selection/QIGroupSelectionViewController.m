@@ -28,95 +28,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  [LinkedIn topFirstDegreeConnectionSchoolsForAuthenticatedUserWithOnCompletion:^(NSArray *schools, NSError *error) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-      if (error) {
-        return;
-      }
-      
-      NSMutableArray *schoolSelectionContent = [NSMutableArray arrayWithCapacity:[schools count]];
-      for (QISchool *school in schools) {
-        NSMutableDictionary *schoolSelection = [@{@"contacts": school.code,
-                                                  @"title": school.name,
-                                                  @"subtitle": @"",
-                                                  @"images": @[],
-                                                  @"logo": [NSNull null],
-                                                  @"selected": @NO} mutableCopy];
-        [schoolSelectionContent addObject:schoolSelection];
-      }
-      [self.groupSelectionView setSelectionContent:[schoolSelectionContent copy]];
-    });
-  }];
-  
-  /*
-  [LinkedIn topFirstDegreeConnectionLocationsForAuthenticatedUserWithOnCompletion:^(NSArray *locations, NSError *error) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-      if (error) {
-        return;
-      }
-      
-      NSMutableArray *locationSelectionContent = [NSMutableArray arrayWithCapacity:[locations count]];
-      for (QILocation *location in locations) {
-        NSMutableDictionary *locationSelection = [@{@"contacts": location.countryCode,
-                                                    @"title": location.name,
-                                                    @"subtitle": @"",
-                                                    @"images": @[],
-                                                    @"logo": [NSNull null],
-                                                    @"selected": @NO} mutableCopy];
-        [locationSelectionContent addObject:locationSelection];
-      }
-      [self.groupSelectionView setSelectionContent:[locationSelectionContent copy]];
-    });
-  }];*/
-  
-  
-  /*
-  [LinkedIn
-   topFirstDegreeConnectionIndustriesForAuthenticatedUserWithOnCompletion:^(NSArray *industries, NSError *error) {
-     dispatch_async(dispatch_get_main_queue(), ^{
-       if (error) {
-         return;
-       }
-       
-       NSMutableArray *industrySelectionContent = [NSMutableArray arrayWithCapacity:[industries count]];
-       for (QIIndustry *industry in industries) {
-         NSMutableDictionary *industrySelection = [@{@"contacts": industry.code,
-                                                     @"title": industry.name,
-                                                     @"subtitle": @"",
-                                                     @"images": @[],
-                                                     @"logo": [NSNull null],
-                                                     @"selected": @NO} mutableCopy];
-         [industrySelectionContent addObject:industrySelection];
-       }
-       [self.groupSelectionView setSelectionContent:[industrySelectionContent copy]];
-       
-       
-     });
-   }];*/
-  
-  /*
-  [LinkedIn topFirstDegreeConnectionCompaniesForAuthentedUserWithOnCompletion:^(NSArray *companies,
-                                                                                NSError *error) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-      if (error) {
-        return;
-      }
-  
-      NSLog(@"Company Names: %@", companies);
-      NSMutableArray *companySelectionContent = [NSMutableArray arrayWithCapacity:[companies count]];
-      for (QICompany *company in companies) {
-        NSMutableDictionary *companySelection = [@{@"contacts": company.companyID,
-                                                   @"title": company.name,
-                                                   @"subtitle": @"",
-                                                   @"images": @[],
-                                                   @"logo": [NSNull null],
-                                                   @"selected": @NO} mutableCopy];
-        [companySelectionContent addObject:companySelection];
-      }
-      [self.groupSelectionView setSelectionContent:[companySelectionContent copy]];
-    });
-  }];*/
-  
   [self.groupSelectionView setSelectionContent:[@[] mutableCopy]];
   [self.groupSelectionView setSelectionViewLabelString:@"Create Your Next Quiz"];
   
@@ -155,22 +66,7 @@
 }
 
 - (void)startQuiz:(id)sender {
-  NSMutableArray *selectedCompanyCodes = [NSMutableArray array];
-  for (NSDictionary *companyDict in self.groupSelectionView.selectionContent) {
-    if ([companyDict[@"selected"] isEqual:@YES]) {
-      [selectedCompanyCodes addObject:companyDict[@"contacts"]];
-    }
-  }
-  
-  [QIQuizFactory newFirstDegreeQuizForCurrentCompanies:selectedCompanyCodes
-                                   withCompletionBlock:^(QIQuiz *quiz, NSError *error) {
-    if (error == nil) {
-      dispatch_async(dispatch_get_main_queue(), ^{
-        QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];
-        [self presentViewController:quizViewController animated:YES completion:nil];
-      });
-    }
-  }];
+  // Abstract method. Subclasses should override.
 }
 
 - (QIQuizViewController *)newQuizViewControllerWithQuiz:(QIQuiz *)quiz {

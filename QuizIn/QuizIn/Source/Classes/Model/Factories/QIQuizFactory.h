@@ -6,8 +6,8 @@
 @interface QIQuizFactory : NSObject
 
 + (void)quizFromRandomConnectionsWithCompletionBlock:(void (^)(QIQuiz *, NSError *))completionBlock;
-+ (void)newFirstDegreeQuizForIndustry:(NSString *)industryCode
-                  withCompletionBlock:(void (^)(QIQuiz *quiz, NSError*error))completionBlock;
++ (void)newFirstDegreeQuizForIndustries:(NSArray *)industryCodes
+                    withCompletionBlock:(void (^)(QIQuiz *quiz, NSError*error))completionBlock;
 + (void)newFirstDegreeQuizForCurrentCompanies:(NSArray *)companyCodes
                           withCompletionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock;
 + (void)newFirstDegreeQuizForSchools:(NSArray *)schoolCodes

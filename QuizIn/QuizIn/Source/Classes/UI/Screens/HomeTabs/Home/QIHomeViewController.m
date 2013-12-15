@@ -2,6 +2,10 @@
 #import "QIHomeViewController.h"
 #import "QIQuizViewController.h"
 #import "QIGroupSelectionViewController.h"
+#import "QILocationSelectionViewController.h"
+#import "QISchoolSelectionViewController.h"
+#import "QIIndustrySelectionViewController.h"
+#import "QICompanySelectionViewController.h"
 #import "QIStoreViewController.h"
 #import "LinkedIn.h"
 #import "QIIAPHelper.h"
@@ -10,6 +14,14 @@
 #import "QIQuizFactory.h"
 
 #define MAX_TIMED_IMAGES 4
+
+typedef NS_ENUM(NSInteger, QIFilterType) {
+  QIFilterTypeNone,
+  QIFilterTypeCompany,
+  QIFilterTypeLocation,
+  QIFilterTypeSchool,
+  QIFilterTypeIndustry,
+};
 
 @interface QIHomeViewController ()
 @property(nonatomic, strong, readonly) QIHomeView *homeView;
@@ -124,7 +136,18 @@
 }
 
 - (void)groupPicker:(UIButton *)sender{
-  QIGroupSelectionViewController *groupSelectionViewController = [self newGroupSelectionViewController];
+  QIFilterType type = QIFilterTypeNone;
+  if (sender == self.homeView.companyQuizBeginButton) {
+    type = QIFilterTypeCompany;
+  } else if (sender == self.homeView.industryQuizBeginButton) {
+    type = QIFilterTypeIndustry;
+  } else if (sender == self.homeView.localeQuizBeginButton) {
+    type = QIFilterTypeLocation;
+  } else if (sender == self.homeView.groupQuizBeginButton) {
+    type = QIFilterTypeSchool;
+  }
+  
+  QIGroupSelectionViewController *groupSelectionViewController = [self newGroupSelectionViewControllerForType:type];
   [self presentViewController:groupSelectionViewController animated:YES completion:nil];
 }
 
@@ -198,8 +221,30 @@
   return quizViewController;
 }
 
-- (QIGroupSelectionViewController *)newGroupSelectionViewController {
-  QIGroupSelectionViewController *groupSelectionViewController = [[QIGroupSelectionViewController alloc] init];
+- (QIGroupSelectionViewController *)newGroupSelectionViewControllerForType:(QIFilterType)type {
+  QIGroupSelectionViewController *groupSelectionViewController = nil;
+  
+  switch (type) {
+    case QIFilterTypeCompany:
+      groupSelectionViewController = [[QICompanySelectionViewController alloc] init];
+      break;
+      
+    case QIFilterTypeLocation:
+      groupSelectionViewController = [[QILocationSelectionViewController alloc] init];
+      break;
+      
+    case QIFilterTypeSchool:
+      groupSelectionViewController = [[QISchoolSelectionViewController alloc] init];
+      break;
+      
+    case QIFilterTypeIndustry:
+      groupSelectionViewController = [[QIIndustrySelectionViewController alloc] init];
+      break;
+      
+    case QIFilterTypeNone:
+      // Do nothing.
+      break;
+  }
   groupSelectionViewController.modalPresentationStyle = UIModalPresentationFullScreen;
   groupSelectionViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
   groupSelectionViewController.view.frame = self.view.bounds;
