@@ -148,7 +148,7 @@
                                               views:mainViews];
 
     NSArray *vTableViewContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_tableView]|"
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-20-[_tableView]|"
                                             options:0
                                             metrics:nil
                                               views:mainViews];

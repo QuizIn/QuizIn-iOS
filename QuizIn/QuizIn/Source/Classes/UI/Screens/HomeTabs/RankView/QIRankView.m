@@ -99,7 +99,7 @@
                                               views:backgroundImageConstraintView];
     
     NSArray *vScrollContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_scrollView]|"
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-20-[_scrollView]|"
                                             options:NSLayoutFormatAlignAllLeft
                                             metrics:nil
                                               views:backgroundImageConstraintView];
