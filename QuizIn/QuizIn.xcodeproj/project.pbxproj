@@ -325,6 +325,8 @@
 		3478FFA8173FD747002B29DB /* QIProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFA7173FD747002B29DB /* QIProgressView.m */; };
 		3478FFAC1747C19D002B29DB /* QIMatchingQuizViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFAB1747C19D002B29DB /* QIMatchingQuizViewController.m */; };
 		3478FFAF1747C1C7002B29DB /* QIMatchingQuizView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFAE1747C1C7002B29DB /* QIMatchingQuizView.m */; };
+		347F49511870E09600815578 /* QISettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 347F49501870E09600815578 /* QISettingsViewController.m */; };
+		347F49541870E0AA00815578 /* QISettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 347F49531870E0AA00815578 /* QISettingsView.m */; };
 		34890121177A76D10004F604 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34890120177A76D10004F604 /* EventKit.framework */; };
 		348901281780C5360004F604 /* QICheckAnswersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 348901271780C5360004F604 /* QICheckAnswersView.m */; };
 		3489013E1780DC540004F604 /* quizin_command_forward_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 3489012A1780DC540004F604 /* quizin_command_forward_btn.png */; };
@@ -834,6 +836,10 @@
 		3478FFFD1750EFC1002B29DB /* quizin_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quizin_bg.png; sourceTree = "<group>"; };
 		3478FFFE1750EFC1002B29DB /* quizin_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quizin_bg@2x.png"; sourceTree = "<group>"; };
 		3478FFFF1750EFC1002B29DB /* quizin_divider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quizin_divider.png; sourceTree = "<group>"; };
+		347F494F1870E09600815578 /* QISettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QISettingsViewController.h; sourceTree = "<group>"; };
+		347F49501870E09600815578 /* QISettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QISettingsViewController.m; sourceTree = "<group>"; };
+		347F49521870E0AA00815578 /* QISettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QISettingsView.h; sourceTree = "<group>"; };
+		347F49531870E0AA00815578 /* QISettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QISettingsView.m; sourceTree = "<group>"; };
 		34890120177A76D10004F604 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		348901261780C5360004F604 /* QICheckAnswersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICheckAnswersView.h; sourceTree = "<group>"; };
 		348901271780C5360004F604 /* QICheckAnswersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICheckAnswersView.m; sourceTree = "<group>"; };
@@ -1386,9 +1392,10 @@
 			isa = PBXGroup;
 			children = (
 				344B6276179F786D00EE85A9 /* Home */,
-				344B627C179F786D00EE85A9 /* RankView */,
 				344B627E179F786D00EE85A9 /* StatsView */,
+				344B627C179F786D00EE85A9 /* RankView */,
 				344B6289179F786D00EE85A9 /* StoreView */,
+				347F494E1870E04200815578 /* SettingsView */,
 			);
 			path = HomeTabs;
 			sourceTree = "<group>";
@@ -1733,6 +1740,17 @@
 				347800041750EFC1002B29DB /* quizin_headerbar@2x.png */,
 			);
 			path = "Shared Images";
+			sourceTree = "<group>";
+		};
+		347F494E1870E04200815578 /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				347F494F1870E09600815578 /* QISettingsViewController.h */,
+				347F49501870E09600815578 /* QISettingsViewController.m */,
+				347F49521870E0AA00815578 /* QISettingsView.h */,
+				347F49531870E0AA00815578 /* QISettingsView.m */,
+			);
+			path = SettingsView;
 			sourceTree = "<group>";
 		};
 		348901251780C51A0004F604 /* CheckAnswers */ = {
@@ -2502,6 +2520,7 @@
 				20B02B82185E43C300FBB498 /* QILocationSelectionViewController.m in Sources */,
 				205504E11780BED200F7F90F /* QIQuiz.m in Sources */,
 				205504E41780BEF900F7F90F /* QIQuizQuestion.m in Sources */,
+				347F49511870E09600815578 /* QISettingsViewController.m in Sources */,
 				205504E71780BF3300F7F90F /* QIMultipleChoiceQuestion.m in Sources */,
 				205504EA1780BF4800F7F90F /* QIBusinessCardQuestion.m in Sources */,
 				205504ED1780BF5B00F7F90F /* QIMatchingQuestion.m in Sources */,
@@ -2570,6 +2589,7 @@
 				20A78E0D180B3EDC0037F8E3 /* QILocation+Factory.m in Sources */,
 				20A78E0E180B3EDC0037F8E3 /* QIPerson+Factory.m in Sources */,
 				20A78E0F180B3EDC0037F8E3 /* QIPosition+Factory.m in Sources */,
+				347F49541870E0AA00815578 /* QISettingsView.m in Sources */,
 				20A78E10180B3EDC0037F8E3 /* QIQuizFactory.m in Sources */,
 				3402C746181D903F004F3B1D /* QIQuizFinishViewController.m in Sources */,
 				3402C749181D9065004F3B1D /* QIQuizFinishView.m in Sources */,

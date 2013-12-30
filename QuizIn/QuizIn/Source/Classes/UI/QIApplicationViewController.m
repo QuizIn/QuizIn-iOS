@@ -9,6 +9,7 @@
 #import "QIStatsViewController.h"
 #import "QIRankViewController.h"
 #import "QIStoreViewController.h"
+#import "QISettingsViewController.h"
 
 // TODO(rcacheaux):  Remove Temp Stuff.
 #import "LinkedIn.h"
@@ -104,14 +105,16 @@
 
 - (UITabBarController *)newTabBarController{
   UITabBarController *tabController = [[UITabBarController alloc] init];
-  [tabController setViewControllers:@[[self newHomeViewController],[self newStatsViewController],[self newRankViewController],[self newStoreViewController]]];
+  [tabController setViewControllers:@[[self newHomeViewController],[self newStatsViewController],[self newRankViewController],[self newSettingsViewController],[self newStoreViewController]]];
   QIHomeViewController *homeViewController = (QIHomeViewController *)[tabController.viewControllers objectAtIndex:0];
   homeViewController.parentTabBarController = tabController; 
   QIStatsViewController *statsViewController = (QIStatsViewController *)[tabController.viewControllers objectAtIndex:1];
   statsViewController.parentTabBarController = tabController;
   QIRankViewController *rankViewController = (QIRankViewController *)[tabController.viewControllers objectAtIndex:2];
   rankViewController.parentTabBarController = tabController;
-  QIStoreViewController *storeViewController = (QIStoreViewController *)[tabController.viewControllers objectAtIndex:3];
+  QISettingsViewController *settingsViewController = (QISettingsViewController *)[tabController.viewControllers objectAtIndex:3];
+  settingsViewController.parentTabBarController = tabController;
+  QIStoreViewController *storeViewController = (QIStoreViewController *)[tabController.viewControllers objectAtIndex:4];
   storeViewController.parentTabBarController = tabController;
   [tabController.tabBar setSelectedImageTintColor:[UIColor colorWithRed:1.0f green:.71f blue:.20f alpha:1.0f]];
   [tabController.tabBar setTintColor:[UIColor colorWithWhite:.15f alpha:1.0f]];
@@ -154,6 +157,13 @@
   [storeViewController setTitle:@"Store"];
   [storeViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Store" image:[UIImage imageNamed:@"connectionsquiz_store_btn"] tag:3]];
   return storeViewController;
+}
+
+- (QISettingsViewController *)newSettingsViewController {
+  QISettingsViewController *settingsViewController = [[QISettingsViewController alloc] init];
+  [settingsViewController setTitle:@"Settings"];
+  [settingsViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Settings" image:[UIImage imageNamed:@"connectionsquiz_store_btn"] tag:4]];
+  return settingsViewController;
 }
 
 @end

@@ -40,7 +40,7 @@
       [_rankButtons addObject:[self newRankButtonWithImage:[_rankBadges objectAtIndex:i] forTag:i]];
     }
     
-    [self contstructViewHierarchy];
+    [self constructViewHierarchy];
   }
   return self;
 }
@@ -58,7 +58,7 @@
 }
 
 #pragma mark Layout
-- (void)contstructViewHierarchy{
+- (void)constructViewHierarchy{
   [self addSubview:self.viewBackground];
   for (UIButton *button in self.rankButtons){
     [self.scrollView addSubview:button];
