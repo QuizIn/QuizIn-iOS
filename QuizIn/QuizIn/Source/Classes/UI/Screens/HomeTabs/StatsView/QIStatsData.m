@@ -48,6 +48,8 @@
     _userID = ID;
     _ranks = [QIRankDefinition getRankDelineations];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    //todo rkuhlman offline usage
+    _userID = @"12345";//
     if (![prefs objectForKey:_userID]){
       [self setUpStats]; 
     }

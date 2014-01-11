@@ -15,7 +15,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _loggedInUser = [LinkedIn authenticatedUser];
+      _loggedInUser = [LinkedIn authenticatedUser];
     }
     return self;
 }
@@ -31,6 +31,12 @@
   [self.settingsView setLastName:self.loggedInUser.lastName]; 
   [self.settingsView setTitle:self.loggedInUser.industry];
   [self.settingsView setProfileImageURL:[NSURL URLWithString:self.loggedInUser.pictureURL]];
+  [self.settingsView.logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+}
+
+#pragma mark Actions
+- (void) logout{
+  NSLog(@"logout");
 }
 
 - (void)didReceiveMemoryWarning

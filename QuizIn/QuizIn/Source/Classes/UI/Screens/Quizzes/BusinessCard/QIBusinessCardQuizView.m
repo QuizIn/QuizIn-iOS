@@ -637,7 +637,7 @@
 }
 
 -(UIImageView *)newBusinessCardBackground{
-  int imagePicker = arc4random_uniform(5);
+  int imagePicker = arc4random_uniform(7);
   DDLogInfo(@"%d",imagePicker);
   NSString *imageName = @"";
   switch (imagePicker) {
@@ -655,6 +655,12 @@
       break;
     case 4:
       imageName = @"cardquiz_businesscard_v4";
+      break;
+    case 5:
+      imageName = @"cardquiz_businesscard_v5";
+      break;
+    case 6:
+      imageName = @"cardquiz_businesscard_v6";
       break;
     default:
       break;

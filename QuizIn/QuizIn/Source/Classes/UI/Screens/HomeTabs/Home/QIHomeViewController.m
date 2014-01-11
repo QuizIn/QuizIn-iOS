@@ -131,7 +131,7 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 }
 
 - (void)goToStore:(UIButton *)sender{
-  [self.parentTabBarController setSelectedIndex:3];
+  [self.parentTabBarController setSelectedIndex:4];
 }
 
 - (void)groupPicker:(UIButton *)sender{

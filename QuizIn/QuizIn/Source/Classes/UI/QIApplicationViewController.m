@@ -43,8 +43,8 @@
   [super viewDidLoad];
   
   //SWTICH FOR OFFLINE USAGE
-  [self.authController beginAuthenticationAttempt];
-  //[self authControllerAccount:nil didAuthenticate:nil];
+  //[self.authController beginAuthenticationAttempt];
+  [self authControllerAccount:nil didAuthenticate:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,16 +72,13 @@
               didAuthenticate:(id<AKAuthControl>)authController {
   [LinkedIn updateAuthenticatedUserWithOnCompletion:^(QIPerson *authenticatedUser, NSError *error) {
     // TODO(rcacheaux): Check if exists.
-    self.loggedInUser = [LinkedIn authenticatedUser]; 
+    self.loggedInUser = [LinkedIn authenticatedUser];
     [self.loginViewController.view removeFromSuperview];
     [self.loginViewController removeFromParentViewController];
     
     self.tabViewController = [self newTabBarController];
     [self addChildViewController:self.tabViewController];
     [self.view addSubview:self.tabViewController.view];
-    //self.drawerController = [self newDrawerController];
-    //[self addChildViewController:self.drawerController];
-    //[self.view addSubview:self.drawerController.view];
   }];
 }
 

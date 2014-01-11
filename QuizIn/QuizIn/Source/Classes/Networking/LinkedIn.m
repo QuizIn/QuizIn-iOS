@@ -35,7 +35,25 @@ static QIPerson *authenticatedUser;
 @implementation LinkedIn
 
 + (QIPerson *)authenticatedUser {
-  return [authenticatedUser copy];
+ 
+  //todo rkuhlman offline/online
+  
+  //offline
+  QIPerson *person = [[QIPerson alloc] init];
+  person.personID = @"12345";
+  person.firstName = @"Test";
+  person.lastName = @"User";
+  person.formattedName = @"Test User";
+  person.industry = @"Test Industry";
+  person.pictureURL = @"";
+  person.location = nil;
+  person.positions = @[@"Test Position 0",@"Test Position 1"];
+  person.numberOfConnections = 269;
+  person.publicProfileURL = @"http://www.google.com";
+  return person;
+  
+  //online
+  //return [authenticatedUser copy];
 }
 
 + (void)updateAuthenticatedUserWithOnCompletion:(LIAuthenticatedUserResponse)onCompletion {

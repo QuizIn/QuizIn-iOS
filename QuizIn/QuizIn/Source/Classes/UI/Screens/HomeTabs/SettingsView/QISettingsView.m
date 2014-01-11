@@ -160,7 +160,8 @@
                                                              _profileImageView,
                                                              _cardFirstName,
                                                              _cardLastName,
-                                                             _cardTitle);
+                                                             _cardTitle,
+                                                             _logoutButton);
     NSArray *hProfileImageConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_profileImageView(==93)]"
                                             options:0
@@ -187,6 +188,13 @@
                                             metrics:nil
                                               views:cardViews];
     
+    NSString *hTitle= @"H:[_profileImageView]-5-[_cardTitle]-|";
+    NSArray *hTitleConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:hTitle
+                                            options:0
+                                            metrics:nil
+                                              views:cardViews];
+    
     NSString *vCardFirstName = @"V:|-25-[_cardFirstName]";
     NSArray *vCardFirstNameConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vCardFirstName
@@ -204,13 +212,20 @@
                                             metrics:nil
                                               views:cardViews];
     
+    NSLayoutConstraint *hCardLogoutConstraint =
+    [NSLayoutConstraint constraintWithItem:_logoutButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_businessCardView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
+    
+    NSLayoutConstraint *vCardLogoutConstraint =
+    [NSLayoutConstraint constraintWithItem:_logoutButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_businessCardView attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-30.0f];
+ 
     
     [self.viewConstraints addObjectsFromArray:hProfileImageConstraints];
     [self.viewConstraints addObjectsFromArray:vProfileImageConstraints];
     [self.viewConstraints addObjectsFromArray:hFirstNameConstraints];
     [self.viewConstraints addObjectsFromArray:hLastNameConstraints];
+    [self.viewConstraints addObjectsFromArray:hTitleConstraints];
     [self.viewConstraints addObjectsFromArray:vCardFirstNameConstraints];
-    [self.viewConstraints addObjectsFromArray:@[vCardLastNameConstraint]];
+    [self.viewConstraints addObjectsFromArray:@[vCardLastNameConstraint,hCardLogoutConstraint,vCardLogoutConstraint]];
     [self.viewConstraints addObjectsFromArray:vCardCompanyConstraints];
     
     [self addConstraints:self.viewConstraints];
@@ -255,6 +270,7 @@
   profileImageView.showActivityIndicator = YES;
   profileImageView.crossfadeDuration = 0.3f;
   profileImageView.crossfadeImages = YES;
+  profileImageView.image = [UIImage imageNamed:@"placeholderHead"];
   return profileImageView;
 }
 
