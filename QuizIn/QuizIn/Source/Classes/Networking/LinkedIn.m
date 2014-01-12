@@ -37,7 +37,7 @@ static QIPerson *authenticatedUser;
 + (QIPerson *)authenticatedUser {
  
   //todo rkuhlman offline/online
-  
+  /*
   //offline
   QIPerson *person = [[QIPerson alloc] init];
   person.personID = @"12345";
@@ -51,9 +51,9 @@ static QIPerson *authenticatedUser;
   person.numberOfConnections = 269;
   person.publicProfileURL = @"http://www.google.com";
   return person;
-  
+  */
   //online
-  //return [authenticatedUser copy];
+  return [authenticatedUser copy];
 }
 
 + (void)updateAuthenticatedUserWithOnCompletion:(LIAuthenticatedUserResponse)onCompletion {

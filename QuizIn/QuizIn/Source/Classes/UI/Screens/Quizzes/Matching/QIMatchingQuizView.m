@@ -232,7 +232,7 @@
                                             metrics:nil
                                               views:progressView];
     
-    NSString *vProgressView = @"V:|[_progressView]";
+    NSString *vProgressView = @"V:|-20-[_progressView(==31)]";
     NSArray *vProgressViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vProgressView
                                             options:NSLayoutFormatAlignAllCenterX
@@ -255,7 +255,6 @@
                                             metrics:nil
                                               views:questionAnswerViews];
     
-   //[self.answerConstraints addObject:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_questionView attribute:NSLayoutAttributeTop multiplier:1.0f constant:10.0f]];
     
     NSString *vQuestionAnswerView = @"V:[_progressView]-(>=-10,<=10)-[_questionView(<=200)]-(>=2,<=10)-[_divider(==2)]-(>=0,<=4)-[_answerView(>=180)]-(>=45,<=75)-|";
     NSArray *vQuestionAnswerViewConstraints =
@@ -607,6 +606,7 @@
   [UIView animateWithDuration:0.5 animations:^{
     [self.topRank setConstant:100.0f];
     [self.overlayMask setHidden:NO];
+    [self.rankDisplayView updateLockedStatusLabel]; 
     [self layoutIfNeeded];
   }];
 }

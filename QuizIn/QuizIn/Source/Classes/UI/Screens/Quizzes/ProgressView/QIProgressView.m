@@ -66,7 +66,7 @@
   
   if (!self.progressViewConstraints) {
     
-    NSDictionary *selfConstraintView = NSDictionaryOfVariableBindings(self);
+    /*NSDictionary *selfConstraintView = NSDictionaryOfVariableBindings(self);
     
     NSArray *hSelf =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|"
@@ -79,10 +79,11 @@
                                             options:0
                                             metrics:nil
                                               views:selfConstraintView];
+     */
     
     NSMutableArray *selfConstraints = [NSMutableArray array];
-    [selfConstraints addObjectsFromArray:hSelf];
-    [selfConstraints addObjectsFromArray:vSelf];
+    //[selfConstraints addObjectsFromArray:hSelf];
+    //[selfConstraints addObjectsFromArray:vSelf];
     [self.superview addConstraints:selfConstraints];
     
     //ProgressView Constraints

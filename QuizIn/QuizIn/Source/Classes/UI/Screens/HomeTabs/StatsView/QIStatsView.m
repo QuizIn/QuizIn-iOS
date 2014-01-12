@@ -182,6 +182,7 @@
   [tableView setRowHeight:46];
   [tableView setSectionHeaderHeight:40];
   [tableView setTableHeaderView:self.summaryView];
+  [tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectMake(0,0,320,46)]];
   [tableView setDataSource:self];
   [tableView setDelegate:self];
   return tableView;

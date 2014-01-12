@@ -6,6 +6,7 @@
 
 @property (nonatomic, strong) UIImageView *viewBackground;
 @property (nonatomic, strong) UIView *businessCardView;
+@property (nonatomic, strong) UILabel *loggedInLabel;
 @property (nonatomic, strong) UIImageView *businessCardBackground;
 @property (nonatomic, strong) AsyncImageView *profileImageView;
 @property (nonatomic, strong) UILabel *cardFirstName;
@@ -24,7 +25,7 @@
     if (self) {
       _viewBackground = [self newViewBackground];
       _logoutButton = [self newLogoutButton];
-      
+      _loggedInLabel = [self newLoggedInLabel];
       _businessCardView = [self newBusinessCardView];
       _businessCardBackground = [self newBusinessCardBackground];
       _profileImageView = [self newProfileImageView];
@@ -80,6 +81,7 @@
 
 - (void)constructViewHierarchy{
   [self addSubview:self.viewBackground];
+  [self addSubview:self.loggedInLabel];
   
   [_businessCardView addSubview:self.businessCardBackground];
   [_businessCardView addSubview:self.profileImageView];
@@ -120,16 +122,16 @@
     [self.viewConstraints addObjectsFromArray:vBackgroundContraints];
     
     //Business Card Container View
-    NSDictionary *businessCardView = NSDictionaryOfVariableBindings(_businessCardView);
-    
+    NSDictionary *businessCardView = NSDictionaryOfVariableBindings(_businessCardView,_loggedInLabel);
+
     NSString *hBusinessCardView = @"H:|-[_businessCardView(==283)]";
     NSArray *hBusinessCardViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:hBusinessCardView
-                                            options:NSLayoutFormatAlignAllTop
+                                            options:0
                                             metrics:nil
                                               views:businessCardView];
     
-    NSString *vBusinessCardView = @"V:|-50-[_businessCardView(==180)]";
+    NSString *vBusinessCardView = @"V:|-50-[_loggedInLabel(==15)][_businessCardView(==180)]";
     NSArray *vBusinessCardViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vBusinessCardView
                                             options:NSLayoutFormatAlignAllCenterX
@@ -239,6 +241,18 @@
   UIImageView *background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"quizin_bg"]];
   [background setTranslatesAutoresizingMaskIntoConstraints:NO];
   return background;
+}
+
+- (UILabel *)newLoggedInLabel{
+  UILabel *label = [[UILabel alloc] init];
+  [label setText:@"Currently Logged In"];
+  [label setFont:[QIFontProvider fontWithSize:13.0f style:Regular]];
+  [label setTextColor:[UIColor colorWithWhite:0.50f alpha:1.0f]];
+  [label setAdjustsFontSizeToFitWidth:YES];
+  [label setBackgroundColor:[UIColor clearColor]];
+  [label setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [label setTextAlignment:NSTextAlignmentCenter];
+  return label;
 }
 
 - (UIButton *)newLogoutButton{

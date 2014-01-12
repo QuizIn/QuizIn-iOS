@@ -12,4 +12,7 @@
 @property (nonatomic, strong) NSURL *profileImageURL;
 @property (nonatomic, strong) NSString *profileName; 
 
+- (void) updateLockedStatusLabel;
+
 @end
+

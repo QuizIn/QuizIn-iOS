@@ -235,7 +235,7 @@
                                             metrics:nil
                                               views:progressView];
     
-    NSString *vProgressView = @"V:|[_progressView]";
+    NSString *vProgressView = @"V:|-20-[_progressView(==31)]";
     NSArray *vProgressViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vProgressView
                                             options:NSLayoutFormatAlignAllCenterX
@@ -255,7 +255,7 @@
                                             metrics:nil
                                               views:businessCardView];
     
-    NSString *vBusinessCardView = @"V:|[_progressView][_businessCardView(==180)]";
+    NSString *vBusinessCardView = @"V:[_progressView][_businessCardView(==180)]";
     NSArray *vBusinessCardViewConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:vBusinessCardView
                                             options:NSLayoutFormatAlignAllCenterX
@@ -494,7 +494,8 @@
 -(void)showRankDisplay{
   [UIView animateWithDuration:0.5 animations:^{
     [self.topRank setConstant:100.0f];
-    [self.overlayMask setHidden:NO]; 
+    [self.overlayMask setHidden:NO];
+    [self.rankDisplayView updateLockedStatusLabel]; 
     [self layoutIfNeeded];
   }];
 }

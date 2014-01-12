@@ -2,7 +2,7 @@
 #import <UIKit/UIKit.h>
 #import "QIRankDisplayView.h"
 
-@interface QIRankView : UIView
+@interface QIRankView : UIView <UIScrollViewDelegate>
 
 @property(nonatomic,strong) NSString *rank;
 @property (nonatomic, strong) QIRankDisplayView *rankDisplayView;

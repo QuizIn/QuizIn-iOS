@@ -43,8 +43,8 @@
   [super viewDidLoad];
   
   //SWTICH FOR OFFLINE USAGE
-  //[self.authController beginAuthenticationAttempt];
-  [self authControllerAccount:nil didAuthenticate:nil];
+  [self.authController beginAuthenticationAttempt];
+  //[self authControllerAccount:nil didAuthenticate:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -113,8 +113,8 @@
   settingsViewController.parentTabBarController = tabController;
   QIStoreViewController *storeViewController = (QIStoreViewController *)[tabController.viewControllers objectAtIndex:4];
   storeViewController.parentTabBarController = tabController;
-  [tabController.tabBar setSelectedImageTintColor:[UIColor colorWithRed:1.0f green:.71f blue:.20f alpha:1.0f]];
-  [tabController.tabBar setTintColor:[UIColor colorWithWhite:.15f alpha:1.0f]];
+  [tabController.tabBar setTintColor:[UIColor colorWithRed:.27f green:.45f blue:.64f alpha:1.0f]];
+  //[tabController.tabBar setTintColor:[UIColor colorWithWhite:.15f alpha:1.0f]];
     
   //[tabController setModalPresentationStyle:UIModalPresentationCurrentContext];
   return tabController;

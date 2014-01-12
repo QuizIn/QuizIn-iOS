@@ -60,10 +60,10 @@
 #pragma mark Layout
 - (void)constructViewHierarchy{
   [self addSubview:self.viewBackground];
+  [self.scrollView addSubview:self.rankSign];
   for (UIButton *button in self.rankButtons){
     [self.scrollView addSubview:button];
   }
-  [self.scrollView addSubview:self.rankSign]; 
   [self addSubview:self.scrollView];
   [self addSubview:self.overlayMask];
   [self addSubview:self.rankDisplayView];
@@ -79,7 +79,7 @@
   if (!self.viewConstraints) {
     
     // Constrain Base Views
-    NSDictionary *backgroundImageConstraintView = NSDictionaryOfVariableBindings(_viewBackground, _scrollView,_overlayMask,_rankSign);
+    NSDictionary *backgroundImageConstraintView = NSDictionaryOfVariableBindings(_viewBackground, _scrollView,_overlayMask);
     
     NSArray *hBackgroundContraints =
     [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_viewBackground]|"
@@ -99,7 +99,7 @@
                                               views:backgroundImageConstraintView];
     
     NSArray *vScrollContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-20-[_scrollView]|"
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-20-[_scrollView]-46-|"
                                             options:NSLayoutFormatAlignAllLeft
                                             metrics:nil
                                               views:backgroundImageConstraintView];
@@ -128,16 +128,17 @@
     self.scrollViewContstraints = [NSMutableArray array];
     
     //Rank Sign
+    NSDictionary *scrollViewViews = NSDictionaryOfVariableBindings(_rankSign);
     NSArray *hSignContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-63-[_rankSign]-63-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-41-[_rankSign]"
                                             options:NSLayoutFormatAlignAllTop
                                             metrics:nil
-                                              views:backgroundImageConstraintView];
+                                              views:scrollViewViews];
     NSArray *vSignContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_rankSign(==112)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[_rankSign(==90)]"
                                             options:0
                                             metrics:nil
-                                              views:backgroundImageConstraintView];
+                                              views:scrollViewViews];
     
     [self.scrollViewContstraints addObjectsFromArray:hSignContraints];
     [self.scrollViewContstraints addObjectsFromArray:vSignContraints];
@@ -154,7 +155,7 @@
       UIButton *button1 = [self.rankButtons objectAtIndex:i+1];
       [self.scrollViewContstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:button1 attribute:NSLayoutAttributeLeft multiplier:1.0f constant:-42.0f]];
       [self.scrollViewContstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:button1 attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
-      [self.scrollViewContstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_scrollView attribute:NSLayoutAttributeTop multiplier:1.0f constant:(i/2)*104+130]];
+      [self.scrollViewContstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_scrollView attribute:NSLayoutAttributeTop multiplier:1.0f constant:(i/2)*104+120]];
       [self.scrollViewContstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_scrollView attribute:NSLayoutAttributeLeft multiplier:1.0f constant:36.0f]];
     }
     
@@ -215,6 +216,7 @@
 - (UIImageView *)newRankSign{
   UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hobnob_rankings_title"]];
   [image setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [image setContentMode:UIViewContentModeCenter];
   return image;
 }
 

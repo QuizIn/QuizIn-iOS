@@ -25,41 +25,7 @@
   QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:userID];
   int currentRank = [data getCurrentRank];
   if (rank > currentRank){
-    switch (rank) {
-      case 0:
-        return [UIImage imageNamed:@"hobnob_rankings_intern_inactive_btn"];
-        break;
-      case 1:
-        return [UIImage imageNamed:@"hobnob_rankings_associate_inactive_btn"];
-        break;
-      case 2:
-        return [UIImage imageNamed:@"hobnob_rankings_manager_inactive_btn"];
-        break;
-      case 3:
-        return [UIImage imageNamed:@"hobnob_rankings_supervisor_inactive_btn"];
-        break;
-      case 4:
-        return [UIImage imageNamed:@"hobnob_rankings_director_inactive_btn"];
-        break;
-      case 5:
-        return [UIImage imageNamed:@"hobnob_rankings_vicepresident_inactive_btn"];
-        break;
-      case 6:
-        return [UIImage imageNamed:@"hobnob_rankings_president_inactive_btn"];
-        break;
-      case 7:
-        return [UIImage imageNamed:@"hobnob_rankings_coo_inactive_btn"];
-        break;
-      case 8:
-        return [UIImage imageNamed:@"hobnob_rankings_ceo_inactive_btn"];
-        break;
-      case 9:
-        return [UIImage imageNamed:@"hobnob_rankings_chairman_inactive_btn"];
-        break;
-      default:
-        return [UIImage imageNamed:@"hobnob_rankings_chairman_inactive_btn"];
-        break;
-    }
+    return [UIImage imageNamed:@"hobnob_rankings_inactive_btn"];
   }
   else {
     switch (rank) {

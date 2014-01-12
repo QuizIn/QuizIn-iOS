@@ -202,6 +202,7 @@
     [self.multipleChoiceConstraints addObjectsFromArray:hOverlayContraints];
     [self.multipleChoiceConstraints addObjectsFromArray:vOverlayContraints];
     
+    
     //Constrain View Elements
     NSDictionary *multipleChoiceViews = [NSDictionary dictionaryWithObjectsAndKeys:
                                          _progressView,       @"_progressView",
@@ -215,6 +216,26 @@
                                          _answerButtons[3],   @"_answerButtons3",
                                          nil];
     
+    //Progress View
+    NSString *hProgressView = @"H:|[_progressView]|";
+    NSArray *hProgressViewConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:hProgressView
+                                            options:NSLayoutFormatAlignAllTop
+                                            metrics:nil
+                                              views:multipleChoiceViews];
+    
+    NSString *vProgressView = @"V:|-20-[_progressView(==31)]";
+    NSArray *vProgressViewConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:vProgressView
+                                            options:NSLayoutFormatAlignAllCenterX
+                                            metrics:nil
+                                              views:multipleChoiceViews];
+    
+    [self.multipleChoiceConstraints addObjectsFromArray:vProgressViewConstraints];
+    [self.multipleChoiceConstraints addObjectsFromArray:hProgressViewConstraints];
+    
+
+    //picture and Answer Views
     NSLayoutConstraint *centerImageX = [NSLayoutConstraint constraintWithItem:_profileImageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
     
     NSLayoutConstraint *imageWidth = [NSLayoutConstraint constraintWithItem:_profileImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeHeight multiplier:1.0f constant:144.0f];
@@ -231,7 +252,7 @@
       [choiceButtonConstraints addObject:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:283.0f]];
     }
     
-    NSString *quizChoiceVertical = @"V:|[_progressView]-3-[_profileImageView(==144)]-(>=15,<=20)-[_dividerTop(==2)][_questionLabel(>=28)][_dividerBottom(==2)]-(>=0,<=8)-[_answerButtons0(>=45,<=60)][_answerButtons1(==_answerButtons0)][_answerButtons2(==_answerButtons0)][_answerButtons3(==_answerButtons0)]-(>=43)-|";
+    NSString *quizChoiceVertical = @"V:[_progressView]-3-[_profileImageView(==144)]-(>=15,<=20)-[_dividerTop(==2)][_questionLabel(>=28)][_dividerBottom(==2)]-(>=0,<=8)-[_answerButtons0(>=45,<=60)][_answerButtons1(==_answerButtons0)][_answerButtons2(==_answerButtons0)][_answerButtons3(==_answerButtons0)]-(>=43)-|";
     
     NSArray *quizChoiceVerticalConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:quizChoiceVertical
@@ -333,7 +354,8 @@
 -(void)showRankDisplay{
   [UIView animateWithDuration:0.5 animations:^{
     [self.topRank setConstant:100.0f];
-    [self.overlayMask setHidden:NO]; 
+    [self.overlayMask setHidden:NO];
+    [self.rankDisplayView updateLockedStatusLabel];
     [self layoutIfNeeded];
   }];
 }

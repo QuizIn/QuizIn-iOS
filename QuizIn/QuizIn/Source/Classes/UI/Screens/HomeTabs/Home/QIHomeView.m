@@ -158,7 +158,7 @@
                                               views:topLevelViews];
    
     NSArray *vScrollContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_scrollView]|"
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_scrollView]-46-|"
                                             options:NSLayoutFormatAlignAllLeft
                                             metrics:nil
                                               views:topLevelViews];
