@@ -5,6 +5,7 @@
 @interface QIStoreSectionHeaderView ()
 
 @property (nonatomic, strong) UILabel *sectionTitleLabel;
+@property (nonatomic, strong) UILabel *priceLabel;
 @property (nonatomic, strong) NSMutableArray *constraints; 
 
 @end
@@ -20,6 +21,7 @@
     self = [super initWithFrame:frame];
     if (self) {
       _sectionTitleLabel = [self newTitleLabel];
+      _priceLabel = [self newPriceLabel];
       [self constructViewHierarchy]; 
     }
     return self;
@@ -31,9 +33,18 @@
   [self updateSectionTitleLabel];
 }
 
+- (void)setPrice:(NSString *)price{
+  _price = price;
+  [self updatePrice];
+}
+
 #pragma mark Data Layout
 - (void)updateSectionTitleLabel{
   self.sectionTitleLabel.text = self.sectionTitle; 
+}
+
+- (void)updatePrice{
+  self.priceLabel.text = self.price;
 }
 
 #pragma mark View Hierarchy
@@ -72,6 +83,17 @@
     [self addConstraints:self.constraints]; 
 
   }
+}
+
+- (UILabel *)newPriceLabel{
+  UILabel *label = [[UILabel alloc] init];
+  label.textAlignment = NSTextAlignmentLeft;
+  label.backgroundColor = [UIColor clearColor];
+  label.font = [QIFontProvider fontWithSize:15.0f style:Bold];
+  label.adjustsFontSizeToFitWidth = YES;
+  label.textColor = [UIColor colorWithWhite:0.50f alpha:1.0f];
+  [label setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return label;
 }
 
 - (UILabel *)newTitleLabel {

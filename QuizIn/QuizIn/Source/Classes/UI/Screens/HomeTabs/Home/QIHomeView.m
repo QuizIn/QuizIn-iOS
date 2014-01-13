@@ -191,7 +191,7 @@
                                             metrics:nil
                                               views:scrollViewViews];
     NSArray *vConstraintsTopLevelViews =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-27-[_connectionsQuizStartView(==250)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-35-[_connectionsQuizStartView(==250)]"
                                             options:NSLayoutFormatAlignAllBaseline
                                             metrics:nil
                                               views:scrollViewViews];
