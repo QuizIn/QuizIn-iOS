@@ -17,8 +17,7 @@
     if (self) {
       _sign = [self newSign];
       _buyAllButton = [self newBuyAllButton];
-      _bestOfferLabel = [self newLabelWithText:@"BEST OFFER"];
-      _buyAllPriceLabel = [self newLabelWithText:@"$x.xx"];
+      _bestOfferLabel = [self newLabelWithText:@"33% Off"];
       _checkmark = [self newCheckMarkImage]; 
       [self constructViewHierarchy];
     }
@@ -28,11 +27,6 @@
 - (void)setAllPurchased:(BOOL)allPurchased{
   _allPurchased = allPurchased;
   [self updateBuyAllButton];
-}
-
-- (void)setAllPrice:(NSString *)allPrice{
-  _allPrice = allPrice;
-  [self updateAllPrice];
 }
 
 #pragma mark Data Layout
@@ -47,16 +41,11 @@
   }
 }
 
--(void)updateAllPrice{
-  self.buyAllPriceLabel.text = self.allPrice; 
-}
-
 #pragma mark View Hierarchy
 - (void)constructViewHierarchy{
   [self addSubview:self.sign];
   [self addSubview:self.buyAllButton];
   [self addSubview:self.bestOfferLabel];
-  [self addSubview:self.buyAllPriceLabel];
   [self addSubview:self.checkmark]; 
 }
 
@@ -71,17 +60,17 @@
   if (!self.constraints){
     self.constraints = [NSMutableArray array];
     
-    NSDictionary *headerViews = NSDictionaryOfVariableBindings(_sign, _buyAllButton, _bestOfferLabel, _buyAllPriceLabel, _checkmark);
+    NSDictionary *headerViews = NSDictionaryOfVariableBindings(_sign, _buyAllButton, _bestOfferLabel, _checkmark);
     
     //Place Sign
     NSArray *hSignConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_sign(==194)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_sign(==238)]"
                                             options:0
                                             metrics:nil
                                               views:headerViews];
     
     NSArray *vSignConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_sign(==112)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-40-[_sign(==60)]"
                                             options:0
                                             metrics:nil
                                               views:headerViews];
@@ -91,11 +80,11 @@
     //Place Button
     NSLayoutConstraint *centerButton = [NSLayoutConstraint constraintWithItem:_buyAllButton  attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_sign attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
     
-    NSLayoutConstraint *vButton = [NSLayoutConstraint constraintWithItem:_buyAllButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_sign attribute:NSLayoutAttributeTop multiplier:1.0f constant:130.0f];
+    NSLayoutConstraint *vButton = [NSLayoutConstraint constraintWithItem:_buyAllButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_sign attribute:NSLayoutAttributeTop multiplier:1.0f constant:70.0f];
     
     //Place Labels
     NSArray *vButtonConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_buyAllButton]-(-64)-[_bestOfferLabel(==10)]-28-[_buyAllPriceLabel(==10)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_buyAllButton]-3-[_bestOfferLabel(==10)]"
                                             options:NSLayoutFormatAlignAllCenterX
                                             metrics:nil
                                               views:headerViews];
@@ -116,14 +105,14 @@
 
 #pragma mark Factory Methods
 - (UIImageView *)newSign{
-  UIImageView *sign = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hobnob_store_titlesign"]];
+  UIImageView *sign = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"store_sign"]];
   [sign setTranslatesAutoresizingMaskIntoConstraints:NO];
   return sign;
 }
 
 - (UIButton *)newBuyAllButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setImage:[UIImage imageNamed:@"hobnob_store_buyall_btn"] forState:UIControlStateNormal];
+  [button setImage:[UIImage imageNamed:@"store_buyall_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   [button setHidden:YES]; 
   return button;
@@ -133,8 +122,8 @@
   UILabel *label = [[UILabel alloc] init];
   [label setTranslatesAutoresizingMaskIntoConstraints:NO];
   [label setBackgroundColor:[UIColor clearColor]];
-  [label setFont:[QIFontProvider fontWithSize:9.0f style:Regular]];
-  [label setTextColor:[UIColor colorWithWhite:1.0f alpha:.9f]];
+  [label setFont:[QIFontProvider fontWithSize:10.0f style:Regular]];
+  [label setTextColor:[UIColor colorWithWhite:.15f alpha:1.0f]];
   [label setAdjustsFontSizeToFitWidth:YES];
   [label setTextAlignment:NSTextAlignmentCenter];
   [label setHidden:YES]; 

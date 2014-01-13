@@ -131,8 +131,6 @@
         [self.storeView.headerView.buyAllPriceLabel setHidden:NO];
         [self.storeView.tableView setHidden:NO];
         [self.storeView.headerView setAllPurchased:[[item objectForKey:@"itemPurchased"] boolValue]];
-        [self.storeView.headerView setAllPrice:[item objectForKey:@"itemPrice"]];
-        
         [self.storeView.storeStatusLabel setHidden:YES];
         [self.storeView.refreshButton setHidden:YES];
         [self.storeView.activity stopAnimating];

@@ -246,7 +246,7 @@
 
 - (UIButton *)newBuyButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setImage:[UIImage imageNamed:@"store_purchasel_btn"] forState:UIControlStateNormal];
+  [button setImage:[UIImage imageNamed:@"store_purchase_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   return button;
 }

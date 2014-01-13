@@ -78,7 +78,7 @@
   if ([filterPurchasesItems count]>0){
     [storeItems addObject:
      @{
-     @"type":@"Focus With Filters",
+     @"type":@"QuizFilters",
      @"item":filterPurchasesItems,
      }];
   }
@@ -86,7 +86,7 @@
   if ([questionPurchasesItems count]>0){
     [storeItems addObject:
      @{
-     @"type":@"Harden With Variety",
+     @"type":@"QuestionTypes",
      @"item":questionPurchasesItems,
      }];
   }
@@ -94,7 +94,7 @@
   if ([detailPurchasesItems count]>0){
     [storeItems addObject:
      @{
-     @"type":@"Refresh Yourself",
+     @"type":@"RefreshQuiz",
      @"item":detailPurchasesItems,
      }];
   }
@@ -140,10 +140,10 @@
       return @"Get them all at a discount.";
       break;
     case 1: //@"com.kuhlmanation.hobnob.q_pack",
-      return @"Go beyond multiple choice with new question types.";
+      return @"Go beyond multiple choice with more question types.";
       break;
     case 2: //@"com.kuhlmanation.hobnob.f_pack"
-      return @"Filter down to a specific company, school, industry, or location.";
+      return @"Filter quizzes down to a specific company, school, industry, or location.";
       break;
     case 3: //@"com.kuhlmanation.hobnob.r_pack"
       return @"Refresh yourself on the people you know the worst.";
@@ -165,19 +165,19 @@
   
   switch ([productIdentifiers indexOfObject:product.productIdentifier]) {
     case 0: //@"com.kuhlmanation.hobnob.p_kit"
-      return [UIImage imageNamed:@"store_producticon_businesscard"];
+      return [UIImage imageNamed:@"store_card_questiontypes"];
       break;
     case 1: //@"com.kuhlmanation.hobnob.q_pack"
-      return [UIImage imageNamed:@"store_producticon_businesscard"];
+      return [UIImage imageNamed:@"store_card_questiontypes"];
       break;
     case 2: //@"com.kuhlmanation.hobnob.f_pack"
-      return [UIImage imageNamed:@"store_producticon_company"];
+      return [UIImage imageNamed:@"store_card_quizfilters"];
       break;
     case 3: //@"com.kuhlmanation.hobnob.r_pack"
-      return [UIImage imageNamed:@"store_producticon_leastofthese"];
+      return [UIImage imageNamed:@"store_card_refreshquiz"];
       break;
     default:
-      return [UIImage imageNamed:@"store_producticon_businesscard"];
+      return [UIImage imageNamed:@"store_card_refreshquiz"];
       break;
   }
 }

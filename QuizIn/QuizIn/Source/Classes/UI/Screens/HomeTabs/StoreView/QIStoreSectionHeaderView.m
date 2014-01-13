@@ -4,13 +4,10 @@
 
 @interface QIStoreSectionHeaderView ()
 
-@property (nonatomic, strong) UIImageView *divider;
 @property (nonatomic, strong) UILabel *sectionTitleLabel;
-
 @property (nonatomic, strong) NSMutableArray *constraints; 
 
 @end
-
 
 @implementation QIStoreSectionHeaderView
 
@@ -22,13 +19,12 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-      _divider = [self newDivider];
       _sectionTitleLabel = [self newTitleLabel];
-      
       [self constructViewHierarchy]; 
     }
     return self;
 }
+
 #pragma mark Properties
 - (void)setSectionTitle:(NSString *)sectionTitle{
   _sectionTitle = sectionTitle;
@@ -42,7 +38,6 @@
 
 #pragma mark View Hierarchy
 - (void)constructViewHierarchy{
-  [self addSubview:self.divider];
   [self addSubview:self.sectionTitleLabel]; 
 }
 
@@ -57,14 +52,7 @@
   if (!self.constraints){
     self.constraints = [NSMutableArray array];
     
-    NSDictionary *headerViews = NSDictionaryOfVariableBindings(_divider, _sectionTitleLabel);
-  
-    //Place Sign
-    NSArray *hDividerConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_divider]-10-|"
-                                            options:0
-                                            metrics:nil
-                                              views:headerViews];
+    NSDictionary *headerViews = NSDictionaryOfVariableBindings(_sectionTitleLabel);
     
     NSArray *hTitleConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_sectionTitleLabel]|"
@@ -73,23 +61,17 @@
                                               views:headerViews];
     
     NSArray *vHeaderConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[_sectionTitleLabel][_divider(==2)]-3-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[_sectionTitleLabel]-5-|"
                                             options:0
                                             metrics:nil
                                               views:headerViews];
     
-    [self.constraints addObjectsFromArray:hDividerConstraints];
     [self.constraints addObjectsFromArray:hTitleConstraints];
     [self.constraints addObjectsFromArray:vHeaderConstraints];
     
     [self addConstraints:self.constraints]; 
 
   }
-}
-- (UIImageView *)newDivider{
-  UIImageView *divider = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"quizin_divider"]];
-  [divider setTranslatesAutoresizingMaskIntoConstraints:NO];
-  return divider;
 }
 
 - (UILabel *)newTitleLabel {

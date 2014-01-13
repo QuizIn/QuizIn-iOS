@@ -67,8 +67,7 @@
                                 cancelButtonTitle:cancelTitle
                                 destructiveButtonTitle:nil
                                 otherButtonTitles:other0, other1, other2, other3, nil];
-  //[actionSheet setOpaque:NO];
-  //[actionSheet setAlpha:.8f];
+
   [actionSheet setTintColor:[UIColor colorWithRed:.27f green:.45f blue:.64f alpha:1.0f]];
   [actionSheet showInView:self.view];
 }

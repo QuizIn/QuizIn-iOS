@@ -36,7 +36,6 @@
 
 - (void) loadView {
   self.view = [[UIView alloc] init];
-  self.view.backgroundColor = [UIColor redColor];
 }
 
 - (void)viewDidLoad {

@@ -99,7 +99,6 @@
 -(UIScrollView *)newPreviewScrollView{
   UIScrollView *previewView = [[UIScrollView alloc] init];
   [previewView setDelegate:self];
-  [previewView setBackgroundColor:[UIColor redColor]];
   [previewView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [previewView setPagingEnabled:YES];
   [previewView setShowsHorizontalScrollIndicator:NO];
