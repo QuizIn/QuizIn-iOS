@@ -6,7 +6,6 @@
 
 @property (nonatomic, strong) UIImageView *viewBackground;
 @property (nonatomic, strong) UILabel *sectionTitleLabel;
-
 @property (nonatomic, strong) NSMutableArray *constraints; 
 
 @end

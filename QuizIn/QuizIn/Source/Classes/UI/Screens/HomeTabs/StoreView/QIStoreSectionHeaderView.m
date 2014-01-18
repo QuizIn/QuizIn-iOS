@@ -49,7 +49,8 @@
 
 #pragma mark View Hierarchy
 - (void)constructViewHierarchy{
-  [self addSubview:self.sectionTitleLabel]; 
+  [self addSubview:self.sectionTitleLabel];
+  [self addSubview:self.priceLabel]; 
 }
 
 #pragma mark Constraints
@@ -63,11 +64,11 @@
   if (!self.constraints){
     self.constraints = [NSMutableArray array];
     
-    NSDictionary *headerViews = NSDictionaryOfVariableBindings(_sectionTitleLabel);
+    NSDictionary *headerViews = NSDictionaryOfVariableBindings(_sectionTitleLabel,_priceLabel);
     
     NSArray *hTitleConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_sectionTitleLabel]|"
-                                            options:0
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_sectionTitleLabel]-(>=10)-[_priceLabel]-20-|"
+                                            options:NSLayoutFormatAlignAllTop
                                             metrics:nil
                                               views:headerViews];
     

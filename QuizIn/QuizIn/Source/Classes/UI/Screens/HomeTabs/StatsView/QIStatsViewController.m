@@ -118,8 +118,7 @@
 #pragma mark Actions
 
 - (void)goToStore:(UIButton *)sender{
-  [self.parentTabBarController setSelectedIndex:3];
-  //[(QIStoreViewController *)[[self.parentTabBarController viewControllers] objectAtIndex:3] setHighlightedCell:sender.tag];
+  [self.parentTabBarController setSelectedIndex:4];
 }
 
 #pragma mark UIAlertViewDelegate Functions

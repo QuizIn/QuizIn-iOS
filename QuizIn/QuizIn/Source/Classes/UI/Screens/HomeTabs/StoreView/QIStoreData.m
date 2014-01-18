@@ -78,7 +78,7 @@
   if ([filterPurchasesItems count]>0){
     [storeItems addObject:
      @{
-     @"type":@"QuizFilters",
+     @"type":@"Quiz Filters",
      @"item":filterPurchasesItems,
      }];
   }
@@ -86,7 +86,7 @@
   if ([questionPurchasesItems count]>0){
     [storeItems addObject:
      @{
-     @"type":@"QuestionTypes",
+     @"type":@"Question Types",
      @"item":questionPurchasesItems,
      }];
   }
@@ -94,7 +94,7 @@
   if ([detailPurchasesItems count]>0){
     [storeItems addObject:
      @{
-     @"type":@"RefreshQuiz",
+     @"type":@"Refresh Quiz",
      @"item":detailPurchasesItems,
      }];
   }

@@ -162,7 +162,8 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
   QIStoreSectionHeaderView *headerView = [[QIStoreSectionHeaderView alloc] init];
-  headerView.sectionTitle = [[self.storeData objectAtIndex:section] objectForKey:@"type"];
+  [headerView setSectionTitle:[[self.storeData objectAtIndex:section] objectForKey:@"type"]];
+  [headerView setPrice:[[[[self.storeData objectAtIndex:section] objectForKey:@"item"] objectAtIndex:0] objectForKey:@"itemPrice"]];
   return headerView;
 }
 
