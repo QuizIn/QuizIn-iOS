@@ -228,7 +228,7 @@
   [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
   [tableView setAllowsSelection:YES];
   tableView.rowHeight = 107;
-  tableView.sectionHeaderHeight = 25;
+  tableView.sectionHeaderHeight = 30;
   tableView.tableHeaderView = self.headerView;
   tableView.tableFooterView = self.footerView; 
   return tableView;

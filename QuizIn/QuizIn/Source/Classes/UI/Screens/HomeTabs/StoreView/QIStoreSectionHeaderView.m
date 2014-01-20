@@ -40,7 +40,31 @@
 
 #pragma mark Data Layout
 - (void)updateSectionTitleLabel{
-  self.sectionTitleLabel.text = self.sectionTitle; 
+  NSArray *strings = [self.sectionTitle componentsSeparatedByString:@" "];
+  NSMutableArray *lengths = [NSMutableArray array];
+  NSString *finalString = @"";
+  for (int i = 0; i<[strings count]; i++){
+    finalString = [finalString stringByAppendingString:[strings objectAtIndex:i]];
+    [lengths addObject:[NSNumber numberWithInteger:[[strings objectAtIndex:i] length]]];
+  }
+  
+  NSMutableAttributedString *labelAttributes = [[NSMutableAttributedString alloc] initWithString:finalString];
+  [labelAttributes addAttribute:NSFontAttributeName value:[QIFontProvider fontWithSize:20.0f style:Regular] range:NSMakeRange(0,labelAttributes.length)];
+  
+  NSNumber *runningTotal = @(0);
+  UIColor *currentColor;
+  for (int i=0;i<[lengths count];i++){
+    if (i%2 == 0){
+      currentColor = [UIColor colorWithWhite:.4 alpha:1.0f];
+    }
+    else{
+      currentColor = [UIColor colorWithWhite:.6 alpha:1.0f];
+    }
+    [labelAttributes addAttribute:NSForegroundColorAttributeName value:currentColor range:NSMakeRange([runningTotal intValue],[[lengths objectAtIndex:i] intValue])];
+
+    runningTotal = @([[lengths objectAtIndex:i]integerValue] + [runningTotal integerValue]);
+  }
+  [self.sectionTitleLabel setAttributedText:labelAttributes];
 }
 
 - (void)updatePrice{
@@ -67,19 +91,26 @@
     NSDictionary *headerViews = NSDictionaryOfVariableBindings(_sectionTitleLabel,_priceLabel);
     
     NSArray *hTitleConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_sectionTitleLabel]-(>=10)-[_priceLabel]-20-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-30-[_sectionTitleLabel]-(>=10)-[_priceLabel]-30-|"
                                             options:NSLayoutFormatAlignAllTop
                                             metrics:nil
                                               views:headerViews];
     
-    NSArray *vHeaderConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[_sectionTitleLabel]-5-|"
+    NSArray *vTitleConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_sectionTitleLabel]|"
+                                            options:0
+                                            metrics:nil
+                                              views:headerViews];
+    
+    NSArray *vPriceConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_priceLabel]|"
                                             options:0
                                             metrics:nil
                                               views:headerViews];
     
     [self.constraints addObjectsFromArray:hTitleConstraints];
-    [self.constraints addObjectsFromArray:vHeaderConstraints];
+    [self.constraints addObjectsFromArray:vTitleConstraints];
+    [self.constraints addObjectsFromArray:vPriceConstraints];
     
     [self addConstraints:self.constraints]; 
 
@@ -90,9 +121,9 @@
   UILabel *label = [[UILabel alloc] init];
   label.textAlignment = NSTextAlignmentLeft;
   label.backgroundColor = [UIColor clearColor];
-  label.font = [QIFontProvider fontWithSize:15.0f style:Bold];
+  label.font = [QIFontProvider fontWithSize:16.0f style:Regular];
   label.adjustsFontSizeToFitWidth = YES;
-  label.textColor = [UIColor colorWithWhite:0.50f alpha:1.0f];
+  label.textColor = [UIColor colorWithWhite:0.40f alpha:1.0f];
   [label setTranslatesAutoresizingMaskIntoConstraints:NO];
   return label;
 }
@@ -101,9 +132,7 @@
   UILabel *label = [[UILabel alloc] init];
   label.textAlignment = NSTextAlignmentLeft;
   label.backgroundColor = [UIColor clearColor];
-  label.font = [QIFontProvider fontWithSize:15.0f style:Bold];
   label.adjustsFontSizeToFitWidth = YES;
-  label.textColor = [UIColor colorWithWhite:0.50f alpha:1.0f];
   [label setTranslatesAutoresizingMaskIntoConstraints:NO];
   return label;
 }
