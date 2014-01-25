@@ -74,7 +74,7 @@
                                             metrics:nil
                                               views:backgroundImageConstraintView];
     NSArray *vExitButtonContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_exitButton]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-30-[_exitButton]"
                                             options:0
                                             metrics:nil
                                               views:backgroundImageConstraintView];

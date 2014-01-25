@@ -48,7 +48,7 @@
                                               views:views];
     
     NSArray *vButtonConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_restoreButton]|"
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_restoreButton(==40)]"
                                             options:0
                                             metrics:nil
                                               views:views];

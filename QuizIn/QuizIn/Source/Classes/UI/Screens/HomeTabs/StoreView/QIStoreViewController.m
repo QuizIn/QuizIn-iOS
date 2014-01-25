@@ -185,15 +185,11 @@
   [cell.previewButton setTag:indexPath.section*SECTION_INDEX_SPAN +indexPath.row];
   [cell.buyButton setTag:indexPath.section*SECTION_INDEX_SPAN+indexPath.row];
   [cell.previewButton addTarget:self action:@selector(preview:) forControlEvents:UIControlEventTouchUpInside];
+  [cell.iconImageView addTarget:self action:@selector(preview:) forControlEvents:UIControlEventTouchUpInside];
   [cell.buyButton addTarget:self action:@selector(buy:) forControlEvents:UIControlEventTouchUpInside];
-  [cell setTitle:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemTitle"]];
-  [cell setPrice:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemPrice"]];
   [cell setDescription:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemShortDescription"]];
   [cell setIconImage:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemIcon"]];
   [cell setPurchased:[[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemPurchased"] boolValue]];
-  if (indexPath.section == 0 && indexPath.row == self.highlightedCell){
-    [cell highlight]; 
-  }
   return cell;
 }
 

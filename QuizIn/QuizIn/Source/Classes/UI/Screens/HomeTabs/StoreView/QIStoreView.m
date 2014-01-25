@@ -118,7 +118,7 @@
                                             metrics:nil
                                               views:mainViews];
     NSArray *vTableViewContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_tableView]|"
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_tableView]-30-|"
                                             options:0
                                             metrics:nil
                                               views:mainViews];
@@ -227,7 +227,7 @@
   [tableView setShowsVerticalScrollIndicator:NO];
   [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
   [tableView setAllowsSelection:YES];
-  tableView.rowHeight = 107;
+  tableView.rowHeight = 85;
   tableView.sectionHeaderHeight = 30;
   tableView.tableHeaderView = self.headerView;
   tableView.tableFooterView = self.footerView; 
@@ -235,13 +235,13 @@
 }
 
 - (QIStoreTableHeaderView *)newHeaderView{
-  QIStoreTableHeaderView *headerView = [[QIStoreTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
+  QIStoreTableHeaderView *headerView = [[QIStoreTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, 320, 180)];
   [headerView setBackgroundColor:[UIColor clearColor]];
   return headerView;
 }
 
 - (QIStoreTableFooterView *)newFooterView{
-  QIStoreTableFooterView *footerView = [[QIStoreTableFooterView alloc] initWithFrame:CGRectMake(0,0, 320, 30)];
+  QIStoreTableFooterView *footerView = [[QIStoreTableFooterView alloc] initWithFrame:CGRectMake(0,0, 320, 64)];
   [footerView setBackgroundColor:[UIColor colorWithWhite:.33f alpha:0.2f]];
   return footerView; 
 }

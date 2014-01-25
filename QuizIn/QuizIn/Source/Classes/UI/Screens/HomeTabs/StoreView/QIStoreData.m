@@ -143,7 +143,7 @@
       return @"Go beyond multiple choice with more question types.";
       break;
     case 2: //@"com.kuhlmanation.hobnob.f_pack"
-      return @"Filter quizzes down to a specific company, school, industry, or location.";
+      return @"Filter down to a specific company, school, industry, or location.";
       break;
     case 3: //@"com.kuhlmanation.hobnob.r_pack"
       return @"Refresh yourself on the people you know the worst.";
