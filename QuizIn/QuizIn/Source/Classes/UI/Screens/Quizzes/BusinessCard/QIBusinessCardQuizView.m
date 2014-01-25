@@ -452,10 +452,6 @@
 -(void)showResult{
   DDLogInfo(@"showResult");
   [UIView animateWithDuration:0.5 animations:^{
-    [self.checkAnswersView.nextButton setHidden:NO];
-    [self.checkAnswersView.againButton setHidden:NO];
-    [self.checkAnswersView.checkButton setHidden:YES];
-    [self.checkAnswersView.resultHideButton setHidden:NO];
     [self.topCheck setConstant:-81.0f];
     [self setResultClosed:NO];
     [self processAnswer];
@@ -465,10 +461,7 @@
 -(void)resetView{
   DDLogInfo(@"resetView");
   [UIView animateWithDuration:0.5 animations:^{
-    [self.checkAnswersView.nextButton setHidden:YES];
-    [self.checkAnswersView.againButton setHidden:YES];
-    [self.checkAnswersView.checkButton setHidden:NO];
-    [self.checkAnswersView.resultHideButton setHidden:YES];
+    [self.checkAnswersView resetView]; 
     [self.topCheck setConstant:-40.0f];
     [self setResultClosed:YES];
     [self.answerName.answerScrollView setContentOffset:CGPointZero];

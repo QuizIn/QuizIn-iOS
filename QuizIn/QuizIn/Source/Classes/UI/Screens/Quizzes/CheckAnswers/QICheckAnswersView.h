@@ -12,6 +12,7 @@
 
 
 -(void)correct:(BOOL)correct;
+-(void)resetView; 
 
 @end
 

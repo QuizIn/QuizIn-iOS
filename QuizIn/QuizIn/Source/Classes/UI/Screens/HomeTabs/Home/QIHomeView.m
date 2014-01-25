@@ -453,6 +453,7 @@
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_hobnob_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [button setAdjustsImageWhenHighlighted:YES]; 
   [button setBackgroundColor:[UIColor clearColor]];
   return button;
 }
@@ -508,6 +509,7 @@
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_lock_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [button setAdjustsImageWhenHighlighted:YES];
   [button setBackgroundColor:[UIColor clearColor]];
   [button setTag:tag]; 
   return button;
@@ -517,7 +519,7 @@
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setBackgroundImage:[UIImage imageNamed:@"connectionsquiz_takequiz_unlocked_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
-  //todo unhide when the item is purchased. 
+  [button setAdjustsImageWhenHighlighted:YES];
   [button setHidden:YES];
   [button setBackgroundColor:[UIColor clearColor]];
   return button;

@@ -51,14 +51,15 @@
 
 - (void)constructViewHierarchy {
   [self.resultView addSubview:self.resultLabel];
-  [self.resultView addSubview:self.seeProfilesButton];
   [self addSubview:self.backgroundImage];
+  [self addSubview:self.seeProfilesButton];
   [self addSubview:self.resultView];
   [self addSubview:self.helpButton];
   [self addSubview:self.resultHideButton];
   [self addSubview:self.checkButton];
   [self addSubview:self.againButton];
   [self addSubview:self.nextButton];
+  [self resetView]; 
 }
 
 #pragma mark Layout
@@ -88,10 +89,10 @@
     
     //Check Answer View Constraints
 
-    NSDictionary *checkAnswerViews = NSDictionaryOfVariableBindings(_resultView, _checkButton, _helpButton, _againButton);
+    NSDictionary *checkAnswerViews = NSDictionaryOfVariableBindings(_resultView, _checkButton, _helpButton, _againButton, _seeProfilesButton);
     
     NSArray *hHelpButtonConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_helpButton(==28)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_helpButton(==30)]-5-[_seeProfilesButton(==30)]"
                                             options:0
                                             metrics:nil
                                               views:checkAnswerViews];
@@ -101,8 +102,15 @@
                                             options:0
                                             metrics:nil
                                               views:checkAnswerViews];
+   
+    NSArray *vProfileButtonConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-6-[_seeProfilesButton(==30)]"
+                                            options:0
+                                            metrics:nil
+                                              views:checkAnswerViews];
+    
     NSArray *hCheckButtonConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_againButton(==108)]-10-[_checkButton(==108)]-18-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_againButton(==108)]-10-[_checkButton(==108)]-10-|"
                                             options:0
                                             metrics:nil
                                               views:checkAnswerViews];
@@ -137,6 +145,7 @@
     [self.checkAnswersViewConstraints addObjectsFromArray:@[hCenterNextButton,vCenterNextButton,widthNextButton,heightNextButton]];
     [self.checkAnswersViewConstraints addObjectsFromArray:hHelpButtonConstraints];
     [self.checkAnswersViewConstraints addObjectsFromArray:vHelpButtonConstraints];
+    [self.checkAnswersViewConstraints addObjectsFromArray:vProfileButtonConstraints];
     [self.checkAnswersViewConstraints addObjectsFromArray:hCheckButtonConstraints];
     [self.checkAnswersViewConstraints addObjectsFromArray:vAgainButtonConstraints];
     [self.checkAnswersViewConstraints addObjectsFromArray:hResultConstraints];
@@ -147,31 +156,21 @@
     //Result View Constraints
     self.resultViewConstraints = [NSMutableArray array];
     
-    NSDictionary *resultsViews = NSDictionaryOfVariableBindings(_seeProfilesButton);
-    
     NSLayoutConstraint *hCenterLabel = [NSLayoutConstraint constraintWithItem:_resultLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_resultView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
     NSLayoutConstraint *vCenterLabel = [NSLayoutConstraint constraintWithItem:_resultLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_resultView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f];
-    NSArray *hProfileButtonConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_seeProfilesButton(==28)]"
-                                            options:0
-                                            metrics:nil
-                                              views:resultsViews];
-    NSArray *vProfileButtonConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-4-[_seeProfilesButton(==30)]"
-                                            options:0
-                                            metrics:nil
-                                              views:resultsViews];
-
     [self.resultViewConstraints addObjectsFromArray:@[hCenterLabel,vCenterLabel]];
-    [self.resultViewConstraints addObjectsFromArray:hProfileButtonConstraints];
-    [self.resultViewConstraints addObjectsFromArray:vProfileButtonConstraints];
-    
+  
     [_resultView addConstraints:self.resultViewConstraints];
   }
 }
 
 #pragma mark Actions
 -(void)correct:(BOOL)correct{
+  [self.helpButton setHidden:YES];
+  [self.seeProfilesButton setHidden:NO];
+  [self.nextButton setHidden:NO];
+  [self.checkButton setHidden:YES];
+  [self.resultHideButton setHidden:NO];
   if(correct){
     [self.againButton setHidden:YES];
     [self.backgroundImage setImage:[UIImage imageNamed:@"quizin_navbar_correct"]];
@@ -182,6 +181,15 @@
     [self.resultLabel setText:[self resultIncorrectText]];
     [self.againButton setHidden:NO];
   }
+}
+
+- (void)resetView {
+  [self.helpButton setHidden:NO];
+  [self.seeProfilesButton setHidden:YES];
+  [self.nextButton setHidden:YES];
+  [self.againButton setHidden:YES];
+  [self.checkButton setHidden:NO];
+  [self.resultHideButton setHidden:YES];
 }
 
 #pragma mark Strings
@@ -263,23 +271,26 @@
 }
 - (UIButton *)newHelpButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setBackgroundImage:[UIImage imageNamed:@"quizin_information_btn"] forState:UIControlStateNormal];
+  [button setBackgroundImage:[UIImage imageNamed:@"hobnob_question_icon"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [button setAdjustsImageWhenHighlighted:YES];
   return button;
 }
 
 - (UIButton *)newResultHideButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setBackgroundImage:[UIImage imageNamed:@"quizin_stretch_btn"] forState:UIControlStateNormal];
+  [button setBackgroundImage:[UIImage imageNamed:@"hobnob_stretch_icon"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [button setAdjustsImageWhenHighlighted:YES];
   [button setHidden:YES];
   return button;
 }
 
 - (UIButton *)newSeeProfilesButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setBackgroundImage:[UIImage imageNamed:@"quizin_information_btn"] forState:UIControlStateNormal];
+  [button setBackgroundImage:[UIImage imageNamed:@"hobnob_profile_icon"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  [button setAdjustsImageWhenHighlighted:YES];
   return button;
 }
 
