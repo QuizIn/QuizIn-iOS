@@ -4,6 +4,9 @@
 #import "QIStorePreviewViewController.h"
 #import "QIStoreData.h"
 
+//todo temp
+#import "QILoginScreenViewController.h"
+
 #define SECTION_INDEX_SPAN 100.0f
 
 @interface QIStoreViewController ()
@@ -90,6 +93,10 @@
   NSLog(@"Preview: Tag-%d  Section-%d  Row-%d",button.tag, section, row);
   QIStorePreviewViewController *previewController = [[QIStorePreviewViewController alloc] init];
   [self presentViewController:previewController  animated:YES completion:nil];
+   
+ /* QILoginScreenViewController *tempController = [[QILoginScreenViewController alloc] init];
+  [self presentViewController:tempController  animated:YES completion:nil];
+  */
 }
 
 - (void)buy:(UIButton *)button{
