@@ -1,6 +1,7 @@
 #import "QIQuizQuestion.h"
 
 @class QIPerson;
+@class QIConnectionsStore;
 
 @interface QIBusinessCardQuestion : QIQuizQuestion
 
@@ -11,5 +12,8 @@
 @property(nonatomic, assign) NSInteger correctCompanyIndex;
 @property(nonatomic, copy) NSArray *titles;
 @property(nonatomic, assign) NSInteger correctTitleIndex;
+
++ (instancetype)businessCardQuestionForPersonID:(NSString *)personID
+                               connectionsStore:(QIConnectionsStore *)connections;
 
 @end
