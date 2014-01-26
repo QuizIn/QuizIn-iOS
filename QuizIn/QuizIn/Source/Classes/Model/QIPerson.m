@@ -1,8 +1,18 @@
 #import "QIPerson.h"
 
 #import "QILocation.h"
+#import "QIPosition.h"
 
 @implementation QIPerson
+
+- (QIPosition *)currentPosition {
+  for (QIPosition *position in self.positions) {
+    if (position.isCurrent) {
+      return position;
+    }
+  }
+  return nil;
+}
 
 - (id)copyWithZone:(NSZone *)zone {
   QIPerson *person = [[[self class] allocWithZone:zone] init];

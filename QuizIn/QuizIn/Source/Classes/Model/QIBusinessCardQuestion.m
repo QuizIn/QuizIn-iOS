@@ -33,6 +33,7 @@
     [namesAnswers shuffleAddObject:answer];
   }
   question.names = [namesAnswers shuffledArray];
+  // TODO(Rene): !!WATCH OUT for duplicate options!!
   question.correctNameIndex = [question.names indexOfObject:question.person.formattedName];
   
   // Build Companies
@@ -60,6 +61,7 @@
     [companyAnswers shuffleAddObject:answer];
   }
   question.companies = [companyAnswers shuffledArray];
+  // TODO(Rene): !!WATCH OUT for duplicate options!!
   question.correctCompanyIndex = [question.companies indexOfObject:company];
   
   
@@ -88,6 +90,7 @@
     [titleAnswers shuffleAddObject:answer];
   }
   question.titles = [titleAnswers shuffledArray];
+  // TODO(Rene): !!WATCH OUT for duplicate options!!
   question.correctTitleIndex = [question.titles indexOfObject:title];
   return question;
 }

@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 
 @class QILocation;
+@class QIPosition;
 
 @interface QIPerson : NSObject<NSCopying>
 
@@ -12,6 +13,7 @@
 @property(nonatomic, copy) NSString *pictureURL;
 @property(nonatomic, copy) QILocation *location;
 @property(nonatomic, copy) NSArray *positions;
+@property(nonatomic, copy, readonly) QIPosition *currentPosition;
 @property(nonatomic, assign) NSInteger numberOfConnections;
 @property(nonatomic, copy) NSString *publicProfileURL;
 
