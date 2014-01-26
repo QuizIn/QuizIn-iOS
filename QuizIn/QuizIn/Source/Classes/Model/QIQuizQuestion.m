@@ -4,21 +4,17 @@
 #import "QIMatchingQuestion.h"
 #import "QIMultipleChoiceQuestion.h"
 
-typedef NS_ENUM(NSInteger, QIQuizQuestionType) {
-  QIQuizQuestionTypeMultipleChoice,
-  QIQuizQuestionTypeMatching,
-  QIQuizQuestionTypeBusinessCard,
-};
-
 static NSInteger kQINumberOfQuizTypes = 3;
 
 @implementation QIQuizQuestion
 
 + (instancetype)newRandomQuestionForPersonID:(NSString *)personID
-                            connectionsStore:(QIConnectionsStore *)connections {
+                            connectionsStore:(QIConnectionsStore *)connections
+                               questionTypes:(QIQuizQuestionType)types {
   QIQuizQuestion *question = nil;
-  QIQuizQuestionType type = arc4random_uniform(kQINumberOfQuizTypes);
-  switch (type) {
+  QIQuizQuestionType randomType = [self randomQuestionTypeOnlyUsingQuestionTypes:types];
+  
+  switch (randomType) {
     case QIQuizQuestionTypeBusinessCard:
       question = [QIBusinessCardQuestion businessCardQuestionForPersonID:personID
                                                         connectionsStore:connections];
@@ -33,8 +29,28 @@ static NSInteger kQINumberOfQuizTypes = 3;
       question = [QIMultipleChoiceQuestion multipleChoiceQuestionForPersonID:personID
                                                             connectionsStore:connections];
       break;
+      
+    case QIQuizQuestionTypeNone:
+      question = nil;
+      break;
   }
   return question;
+}
+
++ (QIQuizQuestionType)randomQuestionTypeOnlyUsingQuestionTypes:(QIQuizQuestionType)types {
+  BOOL containsType = NO;
+  QIQuizQuestionType randomType = QIQuizQuestionTypeNone;
+  NSInteger count = 0;
+  do {
+    if (count > 100) {
+      NSAssert(NO, @"Something went wrong here.");
+      break;
+    }
+    count++;
+    randomType = arc4random_uniform(kQINumberOfQuizTypes);
+    containsType = (types & randomType) != 0;
+  } while (!containsType); // Bitmask check.
+  return randomType;
 }
 
 @end

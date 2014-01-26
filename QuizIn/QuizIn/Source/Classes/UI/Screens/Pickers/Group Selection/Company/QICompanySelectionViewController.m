@@ -46,15 +46,19 @@
     }
   }
   
-  [QIQuizFactory newFirstDegreeQuizForCurrentCompanies:selectedCompanyCodes
-                                   withCompletionBlock:^(QIQuiz *quiz, NSError *error) {
-                                     if (error == nil) {
-                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                         QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];
-                                         [self presentViewController:quizViewController animated:YES completion:nil];
-                                       });
-                                     }
-                                   }];
+  [QIQuizFactory
+   newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionTypeBusinessCard|
+                                        QIQuizQuestionTypeMatching|
+                                        QIQuizQuestionTypeMultipleChoice)
+   forCurrentCompanies:selectedCompanyCodes
+   completionBlock:^(QIQuiz *quiz, NSError *error) {
+       if (error == nil) {
+         dispatch_async(dispatch_get_main_queue(), ^{
+           QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];
+           [self presentViewController:quizViewController animated:YES completion:nil];
+         });
+       }
+  }];
 }
 
 @end

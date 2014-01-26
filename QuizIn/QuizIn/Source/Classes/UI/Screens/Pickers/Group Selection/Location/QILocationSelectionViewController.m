@@ -45,8 +45,11 @@
   }
   
   [QIQuizFactory
-   newFirstDegreeQuizForLocations:selectedLocationCodes
-   withCompletionBlock:^(QIQuiz *quiz, NSError *error) {
+   newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionTypeBusinessCard|
+                                        QIQuizQuestionTypeMatching|
+                                        QIQuizQuestionTypeMultipleChoice)
+   forLocations:selectedLocationCodes
+   completionBlock:^(QIQuiz *quiz, NSError *error) {
      if (error == nil) {
        dispatch_async(dispatch_get_main_queue(), ^{
          QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];

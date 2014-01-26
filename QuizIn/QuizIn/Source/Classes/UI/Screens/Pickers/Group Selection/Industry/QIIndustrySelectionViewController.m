@@ -3,6 +3,7 @@
 #import "LinkedIn.h"
 #import "QIIndustry.h"
 #import "QIQuizFactory.h"
+#import "QIQuizQuestion.h"
 
 @interface QIIndustrySelectionViewController ()
 
@@ -48,8 +49,11 @@
   }
   
   [QIQuizFactory
-   newFirstDegreeQuizForIndustries:selectedIndustryCodes
-   withCompletionBlock:^(QIQuiz *quiz, NSError *error) {
+   newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionTypeBusinessCard|
+                                        QIQuizQuestionTypeMatching|
+                                        QIQuizQuestionTypeMultipleChoice)
+   forIndustries:selectedIndustryCodes
+   completionBlock:^(QIQuiz *quiz, NSError *error) {
      if (error == nil) {
        dispatch_async(dispatch_get_main_queue(), ^{
          QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];

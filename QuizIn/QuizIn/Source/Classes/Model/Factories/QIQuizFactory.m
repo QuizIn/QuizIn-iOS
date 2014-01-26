@@ -70,10 +70,11 @@
 
 //facets:(code,buckets:(code,name,count)) //  // current-company //@"facets": @"location",
 
-+ (void)newFirstDegreeQuizForIndustries:(NSArray *)industryCodes
-                  withCompletionBlock:(void (^)(QIQuiz *, NSError*))completionBlock {
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
+                              forIndustries:(NSArray *)industryCodes
+                            completionBlock:(void (^)(QIQuiz *quiz, NSError*error))completionBlock {
   [LinkedIn allFirstDegreeConnectionsForAuthenticatedUserInIndustries:[industryCodes copy] onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
-    QIQuiz *quiz = [self quizWithConnections:connectionsStore];
+    QIQuiz *quiz = [self quizWithConnections:connectionsStore questionTypes:questionTypes];
     if (quiz) {
       completionBlock? completionBlock(quiz, nil) :  NULL;
     } else {
@@ -85,12 +86,13 @@
   }];
 }
 
-+ (void)newFirstDegreeQuizForCurrentCompanies:(NSArray *)companyCodes
-                          withCompletionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
+                        forCurrentCompanies:(NSArray *)companyCodes
+                            completionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {
   [LinkedIn
    allFirstDegreeConnectionsForAuthenticatedUserInCurrentCompanies:[companyCodes copy]
    onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
-    QIQuiz *quiz = [self quizWithConnections:connectionsStore];
+    QIQuiz *quiz = [self quizWithConnections:connectionsStore questionTypes:questionTypes];
     if (quiz) {
       completionBlock? completionBlock(quiz, nil) :  NULL;
     } else {
@@ -102,12 +104,13 @@
   }];
 }
 
-+ (void)newFirstDegreeQuizForSchools:(NSArray *)schoolCodes
-                 withCompletionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
+                                 forSchools:(NSArray *)schoolCodes
+                            completionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {
   [LinkedIn
    allFirstDegreeConnectionsForAuthenticatedUserInSchools:[schoolCodes copy]
    onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
-     QIQuiz *quiz = [self quizWithConnections:connectionsStore];
+     QIQuiz *quiz = [self quizWithConnections:connectionsStore questionTypes:questionTypes];
      if (quiz) {
        completionBlock? completionBlock(quiz, nil) :  NULL;
      } else {
@@ -119,12 +122,13 @@
    }];
 }
 
-+ (void)newFirstDegreeQuizForLocations:(NSArray *)locationCodes
-                   withCompletionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
+                               forLocations:(NSArray *)locationCodes
+                            completionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {
   [LinkedIn
    allFirstDegreeConnectionsForAuthenticatedUserInLocations:[locationCodes copy]
    onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
-     QIQuiz *quiz = [self quizWithConnections:connectionsStore];
+     QIQuiz *quiz = [self quizWithConnections:connectionsStore questionTypes:questionTypes];
      if (quiz) {
        completionBlock? completionBlock(quiz, nil) :  NULL;
      } else {
@@ -136,9 +140,10 @@
    }];
 }
 
-+ (void)quizFromRandomConnectionsWithCompletionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {
++ (void)quizFromRandomConnectionsWithQuestionTypes:(QIQuizQuestionType)questionTypes
+                                   completionBlock:(void (^)(QIQuiz *, NSError *))completionBlock {
   [LinkedIn randomConnectionsForAuthenticatedUserWithNumberOfConnectionsToFetch:40 onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
-    QIQuiz *quiz = [self quizWithConnections:connectionsStore];
+    QIQuiz *quiz = [self quizWithConnections:connectionsStore questionTypes:questionTypes];
     if (quiz) {
       completionBlock ? completionBlock(quiz, nil) : NULL;
     } else {
@@ -150,7 +155,8 @@
   }];
 }
 
-+ (QIQuiz *)quizWithConnections:(QIConnectionsStore *)connections {
++ (QIQuiz *)quizWithConnections:(QIConnectionsStore *)connections
+                  questionTypes:(QIQuizQuestionType)questionTypes; {
   NSAssert([connections.people count] >= 10, @"Must have at least 10 people to make Quiz");
   // TODO(Rene): Remove this requirement, simply include less multiple choice what's my name questions.
   NSAssert([connections.personIDsWithProfilePics count] >= 10,
@@ -166,8 +172,10 @@
     NSString *personID = [self randomPersonIDfromConnections:connectionsWithProfilePic
                                            connectionsInQuiz:connectionsInQuiz];
     
-    [questions addObject:[QIQuizQuestion newRandomQuestionForPersonID:personID
-                                                     connectionsStore:connections]];
+    QIQuizQuestion *question = [QIQuizQuestion newRandomQuestionForPersonID:personID
+                                                           connectionsStore:connections
+                                                              questionTypes:questionTypes];
+    if (question) [questions addObject:question];
   }
   return [QIQuiz quizWithQuestions:questions];
 }

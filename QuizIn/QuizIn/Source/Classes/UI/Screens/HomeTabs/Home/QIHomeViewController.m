@@ -120,7 +120,11 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 #pragma mark Actions
 
 - (void)startConnectionsQuiz:(id)sender {
-  [QIQuizFactory quizFromRandomConnectionsWithCompletionBlock:^(QIQuiz *quiz, NSError *error) {
+  [QIQuizFactory
+   quizFromRandomConnectionsWithQuestionTypes:(QIQuizQuestionTypeBusinessCard|
+                                               QIQuizQuestionTypeMatching|
+                                               QIQuizQuestionTypeMultipleChoice)
+   completionBlock:^(QIQuiz *quiz, NSError *error) {
     if (error == nil) {
       dispatch_async(dispatch_get_main_queue(), ^{
         QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];

@@ -1,19 +1,27 @@
 #import <Foundation/Foundation.h>
 
+#import "QIQuizQuestion.h"
+
 @class QIConnectionsStore;
 @class QIQuiz;
 
 @interface QIQuizFactory : NSObject
 
-+ (void)quizFromRandomConnectionsWithCompletionBlock:(void (^)(QIQuiz *, NSError *))completionBlock;
-+ (void)newFirstDegreeQuizForIndustries:(NSArray *)industryCodes
-                    withCompletionBlock:(void (^)(QIQuiz *quiz, NSError*error))completionBlock;
-+ (void)newFirstDegreeQuizForCurrentCompanies:(NSArray *)companyCodes
-                          withCompletionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock;
-+ (void)newFirstDegreeQuizForSchools:(NSArray *)schoolCodes
-                 withCompletionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock;
-+ (void)newFirstDegreeQuizForLocations:(NSArray *)locationCodes
-                   withCompletionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock;
-+ (QIQuiz *)quizWithConnections:(QIConnectionsStore *)connections;
++ (void)quizFromRandomConnectionsWithQuestionTypes:(QIQuizQuestionType)questionTypes
+                                   completionBlock:(void (^)(QIQuiz *, NSError *))completionBlock;
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
+                              forIndustries:(NSArray *)industryCodes
+                            completionBlock:(void (^)(QIQuiz *quiz, NSError*error))completionBlock;
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
+                        forCurrentCompanies:(NSArray *)companyCodes
+                            completionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock;
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
+                                 forSchools:(NSArray *)schoolCodes
+                            completionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock;
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
+                               forLocations:(NSArray *)locationCodes
+                            completionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock;
++ (QIQuiz *)quizWithConnections:(QIConnectionsStore *)connections
+                  questionTypes:(QIQuizQuestionType)questionTypes;
 
 @end
