@@ -24,7 +24,6 @@
       _progressLabel = [self newProgressLabel];
       _progressView = [self newProgressView];
       _exitButton = [self newExitButton];
-      //[self setBackgroundColor:[UIColor colorWithWhite:.90f alpha:1.0]];
       [self constructViewHierarchy];
     }
     return self;
@@ -66,24 +65,8 @@
   
   if (!self.progressViewConstraints) {
     
-    /*NSDictionary *selfConstraintView = NSDictionaryOfVariableBindings(self);
-    
-    NSArray *hSelf =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|"
-                                            options:NSLayoutFormatAlignAllTop
-                                            metrics:nil
-                                              views:selfConstraintView];
-    
-    NSArray *vSelf =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self(==31)]"
-                                            options:0
-                                            metrics:nil
-                                              views:selfConstraintView];
-     */
-    
     NSMutableArray *selfConstraints = [NSMutableArray array];
-    //[selfConstraints addObjectsFromArray:hSelf];
-    //[selfConstraints addObjectsFromArray:vSelf];
+    
     [self.superview addConstraints:selfConstraints];
     
     //ProgressView Constraints
@@ -149,8 +132,8 @@
   UIProgressView *progressView = [[UIProgressView alloc] init];
   [progressView setTranslatesAutoresizingMaskIntoConstraints:NO];
 
-  UIImage *track = [[UIImage imageNamed:@"progressView_tracker"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 40, 0, 40)];
-  UIImage *progress = [[UIImage imageNamed:@"progressView_progress"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 40, 0, 40)];
+  UIImage *track = [[UIImage imageNamed:@"progressView_tracker"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 3, 0, 3)];
+  UIImage *progress = [[UIImage imageNamed:@"progressView_progress"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 3, 0, 3)];
   
   [progressView setTrackImage:track];
   [progressView setProgressImage:progress];
@@ -159,7 +142,7 @@
 }
 
 - (UIButton *)newExitButton {
-  UIButton *exitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  UIButton *exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [exitButton setImage:[UIImage imageNamed:@"quizin_exit_btn"] forState:UIControlStateNormal];
   [exitButton setAlpha:0.8f];
   [exitButton setTranslatesAutoresizingMaskIntoConstraints:NO];
