@@ -9,8 +9,8 @@
 // AFNetworking
 #define COCOAPODS_POD_AVAILABLE_AFNetworking
 #define COCOAPODS_VERSION_MAJOR_AFNetworking 1
-#define COCOAPODS_VERSION_MINOR_AFNetworking 2
-#define COCOAPODS_VERSION_PATCH_AFNetworking 1
+#define COCOAPODS_VERSION_MINOR_AFNetworking 3
+#define COCOAPODS_VERSION_PATCH_AFNetworking 3
 
 // AuthKit
 #define COCOAPODS_POD_AVAILABLE_AuthKit
@@ -21,26 +21,32 @@
 // CocoaLumberjack
 #define COCOAPODS_POD_AVAILABLE_CocoaLumberjack
 #define COCOAPODS_VERSION_MAJOR_CocoaLumberjack 1
-#define COCOAPODS_VERSION_MINOR_CocoaLumberjack 6
-#define COCOAPODS_VERSION_PATCH_CocoaLumberjack 2
+#define COCOAPODS_VERSION_MINOR_CocoaLumberjack 8
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack 0
+
+// CocoaLumberjack/Core
+#define COCOAPODS_POD_AVAILABLE_CocoaLumberjack_Core
+#define COCOAPODS_VERSION_MAJOR_CocoaLumberjack_Core 1
+#define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Core 8
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Core 0
+
+// CocoaLumberjack/Extensions
+#define COCOAPODS_POD_AVAILABLE_CocoaLumberjack_Extensions
+#define COCOAPODS_VERSION_MAJOR_CocoaLumberjack_Extensions 1
+#define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Extensions 8
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Extensions 0
+
+// FLKAutoLayout
+#define COCOAPODS_POD_AVAILABLE_FLKAutoLayout
+#define COCOAPODS_VERSION_MAJOR_FLKAutoLayout 0
+#define COCOAPODS_VERSION_MINOR_FLKAutoLayout 1
+#define COCOAPODS_VERSION_PATCH_FLKAutoLayout 1
 
 // GTMHTTPFetcher
 #define COCOAPODS_POD_AVAILABLE_GTMHTTPFetcher
 #define COCOAPODS_VERSION_MAJOR_GTMHTTPFetcher 0
 #define COCOAPODS_VERSION_MINOR_GTMHTTPFetcher 0
-#define COCOAPODS_VERSION_PATCH_GTMHTTPFetcher 1
-
-// MagicalRecord
-#define COCOAPODS_POD_AVAILABLE_MagicalRecord
-#define COCOAPODS_VERSION_MAJOR_MagicalRecord 2
-#define COCOAPODS_VERSION_MINOR_MagicalRecord 1
-#define COCOAPODS_VERSION_PATCH_MagicalRecord 0
-
-// Objection
-#define COCOAPODS_POD_AVAILABLE_Objection
-#define COCOAPODS_VERSION_MAJOR_Objection 0
-#define COCOAPODS_VERSION_MINOR_Objection 15
-#define COCOAPODS_VERSION_PATCH_Objection 2
+#define COCOAPODS_VERSION_PATCH_GTMHTTPFetcher 2
 
 // SBJson
 #define COCOAPODS_POD_AVAILABLE_SBJson
