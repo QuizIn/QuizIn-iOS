@@ -161,23 +161,13 @@
   // TODO(Rene): Do we need a minimum of connections with profile pics?
   NSArray *connectionsWithProfilePic = [connections.personIDsWithProfilePics allObjects];
   
-  // Pick a random connection.
   for (NSInteger i = 0; i < 10; i++) {
+    // Pick a random connection.
     NSString *personID = [self randomPersonIDfromConnections:connectionsWithProfilePic
                                            connectionsInQuiz:connectionsInQuiz];
     
-    if (i < 2) {
-      [questions addObject:[QIMatchingQuestion matchingQuestionForPersonID:personID
-                                                          connectionsStore:connections]];
-    } else if (i < 8) {
-      // Build business card question.
-      [questions addObject:[QIBusinessCardQuestion businessCardQuestionForPersonID:personID
-                                                                  connectionsStore:connections]];
-    } else {
-      // Build a question.
-      [questions addObject:[QIMultipleChoiceQuestion multipleChoiceQuestionForPersonID:personID
-                                                                      connectionsStore:connections]];
-    }
+    [questions addObject:[QIQuizQuestion newRandomQuestionForPersonID:personID
+                                                     connectionsStore:connections]];
   }
   return [QIQuiz quizWithQuestions:questions];
 }

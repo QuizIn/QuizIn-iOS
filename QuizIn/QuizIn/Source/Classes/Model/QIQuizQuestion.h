@@ -1,13 +1,10 @@
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, QIQuizQuestionType) {
-  QIQuizQuestionTypeMultipleChoice,
-  QIQuizQuestionTypeMatching,
-  QIQuizQuestionTypeBusinessCard,
-};
-
-static NSInteger kQINumberOfQuizTypes = 2;
+@class QIConnectionsStore;
 
 @interface QIQuizQuestion : NSObject
+
++ (instancetype)newRandomQuestionForPersonID:(NSString *)personID
+                            connectionsStore:(QIConnectionsStore *)connections;
 
 @end
