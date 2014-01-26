@@ -15,11 +15,37 @@ typedef NS_ENUM(NSInteger, QIMultipleChoiceQuestionType) {
   QIMultipleChoiceQuestionTypeLocation,
 };
 
+static NSInteger kQINumberOfMultipleChoiceQuestionTypes = 5;
+
 @implementation QIMultipleChoiceQuestion
 
 + (instancetype)multipleChoiceQuestionForPersonID:(NSString *)personID
                                  connectionsStore:(QIConnectionsStore *)connections {
-  return [self multipleChoiceLocationQuestionForPersonID:personID connectionsStore:connections];
+
+  QIMultipleChoiceQuestionType type = arc4random_uniform(kQINumberOfMultipleChoiceQuestionTypes);
+  switch (type) {
+    case QIMultipleChoiceQuestionTypeName:
+      return [self multipleChoiceNameQuestionForPersonID:personID connectionsStore:connections];
+      break;
+      
+    case QIMultipleChoiceQuestionTypeCompany:
+      return [self multipleChoiceCompanyQuestionForPersonID:personID connectionsStore:connections];
+      break;
+      
+    case QIMultipleChoiceQuestionTypeIndustry:
+      return [self multipleChoiceIndustryQuestionForPersonID:personID connectionsStore:connections];
+      break;
+      
+    case QIMultipleChoiceQuestionTypeLocation:
+      return [self multipleChoiceLocationQuestionForPersonID:personID connectionsStore:connections];
+      break;
+      
+    case QIMultipleChoiceQuestionTypePosition:
+      return [self multipleChoicePositionQuestionForPersonID:personID connectionsStore:connections];
+      break;
+  }
+  
+  return nil;
 }
 
 + (instancetype)multipleChoiceNameQuestionForPersonID:(NSString *)personID
