@@ -257,7 +257,7 @@
 
 - (UIButton *)newLogoutButton{
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setImage:[UIImage imageNamed:@"store_preview_btn"] forState:UIControlStateNormal];
+  [button setImage:[UIImage imageNamed:@"hobnob_logout_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   return button;
 }

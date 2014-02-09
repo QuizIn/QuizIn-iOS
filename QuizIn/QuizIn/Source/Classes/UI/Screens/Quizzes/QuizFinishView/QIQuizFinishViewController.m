@@ -18,10 +18,15 @@
   self.view = [[QIQuizFinishView alloc] init];
   [self.quizFinishView setCorrectAnswers:5];
   [self.quizFinishView setTotalQuestions:11];
-  [self.quizFinishView.continueButton addTarget:self
+  [self.quizFinishView.doneButton addTarget:self
                                          action:@selector(dismiss)
                                forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.quizFinishView.goAgainButton addTarget:self
+                                     action:@selector(goAgain)
+                           forControlEvents:UIControlEventTouchUpInside];
 }
+
 
 - (void)viewDidLoad
 {
@@ -31,6 +36,10 @@
 
 - (void)dismiss{
   [self dismissViewControllerAnimated:YES completion:nil]; 
+}
+
+- (void)goAgain{
+  NSLog(@"Quiz Again");
 }
 
 - (void)didReceiveMemoryWarning

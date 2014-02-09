@@ -27,7 +27,8 @@
       _title = [self newTitleLabel];
       _result = [self newResultLabel];
       _tagline = [self newTaglineLabel];
-      _continueButton = [self newContinueButton];
+      _doneButton = [self newDoneButton];
+      _goAgainButton = [self newGoAgainButton];
       _correctAnswers = 1;
       _totalQuestions = 1;
       
@@ -45,7 +46,8 @@
   [self addSubview:self.title];
   [self addSubview:self.result];
   [self addSubview:self.tagline];
-  [self addSubview:self.continueButton]; 
+  [self addSubview:self.doneButton];
+  [self addSubview:self.goAgainButton];
 }
 
 #pragma mark Properties
@@ -72,7 +74,7 @@
       taglineText = @"Mediocre";
     }
     else if (percent > .6f && percent <=.8f){
-      taglineText = @"Getting There";
+      taglineText = @"Get'n There";
     }
     else if (percent > .8f && percent <1.0f){
       taglineText = @"Well Done";
@@ -92,7 +94,7 @@
     
     self.viewConstraints = [NSMutableArray array];
     //Constrain Background Image
-    NSDictionary *finishViews = NSDictionaryOfVariableBindings(_viewBackground, _cardImage, _profileImage, _title, _result, _tagline, _continueButton);
+    NSDictionary *finishViews = NSDictionaryOfVariableBindings(_viewBackground, _cardImage, _profileImage, _title, _result, _tagline, _doneButton, _goAgainButton);
     
     NSArray *hBackgroundContraints =
     [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_viewBackground]|"
@@ -121,12 +123,12 @@
                                               views:finishViews];
 
     NSArray *hShareButton =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-57-[_continueButton(==200)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-78-[_doneButton(==78)]-7-[_goAgainButton(==78)]"
                                             options:NSLayoutFormatAlignAllBottom
                                             metrics:nil
                                               views:finishViews];
     NSArray *vAll =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-50-[_title(==30)]-30-[_cardImage]-30-[_continueButton]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-50-[_title(==30)]-30-[_cardImage]-30-[_doneButton(==22)]"
                                             options:0
                                             metrics:nil
                                               views:finishViews];
@@ -233,9 +235,16 @@
   return label;
 }
 
-- (UIButton *)newContinueButton {
+- (UIButton *)newGoAgainButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setImage:[UIImage imageNamed:@"store_preview_btn"] forState:UIControlStateNormal];
+  [button setImage:[UIImage imageNamed:@"hobnob_goagain_btn"] forState:UIControlStateNormal];
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return button;
+}
+
+- (UIButton *)newDoneButton {
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setImage:[UIImage imageNamed:@"hobnob_done_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   return button;
 }
