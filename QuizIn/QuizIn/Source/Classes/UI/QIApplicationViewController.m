@@ -21,7 +21,8 @@
 @property (nonatomic, strong) UIViewController *loginViewController;
 @property (nonatomic, strong) AKLinkedInAuthController *authController;
 @property (nonatomic, strong) UITabBarController *tabViewController;
-@property (nonatomic, strong) QIPerson *loggedInUser; 
+@property (nonatomic, strong) QIPerson *loggedInUser;
+@property (nonatomic, strong) AKAccount *loggedInAccount;
 @end
 
 @implementation QIApplicationViewController
@@ -43,11 +44,14 @@
   
   //SWTICH FOR OFFLINE USAGE
   [self.authController beginAuthenticationAttempt];
-  //[self authControllerAccount:nil didAuthenticate:nil];
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
+}
+
+- (void)logout {
+  [self.authController unauthenticateAccount:self.loggedInAccount];
 }
 
 #pragma mark Layout
@@ -69,6 +73,7 @@
 
 - (void)authControllerAccount:(AKAccount *)account
               didAuthenticate:(id<AKAuthControl>)authController {
+  self.loggedInAccount = account;
   [LinkedIn updateAuthenticatedUserWithOnCompletion:^(QIPerson *authenticatedUser, NSError *error) {
     // TODO(rcacheaux): Check if exists.
     self.loggedInUser = [LinkedIn authenticatedUser];
@@ -83,12 +88,13 @@
 
 - (void)authControllerAccount:(AKAccount *)account
             didUnauthenticate:(id<AKAuthControl>)authController {
-  [self.tabBarController.view removeFromSuperview];
-  [self.tabBarController removeFromParentViewController];
+  [self.tabViewController.view removeFromSuperview];
+  [self.tabViewController removeFromParentViewController];
   //[self.drawerController.view removeFromSuperview];
   //[self.drawerController removeFromParentViewController];
   
   [LinkedIn updateAuthenticatedUserWithOnCompletion:nil];
+  [self.authController beginAuthenticationAttempt];
 }
 
 #pragma mark Factory Methods
@@ -157,6 +163,7 @@
 
 - (QISettingsViewController *)newSettingsViewController {
   QISettingsViewController *settingsViewController = [[QISettingsViewController alloc] init];
+  settingsViewController.applicationViewController = self;
   [settingsViewController setTitle:@"Settings"];
   [settingsViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Settings" image:[UIImage imageNamed:@"connectionsquiz_store_btn"] tag:4]];
   return settingsViewController;

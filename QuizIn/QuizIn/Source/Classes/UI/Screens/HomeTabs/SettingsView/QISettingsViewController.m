@@ -2,6 +2,7 @@
 #import "QISettingsViewController.h"
 #import "QIPerson.h"
 #import "LinkedIn.h"
+#import "QIApplicationViewController.h"
 
 @interface QISettingsViewController ()
 
@@ -36,7 +37,11 @@
 
 #pragma mark Actions
 - (void) logout{
-  NSLog(@"logout");
+  if (self.applicationViewController) {
+    [self.applicationViewController logout];
+    return;
+  }
+  NSAssert(NO, @"Warning: Settings view controller does not have a reference to the application view controller; can't logout.");
 }
 
 - (void)didReceiveMemoryWarning

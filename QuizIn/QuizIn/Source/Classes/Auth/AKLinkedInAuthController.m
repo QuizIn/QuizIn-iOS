@@ -15,7 +15,7 @@
 }
 
 - (NSString *)redirectURIString {
-  return @"http://www.linkedin.com/blah";
+  return @"http://www.linkedin.com/hobnobnoturl";
 }
 
 - (NSString *)clientSecret {
@@ -23,7 +23,7 @@
 }
 
 - (NSString *)keychainItemName {
-  return @"Quizin: Linked In";
+  return @"HobNob: Linked In";
 }
 
 - (NSString *)scope {
