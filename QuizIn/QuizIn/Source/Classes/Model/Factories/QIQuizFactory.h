@@ -7,6 +7,11 @@
 
 @interface QIQuizFactory : NSObject
 
+// TODO: WARNING! Will make multiple API calls to Linked In each time this method is called.
+//  Store the info comming back from Linked In to prevent hitting throttle limits.
++ (void)quizWithPersonIDs:(NSArray *)personIDs
+            questionTypes:(QIQuizQuestionType)questionTypes
+          completionBlock:(void (^)(QIQuiz *, NSError *))completionBlock;
 + (void)quizFromRandomConnectionsWithQuestionTypes:(QIQuizQuestionType)questionTypes
                                    completionBlock:(void (^)(QIQuiz *, NSError *))completionBlock;
 + (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes

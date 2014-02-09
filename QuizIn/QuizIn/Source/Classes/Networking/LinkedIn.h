@@ -3,7 +3,7 @@
 @class QIConnectionsStore;
 @class QIPerson;
 
-typedef void (^LIGetPeopleResponse)(NSDictionary *profile, NSError *error);
+typedef void (^LIGetPersonResponse)(NSDictionary *profile, NSError *error);
 typedef void (^LIGetPeopleCurrentConnectionsResponse)(NSArray *connections,
                                                       NSError *error);
 typedef void (^LIConnectionsResponse)(QIConnectionsStore *connectionsStore, NSError *error);
@@ -13,6 +13,7 @@ typedef void (^LIIndustriesResponse)(NSArray *industries, NSError *error);
 typedef void (^LILocationsResponse)(NSArray *locations, NSError *error);
 typedef void (^LISchoolsResponse)(NSArray *schools, NSError *error);
 typedef void (^LIAuthenticatedUserResponse)(QIPerson *authenticatedUser, NSError *error);
+typedef void (^LIGetPeopleResponse)(NSArray *people, NSError *error);
 
 @interface LinkedIn : NSObject
 
@@ -44,4 +45,7 @@ typedef void (^LIAuthenticatedUserResponse)(QIPerson *authenticatedUser, NSError
 + (void)topFirstDegreeConnectionLocationsForAuthenticatedUserWithOnCompletion:(LILocationsResponse)onCompletion;
 
 + (void)topFirstDegreeConnectionSchoolsForAuthenticatedUserWithOnCompletion:(LISchoolsResponse)onCompletion;
+
++ (void)peopleWithIDs:(NSArray *)personIDs onCompletion:(LIGetPeopleResponse)onCompletion;
+
 @end

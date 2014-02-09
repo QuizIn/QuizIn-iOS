@@ -9,4 +9,8 @@ typedef void (^QIProfileResult)(QIPerson *person, NSError *error);
 + (void)getProfileForAuthenticatedUserWithFieldSelector:(NSString *)fieldSelector
                                            onCompletion:(QIProfileResult)onCompletion;
 
++ (void)getProfileForPersonWithID:(NSString *)personID
+                withFieldSelector:(NSString *)fieldSelector
+                     onCompletion:(QIProfileResult)onCompletion;
+
 @end

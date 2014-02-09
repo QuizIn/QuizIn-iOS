@@ -69,4 +69,43 @@
   return connectionsStore;
 }
 
++ (QIConnectionsStore *)storeWithPeople:(NSArray *)people {
+  QIConnectionsStore *connectionsStore = [QIConnectionsStore new];
+  NSMutableDictionary *peopleMap = [NSMutableDictionary dictionaryWithCapacity:[people count]];
+  NSMutableSet *companyNames = [NSMutableSet set];
+  NSMutableSet *industries = [NSMutableSet set];
+  NSMutableSet *personNames = [NSMutableSet set];
+  NSMutableSet *titleNames = [NSMutableSet set];
+  NSMutableSet *cityNames = [NSMutableSet set];
+  NSMutableSet *personIDsWithProfilePic = [NSMutableSet set];
+  
+  
+  for (QIPerson *person in people) {
+    [personNames addObject:[person.formattedName copy]];
+    [cityNames addObject:[person.location.name copy]];
+
+    NSMutableSet *positions = [NSMutableSet setWithCapacity:[person.positions count]];
+    for (QIPosition *position in person.positions) {
+      [titleNames addObject:[position.title copy]];
+      [industries addObject:[position.company.industry copy]];
+      [companyNames addObject:[position.company.name copy]];
+      [positions addObject:position];
+    }
+    
+    peopleMap[person.personID] = person;
+    if (person.pictureURL != nil && [person.pictureURL length] > 0) {
+      [personIDsWithProfilePic addObject:person.personID];
+    }
+  }
+  
+  connectionsStore.people = [peopleMap copy];
+  connectionsStore.companyNames = [companyNames copy];
+  connectionsStore.industries = [industries copy];
+  connectionsStore.personNames = [personNames copy];
+  connectionsStore.titleNames = [titleNames copy];
+  connectionsStore.cityNames = [cityNames copy];
+  connectionsStore.personIDsWithProfilePics = [personIDsWithProfilePic copy];
+  return connectionsStore;
+}
+
 @end

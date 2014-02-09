@@ -8,6 +8,7 @@
 #import "QIPerson.h"
 #import "QIPosition.h"
 #import "QICompany.h"
+#import "QIConnectionsStore+Factory.h"
 
 #import "QIShuffleSet.h"
 
@@ -69,6 +70,20 @@
 
 
 //facets:(code,buckets:(code,name,count)) //  // current-company //@"facets": @"location",
+
++ (void)quizWithPersonIDs:(NSArray *)personIDs
+            questionTypes:(QIQuizQuestionType)questionTypes
+          completionBlock:(void (^)(QIQuiz *, NSError *))completionBlock {
+  [LinkedIn peopleWithIDs:personIDs onCompletion:^(NSArray *people, NSError *error) {
+    if (people && [people count] > 0) {
+      QIConnectionsStore *connections = [QIConnectionsStore storeWithPeople:people];
+      QIQuiz *quiz = [self quizWithConnections:connections questionTypes:questionTypes];
+      completionBlock(quiz, nil);
+    } else {
+      completionBlock(nil, error);
+    }
+  }];
+}
 
 + (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
                               forIndustries:(NSArray *)industryCodes

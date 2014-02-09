@@ -11,10 +11,25 @@
 
 + (void)getProfileForAuthenticatedUserWithFieldSelector:(NSString *)fieldSelector
                                            onCompletion:(QIProfileResult)onCompletion {
+  // Construct path.
+  NSMutableString *resourcePath = [@"people/~" mutableCopy];
+  [self getProfileWithResourcePath:resourcePath fieldSelector:fieldSelector onCompletion:onCompletion];
+}
+
++ (void)getProfileForPersonWithID:(NSString *)personID
+                withFieldSelector:(NSString *)fieldSelector
+                     onCompletion:(QIProfileResult)onCompletion {
+  // Construct path.
+  NSMutableString *resourcePath = [[NSString stringWithFormat:@"people/id=%@", personID] mutableCopy];
+  [self getProfileWithResourcePath:resourcePath fieldSelector:fieldSelector onCompletion:onCompletion];
+}
+
++ (void)getProfileWithResourcePath:(NSMutableString *)resourcePath
+                     fieldSelector:(NSString *)fieldSelector
+                      onCompletion:(QIProfileResult)onCompletion {
   LIHTTPClient *httpClient = [LIHTTPClient sharedClient];
   
   // Construct path.
-  NSMutableString *resourcePath = [@"people/~" mutableCopy];
   if (fieldSelector) {
     [resourcePath appendFormat:@":(%@)", fieldSelector];
   }
@@ -37,9 +52,9 @@
     // TODO(Rene): Check for unauth responses globally.
     DDLogInfo(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
     [[AKLinkedInAuthController sharedController]
-        unauthenticateAccount:[[AKAccountStore sharedStore] authenticatedAccount]];
+     unauthenticateAccount:[[AKAccountStore sharedStore] authenticatedAccount]];
   };
-
+  
   [httpClient getPath:[resourcePath copy]
            parameters:queryParameters
               success:success

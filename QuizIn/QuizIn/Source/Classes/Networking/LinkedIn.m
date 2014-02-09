@@ -334,4 +334,28 @@ static QIPerson *authenticatedUser;
   }];
 }
 
++ (void)peopleWithIDs:(NSArray *)personIDs onCompletion:(LIGetPeopleResponse)onCompletion {
+  NSInteger numberOfPeople = [personIDs count];
+  __block NSInteger returnCount = 0;
+  __block NSMutableArray *people = [NSMutableArray arrayWithCapacity:numberOfPeople];
+  __block NSError *profileFetchError = nil;
+  for (NSString *personID in personIDs) {
+    [QILIPeople
+     getProfileForPersonWithID:personID
+     withFieldSelector:[self peopleFieldSelector]
+     onCompletion:^(QIPerson *person, NSError *error) {
+       returnCount++;
+       if (person) {
+         [people addObject:person];
+       }
+       if (error) {
+         profileFetchError = error;
+       }
+       if (returnCount >= numberOfPeople) {
+         onCompletion([people copy], profileFetchError);
+       }
+     }];
+  }
+}
+
 @end
