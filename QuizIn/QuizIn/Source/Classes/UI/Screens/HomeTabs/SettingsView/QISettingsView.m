@@ -257,9 +257,7 @@
 
 - (UIButton *)newLogoutButton{
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  // TODO: Replace text with logout image.
-//  [button setImage:[UIImage imageNamed:@"store_preview_btn"] forState:UIControlStateNormal];
-  [button setTitle:@"Logout" forState:UIControlStateNormal];
+  [button setImage:[UIImage imageNamed:@"hobnob_logout_btn"] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   return button;
 }
