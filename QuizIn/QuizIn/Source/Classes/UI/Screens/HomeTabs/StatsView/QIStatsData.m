@@ -49,11 +49,9 @@
     _ranks = [QIRankDefinition getRankDelineations];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     //todo rkuhlman offline usage
-    //_userID = @"12345";//
-    if (_userID != nil){
-      if (![prefs objectForKey:_userID]){
-        [self setUpStats];
-      }
+    _userID = @"12345";//
+    if (![prefs objectForKey:_userID]){
+      [self setUpStats]; 
     }
   }
   return self;
@@ -132,27 +130,6 @@
 - (NSInteger)getWellKnownThreshold{
   return WELL_KNOWN_THRESHOLD; 
 }
-
-- (NSArray *)getRefreshPeopleIDsWithLimit:(int)limit{
-  NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-  NSMutableDictionary *stats = [[prefs objectForKey:self.userID] mutableCopy];
-  NSMutableArray *connectionStats = [stats objectForKey:@"connectionStats"];
-  NSMutableArray *refreshPeople = [NSMutableArray array];
-  for (int i = 0; i<[connectionStats count];i++){
-    NSDictionary *connection = [connectionStats objectAtIndex:i];
-    NSInteger correctAnswers = [[connection objectForKey:@"correctAnswers"] integerValue];
-    NSInteger incorrectAnswers = [[connection objectForKey:@"incorrectAnswers"] integerValue];
-    NSInteger knownIndex = correctAnswers - incorrectAnswers;
-    if (knownIndex < 0){
-      [refreshPeople addObject:[connection objectForKey:@"userID"]];
-      if ([refreshPeople count] == limit){
-        break;
-      }
-    }
-  }
-  return [refreshPeople copy];
-}
-
 
 - (NSArray *)getConnectionStatsInOrderBy:(SortBy)sortBy{
   

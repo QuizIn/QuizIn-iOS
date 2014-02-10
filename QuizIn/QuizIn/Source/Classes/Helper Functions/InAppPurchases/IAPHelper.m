@@ -74,9 +74,7 @@ NSString *const IAPHelperProductFailedNotification = @"IAPHelperProductFailedNot
 }
 
 - (BOOL)productPurchased:(NSString *)productIdentifier{
-  //todo testing interlocks and purchased views. 
   return [_purchasedProductIdentifiers containsObject:productIdentifier];
-  //return YES;
 }
 
 - (void)buyProduct:(SKProduct *)product{

@@ -38,7 +38,7 @@
   [self.statsView.summaryView.pieChartView setDelegate:self];
   [self.statsView.summaryView.pieChartView setDataSource:self]; 
   [self.statsView.tableView reloadData];
-  [self showHideRefreshLockButton];
+  [self showHideRefreshLockButton]; 
 }
 
 - (void)viewDidAppear:(BOOL)animated{

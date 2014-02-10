@@ -4,7 +4,6 @@
 #import <CocoaLumberjack/DDTTYLogger.h>
 
 #import "QIApplicationViewController.h"
-//#import "QILoginScreenViewController.h"
 
 #import "LinkedIn.h"
 #import "QIIAPHelper.h"
@@ -19,10 +18,6 @@ int ddLogLevel;
   [self setUpCocoaLumberjackLoggers];
   
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  
- // QILoginScreenViewController *loginViewController = [QILoginScreenViewController new];
- // self.window.rootViewController = loginViewController;
-  
   QIApplicationViewController *applicationViewController = [QIApplicationViewController new];
   self.window.rootViewController = applicationViewController;
   [self.window makeKeyAndVisible];

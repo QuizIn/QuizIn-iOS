@@ -30,7 +30,6 @@ enum SortBy : NSInteger {
 - (NSArray *)getConnectionStatsInOrderBy:(SortBy)sortBy;
 - (NSArray *)getConnectionStatsByKnownGroupings;
 - (NSInteger)getWellKnownThreshold;
-- (NSArray *)getRefreshPeopleIDsWithLimit:(int)limit;
 
 //update Stats
 - (void)updateStatsWithConnectionProfile:(QIPerson *)person correct:(BOOL)correct;
