@@ -50,8 +50,10 @@
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     //todo rkuhlman offline usage
     //_userID = @"12345";//
-    if (![prefs objectForKey:_userID]){
-      [self setUpStats]; 
+    if (_userID != nil){
+      if (![prefs objectForKey:_userID]){
+        [self setUpStats];
+      }
     }
   }
   return self;

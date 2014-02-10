@@ -1,5 +1,6 @@
 
 #import "QILoginScreenViewController.h"
+#import "QIApplicationViewController.h"
 
 @interface QILoginScreenViewController ()
 
@@ -20,10 +21,18 @@
   self.view = [[QILoginScreenView alloc] init];
   
 }
+
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
+  [super viewDidLoad];
+  [self.loginScreenView.loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)login{
+  
+  QIApplicationViewController *applicationViewController = [QIApplicationViewController new];
+  [self addChildViewController:applicationViewController];
+  [self.view addSubview:applicationViewController.view];
 }
 
 - (void)didReceiveMemoryWarning

@@ -53,10 +53,11 @@
 - (void)logout {
   [self.authController unauthenticateAccount:self.loggedInAccount];
 }
-
+/*
 - (void)login {
   [self.authController beginAuthenticationAttempt];
 }
+ */
 
 #pragma mark Layout
 

@@ -11,6 +11,10 @@
 
 @implementation QILoginScreenView
 
++ (BOOL)requiresConstraintBasedLayout {
+  return YES;
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -26,8 +30,8 @@
 #pragma mark View Hierarchy
 - (void)constructViewHierarchy{
   [self addSubview:self.viewBackground];
+  [self addSubview:self.previewScrollView];
   [self addSubview:self.loginButton];
-  [self addSubview:self.previewScrollView]; 
 }
 
 #pragma mark Layout

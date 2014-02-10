@@ -3,6 +3,6 @@
 @interface QIApplicationViewController : UIViewController
 
 - (void)logout;
-- (void)login;
+//- (void)login;
 
 @end
