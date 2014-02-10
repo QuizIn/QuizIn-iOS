@@ -54,6 +54,10 @@
   [self.authController unauthenticateAccount:self.loggedInAccount];
 }
 
+- (void)login {
+  [self.authController beginAuthenticationAttempt];
+}
+
 #pragma mark Layout
 
 - (void)viewWillLayoutSubviews {
@@ -94,6 +98,9 @@
   //[self.drawerController removeFromParentViewController];
   
   [LinkedIn updateAuthenticatedUserWithOnCompletion:nil];
+  
+  
+  //replace with custom login view
   [self.authController beginAuthenticationAttempt];
 }
 
@@ -165,7 +172,7 @@
   QISettingsViewController *settingsViewController = [[QISettingsViewController alloc] init];
   settingsViewController.applicationViewController = self;
   [settingsViewController setTitle:@"Settings"];
-  [settingsViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Settings" image:[UIImage imageNamed:@"connectionsquiz_store_btn"] tag:4]];
+  [settingsViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Settings" image:[UIImage imageNamed:@"connectionsquiz_settings_btn"] tag:4]];
   return settingsViewController;
 }
 

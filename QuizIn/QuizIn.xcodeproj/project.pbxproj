@@ -258,6 +258,8 @@
 		3473047118A822260063B090 /* hobnob_goagain_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3473046D18A822260063B090 /* hobnob_goagain_btn@2x.png */; };
 		3473047418A82DBD0063B090 /* hobnob_logout_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 3473047218A82DBD0063B090 /* hobnob_logout_btn.png */; };
 		3473047518A82DBD0063B090 /* hobnob_logout_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3473047318A82DBD0063B090 /* hobnob_logout_btn@2x.png */; };
+		3473047818A82F5A0063B090 /* connectionsquiz_settings_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 3473047618A82F5A0063B090 /* connectionsquiz_settings_btn.png */; };
+		3473047918A82F5A0063B090 /* connectionsquiz_settings_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3473047718A82F5A0063B090 /* connectionsquiz_settings_btn@2x.png */; };
 		347800051750EFC1002B29DB /* cardquiz_answerholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFB11750EFC1002B29DB /* cardquiz_answerholder.png */; };
 		347800061750EFC1002B29DB /* cardquiz_answerholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFB21750EFC1002B29DB /* cardquiz_answerholder@2x.png */; };
 		347800071750EFC1002B29DB /* cardquiz_businesscard.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFB31750EFC1002B29DB /* cardquiz_businesscard.png */; };
@@ -745,6 +747,8 @@
 		3473046D18A822260063B090 /* hobnob_goagain_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hobnob_goagain_btn@2x.png"; sourceTree = "<group>"; };
 		3473047218A82DBD0063B090 /* hobnob_logout_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hobnob_logout_btn.png; sourceTree = "<group>"; };
 		3473047318A82DBD0063B090 /* hobnob_logout_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hobnob_logout_btn@2x.png"; sourceTree = "<group>"; };
+		3473047618A82F5A0063B090 /* connectionsquiz_settings_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connectionsquiz_settings_btn.png; sourceTree = "<group>"; };
+		3473047718A82F5A0063B090 /* connectionsquiz_settings_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connectionsquiz_settings_btn@2x.png"; sourceTree = "<group>"; };
 		347800001750EFC1002B29DB /* quizin_divider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quizin_divider@2x.png"; sourceTree = "<group>"; };
 		347800011750EFC1002B29DB /* quizin_exit_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quizin_exit_btn.png; sourceTree = "<group>"; };
 		347800021750EFC1002B29DB /* quizin_exit_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quizin_exit_btn@2x.png"; sourceTree = "<group>"; };
@@ -1207,6 +1211,8 @@
 		3412984517B7C0B900678A55 /* Tab Bar Icons */ = {
 			isa = PBXGroup;
 			children = (
+				3473047618A82F5A0063B090 /* connectionsquiz_settings_btn.png */,
+				3473047718A82F5A0063B090 /* connectionsquiz_settings_btn@2x.png */,
 				3412984617B7C0B900678A55 /* connectionsquiz_home_btn.png */,
 				3412984717B7C0B900678A55 /* connectionsquiz_home_btn@2x.png */,
 				3412984817B7C0B900678A55 /* connectionsquiz_rank_btn.png */,
@@ -2202,6 +2208,7 @@
 				3449711C1883554500871A3F /* store_purchase_btn.png in Resources */,
 				3489014E1780DC540004F604 /* quizin_navbar_incorrect_reference.png in Resources */,
 				3489014F1780DC540004F604 /* quizin_navbar_incorrect_reference@2x.png in Resources */,
+				3473047818A82F5A0063B090 /* connectionsquiz_settings_btn.png in Resources */,
 				3473046E18A822260063B090 /* hobnob_done_btn.png in Resources */,
 				348901651784E4A90004F604 /* match_answerbox_bluev1.png in Resources */,
 				348901661784E4A90004F604 /* match_answerbox_bluev1@2x.png in Resources */,
@@ -2316,6 +2323,7 @@
 				340D3DAA17EF869B004F5522 /* hobnob_rankings_chairman_active_btn@2x.png in Resources */,
 				340D3DAD17EF869B004F5522 /* hobnob_rankings_coo_active_btn.png in Resources */,
 				340D3DAE17EF869B004F5522 /* hobnob_rankings_coo_active_btn@2x.png in Resources */,
+				3473047918A82F5A0063B090 /* connectionsquiz_settings_btn@2x.png in Resources */,
 				340D3DB117EF869B004F5522 /* hobnob_rankings_director_active_btn.png in Resources */,
 				340D3DB217EF869B004F5522 /* hobnob_rankings_director_active_btn@2x.png in Resources */,
 				340D3DB517EF869B004F5522 /* hobnob_rankings_intern_active_btn.png in Resources */,
