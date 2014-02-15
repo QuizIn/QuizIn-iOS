@@ -120,10 +120,19 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 #pragma mark Actions
 
 - (void)startConnectionsQuiz:(id)sender {
+  QIIAPHelper *store = [QIIAPHelper sharedInstance];
+  QIQuizQuestionType questionType;
+  if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"]){
+    questionType = (QIQuizQuestionTypeBusinessCard|
+                    QIQuizQuestionTypeMatching|
+                    QIQuizQuestionTypeMultipleChoice);
+  }
+  else {
+    questionType = (QIQuizQuestionTypeMultipleChoice);
+  }
+  
   [QIQuizFactory
-   quizFromRandomConnectionsWithQuestionTypes:(QIQuizQuestionTypeBusinessCard|
-                                               QIQuizQuestionTypeMatching|
-                                               QIQuizQuestionTypeMultipleChoice)
+   quizFromRandomConnectionsWithQuestionTypes:questionType
    completionBlock:^(QIQuiz *quiz, NSError *error) {
     if (error == nil) {
       dispatch_async(dispatch_get_main_queue(), ^{

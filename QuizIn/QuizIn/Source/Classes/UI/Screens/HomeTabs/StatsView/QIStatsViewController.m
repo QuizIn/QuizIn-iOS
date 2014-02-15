@@ -1,6 +1,8 @@
 
 #import "QIStatsViewController.h"
 #import "QIStoreViewController.h"
+#import "QIQuizFactory.h"
+#import "QIQuizViewController.h"
 
 @interface QIStatsViewController ()
 
@@ -27,6 +29,7 @@
   [self.statsView.printStatsButton addTarget:self action:@selector(printStats) forControlEvents:UIControlEventTouchUpInside];
   [self.statsView.summaryView.sorterSegmentedControl addTarget:self action:@selector(sorter:) forControlEvents:UIControlEventValueChanged];
   [self.statsView.summaryView.leastQuizLockButton addTarget:self action:@selector(goToStore:) forControlEvents:UIControlEventTouchUpInside];
+  [self.statsView.summaryView.leastQuizButton addTarget:self action:@selector(takeRefreshQuiz) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -121,6 +124,32 @@
   [self.parentTabBarController setSelectedIndex:4];
 }
 
+- (void)takeRefreshQuiz{
+  QIIAPHelper *store = [QIIAPHelper sharedInstance];
+  
+  QIQuizQuestionType questionType;
+  if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"]){
+    questionType = (QIQuizQuestionTypeBusinessCard|
+                    QIQuizQuestionTypeMatching|
+                    QIQuizQuestionTypeMultipleChoice);
+  }
+  else {
+    questionType = (QIQuizQuestionTypeMultipleChoice);
+  }
+  
+  NSArray *refreshPersonIDs = [self.data getRefreshPeopleIDsWithLimit:40];
+  [QIQuizFactory quizWithPersonIDs:refreshPersonIDs
+                     questionTypes:questionType
+                   completionBlock:^(QIQuiz *quiz, NSError *error) {
+                     if (error == nil) {
+                       dispatch_async(dispatch_get_main_queue(), ^{
+                         QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];
+                         [self presentViewController:quizViewController animated:YES completion:nil];
+                       });
+                     }
+                   }];
+}
+
 #pragma mark UIAlertViewDelegate Functions
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
   [self.parentTabBarController setSelectedIndex:0];
@@ -159,6 +188,14 @@
                                @"Small",
                                nil];
   return [textArray objectAtIndex:index];
+}
+
+#pragma mark Factory Methods
+- (QIQuizViewController *)newQuizViewControllerWithQuiz:(QIQuiz *)quiz {
+  QIQuizViewController *quizViewController = [[QIQuizViewController alloc] initWithQuiz:quiz];
+  quizViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+  quizViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+  return quizViewController;
 }
 
 @end
