@@ -6,7 +6,7 @@
 @interface QIQuizFinishView ()
 @property (nonatomic,strong) UIImageView *viewBackground;
 @property (nonatomic,strong) UIImageView *cardImage;
-@property (nonatomic,strong) UIImageView *profileImage;
+@property (nonatomic,strong) UIImageView *profileImageView;
 @property (nonatomic,strong) UILabel *title;
 @property (nonatomic,strong) UILabel *result;
 @property (nonatomic,strong) UILabel *tagline;
@@ -23,7 +23,7 @@
     if (self) {
       _viewBackground = [self newViewBackground];
       _cardImage = [self newCardImage];
-      _profileImage = [self newProfileImageView:[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_60_60/p/3/000/2b1/283/2147fda.jpg"]];
+      _profileImageView = [self newProfileImageView];
       _title = [self newTitleLabel];
       _result = [self newResultLabel];
       _tagline = [self newTaglineLabel];
@@ -33,7 +33,6 @@
       _totalQuestions = 1;
       
       [self constructViewHierarchy];
-      
     }
     return self;
 }
@@ -42,7 +41,7 @@
 - (void)constructViewHierarchy{
   [self addSubview:self.viewBackground];
   [self addSubview:self.cardImage];
-  [self addSubview:self.profileImage];
+  [self addSubview:self.profileImageView];
   [self addSubview:self.title];
   [self addSubview:self.result];
   [self addSubview:self.tagline];
@@ -59,6 +58,11 @@
 - (void)setTotalQuestions:(NSInteger)totalQuestions{
   _totalQuestions = totalQuestions;
   [self updateResult]; 
+}
+
+- (void)setProfileImageURL:(NSURL *)profileImageURL{
+  _profileImageURL = profileImageURL;
+  [self updateProfileImageView];
 }
 
 #pragma mark Data Layout
@@ -86,6 +90,10 @@
   }
 }
 
+- (void)updateProfileImageView{
+  [self.profileImageView setImageURL:self.profileImageURL];
+}
+
 #pragma mark Layout
 - (void)updateConstraints {
   [super updateConstraints];
@@ -94,7 +102,7 @@
     
     self.viewConstraints = [NSMutableArray array];
     //Constrain Background Image
-    NSDictionary *finishViews = NSDictionaryOfVariableBindings(_viewBackground, _cardImage, _profileImage, _title, _result, _tagline, _doneButton, _goAgainButton);
+    NSDictionary *finishViews = NSDictionaryOfVariableBindings(_viewBackground, _cardImage, _profileImageView, _title, _result, _tagline, _doneButton, _goAgainButton);
     
     NSArray *hBackgroundContraints =
     [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_viewBackground]|"
@@ -134,13 +142,13 @@
                                               views:finishViews];
     
     NSArray *hProfileImage =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-47-[_profileImage(==80)]-20-[_result]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-47-[_profileImageView(==80)]-20-[_result]"
                                             options:0
                                             metrics:nil
                                               views:finishViews];
     
     NSArray *vProfileImage =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-129-[_profileImage(==80)]-(-65)-[_result(==50)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-129-[_profileImageView(==80)]-(-65)-[_result(==50)]"
                                             options:0
                                             metrics:nil
                                               views:finishViews];
@@ -185,11 +193,10 @@
   return imageView;
 }
 
-- (AsyncImageView *)newProfileImageView:(NSURL *)imageURL {
+- (AsyncImageView *)newProfileImageView {
   AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
   [profileImageView.layer setCornerRadius:4.0f];
   [profileImageView setClipsToBounds:YES];
-  [profileImageView setImageURL:imageURL];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [profileImageView setContentMode:UIViewContentModeScaleAspectFit];
   [profileImageView setShowActivityIndicator:YES];
