@@ -165,7 +165,7 @@
   QISettingsViewController *settingsViewController = [[QISettingsViewController alloc] init];
   settingsViewController.applicationViewController = self;
   [settingsViewController setTitle:@"Settings"];
-  [settingsViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Settings" image:[UIImage imageNamed:@"connectionsquiz_store_btn"] tag:4]];
+  [settingsViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Settings" image:[UIImage imageNamed:@"connectionsquiz_settings_btn"] tag:4]];
   return settingsViewController;
 }
 
