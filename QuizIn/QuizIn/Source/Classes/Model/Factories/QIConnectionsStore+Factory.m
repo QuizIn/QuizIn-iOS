@@ -82,7 +82,11 @@
   
   for (QIPerson *person in people) {
     [personNames addObject:[person.formattedName copy]];
-    [cityNames addObject:[person.location.name copy]];
+//todo probably not a good way to handle this need to take a look at this condition. 
+    if (person.location != nil)
+      [cityNames addObject:[person.location.name copy]];
+    else
+      [cityNames addObject:@"cityNotSpecified"];
 
     NSMutableSet *positions = [NSMutableSet setWithCapacity:[person.positions count]];
     for (QIPosition *position in person.positions) {

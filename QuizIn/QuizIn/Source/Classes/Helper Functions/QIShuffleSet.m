@@ -28,7 +28,7 @@
     
   } else {
     [[NSException exceptionWithName:NSInvalidArgumentException
-                             reason:@"NSMutable array shuffle quantity in add mut be greater than 0"
+                             reason:@"NSMutable array shuffle quantity in add must be greater than 0"
                            userInfo:nil] raise];
   }
 }
