@@ -367,6 +367,9 @@
 -(void)processAnswer{
   QIStatsData *statsEngine = [[QIStatsData alloc] initWithLoggedInUserID:self.loggedInUserID];
   if (self.currentAnswer == self.correctAnswerIndex){
+    if (self.interactor) {
+      [self.interactor didCheckAnswerIsCorrect:YES sender:self];
+    }
     [self.checkAnswersView correct:YES];
     if (self.allowAnalytics){
       [statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:YES];
@@ -377,6 +380,9 @@
     }
   }
   else{
+    if (self.interactor) {
+      [self.interactor didCheckAnswerIsCorrect:NO sender:self];
+    }
     [self.checkAnswersView correct:NO];
     if (self.allowAnalytics) {
       [statsEngine updateStatsWithConnectionProfile:self.answerPerson correct:NO];

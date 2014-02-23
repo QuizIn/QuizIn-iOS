@@ -544,7 +544,7 @@
   return @"ConnectionsQuiz"; 
 }
 - (NSString *)homeViewSubtext{
-  return @"Connections"; 
+  return @"Quiz Using All Connections";
 }
 
 @end

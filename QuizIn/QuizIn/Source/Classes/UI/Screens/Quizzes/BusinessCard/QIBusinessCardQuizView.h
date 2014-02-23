@@ -4,6 +4,8 @@
 #import "QICheckAnswersView.h"
 #import "QIRankDisplayView.h"
 #import "QIPerson.h"
+#import "QIQuizQuestionViewInteractor.h"
+
 
 @interface QIBusinessCardQuizView : UIView
 
@@ -20,7 +22,8 @@
 @property(nonatomic, assign) NSUInteger correctTitleIndex;
 @property(nonatomic, assign) NSUInteger quizProgress;
 @property(nonatomic, assign) NSUInteger numberOfQuestions;
-@property(nonatomic, strong) NSString *loggedInUserID; 
+@property(nonatomic, strong) NSString *loggedInUserID;
+@property(nonatomic, weak) id<QIQuizQuestionViewInteractor> interactor;
 
 -(void)hideRankDisplay;
 

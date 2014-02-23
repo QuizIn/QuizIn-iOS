@@ -20,6 +20,7 @@
 @property(nonatomic, strong) QIMultipleChoiceQuizViewController *multipleChoiceController;
 @property(nonatomic, strong) QIBusinessCardViewController *businessCardController;
 @property(nonatomic, strong) QIMatchingQuizViewController *matchingController;
+@property(nonatomic, assign) NSInteger numberCorrect;
 @end
 
 @implementation QIQuizViewController
@@ -31,6 +32,7 @@
     _businessCard = NO;
     _matching = NO;
     _questionIndex = 0;
+    _numberCorrect = 0;
   }
   return self;
 }
@@ -89,6 +91,9 @@
 
 #pragma mark Actions
 - (void)nextPressed{
+  if (self.currentQuestionViewController.isCorrect) {
+    self.numberCorrect++;
+  }
   [self.currentQuestionViewController.view removeFromSuperview];
   [self.currentQuestionViewController removeFromParentViewController];
   
@@ -98,6 +103,8 @@
   
   if (nextQuestion == nil) {
     QIQuizFinishViewController *finishViewController = [[QIQuizFinishViewController alloc] init];
+    finishViewController.correctAnswers = self.numberCorrect;
+    finishViewController.totalQuestions = self.quiz.numberOfQuestions;
     [self addChildViewController:finishViewController];
     [self.view addSubview:finishViewController.view];
     finishViewController.view.frame = self.view.bounds;

@@ -637,6 +637,7 @@
 		3429135F1753AC780056ACCD /* QIFontProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIFontProvider.m; sourceTree = "<group>"; };
 		342913621753E5340056ACCD /* QIBusinessCardAnswerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardAnswerView.h; sourceTree = "<group>"; };
 		342913631753E5340056ACCD /* QIBusinessCardAnswerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardAnswerView.m; sourceTree = "<group>"; };
+		34322E7718BA99110065A96D /* QIQuizQuestionViewInteractor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QIQuizQuestionViewInteractor.h; sourceTree = "<group>"; };
 		344971021883273800871A3F /* cardquiz_businesscard_v5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardquiz_businesscard_v5.png; sourceTree = "<group>"; };
 		344971031883273800871A3F /* cardquiz_businesscard_v5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardquiz_businesscard_v5@2x.png"; sourceTree = "<group>"; };
 		344971041883273800871A3F /* cardquiz_businesscard_v6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cardquiz_businesscard_v6.png; sourceTree = "<group>"; };
@@ -2004,6 +2005,7 @@
 				20E0203817A5CC1900CB9D43 /* QIQuizQuestionViewControllerFactory.h */,
 				20E0203917A5CC1B00CB9D43 /* QIQuizQuestionViewControllerFactory.m */,
 				20E0203B17A5D05000CB9D43 /* QIQuizQuestionViewController_Protected.h */,
+				34322E7718BA99110065A96D /* QIQuizQuestionViewInteractor.h */,
 			);
 			path = Quizzes;
 			sourceTree = "<group>";

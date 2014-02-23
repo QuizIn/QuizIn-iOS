@@ -2,6 +2,7 @@
 #import "QIProgressView.h"
 #import "QICheckAnswersView.h"
 #import "QIRankDisplayView.h"
+#import "QIQuizQuestionViewInteractor.h"
 
 @interface QIMatchingQuizView : UIView
 
@@ -16,7 +17,8 @@
 @property(nonatomic, copy) NSArray *people;
 // Array is in order of answers, each item in the array is the index of the matching picture.
 @property(nonatomic, copy) NSArray *correctAnswers;
-@property(nonatomic, strong) NSString *loggedInUserID; 
+@property(nonatomic, strong) NSString *loggedInUserID;
+@property(nonatomic, weak) id<QIQuizQuestionViewInteractor> interactor;
 
 -(void)hideRankDisplay;
 

@@ -3,6 +3,7 @@
 #import "AKLinkedInAuthController.h"
 #import "QIDrawerController.h"
 #import "QIHomeViewController.h"
+#import "QILoginScreenViewController.h"
 
 //Tab Bar Views
 #import "QIHomeViewController.h"
@@ -23,6 +24,8 @@
 @property (nonatomic, strong) UITabBarController *tabViewController;
 @property (nonatomic, strong) QIPerson *loggedInUser;
 @property (nonatomic, strong) AKAccount *loggedInAccount;
+@property (nonatomic, strong) UINavigationController *mainNav;
+@property (nonatomic) BOOL isWaitingForLogin;
 @end
 
 @implementation QIApplicationViewController
@@ -31,6 +34,11 @@
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     _authController = [self newLinkedInAuthController];
+    _isWaitingForLogin = NO;
+    
+    // rtodo make factory
+    _mainNav = [UINavigationController new];
+    _mainNav.navigationBarHidden = YES;
   }
   return self;
 }
@@ -42,12 +50,28 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  //SWTICH FOR OFFLINE USAGE
+  [self.mainNav willMoveToParentViewController:self];
+  self.mainNav.view.frame = self.view.bounds;
+  [self.view addSubview:self.mainNav.view];
+  [self addChildViewController:self.mainNav];
+  
+  QILoginScreenViewController *landingViewController = [QILoginScreenViewController new];
+  landingViewController.appViewController = self;
+  [self.mainNav pushViewController:landingViewController animated:NO];
+  
+  self.isWaitingForLogin = YES;
   [self.authController beginAuthenticationAttempt];
+  while (self.isWaitingForLogin) {
+    [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+  }
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
+}
+
+-(void)login{
+  [self presentViewController:self.loginViewController animated:YES completion:nil];
 }
 
 - (void)logout {
@@ -67,34 +91,34 @@
 
 - (void)presentAKLoginViewController:(UIViewController *)viewController {
   self.loginViewController = viewController;
-  [self addChildViewController:viewController];
-  [self.view addSubview:viewController.view];
+  self.isWaitingForLogin = NO;
 }
 
 - (void)authControllerAccount:(AKAccount *)account
               didAuthenticate:(id<AKAuthControl>)authController {
   self.loggedInAccount = account;
   [LinkedIn updateAuthenticatedUserWithOnCompletion:^(QIPerson *authenticatedUser, NSError *error) {
+    [QIIAPHelper sharedInstance]; 
+    self.tabViewController = [self newTabBarController];
+    [self.mainNav pushViewController:self.tabViewController animated:NO];
+    
     // TODO(rcacheaux): Check if exists.
     self.loggedInUser = [LinkedIn authenticatedUser];
-    [self.loginViewController.view removeFromSuperview];
-    [self.loginViewController removeFromParentViewController];
-    
-    self.tabViewController = [self newTabBarController];
-    [self addChildViewController:self.tabViewController];
-    [self.view addSubview:self.tabViewController.view];
+    self.isWaitingForLogin = NO;
+    if (self.presentedViewController) {
+      [self dismissViewControllerAnimated:YES completion:nil];
+    }
   }];
+  
 }
 
 - (void)authControllerAccount:(AKAccount *)account
             didUnauthenticate:(id<AKAuthControl>)authController {
-  [self.tabViewController.view removeFromSuperview];
-  [self.tabViewController removeFromParentViewController];
-  //[self.drawerController.view removeFromSuperview];
-  //[self.drawerController removeFromParentViewController];
   
-  [LinkedIn updateAuthenticatedUserWithOnCompletion:nil];
-  [self.authController beginAuthenticationAttempt];
+    [LinkedIn updateAuthenticatedUserWithOnCompletion:nil];
+    self.isWaitingForLogin = NO;
+    [self.mainNav popViewControllerAnimated:YES];
+    [self.authController beginAuthenticationAttempt];
 }
 
 #pragma mark Factory Methods

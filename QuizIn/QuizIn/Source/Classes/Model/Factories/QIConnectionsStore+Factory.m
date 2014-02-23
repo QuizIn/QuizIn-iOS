@@ -82,18 +82,16 @@
   
   for (QIPerson *person in people) {
     [personNames addObject:[person.formattedName copy]];
-//todo probably not a good way to handle this need to take a look at this condition. 
-    if (person.location != nil)
-      [cityNames addObject:[person.location.name copy]];
-    else
-      [cityNames addObject:@"cityNotSpecified"];
 
-    NSMutableSet *positions = [NSMutableSet setWithCapacity:[person.positions count]];
+    if (person.location) {
+      [cityNames addObject:[person.location.name copy]];
+    }
+
+    // TODO: Check for existence before adding to set.
     for (QIPosition *position in person.positions) {
       [titleNames addObject:[position.title copy]];
       [industries addObject:[position.company.industry copy]];
       [companyNames addObject:[position.company.name copy]];
-      [positions addObject:position];
     }
     
     peopleMap[person.personID] = person;

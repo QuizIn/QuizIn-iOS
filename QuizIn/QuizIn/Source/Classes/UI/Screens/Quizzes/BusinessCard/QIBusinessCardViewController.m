@@ -25,6 +25,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  self.businessCardQuizView.interactor = self;
   self.businessCardQuizView.numberOfQuestions = 10;
   self.businessCardQuizView.quizProgress = 4;
   self.businessCardQuizView.questionImageURL = [NSURL URLWithString:self.businessCardQuestion.person.pictureURL];

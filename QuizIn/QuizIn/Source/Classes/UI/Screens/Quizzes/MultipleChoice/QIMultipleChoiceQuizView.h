@@ -3,6 +3,7 @@
 #import "QICheckAnswersView.h"
 #import "QIRankDisplayView.h"
 #import "QIPerson.h"
+#import "QIQuizQuestionViewInteractor.h"
 
 @interface QIMultipleChoiceQuizView : UIView
 
@@ -17,6 +18,7 @@
 @property(nonatomic, assign) NSUInteger correctAnswerIndex;
 @property(nonatomic, strong) QIPerson *answerPerson;
 @property(nonatomic, strong) NSString *loggedInUserID;
+@property(nonatomic, weak) id<QIQuizQuestionViewInteractor> interactor;
 
 -(void)hideRankDisplay;
 

@@ -19,6 +19,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  self.multipleChoiceView.interactor = self;
   self.multipleChoiceView.numberOfQuestions = 11;
   self.multipleChoiceView.quizProgress = 10;
   self.multipleChoiceView.question = self.multipleChoiceQuestion.questionPrompt;

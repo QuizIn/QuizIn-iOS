@@ -6,6 +6,15 @@
 #import "AKLinkedInAuthController.h"
 #import "LIHTTPClient.h"
 #import "QIPerson+Factory.h"
+#import "QIConnectionsStore.h"
+#import "QIPerson.h"
+#import "QIPerson+Factory.h"
+#import "QILocation.h"
+#import "QILocation+Factory.h"
+#import "QIPosition.h"
+#import "QIPosition+Factory.h"
+#import "QICompany.h"
+#import "QICompany+Factory.h"
 
 @implementation QILIPeople
 
@@ -39,9 +48,24 @@
   
   // Success block.
   AFHTTPRequestOperationSuccess success = ^(AFHTTPRequestOperation *requestOperation,
-                                            NSDictionary *JSON){
+                                            NSDictionary *personJSON){
     
-    QIPerson *person = [QIPerson personWithJSON:JSON];
+    QIPerson *person = [QIPerson personWithJSON:personJSON];
+    QILocation *location = [QILocation locationWithJSON:personJSON[@"location"]];
+    person.location = location;
+    
+    // TODO(Rene): Test if JSON has no positions in values.
+    NSArray *positionsJSON = personJSON[@"positions"][@"values"];
+    NSMutableSet *positions =
+    [NSMutableSet setWithCapacity:[personJSON[@"positions"][@"_total"] intValue]];
+    for (NSDictionary *positionJSON in positionsJSON) {
+      QIPosition *position = [QIPosition positionWithJSON:positionJSON];
+      NSDictionary *companyJSON = positionJSON[@"company"];
+      QICompany *company = [QICompany companyWithJSON:companyJSON];
+      position.company = company;
+      [positions addObject:position];
+    }
+    person.positions = [positions copy];
     onCompletion ? onCompletion(person, nil) : NULL;
   };
   // Failure block.

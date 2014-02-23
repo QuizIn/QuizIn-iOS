@@ -18,10 +18,11 @@
     }
     return self;
 }
+
 - (void)loadView{
   self.view = [[QIQuizFinishView alloc] init];
-  [self.quizFinishView setCorrectAnswers:5];
-  [self.quizFinishView setTotalQuestions:11];
+  [self.quizFinishView setCorrectAnswers:self.correctAnswers];
+  [self.quizFinishView setTotalQuestions:self.totalQuestions];
   [self.quizFinishView setProfileImageURL:[NSURL URLWithString:self.loggedInUser.pictureURL]];
   [self.quizFinishView.doneButton addTarget:self
                                          action:@selector(dismiss)

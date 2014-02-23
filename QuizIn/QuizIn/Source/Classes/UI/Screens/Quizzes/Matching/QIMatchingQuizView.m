@@ -624,6 +624,10 @@
     correct = correct & correctIndividual; 
   }
   
+  if (self.interactor) {
+    [self.interactor didCheckAnswerIsCorrect:correct sender:self];
+  }
+  
   if (correct){
     [self.checkAnswersView correct:YES];
     if (self.allowAnalytics){
