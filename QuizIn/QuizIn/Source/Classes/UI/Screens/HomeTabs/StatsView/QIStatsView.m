@@ -239,17 +239,6 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
   return [[self.connectionStats objectAtIndex:0] objectAtIndex:section];
 }
-
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
-  /*if (tableView.contentOffset.y >=200){
-    return [self.connectionStats objectAtIndex:0];
-  }
-  else {
-    return nil; 
-  }
-   */
-  return nil;
-}
  
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
@@ -278,6 +267,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
    NSDictionary *data = [[[self.connectionStats objectAtIndex:1] objectForKey:[[self.connectionStats objectAtIndex:0] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
   NSURL *profileURL = [NSURL URLWithString:[data objectForKey:@"profileURL"]];
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
   [[UIApplication sharedApplication] openURL:profileURL];
 }
 

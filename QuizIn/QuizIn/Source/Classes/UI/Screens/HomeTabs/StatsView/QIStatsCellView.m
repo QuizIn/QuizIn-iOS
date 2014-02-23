@@ -138,7 +138,7 @@
     NSDictionary *cellViews = NSDictionaryOfVariableBindings(_connectionNameLabel,_profileImageView,_rightLabel,_wrongLabel,_trendImage,_keyKnown);
     
     NSArray *hCellViewsConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-3-[_profileImageView(==40)]-3-[_connectionNameLabel(==100)]-(>=4)-[_rightLabel(==30)][_wrongLabel(==30)]-2-[_trendImage(==25)]-9-[_keyKnown(==18)]-16-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-3-[_profileImageView(==40)]-3-[_connectionNameLabel(>=100)]-4-[_rightLabel(==30)][_wrongLabel(==30)]-2-[_trendImage(==25)]-9-[_keyKnown(==18)]-16-|"
                                             options:0
                                             metrics:nil
                                               views:cellViews];
