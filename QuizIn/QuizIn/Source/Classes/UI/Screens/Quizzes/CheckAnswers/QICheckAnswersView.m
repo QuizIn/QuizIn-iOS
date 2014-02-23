@@ -203,10 +203,10 @@
   return @"Try Again";
 }
 - (NSString *)resultCorrectText{
-  return @"CORRECT";
+  return @"Correct";
 }
 - (NSString *)resultIncorrectText{
-  return @"INCORRECT";
+  return @"Incorrect";
 }
 
 
@@ -229,7 +229,7 @@
   UILabel *resultLabel = [[UILabel alloc] init];
   [resultLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [resultLabel setBackgroundColor:[UIColor clearColor]];
-  [resultLabel setFont:[QIFontProvider fontWithSize:20.0f style:Regular]];
+  [resultLabel setFont:[QIFontProvider fontWithSize:20.0f style:Bold]];
   [resultLabel setTextColor:[UIColor colorWithWhite:1.0f alpha:1.0f]];
   [resultLabel setAdjustsFontSizeToFitWidth:YES];
   [resultLabel setAdjustsFontSizeToFitWidth:YES];
