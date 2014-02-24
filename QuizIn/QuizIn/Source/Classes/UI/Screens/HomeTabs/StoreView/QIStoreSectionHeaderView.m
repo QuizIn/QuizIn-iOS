@@ -122,13 +122,15 @@
                                               views:headerViews];
     
     NSLayoutConstraint *hCheckmark = [NSLayoutConstraint constraintWithItem:_checkmarkImageView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_priceLabel attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *vCheckmark = [NSLayoutConstraint constraintWithItem:_checkmarkImageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_priceLabel attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *vCheckmark = [NSLayoutConstraint constraintWithItem:_checkmarkImageView attribute:NSLayoutAttributeBaseline relatedBy:NSLayoutRelationEqual toItem:_priceLabel attribute:NSLayoutAttributeBaseline multiplier:1.0f constant:-7.0f];
+    NSLayoutConstraint *heightCheckmark = [NSLayoutConstraint constraintWithItem:_checkmarkImageView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:20.0f];
+    NSLayoutConstraint *widthCheckmark = [NSLayoutConstraint constraintWithItem:_checkmarkImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_checkmarkImageView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f];
 
     
     [self.constraints addObjectsFromArray:hTitleConstraints];
     [self.constraints addObjectsFromArray:vTitleConstraints];
     [self.constraints addObjectsFromArray:vPriceConstraints];
-    [self.constraints addObjectsFromArray:@[hCheckmark, vCheckmark]];
+    [self.constraints addObjectsFromArray:@[hCheckmark, vCheckmark,heightCheckmark,widthCheckmark]];
     
     [self addConstraints:self.constraints]; 
 

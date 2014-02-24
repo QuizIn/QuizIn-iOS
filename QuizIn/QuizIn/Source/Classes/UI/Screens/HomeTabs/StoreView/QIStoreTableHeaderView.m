@@ -33,11 +33,13 @@
 - (void)updateBuyAllButton{
   if (self.allPurchased){
     [self.buyAllButton setAlpha:.4f];
-    [self.checkmark setHidden:NO]; 
+    [self.checkmark setHidden:NO];
+    [self.bestOfferLabel setHidden:YES];
   }
   else{
     [self.buyAllButton setAlpha:1.0];
     [self.checkmark setHidden:YES];
+    [self.bestOfferLabel setHidden:NO];
   }
 }
 
