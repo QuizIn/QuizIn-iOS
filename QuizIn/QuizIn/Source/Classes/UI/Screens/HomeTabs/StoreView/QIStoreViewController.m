@@ -171,6 +171,8 @@
   QIStoreSectionHeaderView *headerView = [[QIStoreSectionHeaderView alloc] init];
   [headerView setSectionTitle:[[self.storeData objectAtIndex:section] objectForKey:@"type"]];
   [headerView setPrice:[[[[self.storeData objectAtIndex:section] objectForKey:@"item"] objectAtIndex:0] objectForKey:@"itemPrice"]];
+  //TODO Fix this is hardcoded. 
+  [headerView setPurchased:YES];
   return headerView;
 }
 

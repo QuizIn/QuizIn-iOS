@@ -13,7 +13,6 @@
 @property (nonatomic, strong) NSArray *questionButtonImages;
 @property (nonatomic, strong) NSMutableArray *questionColorImagesQueue;
 @property (nonatomic, strong) NSMutableArray *questionColorImages;
-@property (nonatomic, strong) NSArray *questionButtonTapes;
 @property (nonatomic, strong) UIView *answerView;
 @property (nonatomic, strong) NSArray *answerButtons;
 @property (nonatomic, strong) NSMutableArray *answerColorImagesQueue;
@@ -50,7 +49,6 @@
     _answerButtons = @[];
     _questionButtons = @[];
     _questionButtonImages = @[];
-    _questionButtonTapes = @[];
     _questionColorImagesQueue = [self newQueue];
     _answerColorImagesQueue = [self newQueue];
     _questionColorImages = [self newQuestionColorImages];
@@ -144,7 +142,6 @@
   for (UIButton *button in self.questionButtons) {
     [button addSubview:_questionButtonImages[i]];
     [_questionView addSubview:button];
-    [_questionView addSubview:_questionButtonTapes[i]];
     i++;
   }
 }
@@ -280,10 +277,6 @@
       [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonImages[i] attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_questionButtons[i] attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
       [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonImages[i] attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_questionButtons[i] attribute:NSLayoutAttributeWidth multiplier:0.795f constant:0.0f]];
       [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonImages[i] attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_questionButtons[i] attribute:NSLayoutAttributeHeight multiplier:0.795f constant:0.0f]];
-      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonTapes[i] attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_questionButtons[i] attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonTapes[i] attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_questionButtons[i] attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
-      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonTapes[i] attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_questionButtonImages[i] attribute:NSLayoutAttributeTop multiplier:1.0f constant:5.0f]];
-      [self.questionConstraints addObject:[NSLayoutConstraint constraintWithItem:_questionButtonTapes[i] attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:47.0f]];
     }
 
     for (UIButton *button in self.questionButtons){
@@ -405,19 +398,15 @@
   }
   NSMutableArray *questionButtons = [NSMutableArray arrayWithCapacity:[self.questionImageURLs count]];
   NSMutableArray *questionButtonImages = [NSMutableArray arrayWithCapacity:[self.questionImageURLs count]];
-  NSMutableArray *questionButtonTapes = [NSMutableArray arrayWithCapacity:[self.questionImageURLs count]];
-  
+
   for (NSURL *questionImageURL in self.questionImageURLs) {
     UIButton *questionButton = [self newQuestionButton];
     [questionButtons addObject:questionButton];
     AsyncImageView *questionImage = [self newQuestionButtonImageWithURL:questionImageURL];
     [questionButtonImages addObject:questionImage];
-    UIImageView *tape = [self newQuestionButtonTape];
-    [questionButtonTapes addObject:tape];
   }
   
   _questionButtonImages = [questionButtonImages copy];
-  _questionButtonTapes = [questionButtonTapes copy];
   self.questionButtons = [questionButtons copy];
   return;
 }
@@ -706,12 +695,6 @@
   return profileImageView;
 }
 
-- (UIImageView *)newQuestionButtonTape{
-  UIImageView *profileTape = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"multiplechoice_tape"]];
-  [profileTape setContentMode:UIViewContentModeScaleToFill];
-  [profileTape setTranslatesAutoresizingMaskIntoConstraints:NO];
-  return profileTape;
-}
 -(NSMutableArray *)newQueue{
   return [NSMutableArray arrayWithObjects:
           [NSNumber numberWithInt:0],
@@ -722,14 +705,6 @@
 }
 
 -(NSMutableArray *)newQuestionColorImages{
-  /*UIEdgeInsets insets = UIEdgeInsetsMake(16.0f, 16.0f, 16.0f, 16.0f);
-  return [NSMutableArray arrayWithObjects:
-          [[UIImage imageNamed:@"match_pictureholder_bluev1"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_pictureholder_bluev2"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_pictureholder_orangev1"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_pictureholder_orangev2"] resizableImageWithCapInsets:insets],
-          nil];
-   */
   return [NSMutableArray arrayWithObjects:
           [UIImage imageNamed:@"match_pictureholder_bluev1"],
           [UIImage imageNamed:@"match_pictureholder_bluev2"],
@@ -739,14 +714,6 @@
 }
 
 -(NSMutableArray *)newAnswerColorImages{
-  /*UIEdgeInsets insets = UIEdgeInsetsMake(15.0f, 18.0f, 15.0f, 18.0f);
-  return [NSMutableArray arrayWithObjects:
-          [[UIImage imageNamed:@"match_answerbox_bluev1"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_answerbox_bluev2"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_answerbox_orangev1"] resizableImageWithCapInsets:insets],
-          [[UIImage imageNamed:@"match_answerbox_orangev2"] resizableImageWithCapInsets:insets],
-          nil];
-   */
   return [NSMutableArray arrayWithObjects:
           [UIImage imageNamed:@"match_answerbox_bluev1"],
           [UIImage imageNamed:@"match_answerbox_bluev2"],

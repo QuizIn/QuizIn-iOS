@@ -142,7 +142,7 @@
   settingsViewController.parentTabBarController = tabController;
   QIStoreViewController *storeViewController = (QIStoreViewController *)[tabController.viewControllers objectAtIndex:4];
   storeViewController.parentTabBarController = tabController;
-  [tabController.tabBar setTintColor:[UIColor colorWithRed:.27f green:.45f blue:.64f alpha:1.0f]];
+  [tabController.tabBar setTintColor:[UIColor colorWithRed:.34f green:.45f blue:.64f alpha:1.0f]];
   //[tabController.tabBar setTintColor:[UIColor colorWithWhite:.15f alpha:1.0f]];
     
   //[tabController setModalPresentationStyle:UIModalPresentationCurrentContext];

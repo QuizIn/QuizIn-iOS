@@ -6,6 +6,7 @@
 
 @property (nonatomic, strong) UILabel *sectionTitleLabel;
 @property (nonatomic, strong) UILabel *priceLabel;
+@property (nonatomic, strong) UIImageView *checkmarkImageView;
 @property (nonatomic, strong) NSMutableArray *constraints; 
 
 @end
@@ -22,6 +23,7 @@
     if (self) {
       _sectionTitleLabel = [self newTitleLabel];
       _priceLabel = [self newPriceLabel];
+      _checkmarkImageView = [self newCheckmarkImageView];
       [self constructViewHierarchy]; 
     }
     return self;
@@ -36,6 +38,11 @@
 - (void)setPrice:(NSString *)price{
   _price = price;
   [self updatePrice];
+}
+
+- (void)setPurchased:(BOOL)purchased{
+  _purchased = purchased;
+  [self updatePurchasedState];
 }
 
 #pragma mark Data Layout
@@ -71,10 +78,16 @@
   self.priceLabel.text = self.price;
 }
 
+-(void)updatePurchasedState{
+  self.priceLabel.hidden = self.purchased;
+  self.checkmarkImageView.hidden = !self.purchased;
+}
+
 #pragma mark View Hierarchy
 - (void)constructViewHierarchy{
   [self addSubview:self.sectionTitleLabel];
-  [self addSubview:self.priceLabel]; 
+  [self addSubview:self.priceLabel];
+  [self addSubview:self.checkmarkImageView];
 }
 
 #pragma mark Constraints
@@ -88,7 +101,7 @@
   if (!self.constraints){
     self.constraints = [NSMutableArray array];
     
-    NSDictionary *headerViews = NSDictionaryOfVariableBindings(_sectionTitleLabel,_priceLabel);
+    NSDictionary *headerViews = NSDictionaryOfVariableBindings(_sectionTitleLabel,_priceLabel,_checkmarkImageView);
     
     NSArray *hTitleConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-30-[_sectionTitleLabel]-(>=10)-[_priceLabel]-30-|"
@@ -108,9 +121,14 @@
                                             metrics:nil
                                               views:headerViews];
     
+    NSLayoutConstraint *hCheckmark = [NSLayoutConstraint constraintWithItem:_checkmarkImageView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_priceLabel attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f];
+    NSLayoutConstraint *vCheckmark = [NSLayoutConstraint constraintWithItem:_checkmarkImageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_priceLabel attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f];
+
+    
     [self.constraints addObjectsFromArray:hTitleConstraints];
     [self.constraints addObjectsFromArray:vTitleConstraints];
     [self.constraints addObjectsFromArray:vPriceConstraints];
+    [self.constraints addObjectsFromArray:@[hCheckmark, vCheckmark]];
     
     [self addConstraints:self.constraints]; 
 
@@ -135,6 +153,13 @@
   label.adjustsFontSizeToFitWidth = YES;
   [label setTranslatesAutoresizingMaskIntoConstraints:NO];
   return label;
+}
+
+-(UIImageView *)newCheckmarkImageView{
+  UIImageView *check = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"calendar_checkmark"]];
+  [check setContentMode:UIViewContentModeScaleAspectFit];
+  [check setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return check;
 }
 
 @end

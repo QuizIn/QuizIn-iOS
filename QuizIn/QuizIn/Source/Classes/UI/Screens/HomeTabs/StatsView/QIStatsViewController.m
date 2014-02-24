@@ -175,7 +175,7 @@
 - (UIColor *)pieChart:(DLPieChart *)pieChart colorForSliceAtIndex:(NSUInteger)index{
   NSMutableArray *colorArray = [NSMutableArray arrayWithObjects:
                                 [UIColor colorWithRed:1.0f green:.71f blue:.20f alpha:1.0f],
-                                [UIColor colorWithRed:.29f green:.51f blue:.72f alpha:1.0f],
+                                [UIColor colorWithRed:.34f green:.45f blue:.64f alpha:1.0f],
                                 [UIColor colorWithWhite:.33f alpha:1.0f],
                                 nil];
   return [colorArray objectAtIndex:index];

@@ -6,7 +6,6 @@
 
 @property (nonatomic, strong) NSMutableArray *constraints;
 @property (nonatomic, strong) UILabel *descriptionLabel;
-@property (nonatomic, strong) UIImageView *checkmark; 
 
 @end
 
@@ -24,7 +23,6 @@
       _buyButton = [self newBuyButton];
       _previewButton = [self newPreviewButton];
       _descriptionLabel = [self newDescriptionLabel];
-      _checkmark = [self newCheckMarkImage]; 
       
       [self constructViewHierarchy]; 
     }
@@ -54,7 +52,6 @@
   [self.contentView addSubview:_previewButton];
   [self.contentView addSubview:_buyButton];
   [self.contentView addSubview:_descriptionLabel];
-  [self.contentView addSubview:_checkmark]; 
 }
 
 - (void)updateConstraints {
@@ -63,7 +60,7 @@
   if (!self.constraints){
     self.constraints = [NSMutableArray array];
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_previewButton,_buyButton,_descriptionLabel,_iconImageView,_checkmark);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_previewButton,_buyButton,_descriptionLabel,_iconImageView);
     
     NSArray *hBackground =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-41-[_iconImageView(==238)]"
@@ -88,11 +85,6 @@
                                             metrics:nil
                                               views:views];
     
-    NSLayoutConstraint *heightCheckmark = [NSLayoutConstraint constraintWithItem:_checkmark attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_buyButton attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *widthCheckmark = [NSLayoutConstraint constraintWithItem:_checkmark attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_buyButton attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *hCheckmark = [NSLayoutConstraint constraintWithItem:_checkmark attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_buyButton attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *vCheckmark = [NSLayoutConstraint constraintWithItem:_checkmark attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_buyButton attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f];
-    
     NSArray *hDescriptionLabel =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_iconImageView]-(-175)-[_descriptionLabel(==165)]"
                                             options:0
@@ -113,7 +105,6 @@
     [self.constraints addObjectsFromArray:vBuyButton];
     [self.constraints addObjectsFromArray:vDescriptionLabel];
     [self.constraints addObjectsFromArray:hDescriptionLabel];
-    [self.constraints addObjectsFromArray:@[heightCheckmark,widthCheckmark,hCheckmark,vCheckmark]];
     
     [self.contentView addConstraints:self.constraints];
   }
@@ -132,7 +123,6 @@
 - (void)updateCellForPurchasedState{
   [self.previewButton setHidden:self.purchased];
   [self.buyButton setHidden:self.purchased];
-  [self.checkmark setHidden:!self.purchased]; 
 }
 
 #pragma mark Factory Methods
@@ -164,13 +154,6 @@
   [button setAdjustsImageWhenHighlighted:YES];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   return button;
-}
-
--(UIImageView *)newCheckMarkImage{
-  UIImageView *check = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"calendar_checkmark"]];
-  [check setContentMode:UIViewContentModeScaleAspectFit];
-  [check setTranslatesAutoresizingMaskIntoConstraints:NO];
-  return check;
 }
 
 -(UILabel *)newDescriptionLabel{

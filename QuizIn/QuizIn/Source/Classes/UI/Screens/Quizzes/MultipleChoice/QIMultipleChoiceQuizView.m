@@ -11,7 +11,6 @@
 @property (nonatomic, strong) UIImageView *dividerTop;
 @property (nonatomic, strong) UIImageView *dividerBottom;
 @property (nonatomic, strong) UIImageView *profileImageBackground;
-@property (nonatomic, strong) UIImageView *profileImageTape;
 @property (nonatomic, strong) AsyncImageView *profileImageView;
 @property (nonatomic, strong) UILabel *questionLabel;
 @property (nonatomic, strong) NSArray *answerButtons;
@@ -42,8 +41,6 @@
     _dividerTop = [self newDivider];
     _dividerBottom = [self newDivider];
     _profileImageBackground = [self newProfileImageBackground];
-    _profileImageTape = [self newProfileImageTape];
-    
     _progressView = [self newProgressView];
     _profileImageView = [self newProfileImageView];
     _rankDisplayView = [self newRankDisplayView];
@@ -121,7 +118,6 @@
   [self addSubview:self.viewBackground];
   [self addSubview:self.profileImageBackground];
   [self addSubview:self.profileImageView];
-  [self addSubview:self.profileImageTape];
   [self addSubview:self.progressView];
   [self addSubview:self.questionLabel];
   [self addSubview:self.dividerTop];
@@ -264,7 +260,7 @@
     [self.multipleChoiceConstraints addObjectsFromArray:choiceButtonConstraints];
     [self.multipleChoiceConstraints addObjectsFromArray:quizChoiceVerticalConstraints];
     
-    //Constrain Profile Image Holder and tape
+    //Constrain Profile Image Holder
     
     NSLayoutConstraint *centerImageBackgroundX = [NSLayoutConstraint constraintWithItem:_profileImageBackground attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_profileImageView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:-1.0f];
     
@@ -273,11 +269,9 @@
     NSLayoutConstraint *widthImageBackground = [NSLayoutConstraint constraintWithItem:_profileImageBackground attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_profileImageView attribute:NSLayoutAttributeWidth multiplier:1.0f constant:25.0f];
     
     NSLayoutConstraint *heightImageBackground = [NSLayoutConstraint constraintWithItem:_profileImageBackground attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_profileImageView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:34.0f];
+  
     
-    NSLayoutConstraint *centerTapeX = [NSLayoutConstraint constraintWithItem:_profileImageTape attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_profileImageView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
-    NSLayoutConstraint *tapeY = [NSLayoutConstraint constraintWithItem:_profileImageTape attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_profileImageView attribute:NSLayoutAttributeTop multiplier:1.0f constant:-11.0f];
-    
-    [self.multipleChoiceConstraints addObjectsFromArray:@[centerImageBackgroundX,centerImageBackgroundY,widthImageBackground,heightImageBackground,centerTapeX,tapeY]];
+    [self.multipleChoiceConstraints addObjectsFromArray:@[centerImageBackgroundX,centerImageBackgroundY,widthImageBackground,heightImageBackground]];
     
     //Constrain Check Answers View
     NSLayoutConstraint *centerCheckX = [NSLayoutConstraint constraintWithItem:_checkAnswersView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
@@ -451,13 +445,6 @@
   [profileBackground setContentMode:UIViewContentModeScaleToFill];
   [profileBackground setTranslatesAutoresizingMaskIntoConstraints:NO];
   return profileBackground;
-}
-
-- (UIImageView *)newProfileImageTape{
-  UIImageView *profileTape = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"multiplechoice_tape"]];
-  [profileTape setContentMode:UIViewContentModeScaleToFill];
-  [profileTape setTranslatesAutoresizingMaskIntoConstraints:NO];
-  return profileTape;
 }
 
 - (AsyncImageView *)newProfileImageView {

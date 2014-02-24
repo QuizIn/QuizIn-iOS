@@ -113,7 +113,7 @@
       [self.keyKnown setBackgroundColor:[UIColor colorWithRed:1.0f green:.71f blue:.20f alpha:1.0f]];
       break;
     case 1:
-      [self.keyKnown setBackgroundColor:[UIColor colorWithRed:.29f green:.51f blue:.72f alpha:1.0f]];
+      [self.keyKnown setBackgroundColor:[UIColor colorWithRed:.34f green:.45f blue:.64f alpha:1.0f]];
       break;
     case 2:
       [self.keyKnown setBackgroundColor:[UIColor colorWithWhite:.33f alpha:1.0f]];
