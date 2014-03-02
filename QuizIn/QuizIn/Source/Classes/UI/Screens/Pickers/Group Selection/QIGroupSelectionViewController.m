@@ -29,7 +29,6 @@
   [super viewDidLoad];
   
   [self.groupSelectionView setSelectionContent:[@[] mutableCopy]];
-  [self.groupSelectionView setSelectionViewLabelString:@"Create Your Next Quiz"];
   
   [self.groupSelectionView.backButton addTarget:self
                                          action:@selector(backButtonPressed)

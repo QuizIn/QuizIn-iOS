@@ -12,7 +12,9 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
+  
+  [self.groupSelectionView setSelectionViewLabelString:@"Filter By Schools"];
+  
   [LinkedIn topFirstDegreeConnectionSchoolsForAuthenticatedUserWithOnCompletion:^(NSArray *schools, NSError *error) {
     dispatch_async(dispatch_get_main_queue(), ^{
       if (error) {

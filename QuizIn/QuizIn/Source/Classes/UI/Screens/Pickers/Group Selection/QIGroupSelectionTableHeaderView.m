@@ -23,7 +23,6 @@
     self = [super initWithFrame:frame];
     if (self) {
       _sectionTitleLabel = [self newSectionTitleLabel];
-     // [self setTranslatesAutoresizingMaskIntoConstraints:NO];
       [self constructViewHierarchy];
     }
     return self;
