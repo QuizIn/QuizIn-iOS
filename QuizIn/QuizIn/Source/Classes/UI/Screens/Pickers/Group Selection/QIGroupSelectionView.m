@@ -273,10 +273,10 @@
   
   BOOL selected = [[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"selected"] boolValue];
   if (selected){
-    [self snapView:cell.frontView toX:PAN_OPEN_X animated:NO];
+    [self snapViewforCell:cell toX:PAN_OPEN_X animated:NO];
   }
   else{
-    [self snapView:cell.frontView toX:PAN_CLOSED_X animated:NO];
+    [self snapViewforCell:cell toX:PAN_CLOSED_X animated:NO];
   }
   
   UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
@@ -291,11 +291,11 @@
 
   BOOL selected = [[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"selected"] boolValue];
   if (selected){
-    [self snapView:cell.frontView toX:PAN_CLOSED_X animated:YES];
+    [self snapViewforCell:cell toX:PAN_CLOSED_X animated:YES];
     [[self.selectionContent objectAtIndex:indexPath.row] setObject:@NO forKey:@"selected"];
   }
   else{
-    [self snapView:cell.frontView toX:PAN_OPEN_X animated:YES];
+    [self snapViewforCell:cell toX:PAN_OPEN_X animated:YES];
      [[self.selectionContent objectAtIndex:indexPath.row] setObject:@YES forKey:@"selected"];
   }
 }
@@ -329,17 +329,17 @@
       break;
     case UIGestureRecognizerStateEnded:
       vX = (FAST_ANIMATION_DURATION/2.0)*[panGestureRecognizer velocityInView:self].x;
-      compare = cellView.slideOffset.constant + vX;
+      compare = cellView.slideOffset + vX;
       if (compare > threshold) {
         finalX = MAX(PAN_OPEN_X,PAN_CLOSED_X);
         [self setOpenCellLastTX:0];
         [[self.selectionContent objectAtIndex:indexPath.row] setObject:@NO forKey:@"selected"];
       } else {
         finalX = MIN(PAN_OPEN_X,PAN_CLOSED_X);
-        [self setOpenCellLastTX:cellView.slideOffset.constant];
+        [self setOpenCellLastTX:cellView.slideOffset];
         [[self.selectionContent objectAtIndex:indexPath.row] setObject:@YES forKey:@"selected"];
       }
-      [self snapView:frontView toX:finalX animated:YES];
+      [self snapViewforCell:cellView toX:finalX animated:YES];
       if (finalX == PAN_CLOSED_X) {
         [self setOpenCellIndexPath:nil];
       }
@@ -356,8 +356,7 @@
         compare = MIN(PAN_OPEN_X,PAN_CLOSED_X);
       }
       //[view setTransform:CGAffineTransformMakeTranslation(compare, 0)];
-      [cellView.slideOffset setConstant:compare];
-      [self layoutIfNeeded];
+      cellView.slideOffset = compare;
       break;
     default:
       compare = 0;
@@ -365,21 +364,17 @@
   }
 }
 
--(void)snapView:(UIView *)view toX:(float)x animated:(BOOL)animated
+-(void)snapViewforCell:(QIGroupSelectionCellView *)cell toX:(float)x animated:(BOOL)animated
 {
-  QIGroupSelectionCellView *cell = (QIGroupSelectionCellView *)view.superview.superview.superview;
-  
   if (animated) {
     [UIView animateWithDuration:FAST_ANIMATION_DURATION animations:^{
-      [cell.slideOffset setConstant:x];
-      [self layoutIfNeeded];
+      cell.slideOffset = x;
     }];
   }
   else {
-    [cell.slideOffset setConstant:x];
-    [self layoutIfNeeded];
+    cell.slideOffset = x;
   }
-
+  
 }
 
 @end
