@@ -115,27 +115,27 @@
                                             metrics:nil
                                               views:headerViews];
     NSArray *vAlphaConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_alphaHeader]-10-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_alphaHeader]-5-|"
                                             options:0
                                             metrics:nil
                                               views:headerViews];
     NSArray *vCorrectConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_correctHeader]-10-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_correctHeader]-5-|"
                                             options:0
                                             metrics:nil
                                               views:headerViews];
     NSArray *vIncorrectConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_incorrectHeader]-10-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_incorrectHeader]-5-|"
                                             options:0
                                             metrics:nil
                                               views:headerViews];
     NSArray *vKnownConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_trendHeader]-10-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_trendHeader]-5-|"
                                             options:0
                                             metrics:nil
                                               views:headerViews];
     NSArray *vTrendConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_knownHeader]-10-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_knownHeader]-5-|"
                                             options:0
                                             metrics:nil
                                               views:headerViews];
