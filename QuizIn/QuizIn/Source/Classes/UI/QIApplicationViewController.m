@@ -1,7 +1,6 @@
 #import "QIApplicationViewController.h"
 #import <AuthKit/AKAuthHandler.h>
 #import "AKLinkedInAuthController.h"
-#import "QIDrawerController.h"
 #import "QIHomeViewController.h"
 #import "QILoginScreenViewController.h"
 
@@ -72,18 +71,19 @@
 
 -(void)login{
   [self presentViewController:self.loginViewController animated:YES completion:nil];
+  [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 }
 
 - (void)logout {
   [self.authController unauthenticateAccount:self.loggedInAccount];
+  
 }
 
 #pragma mark Layout
 
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
-  //self.drawerController.view.frame = self.view.bounds;
-  self.tabViewController.view.frame = self.view.bounds; 
+  self.tabViewController.view.frame = self.view.bounds;
   self.loginViewController.view.frame = self.view.bounds;
 }
 
@@ -108,6 +108,7 @@
     if (self.presentedViewController) {
       [self dismissViewControllerAnimated:YES completion:nil];
     }
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
   }];
   
 }
@@ -147,11 +148,6 @@
     
   //[tabController setModalPresentationStyle:UIModalPresentationCurrentContext];
   return tabController;
-}
-- (QIDrawerController *)newDrawerController {
-  QIDrawerController *drawerController = [[QIDrawerController alloc] init];
-  [drawerController updateViewControllers:@[[self newHomeViewController]]];
-  return drawerController;
 }
 
 - (QIHomeViewController *)newHomeViewController {
