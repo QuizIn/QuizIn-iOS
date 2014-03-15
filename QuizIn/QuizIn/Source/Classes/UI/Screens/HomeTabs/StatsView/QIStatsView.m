@@ -8,8 +8,8 @@
 @property (nonatomic, strong) UIImageView *viewBackground;
 @property (nonatomic, retain) NSMutableArray *viewConstraints;
 @property (nonatomic, strong) NSLayoutConstraint *vSummaryViewConstraint;
-@property (nonatomic, assign) NSInteger selectedSorter;
-@property (nonatomic, assign) BOOL toggleIndexForTable; 
+@property (nonatomic, assign) BOOL toggleIndexForTable;
+@property (nonatomic, assign) BOOL sortAscending;
 
 @end
 
@@ -77,26 +77,30 @@
 }
 
 - (void)sortTable:(UIButton *)sender{
-  if (sender.selected)
-    return;
   
-  self.selectedSorter = sender.tag; 
+  if (self.selectedSorter == sender.tag){
+    self.sortAscending = !self.sortAscending;
+  }
+  else{
+    self.sortAscending = YES;
+  }
+  self.selectedSorter = sender.tag;
   
   switch (sender.tag) {
     case 0:
-      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:lastName]];
+      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:lastName ascending:self.sortAscending]];
       break;
     case 1:
-      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:correctAnswers]];
+      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:correctAnswers ascending:self.sortAscending]];
       break;
     case 2:
-      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:incorrectAnswers]];
+      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:incorrectAnswers ascending:self.sortAscending]];
       break;
     case 3:
-      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:trend]];
+      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:trend ascending:self.sortAscending]];
       break;
     case 4:
-      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:known]];
+      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:known ascending:self.sortAscending]];
       break;
     default:
       break;

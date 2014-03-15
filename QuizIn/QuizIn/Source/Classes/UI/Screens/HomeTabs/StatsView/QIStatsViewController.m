@@ -36,10 +36,10 @@
   [self.statsView setCurrentRank:[self.data getCurrentRank]];
   [self.statsView setTotalCorrectAnswers:[self.data getTotalCorrectAnswers]];
   [self.statsView setTotalIncorrectAnswers:[self.data getTotalIncorrectAnswers]];
-  [self.statsView setConnectionStats:[self.data getConnectionStatsInOrderBy:known]];
+  [self.statsView setConnectionStats:[self.data getConnectionStatsInOrderBy:known ascending:YES]];
   [self.statsView setWellKnownThreshold:[self.data getWellKnownThreshold]];
   [self.statsView.summaryView.pieChartView setDelegate:self];
-  [self.statsView.summaryView.pieChartView setDataSource:self]; 
+  [self.statsView.summaryView.pieChartView setDataSource:self];
   [self.statsView.tableView reloadData];
   [self showHideRefreshLockButton]; 
 }
@@ -50,30 +50,6 @@
   if (self.statsView.totalCorrectAnswers + self.statsView.totalIncorrectAnswers == 0){
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Stats Yet" message:@"Build up knowledge data by Hobnob'n with your contacts." delegate:self cancelButtonTitle:@"Home" otherButtonTitles:nil];
     [alert show];
-  }
-}
-
-- (void)sorter:(id)sender{
-  UISegmentedControl *sorter = (UISegmentedControl *)sender;
-  int index = [sorter selectedSegmentIndex];
-  switch (index) {
-    case 0:{
-      self.statsView.connectionStats = [self.data getConnectionStatsInOrderBy:firstName];
-      [self.statsView.tableView reloadData];
-      break;
-    }
-    case 1:{
-      self.statsView.connectionStats = [self.data getConnectionStatsInOrderBy:lastName];
-      [self.statsView.tableView reloadData];
-      break;
-    }
-    case 2:{
-      self.statsView.connectionStats = [self.data getConnectionStatsInOrderBy:correctAnswers];
-      [self.statsView.tableView reloadData];
-      break;
-    }
-    default:
-      break;
   }
 }
 

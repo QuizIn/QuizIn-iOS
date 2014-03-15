@@ -3,6 +3,7 @@
 #import "QIPerson.h"
 #import "LinkedIn.h"
 #import "QIApplicationViewController.h"
+#import "QIStatsData.h"
 
 @interface QISettingsViewController ()
 
@@ -33,6 +34,12 @@
   [self.settingsView setTitle:self.loggedInUser.industry];
   [self.settingsView setProfileImageURL:[NSURL URLWithString:self.loggedInUser.pictureURL]];
   [self.settingsView.logoutButton addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+  [self.settingsView.clearStatsButton addTarget:self action:@selector(clearStats) forControlEvents:UIControlEventTouchUpInside];
+}
+#pragma Properties
+
+- (void)setUserID:(NSString *)userID{
+  _userID = userID;
 }
 
 #pragma mark Actions
@@ -42,6 +49,11 @@
     return;
   }
   NSAssert(NO, @"Warning: Settings view controller does not have a reference to the application view controller; can't logout.");
+}
+
+- (void)clearStats{
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reset Stats" message:@"Just to confirm, you are about to delete all stats and reset your rank." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Reset",nil];
+  [alert show];
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,6 +68,14 @@
 
 - (void)setParentTabBarController:(UITabBarController *)parentTabBarController{
   _parentTabBarController = parentTabBarController;
+}
+
+#pragma UIAlertView Delegate Functions
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+  if (buttonIndex == 1){
+    QIStatsData *data = [[QIStatsData alloc] initWithLoggedInUserID:self.userID];
+    [data setUpStats];
+  }
 }
 
 

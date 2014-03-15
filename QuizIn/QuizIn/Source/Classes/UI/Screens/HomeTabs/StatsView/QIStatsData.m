@@ -151,7 +151,7 @@
   return [refreshPeople copy];
 }
 
-- (NSArray *)getConnectionStatsInOrderBy:(SortBy)sortBy{
+- (NSArray *)getConnectionStatsInOrderBy:(SortBy)sortBy ascending:(BOOL)ascending{
   
   NSString *sortKey = @"userLastName";
   switch (sortBy) {
@@ -190,7 +190,7 @@
   NSMutableDictionary *stats = [[prefs objectForKey:self.userID] mutableCopy];
   NSMutableArray *connectionStats = [stats objectForKey:@"connectionStats"];
   NSSortDescriptor *intermediateSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"userLastName" ascending:YES];
-  NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
+  NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:ascending];
   NSArray *sortDescriptors = @[sortDescriptor, intermediateSortDescriptor];
   NSArray *sortedConnectionStats = [connectionStats sortedArrayUsingDescriptors:sortDescriptors];
 
@@ -285,10 +285,18 @@
     NSArray *wellKnownConnections = [sortedConnectionStats objectsAtIndexes:wellKnownIndexes];
     NSArray *middleConnections = [sortedConnectionStats objectsAtIndexes:middleKnownIndexes];
     NSArray *needsRefreshConnections = [sortedConnectionStats objectsAtIndexes:needsRefreshIndexes];
-    [sections addObjectsFromArray:@[@"Needs Refresh",@"Sorta Known",@"Well Known"]];
-    [connectionStatsAlphabetical setObject:needsRefreshConnections forKey:[sections objectAtIndex:0]];
-    [connectionStatsAlphabetical setObject:middleConnections forKey:[sections objectAtIndex:1]];
-    [connectionStatsAlphabetical setObject:wellKnownConnections forKey:[sections objectAtIndex:2]];
+    if (ascending){
+      [sections addObjectsFromArray:@[@"Needs Refresh",@"Sorta Known",@"Well Known"]];
+      [connectionStatsAlphabetical setObject:needsRefreshConnections forKey:[sections objectAtIndex:0]];
+      [connectionStatsAlphabetical setObject:middleConnections forKey:[sections objectAtIndex:1]];
+      [connectionStatsAlphabetical setObject:wellKnownConnections forKey:[sections objectAtIndex:2]];
+    }
+    else {
+      [sections addObjectsFromArray:@[@"Well Known",@"Sorta Known",@"Needs Refresh"]];
+      [connectionStatsAlphabetical setObject:needsRefreshConnections forKey:[sections objectAtIndex:2]];
+      [connectionStatsAlphabetical setObject:middleConnections forKey:[sections objectAtIndex:1]];
+      [connectionStatsAlphabetical setObject:wellKnownConnections forKey:[sections objectAtIndex:0]];
+    }
   }
   return @[sections,connectionStatsAlphabetical];
 }

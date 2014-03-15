@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSArray *connectionStats;
 @property (nonatomic, assign) int wellKnownThreshold;
 @property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, assign) NSInteger selectedSorter;
 
 @property (nonatomic,strong,readwrite) UIButton *resetStatsButton;
 @property (nonatomic,strong,readwrite) UIButton *printStatsButton;
