@@ -11,6 +11,12 @@
   company.size = [self.size copy];
   company.ticker = [self.ticker copy];
   company.type = [self.type copy];
+  company.websiteURLString = [self.websiteURLString copy];
+  company.logoURLString = [self.logoURLString copy];
+  company.squareLogoURLString = [self.squareLogoURLString copy];
+  company.companyDescription = [self.companyDescription copy];
+  company.foundedYear = [self.foundedYear copy];
+  company.headquarterLocationDescription = [self.headquarterLocationDescription copy];
   
   return company;
 }

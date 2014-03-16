@@ -1,4 +1,3 @@
-x
 #import "IAPHelper.h"
 #import <StoreKit/StoreKit.h>
 

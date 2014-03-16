@@ -14,6 +14,7 @@
 #import "QISchool.h"
 #import "QISearchFacet.h"
 #import "QISearchFacetBucket.h"
+#import "QILICompanies.h"
 
 #import "QILIPeople.h"
 #import "QILIConnections.h"
@@ -75,6 +76,10 @@ static QIPerson *authenticatedUser;
 
 + (NSString *)peopleFieldSelector {
   return @"id,first-name,last-name,formatted-name,positions,location,industry,picture-url,public-profile-url";
+}
+
++ (NSString *)companyFieldSelector {
+  return @"id,name,industries,employee-count-range,ticker,company-type,website-url,logo-url,square-logo-url,locations:(is-headquarters,address),description,founded-year";
 }
 
 + (void)randomConnectionsForAuthenticatedUserWithNumberOfConnectionsToFetch:(NSInteger)numberOfConnectionsToFetch
@@ -356,6 +361,15 @@ static QIPerson *authenticatedUser;
        }
      }];
   }
+}
+
++ (void)companiesWithIDs:(NSArray *)companyIDs onCompletion:(LICompaniesResponse)onCompletion {
+  [QILICompanies
+   getCompaniesWithIDs:companyIDs
+   fieldSelector:[self companyFieldSelector]
+   onCompletion:^(NSArray *companies, NSError *error) {
+     onCompletion ? onCompletion(companies, error) : NULL;
+   }];
 }
 
 @end

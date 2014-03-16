@@ -48,4 +48,6 @@ typedef void (^LIGetPeopleResponse)(NSArray *people, NSError *error);
 
 + (void)peopleWithIDs:(NSArray *)personIDs onCompletion:(LIGetPeopleResponse)onCompletion;
 
++ (void)companiesWithIDs:(NSArray *)companyIDs onCompletion:(LICompaniesResponse)onCompletion;
+
 @end

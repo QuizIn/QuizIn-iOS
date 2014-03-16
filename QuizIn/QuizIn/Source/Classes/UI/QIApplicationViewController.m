@@ -110,7 +110,6 @@
     }
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
   }];
-  
 }
 
 - (void)authControllerAccount:(AKAccount *)account
