@@ -47,7 +47,7 @@ static NSInteger kQINumberOfQuizTypes = 3;
       break;
     }
     count++;
-    randomType = arc4random_uniform(kQINumberOfQuizTypes);
+    randomType = arc4random_uniform(kQINumberOfQuizTypes) + 1;
     containsType = (types & randomType) != 0;
   } while (!containsType); // Bitmask check.
   return randomType;

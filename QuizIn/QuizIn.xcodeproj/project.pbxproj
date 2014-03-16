@@ -23,7 +23,7 @@
 		20683D9A17AEE0210047B803 /* QILISearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 20683D9917AEE0210047B803 /* QILISearch.m */; };
 		20876203181D77340089C165 /* QILIPagedSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 20876202181D77340089C165 /* QILIPagedSearch.m */; };
 		20A78E0B180B3EDC0037F8E3 /* QICompany+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A78E00180B3EDC0037F8E3 /* QICompany+Factory.m */; };
-		20A78E0C180B3EDC0037F8E3 /* QIConnectionsStoreFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A78E02180B3EDC0037F8E3 /* QIConnectionsStoreFactory.m */; };
+		20A78E0C180B3EDC0037F8E3 /* QIConnectionsStore+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A78E02180B3EDC0037F8E3 /* QIConnectionsStore+Factory.m */; };
 		20A78E0D180B3EDC0037F8E3 /* QILocation+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A78E04180B3EDC0037F8E3 /* QILocation+Factory.m */; };
 		20A78E0E180B3EDC0037F8E3 /* QIPerson+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A78E06180B3EDC0037F8E3 /* QIPerson+Factory.m */; };
 		20A78E0F180B3EDC0037F8E3 /* QIPosition+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A78E08180B3EDC0037F8E3 /* QIPosition+Factory.m */; };
@@ -444,7 +444,7 @@
 		20A78DFF180B3EDC0037F8E3 /* QICompany+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QICompany+Factory.h"; sourceTree = "<group>"; };
 		20A78E00180B3EDC0037F8E3 /* QICompany+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QICompany+Factory.m"; sourceTree = "<group>"; };
 		20A78E01180B3EDC0037F8E3 /* QIConnectionsStore+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QIConnectionsStore+Factory.h"; sourceTree = "<group>"; };
-		20A78E02180B3EDC0037F8E3 /* QIConnectionsStoreFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIConnectionsStoreFactory.m; sourceTree = "<group>"; };
+		20A78E02180B3EDC0037F8E3 /* QIConnectionsStore+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QIConnectionsStore+Factory.m"; sourceTree = "<group>"; };
 		20A78E03180B3EDC0037F8E3 /* QILocation+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QILocation+Factory.h"; sourceTree = "<group>"; };
 		20A78E04180B3EDC0037F8E3 /* QILocation+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QILocation+Factory.m"; sourceTree = "<group>"; };
 		20A78E05180B3EDC0037F8E3 /* QIPerson+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QIPerson+Factory.h"; sourceTree = "<group>"; };
@@ -998,7 +998,7 @@
 				20A78DFF180B3EDC0037F8E3 /* QICompany+Factory.h */,
 				20A78E00180B3EDC0037F8E3 /* QICompany+Factory.m */,
 				20A78E01180B3EDC0037F8E3 /* QIConnectionsStore+Factory.h */,
-				20A78E02180B3EDC0037F8E3 /* QIConnectionsStoreFactory.m */,
+				20A78E02180B3EDC0037F8E3 /* QIConnectionsStore+Factory.m */,
 				20A78E03180B3EDC0037F8E3 /* QILocation+Factory.h */,
 				20A78E04180B3EDC0037F8E3 /* QILocation+Factory.m */,
 				20A78E05180B3EDC0037F8E3 /* QIPerson+Factory.h */,
@@ -2512,7 +2512,7 @@
 				340D3D4B17E1DC4C004F5522 /* QISearchPickerTableViewCell.m in Sources */,
 				340D3DF917F9D74E004F5522 /* QIStatsKeyView.m in Sources */,
 				20A78E0B180B3EDC0037F8E3 /* QICompany+Factory.m in Sources */,
-				20A78E0C180B3EDC0037F8E3 /* QIConnectionsStoreFactory.m in Sources */,
+				20A78E0C180B3EDC0037F8E3 /* QIConnectionsStore+Factory.m in Sources */,
 				20A78E0D180B3EDC0037F8E3 /* QILocation+Factory.m in Sources */,
 				20A78E0E180B3EDC0037F8E3 /* QIPerson+Factory.m in Sources */,
 				20A78E0F180B3EDC0037F8E3 /* QIPosition+Factory.m in Sources */,
@@ -2630,10 +2630,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7F88557B297046AD9AF083B1 /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuizIn/Source/QuizIn-Prefix.pch";
 				INFOPLIST_FILE = "QuizIn/Supporting Files/QuizIn-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2643,10 +2645,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7F88557B297046AD9AF083B1 /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuizIn/Source/QuizIn-Prefix.pch";
 				INFOPLIST_FILE = "QuizIn/Supporting Files/QuizIn-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = app;
 			};

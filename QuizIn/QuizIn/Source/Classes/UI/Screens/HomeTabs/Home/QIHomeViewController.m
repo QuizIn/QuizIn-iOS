@@ -168,7 +168,8 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 #pragma mark Data
 - (void) showHideLockButtons{
   QIIAPHelper *store = [QIIAPHelper sharedInstance];
-  BOOL filterPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_pack"];
+  // DO NOT COMMIT!!!!!!
+  BOOL filterPurchased = YES; //[store productPurchased: @"com.kuhlmanation.hobnob.f_pack"];
   [self.homeView.companyQuizLockButton setHidden:filterPurchased];
   [self.homeView.companyQuizBeginButton setHidden:!filterPurchased];
   [self.homeView.localeQuizLockButton setHidden:filterPurchased];
