@@ -93,10 +93,6 @@
   NSLog(@"Preview: Tag-%d  Section-%d  Row-%d",button.tag, section, row);
   QIStorePreviewViewController *previewController = [[QIStorePreviewViewController alloc] init];
   [self presentViewController:previewController  animated:YES completion:nil];
-   
- /* QILoginScreenViewController *tempController = [[QILoginScreenViewController alloc] init];
-  [self presentViewController:tempController  animated:YES completion:nil];
-  */
 }
 
 - (void)buy:(UIButton *)button{
@@ -171,6 +167,7 @@
   QIStoreSectionHeaderView *headerView = [[QIStoreSectionHeaderView alloc] init];
   [headerView setSectionTitle:[[self.storeData objectAtIndex:section] objectForKey:@"type"]];
   [headerView setPrice:[[[[self.storeData objectAtIndex:section] objectForKey:@"item"] objectAtIndex:0] objectForKey:@"itemPrice"]];
+  [headerView setPurchased:[[[[[self.storeData objectAtIndex:section] objectForKey:@"item"] objectAtIndex:0] objectForKey:@"itemPurchased"] boolValue]];
   return headerView;
 }
 

@@ -36,6 +36,10 @@
   }
 }
 
+- (void)didCheckAnswerIsCorrect:(BOOL)isCorrect sender:(id)sender {
+  self.isCorrect = isCorrect;
+}
+
 - (QIProgressView *)progressView {
   return (QIProgressView *)[self.view valueForKey:@"progressView"];
 }

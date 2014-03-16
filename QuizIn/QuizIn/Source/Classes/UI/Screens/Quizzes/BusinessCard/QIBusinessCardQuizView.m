@@ -506,6 +506,10 @@
 -(void)processAnswer{
   QIStatsData *statsEngine = [[QIStatsData alloc] initWithLoggedInUserID:self.loggedInUserID];
   BOOL correct = self.answerName.selectedAnswer == self.correctNameIndex & self.answerCompany.selectedAnswer == self.correctCompanyIndex & self.answerTitle.selectedAnswer == self.correctTitleIndex;
+  if (self.interactor) {
+    [self.interactor didCheckAnswerIsCorrect:correct sender:self];
+  }
+  
   if (correct){
     [self.checkAnswersView correct:YES];
     if (self.allowAnalytics){

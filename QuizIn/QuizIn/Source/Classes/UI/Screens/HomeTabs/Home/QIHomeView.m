@@ -191,7 +191,7 @@
                                             metrics:nil
                                               views:scrollViewViews];
     NSArray *vConstraintsTopLevelViews =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-35-[_connectionsQuizStartView(==250)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-25-[_connectionsQuizStartView(==250)]"
                                             options:NSLayoutFormatAlignAllBaseline
                                             metrics:nil
                                               views:scrollViewViews];
@@ -203,7 +203,7 @@
     //ConnectionsQuizStartView Constraints
     
     NSDictionary *connectionQuizViews = NSDictionaryOfVariableBindings(_connectionsQuizPaperImage,_connectionsQuizBinderImage,_connectionsQuizTitle,_connectionsQuizNumberOfConnectionsLabel,_connectionsQuizImagePreviewCollection,_connectionsQuizButton);
-    NSString *primaryVertical = @"V:|-40-[_connectionsQuizTitle]-(-3)-[_connectionsQuizNumberOfConnectionsLabel]-15-[_connectionsQuizImagePreviewCollection(==60)]";
+    NSString *primaryVertical = @"V:|-35-[_connectionsQuizTitle][_connectionsQuizNumberOfConnectionsLabel]-20-[_connectionsQuizImagePreviewCollection(==60)]";
     
     NSArray *vConstraintsConnectionsQuizPaperImageBottom =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_connectionsQuizPaperImage(==250)]"
@@ -216,14 +216,14 @@
     
     
     NSArray *vConstraintsConnectionsQuizButton =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_connectionsQuizButton(==46)]-40-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_connectionsQuizButton(==46)]-45-|"
                                             options:NSLayoutFormatAlignAllLeft
                                             metrics:nil
                                               views:connectionQuizViews];
     
     NSArray *vConstraintsConnectionsQuizViews =
     [NSLayoutConstraint constraintsWithVisualFormat:primaryVertical
-                                            options:NSLayoutFormatAlignAllLeft
+                                            options:NSLayoutFormatAlignAllCenterX
                                             metrics:nil
                                               views:connectionQuizViews];
     
@@ -427,6 +427,7 @@
   [labelAttributes addAttribute:NSFontAttributeName value:[QIFontProvider fontWithSize:16.0f style:Bold] range:NSMakeRange(0,labelAttributes.length-4)];
   [labelAttributes addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:0.33f alpha:1.0f] range:NSMakeRange(0,labelAttributes.length-4)];
   [quizTitle setAttributedText:labelAttributes];
+  [quizTitle setTextAlignment:NSTextAlignmentCenter];
   [quizTitle setBackgroundColor:[UIColor clearColor]];
   [quizTitle setTranslatesAutoresizingMaskIntoConstraints:NO];
   return quizTitle;
@@ -439,6 +440,7 @@
   [quizConnections setTextColor:[UIColor colorWithWhite:0.50f alpha:1.0f]];
   [quizConnections setAdjustsFontSizeToFitWidth:YES];
   [quizConnections setBackgroundColor:[UIColor clearColor]];
+  [quizConnections setTextAlignment:NSTextAlignmentCenter];
   [quizConnections setTranslatesAutoresizingMaskIntoConstraints:NO];
   return quizConnections;
 }
@@ -544,7 +546,7 @@
   return @"ConnectionsQuiz"; 
 }
 - (NSString *)homeViewSubtext{
-  return @"Connections"; 
+  return @"Quiz Using All Connections";
 }
 
 @end

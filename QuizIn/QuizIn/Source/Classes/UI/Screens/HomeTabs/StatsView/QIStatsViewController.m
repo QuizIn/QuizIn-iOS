@@ -1,6 +1,8 @@
 
 #import "QIStatsViewController.h"
 #import "QIStoreViewController.h"
+#import "QIQuizFactory.h"
+#import "QIQuizViewController.h"
 
 @interface QIStatsViewController ()
 
@@ -27,16 +29,17 @@
   [self.statsView.printStatsButton addTarget:self action:@selector(printStats) forControlEvents:UIControlEventTouchUpInside];
   [self.statsView.summaryView.sorterSegmentedControl addTarget:self action:@selector(sorter:) forControlEvents:UIControlEventValueChanged];
   [self.statsView.summaryView.leastQuizLockButton addTarget:self action:@selector(goToStore:) forControlEvents:UIControlEventTouchUpInside];
+  [self.statsView.summaryView.leastQuizButton addTarget:self action:@selector(takeRefreshQuiz) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
   [self.statsView setCurrentRank:[self.data getCurrentRank]];
   [self.statsView setTotalCorrectAnswers:[self.data getTotalCorrectAnswers]];
   [self.statsView setTotalIncorrectAnswers:[self.data getTotalIncorrectAnswers]];
-  [self.statsView setConnectionStats:[self.data getConnectionStatsInOrderBy:known]];
+  [self.statsView setConnectionStats:[self.data getConnectionStatsInOrderBy:known ascending:YES]];
   [self.statsView setWellKnownThreshold:[self.data getWellKnownThreshold]];
   [self.statsView.summaryView.pieChartView setDelegate:self];
-  [self.statsView.summaryView.pieChartView setDataSource:self]; 
+  [self.statsView.summaryView.pieChartView setDataSource:self];
   [self.statsView.tableView reloadData];
   [self showHideRefreshLockButton]; 
 }
@@ -47,30 +50,6 @@
   if (self.statsView.totalCorrectAnswers + self.statsView.totalIncorrectAnswers == 0){
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Stats Yet" message:@"Build up knowledge data by Hobnob'n with your contacts." delegate:self cancelButtonTitle:@"Home" otherButtonTitles:nil];
     [alert show];
-  }
-}
-
-- (void)sorter:(id)sender{
-  UISegmentedControl *sorter = (UISegmentedControl *)sender;
-  int index = [sorter selectedSegmentIndex];
-  switch (index) {
-    case 0:{
-      self.statsView.connectionStats = [self.data getConnectionStatsInOrderBy:firstName];
-      [self.statsView.tableView reloadData];
-      break;
-    }
-    case 1:{
-      self.statsView.connectionStats = [self.data getConnectionStatsInOrderBy:lastName];
-      [self.statsView.tableView reloadData];
-      break;
-    }
-    case 2:{
-      self.statsView.connectionStats = [self.data getConnectionStatsInOrderBy:correctAnswers];
-      [self.statsView.tableView reloadData];
-      break;
-    }
-    default:
-      break;
   }
 }
 
@@ -121,6 +100,32 @@
   [self.parentTabBarController setSelectedIndex:4];
 }
 
+- (void)takeRefreshQuiz{
+  QIIAPHelper *store = [QIIAPHelper sharedInstance];
+  
+  QIQuizQuestionType questionType;
+  if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"]){
+    questionType = (QIQuizQuestionTypeBusinessCard|
+                    QIQuizQuestionTypeMatching|
+                    QIQuizQuestionTypeMultipleChoice);
+  }
+  else {
+    questionType = (QIQuizQuestionTypeMultipleChoice);
+  }
+  
+  NSArray *refreshPersonIDs = [self.data getRefreshPeopleIDsWithLimit:40];
+  [QIQuizFactory quizWithPersonIDs:refreshPersonIDs
+                     questionTypes:questionType
+                   completionBlock:^(QIQuiz *quiz, NSError *error) {
+                     if (error == nil) {
+                       dispatch_async(dispatch_get_main_queue(), ^{
+                         QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];
+                         [self presentViewController:quizViewController animated:YES completion:nil];
+                       });
+                     }
+                   }];
+}
+
 #pragma mark UIAlertViewDelegate Functions
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
   [self.parentTabBarController setSelectedIndex:0];
@@ -146,7 +151,7 @@
 - (UIColor *)pieChart:(DLPieChart *)pieChart colorForSliceAtIndex:(NSUInteger)index{
   NSMutableArray *colorArray = [NSMutableArray arrayWithObjects:
                                 [UIColor colorWithRed:1.0f green:.71f blue:.20f alpha:1.0f],
-                                [UIColor colorWithRed:.29f green:.51f blue:.72f alpha:1.0f],
+                                [UIColor colorWithRed:.34f green:.45f blue:.64f alpha:1.0f],
                                 [UIColor colorWithWhite:.33f alpha:1.0f],
                                 nil];
   return [colorArray objectAtIndex:index];
@@ -159,6 +164,14 @@
                                @"Small",
                                nil];
   return [textArray objectAtIndex:index];
+}
+
+#pragma mark Factory Methods
+- (QIQuizViewController *)newQuizViewControllerWithQuiz:(QIQuiz *)quiz {
+  QIQuizViewController *quizViewController = [[QIQuizViewController alloc] initWithQuiz:quiz];
+  quizViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+  quizViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+  return quizViewController;
 }
 
 @end

@@ -13,6 +13,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+    [self.groupSelectionView setSelectionViewLabelString:@"Filter By Locations"];
+  
   [LinkedIn topFirstDegreeConnectionLocationsForAuthenticatedUserWithOnCompletion:^(NSArray *locations, NSError *error) {
     dispatch_async(dispatch_get_main_queue(), ^{
       if (error) {

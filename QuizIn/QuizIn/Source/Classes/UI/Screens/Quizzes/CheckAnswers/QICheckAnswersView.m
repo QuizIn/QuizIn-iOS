@@ -203,10 +203,10 @@
   return @"Try Again";
 }
 - (NSString *)resultCorrectText{
-  return @"CORRECT";
+  return @"Correct";
 }
 - (NSString *)resultIncorrectText{
-  return @"INCORRECT";
+  return @"Incorrect";
 }
 
 
@@ -229,7 +229,7 @@
   UILabel *resultLabel = [[UILabel alloc] init];
   [resultLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   [resultLabel setBackgroundColor:[UIColor clearColor]];
-  [resultLabel setFont:[QIFontProvider fontWithSize:20.0f style:Regular]];
+  [resultLabel setFont:[QIFontProvider fontWithSize:20.0f style:Bold]];
   [resultLabel setTextColor:[UIColor colorWithWhite:1.0f alpha:1.0f]];
   [resultLabel setAdjustsFontSizeToFitWidth:YES];
   [resultLabel setAdjustsFontSizeToFitWidth:YES];
@@ -239,11 +239,8 @@
 - (UIButton *)newCheckButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setTitle:[self checkButtonText] forState:UIControlStateNormal];
-  [button setBackgroundImage:[UIImage imageNamed:@"quizin_command_up_btn"] forState:UIControlStateNormal];
-  [button.titleLabel setFont:[QIFontProvider fontWithSize:12.0f style:Regular]];
-  [button.titleLabel setTextAlignment:NSTextAlignmentLeft];
-  [button setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-  [button setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, 7.0f, 0.0f, 0.0f)];
+  [button setBackgroundImage:[UIImage imageNamed:@"quizin_command_std_btn"] forState:UIControlStateNormal];
+  [button.titleLabel setFont:[QIFontProvider fontWithSize:12.0f style:Bold]];
   [button setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   return button;
@@ -252,7 +249,7 @@
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setTitle:[self nextButtonText] forState:UIControlStateNormal];
   [button setBackgroundImage:[UIImage imageNamed:@"quizin_command_forward_btn"] forState:UIControlStateNormal];
-  [button.titleLabel setFont:[QIFontProvider fontWithSize:12.0f style:Regular]];
+  [button.titleLabel setFont:[QIFontProvider fontWithSize:12.0f style:Bold]];
   [button setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   [button setHidden:YES];
@@ -262,7 +259,7 @@
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setTitle:[self againButtonText] forState:UIControlStateNormal];
   [button setBackgroundImage:[UIImage imageNamed:@"quizin_command_std_btn"] forState:UIControlStateNormal];
-  [button.titleLabel setFont:[QIFontProvider fontWithSize:12.0f style:Regular]];
+  [button.titleLabel setFont:[QIFontProvider fontWithSize:12.0f style:Bold]];
   [button.titleLabel setTextAlignment:NSTextAlignmentLeft];
   [button setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];

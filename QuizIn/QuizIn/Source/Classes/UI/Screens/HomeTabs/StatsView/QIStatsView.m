@@ -8,8 +8,8 @@
 @property (nonatomic, strong) UIImageView *viewBackground;
 @property (nonatomic, retain) NSMutableArray *viewConstraints;
 @property (nonatomic, strong) NSLayoutConstraint *vSummaryViewConstraint;
-@property (nonatomic, assign) NSInteger selectedSorter;
-@property (nonatomic, assign) BOOL toggleIndexForTable; 
+@property (nonatomic, assign) BOOL toggleIndexForTable;
+@property (nonatomic, assign) BOOL sortAscending;
 
 @end
 
@@ -77,26 +77,30 @@
 }
 
 - (void)sortTable:(UIButton *)sender{
-  if (sender.selected)
-    return;
   
-  self.selectedSorter = sender.tag; 
+  if (self.selectedSorter == sender.tag){
+    self.sortAscending = !self.sortAscending;
+  }
+  else{
+    self.sortAscending = YES;
+  }
+  self.selectedSorter = sender.tag;
   
   switch (sender.tag) {
     case 0:
-      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:lastName]];
+      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:lastName ascending:self.sortAscending]];
       break;
     case 1:
-      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:correctAnswers]];
+      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:correctAnswers ascending:self.sortAscending]];
       break;
     case 2:
-      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:incorrectAnswers]];
+      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:incorrectAnswers ascending:self.sortAscending]];
       break;
     case 3:
-      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:trend]];
+      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:trend ascending:self.sortAscending]];
       break;
     case 4:
-      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:known]];
+      [self setConnectionStats:[self.data getConnectionStatsInOrderBy:known ascending:self.sortAscending]];
       break;
     default:
       break;
@@ -239,17 +243,6 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
   return [[self.connectionStats objectAtIndex:0] objectAtIndex:section];
 }
-
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView{
-  /*if (tableView.contentOffset.y >=200){
-    return [self.connectionStats objectAtIndex:0];
-  }
-  else {
-    return nil; 
-  }
-   */
-  return nil;
-}
  
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
@@ -278,6 +271,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
    NSDictionary *data = [[[self.connectionStats objectAtIndex:1] objectForKey:[[self.connectionStats objectAtIndex:0] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
   NSURL *profileURL = [NSURL URLWithString:[data objectForKey:@"profileURL"]];
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
   [[UIApplication sharedApplication] openURL:profileURL];
 }
 

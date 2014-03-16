@@ -63,7 +63,7 @@
                                             metrics:nil
                                               views:loginViews];
     NSArray *vScrollViewContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-[_previewScrollView]-[_loginButton]"
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-[_previewScrollView]"
                                             options:NSLayoutFormatAlignAllLeft
                                             metrics:nil
                                               views:loginViews];
@@ -74,8 +74,8 @@
     
     
     //Constrain the login button
-    [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_loginButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-    [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_loginButton attribute:NSLayoutAttributeBaseline relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBaseline multiplier:1.0f constant:-15.0f]];
+    //[self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_loginButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+   // [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_loginButton attribute:NSLayoutAttributeBaseline relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBaseline multiplier:1.0f constant:-15.0f]];
     
     [self addConstraints:self.viewConstraints]; 
 
@@ -92,7 +92,7 @@
 - (UIButton *)newLoginButton{
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setImage:[UIImage imageNamed:@"login_learn_btn_standard"] forState:UIControlStateNormal];
-  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  button.frame = CGRectMake(0, 300, 80, 47);
   return button;
 }
 

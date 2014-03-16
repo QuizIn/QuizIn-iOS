@@ -14,12 +14,12 @@ int ddLogLevel;
 
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  [QIIAPHelper sharedInstance]; 
   [self setUpCocoaLumberjackLoggers];
   
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   QIApplicationViewController *applicationViewController = [QIApplicationViewController new];
   self.window.rootViewController = applicationViewController;
+
   [self.window makeKeyAndVisible];
 
   return YES;

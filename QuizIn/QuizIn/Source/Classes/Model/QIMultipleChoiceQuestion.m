@@ -28,21 +28,41 @@ static NSInteger kQINumberOfMultipleChoiceQuestionTypes = 5;
       return [self multipleChoiceNameQuestionForPersonID:personID connectionsStore:connections];
       break;
       
-    case QIMultipleChoiceQuestionTypeCompany:
+    case QIMultipleChoiceQuestionTypeCompany: {
+      QIPerson *person = connections.people[personID];
+      if (!person.currentPosition || !person.currentPosition.company) {
+        return [self multipleChoiceNameQuestionForPersonID:personID connectionsStore:connections];
+      }
       return [self multipleChoiceCompanyQuestionForPersonID:personID connectionsStore:connections];
       break;
+    }
       
-    case QIMultipleChoiceQuestionTypeIndustry:
+    case QIMultipleChoiceQuestionTypeIndustry: {
+      QIPerson *person = connections.people[personID];
+      if (!person.industry) {
+        return [self multipleChoiceNameQuestionForPersonID:personID connectionsStore:connections];
+      }
       return [self multipleChoiceIndustryQuestionForPersonID:personID connectionsStore:connections];
       break;
+    }
       
-    case QIMultipleChoiceQuestionTypeLocation:
+    case QIMultipleChoiceQuestionTypeLocation: {
+      QIPerson *person = connections.people[personID];
+      if (!person.location) {
+        return [self multipleChoiceNameQuestionForPersonID:personID connectionsStore:connections];
+      }
       return [self multipleChoiceLocationQuestionForPersonID:personID connectionsStore:connections];
       break;
+    }
       
-    case QIMultipleChoiceQuestionTypePosition:
+    case QIMultipleChoiceQuestionTypePosition: {
+      QIPerson *person = connections.people[personID];
+      if (!person.currentPosition || !person.currentPosition.title) {
+        return [self multipleChoiceNameQuestionForPersonID:personID connectionsStore:connections];
+      }
       return [self multipleChoicePositionQuestionForPersonID:personID connectionsStore:connections];
       break;
+    }
   }
   
   return nil;

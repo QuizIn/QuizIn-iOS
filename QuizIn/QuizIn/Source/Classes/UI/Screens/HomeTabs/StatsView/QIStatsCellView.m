@@ -113,7 +113,7 @@
       [self.keyKnown setBackgroundColor:[UIColor colorWithRed:1.0f green:.71f blue:.20f alpha:1.0f]];
       break;
     case 1:
-      [self.keyKnown setBackgroundColor:[UIColor colorWithRed:.29f green:.51f blue:.72f alpha:1.0f]];
+      [self.keyKnown setBackgroundColor:[UIColor colorWithRed:.34f green:.45f blue:.64f alpha:1.0f]];
       break;
     case 2:
       [self.keyKnown setBackgroundColor:[UIColor colorWithWhite:.33f alpha:1.0f]];
@@ -138,7 +138,7 @@
     NSDictionary *cellViews = NSDictionaryOfVariableBindings(_connectionNameLabel,_profileImageView,_rightLabel,_wrongLabel,_trendImage,_keyKnown);
     
     NSArray *hCellViewsConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-3-[_profileImageView(==40)]-3-[_connectionNameLabel(==100)]-(>=4)-[_rightLabel(==30)][_wrongLabel(==30)]-2-[_trendImage(==25)]-9-[_keyKnown(==18)]-16-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-3-[_profileImageView(==40)]-3-[_connectionNameLabel(>=100)]-4-[_rightLabel(==30)][_wrongLabel(==30)]-2-[_trendImage(==25)]-9-[_keyKnown(==18)]-16-|"
                                             options:0
                                             metrics:nil
                                               views:cellViews];

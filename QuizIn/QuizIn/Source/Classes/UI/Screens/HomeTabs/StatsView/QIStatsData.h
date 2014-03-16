@@ -27,9 +27,10 @@ enum SortBy : NSInteger {
 - (int)getTotalCorrectAnswers;
 - (int)getTotalIncorrectAnswers;
 - (NSArray *)getConnectionStats;
-- (NSArray *)getConnectionStatsInOrderBy:(SortBy)sortBy;
+- (NSArray *)getConnectionStatsInOrderBy:(SortBy)sortBy ascending:(BOOL)ascending;
 - (NSArray *)getConnectionStatsByKnownGroupings;
 - (NSInteger)getWellKnownThreshold;
+- (NSArray *)getRefreshPeopleIDsWithLimit:(int)limit; 
 
 //update Stats
 - (void)updateStatsWithConnectionProfile:(QIPerson *)person correct:(BOOL)correct;

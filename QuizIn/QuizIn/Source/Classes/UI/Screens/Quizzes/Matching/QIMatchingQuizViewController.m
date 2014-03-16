@@ -28,6 +28,7 @@
 {
   [super viewDidLoad];
   
+  self.matchingQuizView.interactor = self;
   NSMutableArray *imageURLs = [NSMutableArray arrayWithCapacity:[self.matchingQuestion.people count]];
   for (QIPerson *person in self.matchingQuestion.people) {
     [imageURLs addObject:[NSURL URLWithString:person.pictureURL]];

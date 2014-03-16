@@ -114,13 +114,13 @@
     NSDictionary *mainViews = NSDictionaryOfVariableBindings(_viewLabel, _topSlit,_tableView,_bottomSlit,_quizButton,_backButton);
     
     NSArray *vMainViewsConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_viewLabel(==20)]-3-[_topSlit(==8)]-(-5)-[_tableView]-(-5)-[_bottomSlit(==8)]-[_quizButton(==54)]-6-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-30-[_viewLabel(==20)]-3-[_topSlit(==8)]-(-5)-[_tableView]-(-5)-[_bottomSlit(==8)]-[_quizButton(==54)]-6-|"
                                             options:0
                                             metrics:0
                                               views:mainViews];
     NSArray *hLabelConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[_viewLabel]-8-|"
-                                            options:0
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[_backButton]-(>=8)-[_viewLabel]-8-|"
+                                            options:NSLayoutFormatAlignAllBaseline
                                             metrics:0
                                               views:mainViews];
     NSArray *hTopSlitConstraints =
@@ -138,42 +138,25 @@
                                             options:0
                                             metrics:0
                                               views:mainViews];
-    NSArray *hButtonConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_quizButton]-14-|"
-                                            options:0
-                                            metrics:0
-                                              views:mainViews];
-    NSArray *hBackButtonConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_backButton(==100)]"
-                                            options:0
-                                            metrics:0
-                                              views:mainViews];
-    NSArray *vBackButtonConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_backButton(==40)]-3-|"
-                                            options:0
-                                            metrics:0
-                                              views:mainViews];
+    
+    NSLayoutConstraint *hButtonConstraint = [NSLayoutConstraint constraintWithItem:_quizButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
+
     
     [self.viewConstraints addObjectsFromArray:hLabelConstraints];
     [self.viewConstraints addObjectsFromArray:hTopSlitConstraints];
     [self.viewConstraints addObjectsFromArray:hTableViewConstraints];
     [self.viewConstraints addObjectsFromArray:hBottomSlitConstraints];
     [self.viewConstraints addObjectsFromArray:vMainViewsConstraints];
-    [self.viewConstraints addObjectsFromArray:hButtonConstraints];
-    [self.viewConstraints addObjectsFromArray:vBackButtonConstraints];
-    [self.viewConstraints addObjectsFromArray:hBackButtonConstraints];
+    [self.viewConstraints addObjectsFromArray:@[hButtonConstraint]];
     
     [self addConstraints:self.viewConstraints];
   }
 }
 
 #pragma mark Strings
--(NSString *)quizButtonTitle{
-  return @"Take Quiz";
-}
 
 -(NSString *)backButtonTitle{
-  return @"Back";
+  return @"< Cancel";
 }
 
 #pragma mark Factory Methods
@@ -181,7 +164,7 @@
 -(UITableView *)newSelectionTable{
   UITableView *tableView = [[UITableView alloc] init];
   [tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [tableView setBackgroundColor:[UIColor colorWithRed:80.0f/255.0f green:125.0f/255.0f blue:144.0f/255.0f alpha:.3f]];
+  [tableView setBackgroundColor:[UIColor colorWithRed:.34f green:.45f blue:.64f alpha:.5f]];
   [tableView setSeparatorColor:[UIColor colorWithWhite:.8f alpha:1.0f]];
   [tableView setShowsVerticalScrollIndicator:NO];
   tableView.rowHeight = 94;
@@ -216,19 +199,18 @@
 
 - (UILabel *)newViewLabel {
   UILabel *viewLabel = [[UILabel alloc] init];
-  viewLabel.textAlignment = NSTextAlignmentLeft;
+  viewLabel.textAlignment = NSTextAlignmentCenter;
   viewLabel.backgroundColor = [UIColor clearColor];
-  viewLabel.font = [QIFontProvider fontWithSize:15.0f style:Bold];
+  viewLabel.font = [QIFontProvider fontWithSize:12.0f style:Bold];
   viewLabel.adjustsFontSizeToFitWidth = YES;
-  viewLabel.textColor = [UIColor colorWithWhite:0.33f alpha:1.0f];
+  viewLabel.textColor = [UIColor colorWithWhite:0.50f alpha:1.0f];
   [viewLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
   return viewLabel;
 }
 
 - (UIButton *)newQuizButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setTitle:[self quizButtonTitle] forState:UIControlStateNormal];
-  [button setBackgroundImage:[[UIImage imageNamed:@"connectionsquiz_takequiz_btn"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 74, 0, 74)] forState:UIControlStateNormal];
+  [button setBackgroundImage:[[UIImage imageNamed:@"connectionsquiz_hobnob_btn"] resizableImageWithCapInsets: UIEdgeInsetsMake(0, 5, 0, 200)] forState:UIControlStateNormal];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   button.backgroundColor = [UIColor clearColor];
   return button;
@@ -237,8 +219,8 @@
 - (UIButton *)newBackButton {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setTitle:[self backButtonTitle] forState:UIControlStateNormal];
-  [button.titleLabel setFont:[QIFontProvider fontWithSize:12.0f style:Regular]];
-  [button setTitleColor:[UIColor colorWithWhite:0.33f alpha:1.0f] forState:UIControlStateNormal];
+  [button.titleLabel setFont:[QIFontProvider fontWithSize:12.0f style:Bold]];
+  [button setTitleColor:[UIColor colorWithWhite:0.50f alpha:1.0f] forState:UIControlStateNormal];
   [button setTitleColor:[UIColor colorWithWhite:0.0f alpha:1.0f] forState:UIControlStateHighlighted];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   button.backgroundColor = [UIColor clearColor];
@@ -264,7 +246,7 @@
     cell = [[QIGroupSelectionCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
   }
   [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-  [cell.backView setBackgroundColor:[UIColor colorWithRed:80.0f/255.0f green:125.0f/255.0f blue:144.0f/255.0f alpha:1.0f]];
+  [cell.backView setBackgroundColor:[UIColor colorWithRed:.34f green:.45f blue:.64f alpha:1.0f]];
   [cell setImageURLs:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"images"]];
   [cell setSelectionTitle:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"title"]];
   [cell setSelectionSubtitle:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"subtitle"]];
@@ -273,10 +255,10 @@
   
   BOOL selected = [[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"selected"] boolValue];
   if (selected){
-    [self snapView:cell.frontView toX:PAN_OPEN_X animated:NO];
+    [self snapViewforCell:cell toX:PAN_OPEN_X animated:NO];
   }
   else{
-    [self snapView:cell.frontView toX:PAN_CLOSED_X animated:NO];
+    [self snapViewforCell:cell toX:PAN_CLOSED_X animated:NO];
   }
   
   UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
@@ -291,11 +273,11 @@
 
   BOOL selected = [[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"selected"] boolValue];
   if (selected){
-    [self snapView:cell.frontView toX:PAN_CLOSED_X animated:YES];
+    [self snapViewforCell:cell toX:PAN_CLOSED_X animated:YES];
     [[self.selectionContent objectAtIndex:indexPath.row] setObject:@NO forKey:@"selected"];
   }
   else{
-    [self snapView:cell.frontView toX:PAN_OPEN_X animated:YES];
+    [self snapViewforCell:cell toX:PAN_OPEN_X animated:YES];
      [[self.selectionContent objectAtIndex:indexPath.row] setObject:@YES forKey:@"selected"];
   }
 }
@@ -318,7 +300,6 @@
   float finalX;
   NSIndexPath *indexPath = [self.tableView indexPathForCell:(QIGroupSelectionCellView *)[panGestureRecognizer view] ];
   QIGroupSelectionCellView *cellView = (QIGroupSelectionCellView *)[self.tableView cellForRowAtIndexPath:indexPath];
-  UIView *frontView = ((QIGroupSelectionCellView *)panGestureRecognizer.view).frontView;
   
   switch ([panGestureRecognizer state]) {
     case UIGestureRecognizerStateBegan:
@@ -329,17 +310,17 @@
       break;
     case UIGestureRecognizerStateEnded:
       vX = (FAST_ANIMATION_DURATION/2.0)*[panGestureRecognizer velocityInView:self].x;
-      compare = cellView.slideOffset.constant + vX;
+      compare = cellView.slideOffset + vX;
       if (compare > threshold) {
         finalX = MAX(PAN_OPEN_X,PAN_CLOSED_X);
         [self setOpenCellLastTX:0];
         [[self.selectionContent objectAtIndex:indexPath.row] setObject:@NO forKey:@"selected"];
       } else {
         finalX = MIN(PAN_OPEN_X,PAN_CLOSED_X);
-        [self setOpenCellLastTX:cellView.slideOffset.constant];
+        [self setOpenCellLastTX:cellView.slideOffset];
         [[self.selectionContent objectAtIndex:indexPath.row] setObject:@YES forKey:@"selected"];
       }
-      [self snapView:frontView toX:finalX animated:YES];
+      [self snapViewforCell:cellView toX:finalX animated:YES];
       if (finalX == PAN_CLOSED_X) {
         [self setOpenCellIndexPath:nil];
       }
@@ -356,8 +337,7 @@
         compare = MIN(PAN_OPEN_X,PAN_CLOSED_X);
       }
       //[view setTransform:CGAffineTransformMakeTranslation(compare, 0)];
-      [cellView.slideOffset setConstant:compare];
-      [self layoutIfNeeded];
+      cellView.slideOffset = compare;
       break;
     default:
       compare = 0;
@@ -365,21 +345,17 @@
   }
 }
 
--(void)snapView:(UIView *)view toX:(float)x animated:(BOOL)animated
+-(void)snapViewforCell:(QIGroupSelectionCellView *)cell toX:(float)x animated:(BOOL)animated
 {
-  QIGroupSelectionCellView *cell = (QIGroupSelectionCellView *)view.superview.superview.superview;
-  
   if (animated) {
     [UIView animateWithDuration:FAST_ANIMATION_DURATION animations:^{
-      [cell.slideOffset setConstant:x];
-      [self layoutIfNeeded];
+      cell.slideOffset = x;
     }];
   }
   else {
-    [cell.slideOffset setConstant:x];
-    [self layoutIfNeeded];
+    cell.slideOffset = x;
   }
-
+  
 }
 
 @end

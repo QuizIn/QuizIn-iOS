@@ -4,5 +4,7 @@
 @interface QIQuizFinishViewController : UIViewController
 
 @property (nonatomic, strong, readonly) QIQuizFinishView *quizFinishView;
+@property (nonatomic, assign) NSInteger correctAnswers;
+@property (nonatomic, assign) NSInteger totalQuestions;
 
 @end

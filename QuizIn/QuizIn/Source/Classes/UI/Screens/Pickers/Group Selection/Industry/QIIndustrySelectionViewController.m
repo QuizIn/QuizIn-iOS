@@ -14,6 +14,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  [self.groupSelectionView setSelectionViewLabelString:@"Filter By Industries"];
   [LinkedIn
    topFirstDegreeConnectionIndustriesForAuthenticatedUserWithOnCompletion:^(NSArray *industries, NSError *error) {
      dispatch_async(dispatch_get_main_queue(), ^{

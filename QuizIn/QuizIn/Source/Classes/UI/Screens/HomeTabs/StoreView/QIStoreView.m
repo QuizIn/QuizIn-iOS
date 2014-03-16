@@ -209,7 +209,7 @@
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setTitle:@"Refresh" forState:UIControlStateNormal];
   [button.titleLabel setFont:[QIFontProvider fontWithSize:12.0f style:Regular]];
-  [button setTitleColor:[UIColor colorWithWhite:0.33f alpha:1.0f] forState:UIControlStateNormal];
+  [button setTitleColor:[UIColor colorWithRed:.34f green:.45f blue:.64f alpha:1.0f] forState:UIControlStateNormal];
   [button setTitleColor:[UIColor colorWithWhite:0.0f alpha:1.0f] forState:UIControlStateHighlighted];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   [button setHidden:YES]; 

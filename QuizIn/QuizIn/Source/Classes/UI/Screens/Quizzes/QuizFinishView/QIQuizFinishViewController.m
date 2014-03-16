@@ -1,6 +1,10 @@
 #import "QIQuizFinishViewController.h"
+#import "QIPerson.h"
+#import "LinkedIn.h"
 
 @interface QIQuizFinishViewController ()
+
+@property (nonatomic,strong) QIPerson *loggedInUser;
 
 @end
 
@@ -10,14 +14,16 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+      _loggedInUser = [LinkedIn authenticatedUser];
     }
     return self;
 }
+
 - (void)loadView{
   self.view = [[QIQuizFinishView alloc] init];
-  [self.quizFinishView setCorrectAnswers:5];
-  [self.quizFinishView setTotalQuestions:11];
+  [self.quizFinishView setCorrectAnswers:self.correctAnswers];
+  [self.quizFinishView setTotalQuestions:self.totalQuestions];
+  [self.quizFinishView setProfileImageURL:[NSURL URLWithString:self.loggedInUser.pictureURL]];
   [self.quizFinishView.doneButton addTarget:self
                                          action:@selector(dismiss)
                                forControlEvents:UIControlEventTouchUpInside];

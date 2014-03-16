@@ -110,32 +110,32 @@
                                             metrics:nil
                                               views:headerViews];
     NSArray *hHeaderConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_alphaHeader(==30)][_correctHeader(==_alphaHeader)][_incorrectHeader(==_alphaHeader)][_trendHeader(==_alphaHeader)][_knownHeader(==_alphaHeader)]-10-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_alphaHeader(==26)]-4-[_correctHeader(==_alphaHeader)]-4-[_incorrectHeader(==_alphaHeader)]-4-[_trendHeader(==_alphaHeader)]-4-[_knownHeader(==_alphaHeader)]-10-|"
                                             options:NSLayoutFormatAlignAllTop
                                             metrics:nil
                                               views:headerViews];
     NSArray *vAlphaConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_alphaHeader]-10-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_alphaHeader]-7-|"
                                             options:0
                                             metrics:nil
                                               views:headerViews];
     NSArray *vCorrectConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_correctHeader]-10-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_correctHeader]-7-|"
                                             options:0
                                             metrics:nil
                                               views:headerViews];
     NSArray *vIncorrectConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_incorrectHeader]-10-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_incorrectHeader]-7-|"
                                             options:0
                                             metrics:nil
                                               views:headerViews];
     NSArray *vKnownConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_trendHeader]-10-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_trendHeader]-7-|"
                                             options:0
                                             metrics:nil
                                               views:headerViews];
     NSArray *vTrendConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_knownHeader]-10-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_knownHeader]-7-|"
                                             options:0
                                             metrics:nil
                                               views:headerViews];

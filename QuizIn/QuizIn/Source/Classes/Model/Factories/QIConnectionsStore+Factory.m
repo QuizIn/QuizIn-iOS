@@ -82,14 +82,16 @@
   
   for (QIPerson *person in people) {
     [personNames addObject:[person.formattedName copy]];
-    [cityNames addObject:[person.location.name copy]];
 
-    NSMutableSet *positions = [NSMutableSet setWithCapacity:[person.positions count]];
+    if (person.location) {
+      [cityNames addObject:[person.location.name copy]];
+    }
+
+    // TODO: Check for existence before adding to set.
     for (QIPosition *position in person.positions) {
       [titleNames addObject:[position.title copy]];
       [industries addObject:[position.company.industry copy]];
       [companyNames addObject:[position.company.name copy]];
-      [positions addObject:position];
     }
     
     peopleMap[person.personID] = person;

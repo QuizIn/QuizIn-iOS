@@ -25,6 +25,7 @@
     if (self) {
       _viewBackground = [self newViewBackground];
       _logoutButton = [self newLogoutButton];
+      _clearStatsButton = [self newClearStatsButton];
       _loggedInLabel = [self newLoggedInLabel];
       _businessCardView = [self newBusinessCardView];
       _businessCardBackground = [self newBusinessCardBackground];
@@ -89,6 +90,7 @@
   [_businessCardView addSubview:self.cardLastName];
   [_businessCardView addSubview:self.cardTitle];
   [_businessCardView addSubview:self.logoutButton];
+  [_businessCardView addSubview:self.clearStatsButton];
 
   [self addSubview:self.businessCardView];
 }
@@ -163,7 +165,8 @@
                                                              _cardFirstName,
                                                              _cardLastName,
                                                              _cardTitle,
-                                                             _logoutButton);
+                                                             _logoutButton,
+                                                             _clearStatsButton);
     NSArray *hProfileImageConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_profileImageView(==93)]"
                                             options:0
@@ -214,11 +217,15 @@
                                             metrics:nil
                                               views:cardViews];
     
-    NSLayoutConstraint *hCardLogoutConstraint =
-    [NSLayoutConstraint constraintWithItem:_logoutButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_businessCardView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f];
-    
     NSLayoutConstraint *vCardLogoutConstraint =
     [NSLayoutConstraint constraintWithItem:_logoutButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_businessCardView attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-30.0f];
+    
+    NSString *hButtons = @"H:|-30-[_logoutButton]-(>=20)-[_clearStatsButton]-30-|";
+    NSArray *hButtonsConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:hButtons
+                                            options:NSLayoutFormatAlignAllCenterY
+                                            metrics:nil
+                                              views:cardViews];
  
     
     [self.viewConstraints addObjectsFromArray:hProfileImageConstraints];
@@ -227,7 +234,8 @@
     [self.viewConstraints addObjectsFromArray:hLastNameConstraints];
     [self.viewConstraints addObjectsFromArray:hTitleConstraints];
     [self.viewConstraints addObjectsFromArray:vCardFirstNameConstraints];
-    [self.viewConstraints addObjectsFromArray:@[vCardLastNameConstraint,hCardLogoutConstraint,vCardLogoutConstraint]];
+    [self.viewConstraints addObjectsFromArray:hButtonsConstraints];
+    [self.viewConstraints addObjectsFromArray:@[vCardLastNameConstraint,vCardLogoutConstraint]];
     [self.viewConstraints addObjectsFromArray:vCardCompanyConstraints];
     
     [self addConstraints:self.viewConstraints];
@@ -326,6 +334,17 @@
   [cardTitle setMinimumScaleFactor:.8f];
   [cardTitle setLineBreakMode:NSLineBreakByTruncatingMiddle];
   return cardTitle;
+}
+
+- (UIButton *)newClearStatsButton {
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setTitle:@"Reset Stats" forState:UIControlStateNormal];
+  [button.titleLabel setFont:[QIFontProvider fontWithSize:12.0f style:Regular]];
+  [button setTitleColor:[UIColor colorWithRed:.34f green:.45f blue:.64f alpha:1.0f] forState:UIControlStateNormal];
+  [button setTitleColor:[UIColor colorWithWhite:0.0f alpha:1.0f] forState:UIControlStateHighlighted];
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  button.backgroundColor = [UIColor clearColor];
+  return button;
 }
 
 @end

@@ -20,6 +20,7 @@
 @property (nonatomic,strong) AsyncImageView *logoImageView;
 @property (nonatomic,strong) UIView *imagesView;
 @property (nonatomic,assign) NSInteger numberOfImages;
+@property (nonatomic,strong) NSLayoutConstraint *offsetConstraint;
 
 
 @end
@@ -45,9 +46,7 @@
       _numberOfImages = 0;
       _logoImageView = [self newLogoImageView];
       _checkMarkImage = [self newCheckMarkImage];
-      
-      _slideOffset = [NSLayoutConstraint constraintWithItem:_frontView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:_backView attribute:NSLayoutAttributeRight multiplier:1.0f constant:0.0f];
-      
+      //_slideOffset = [NSLayoutConstraint constraintWithItem:_frontView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_backView attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0];
       [self constructViewHierarchy];
     }
     return self;
@@ -60,9 +59,12 @@
 
 #pragma properties
 
--(void)setSlideOffset:(NSLayoutConstraint *)slideOffset{
+-(void)setSlideOffset:(NSInteger)slideOffset{
   _slideOffset = slideOffset;
+  [_offsetConstraint setConstant:_slideOffset];
+  [self layoutIfNeeded];
 }
+
 
 - (void)setBackView:(UIView *)backView{
   _backView = backView;
@@ -196,15 +198,12 @@
     [self.contentView addConstraints:self.backViewConstraints];
     
     //Constrain FrontView
-    NSDictionary *cellFrontViews = NSDictionaryOfVariableBindings(_frontView);
+    NSLayoutConstraint *frontViewWidthConstraint = [NSLayoutConstraint constraintWithItem:_frontView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_backView attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0];
+    NSLayoutConstraint *frontViewHeightConstraint = [NSLayoutConstraint constraintWithItem:_frontView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_backView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0];
     
-    NSLayoutConstraint *frontViewWidthConstaint = [NSLayoutConstraint constraintWithItem:_frontView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_backView attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0];
+    _offsetConstraint = [NSLayoutConstraint constraintWithItem:_frontView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_backView attribute:NSLayoutAttributeLeft multiplier:1.0f constant:_slideOffset];
     
-    NSArray *vFrontViewContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_frontView]|"
-                                            options:0
-                                            metrics:nil
-                                              views:cellFrontViews];
+    NSLayoutConstraint *frontViewTopConstraint = [NSLayoutConstraint constraintWithItem:_frontView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_backView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0];
     
     self.frontViewSelfConstraints = [NSMutableArray array];
     
@@ -213,12 +212,11 @@
     [self.frontViewSelfConstraints addObject:[NSLayoutConstraint constraintWithItem:_checkMarkImage attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_frontView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
     [self.frontViewSelfConstraints addObject:[NSLayoutConstraint constraintWithItem:_checkMarkImage attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:_backView attribute:NSLayoutAttributeRight multiplier:1.0f constant:-5.0f]];
     
-    [self.frontViewSelfConstraints addObjectsFromArray:@[_slideOffset,frontViewWidthConstaint]];
-    [self.frontViewSelfConstraints addObjectsFromArray:vFrontViewContraints];
+    [self.frontViewSelfConstraints addObjectsFromArray:@[_offsetConstraint,frontViewWidthConstraint,frontViewHeightConstraint,frontViewTopConstraint]];
     
     [self.backView addConstraints:self.frontViewSelfConstraints];
-    
-    //Constrain FrontView
+  
+   //Constrain FrontView
     NSDictionary *cellBackgroundViews = NSDictionaryOfVariableBindings(_selectionTabImage,_selectionSubtitleLabel,_selectionTitleLabel,_logoImageView,_imagesView,_numberOfContactsLabel,_morePeopleLabel);
     
     NSArray *hBackgroundConstraints =
@@ -247,7 +245,7 @@
                                             metrics:nil
                                               views:cellBackgroundViews];
     NSArray *vItemsConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_selectionTitleLabel(==12)][_selectionSubtitleLabel(==12)]-(>=0)-[_imagesView(==38)]-8-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_selectionTitleLabel(==12)][_selectionSubtitleLabel(==12)][_imagesView(==38)]"
                                             options:NSLayoutFormatAlignAllLeft
                                             metrics:nil
                                               views:cellBackgroundViews];
