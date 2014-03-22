@@ -5,7 +5,7 @@
 
 @property (nonatomic, strong) UIImageView *viewBackground;
 @property (nonatomic, strong) UIImageView *rankSign; 
-@property (nonatomic, strong) UIView *overlayMask;
+@property (nonatomic, strong) UIButton *overlayMask;
 
 @property (nonatomic, strong) NSMutableArray *rankButtons;
 @property (nonatomic, strong) NSArray *rankDelineations;
@@ -244,12 +244,12 @@
   return scrollView;
 }
 
-- (UIView *)newOverlayMask{
-  UIView *view = [[UIView alloc] init];
-  [view setHidden:YES];
-  [view setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:.8f]];
-  [view setTranslatesAutoresizingMaskIntoConstraints:NO];
-  return view;
+- (UIButton *)newOverlayMask{
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setHidden:YES];
+  [button setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:.8f]];
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return button;
 }
 
 - (UIButton *)newRankButtonWithImage:(UIImage *)image forTag:(NSInteger)tag{
