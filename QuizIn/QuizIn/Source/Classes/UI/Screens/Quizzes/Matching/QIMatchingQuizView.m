@@ -1,6 +1,7 @@
 #import "QIMatchingQuizView.h"
 #import "QIFontProvider.h"
 #import "QIStatsData.h"
+#import "UIImageView+QIAFNetworking.h"
 
 @interface QIMatchingQuizView ()
 
@@ -683,15 +684,34 @@
   return questionButton;
 }
 
-// TODO: (Rene) Replace this with AFNetworking image fetch.
 - (UIImageView *)newQuestionButtonImageWithURL:(NSURL *)imageURL{
   UIImageView *profileImageView = [[UIImageView alloc] init];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   profileImageView.contentMode = UIViewContentModeScaleAspectFit;
-//  profileImageView.showActivityIndicator = YES;
-//  profileImageView.crossfadeDuration = 0.3f;
-//  profileImageView.crossfadeImages = YES;
-//  profileImageView.imageURL = imageURL;
+
+  if (imageURL) {
+    QI_DECLARE_WEAK(profileImageView, weakProfileImageView);
+    [profileImageView
+     setImageWithURL:imageURL
+     placeholderImage:nil
+     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+       if (!image || !weakProfileImageView) {
+         return;
+       }
+       dispatch_async(dispatch_get_main_queue(), ^{
+         // TODO: (Rene) Crossfade in.
+         //  profileImageView.showActivityIndicator = YES;
+         //  profileImageView.crossfadeDuration = 0.3f;
+         //  profileImageView.crossfadeImages = YES;
+         weakProfileImageView.image = image;
+       });
+     }
+     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+       NSLog(@"Could not load question image in business card quiz view, %@", error);
+     }];
+  }
+  
+  
   return profileImageView;
 }
 

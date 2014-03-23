@@ -1,6 +1,6 @@
-
 #import "QIStatsCellView.h"
 #import "QIFontProvider.h"
+#import "UIImageView+QIAFNetworking.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface QIStatsCellView ()
@@ -84,8 +84,29 @@
 
 #pragma mark Update
 -(void)updateProfileImage {
-  // TODO: (Rene) Replace this with AFNetworking image fetch.
-//  [self.profileImageView setImageURL:self.profileImageURL];
+  if (!self.profileImageURL) {
+    return;
+  }
+  
+  QI_DECLARE_WEAK_SELF(weakSelf);
+  [self.profileImageView
+   setImageWithURL:self.profileImageURL
+   placeholderImage:nil
+   success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+     if (!image || !weakSelf || !weakSelf.profileImageView) {
+       return;
+     }
+     dispatch_async(dispatch_get_main_queue(), ^{
+       // TODO: (Rene) Crossfade in.
+       //  profileImageView.showActivityIndicator = YES;
+       //  profileImageView.crossfadeDuration = 0.3f;
+       //  profileImageView.crossfadeImages = YES;
+       weakSelf.profileImageView.image = image;
+     });
+   }
+   failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+     NSLog(@"Could not load question image in business card quiz view, %@", error);
+   }];
 }
 
 - (void)updateConnectionNameLabel{
@@ -209,16 +230,12 @@
   return label;
 }
 
-// TODO: (Rene) Replace this with AFNetworking image fetch.
 - (UIImageView *)newProfileImageView{
   UIImageView *profileImageView = [[UIImageView alloc] init];
   [profileImageView.layer setCornerRadius:4.0f];
   [profileImageView setClipsToBounds:YES];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [profileImageView setContentMode:UIViewContentModeScaleAspectFit];
-//  [profileImageView setShowActivityIndicator:YES];
-//  [profileImageView setCrossfadeDuration:0.3f];
-//  [profileImageView setCrossfadeImages:YES];
   return profileImageView;
 }
 

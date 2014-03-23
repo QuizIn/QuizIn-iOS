@@ -1,6 +1,7 @@
 
 #import "QIGroupSelectionCellView.h"
 #import "QIFontProvider.h"
+#import "UIImageView+QIAFNetworking.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define TAG_OFFSET 10
@@ -162,10 +163,27 @@
 }
 
 -(void)updateLogoImage{
-  // TODO: (Rene) Replace this with AFNetworking async image fetch.
-//  if (self.logoURL && ![self.logoURL isKindOfClass:[NSNull class]]) {
-//    [self.logoImageView setImageURL:self.logoURL];
-//  }
+  if (self.logoURL && ![self.logoURL isKindOfClass:[NSNull class]]) {
+    QI_DECLARE_WEAK_SELF(weakSelf);
+    [self.logoImageView
+     setImageWithURL:self.logoURL
+     placeholderImage:nil
+     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+       if (!image || !weakSelf || !weakSelf.logoImageView) {
+         return;
+       }
+       dispatch_async(dispatch_get_main_queue(), ^{
+         // TODO: (Rene) Crossfade in.
+         //  profileImageView.showActivityIndicator = YES;
+         //  profileImageView.crossfadeDuration = 0.3f;
+         //  profileImageView.crossfadeImages = YES;
+         weakSelf.logoImageView.image = image;
+       });
+     }
+     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+       NSLog(@"Could not load question image in business card quiz view, %@", error);
+     }];
+  }
 }
 
 #pragma mark Layout
@@ -374,30 +392,45 @@
   return imagesView;
 }
 
-// TODO: (Rene) Replace this with AFNetworking async image fetch.
 - (UIImageView *)newProfileImageView:(NSURL *)imageURL {
   UIImageView *profileImageView = [[UIImageView alloc] init];
   profileImageView.layer.cornerRadius = 4.0f;
   profileImageView.clipsToBounds = YES;
-//  [profileImageView setImageURL:imageURL];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   profileImageView.contentMode = UIViewContentModeScaleAspectFit;
-//  profileImageView.showActivityIndicator = YES;
-//  profileImageView.crossfadeDuration = 0.3f;
-//  profileImageView.crossfadeImages = YES;
+
+  if (imageURL) {
+    QI_DECLARE_WEAK(profileImageView, weakProfileImageView);
+    [profileImageView
+     setImageWithURL:imageURL
+     placeholderImage:nil
+     success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+       if (!image || !weakProfileImageView) {
+         return;
+       }
+       dispatch_async(dispatch_get_main_queue(), ^{
+         // TODO: (Rene) Crossfade in.
+         //  profileImageView.showActivityIndicator = YES;
+         //  profileImageView.crossfadeDuration = 0.3f;
+         //  profileImageView.crossfadeImages = YES;
+         weakProfileImageView.image = image;
+       });
+     }
+     failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+       NSLog(@"Could not load question image in business card quiz view, %@", error);
+     }];
+  }
+  
   return profileImageView;
 }
 
-// TODO: (Rene) Replace this with AFNetworking async image fetch.
 - (UIImageView *)newLogoImageView {
   UIImageView *logoImageView = [[UIImageView alloc] init];
   logoImageView.layer.cornerRadius = 4.0f;
   logoImageView.clipsToBounds = YES;
   [logoImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-//  logoImageView.contentMode = UIViewContentModeScaleAspectFit;
-//  logoImageView.showActivityIndicator = YES;
-//  logoImageView.crossfadeDuration = 0.3f;
-//  logoImageView.crossfadeImages = YES;
+  logoImageView.contentMode = UIViewContentModeScaleAspectFit;
+
   return logoImageView;
 }
        

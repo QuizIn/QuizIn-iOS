@@ -2,6 +2,7 @@
 #import "QIFontProvider.h"
 #import "QIRankDefinition.h"
 #import "QIStatsData.h"
+#import "UIImageView+QIAFNetworking.h"
 
 @interface QIRankDisplayView ()
 
@@ -86,8 +87,26 @@
 }
 
 - (void)updateProfileImageView {
-  // TODO: (Rene) Use AFNetworking to replace AsyncImageView.
-//  [self.profileImageView setImageURL:self.profileImageURL];
+  if (!self.profileImageURL) {
+    return;
+  }
+  
+  QI_DECLARE_WEAK_SELF(weakSelf);
+  [self.profileImageView
+   setImageWithURL:self.profileImageURL
+   placeholderImage:nil
+   success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+     if (!image || !weakSelf || !weakSelf.profileImageView) {
+       return;
+     }
+     dispatch_async(dispatch_get_main_queue(), ^{
+       // TODO: (Rene) Crossfade in?
+       weakSelf.profileImageView.image = image;
+     });
+   }
+   failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+     NSLog(@"Could not load question image in business card quiz view, %@", error);
+   }];
 }
 
 - (void)updateProfileNameLabel{
@@ -238,13 +257,13 @@
   return imageView;
 }
 
-// TODO: (Rene) Use AFNetworking to replace AsyncImageView.
 -(UIImageView *)newProfileImageView{
   UIImageView *imageView = [[UIImageView alloc] init];
   [imageView setContentMode:UIViewContentModeScaleAspectFill];
   [imageView setBackgroundColor:[UIColor blackColor]]; 
   [imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [imageView setImage:[UIImage imageNamed:@"placeholderHead"]];
+  
   return imageView;
 }
 

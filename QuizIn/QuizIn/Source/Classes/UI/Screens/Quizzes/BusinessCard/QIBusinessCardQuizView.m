@@ -1,6 +1,7 @@
 #import "QIBusinessCardQuizView.h"
 #import "QIStatsData.h"
 #import "QIFontProvider.h"
+#import "UIImageView+QIAFNetworking.h"
 
 @interface QIBusinessCardQuizView ()
 
@@ -531,9 +532,26 @@
 
 
 #pragma mark Data Display
-// TODO: (Rene) Replace this with AFNetworking image fetch.
--(void)updateQuestionImage{
-//  self.profileImageView.imageURL = self.questionImageURL;
+-(void)updateQuestionImage {
+  QI_DECLARE_WEAK_SELF(weakSelf);
+  [self.profileImageView
+   setImageWithURL:self.questionImageURL
+   placeholderImage:nil
+   success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+     if (!image || !weakSelf || !weakSelf.profileImageView) {
+       return;
+     }
+     dispatch_async(dispatch_get_main_queue(), ^{
+       // TODO: (Rene) Crossfade in.
+       //  profileImageView.showActivityIndicator = YES;
+       //  profileImageView.crossfadeDuration = 0.3f;
+       //  profileImageView.crossfadeImages = YES;
+       weakSelf.profileImageView.image = image;
+     });
+   }
+   failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+     NSLog(@"Could not load question image in business card quiz view, %@", error);
+   }];
 }
 
 -(void)updateProgress{
@@ -668,14 +686,10 @@
   return businessCardBackground;
 }
 
-// TODO: (Rene) Replace this with AFNetworking image fetch.
 - (UIImageView *)newProfileImageView {
   UIImageView *profileImageView = [[UIImageView alloc] init];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   profileImageView.contentMode = UIViewContentModeScaleAspectFit;
-//  profileImageView.showActivityIndicator = YES;
-//  profileImageView.crossfadeDuration = 0.3f;
-//  profileImageView.crossfadeImages = YES;
   return profileImageView;
 }
 
