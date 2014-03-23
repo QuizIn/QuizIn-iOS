@@ -1,5 +1,4 @@
 #import "QIHomeView.h"
-#import "AsyncImageView.h"
 #import "QIFontProvider.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -366,11 +365,12 @@
 
 #pragma mark Data
 - (void)updateImages{
-  for (int i=0;i<4;i++) {
-    AsyncImageView *image = [self.profileImages objectAtIndex:i];
-    NSURL *url = [self.imageURLs objectAtIndex:i];
-    [image setImageURL:url];
-  }
+  // TODO: (Rene) Replace this with AFNetworking image fetch.
+//  for (int i=0;i<4;i++) {
+//    AsyncImageView *image = [self.profileImages objectAtIndex:i];
+//    NSURL *url = [self.imageURLs objectAtIndex:i];
+//    [image setImageURL:url];
+//  }
 }
 
 - (void)updateNumberOfConnections{
@@ -378,7 +378,7 @@
     [self.connectionsQuizNumberOfConnectionsLabel setText:@"500+ Connections"];
   }
   else{
-    [self.connectionsQuizNumberOfConnectionsLabel setText:[NSString stringWithFormat:@"%d Connections",self.numberOfConnections]];
+    [self.connectionsQuizNumberOfConnectionsLabel setText:[NSString stringWithFormat:@"%ld Connections",(long)self.numberOfConnections]];
   }
 }
 
@@ -470,16 +470,17 @@
   return @[[self newProfileImageView:nil],[self newProfileImageView:nil],[self newProfileImageView:nil],[self newProfileImageView:nil]];
 }
 
-- (AsyncImageView *)newProfileImageView:(NSURL *)imageURL {
-  AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
+// TODO: (Rene) Replace this with AFNetworking aync image fetch.
+- (UIImageView *)newProfileImageView:(NSURL *)imageURL {
+  UIImageView *profileImageView = [[UIImageView alloc] init];
   [profileImageView.layer setCornerRadius:4.0f];
   [profileImageView setClipsToBounds:YES];
-  [profileImageView setImageURL:imageURL];
+//  [profileImageView setImageURL:imageURL];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [profileImageView setContentMode:UIViewContentModeScaleAspectFit];
-  [profileImageView setShowActivityIndicator:YES];
-  [profileImageView setCrossfadeDuration:0.3f];
-  [profileImageView setCrossfadeImages:YES];
+//  [profileImageView setShowActivityIndicator:YES];
+//  [profileImageView setCrossfadeDuration:0.3f];
+//  [profileImageView setCrossfadeImages:YES];
   return profileImageView;
 }
 

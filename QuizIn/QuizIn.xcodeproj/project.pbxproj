@@ -11,6 +11,7 @@
 		203AB01218300AF60053541C /* QISearchFacet.m in Sources */ = {isa = PBXBuildFile; fileRef = 203AB01118300AF60053541C /* QISearchFacet.m */; };
 		203AB01518300B730053541C /* QISearchFacetBucket.m in Sources */ = {isa = PBXBuildFile; fileRef = 203AB01418300B730053541C /* QISearchFacetBucket.m */; };
 		203AB01818300C460053541C /* QISearchFacet+Factory.m in Sources */ = {isa = PBXBuildFile; fileRef = 203AB01718300C460053541C /* QISearchFacet+Factory.m */; };
+		2043383418DE471E001801B6 /* LIAuthenticatedRequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2043383318DE471E001801B6 /* LIAuthenticatedRequestSerializer.m */; };
 		205504E11780BED200F7F90F /* QIQuiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504E01780BED200F7F90F /* QIQuiz.m */; };
 		205504E41780BEF900F7F90F /* QIQuizQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504E31780BEF900F7F90F /* QIQuizQuestion.m */; };
 		205504E71780BF3300F7F90F /* QIMultipleChoiceQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 205504E61780BF3200F7F90F /* QIMultipleChoiceQuestion.m */; };
@@ -292,7 +293,9 @@
 		3478003E1750EFC1002B29DB /* multiplechoice_reference@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFEF1750EFC1002B29DB /* multiplechoice_reference@2x.png */; };
 		347800411750EFC1002B29DB /* placeholderHead.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFF21750EFC1002B29DB /* placeholderHead.png */; };
 		347800421750EFC1002B29DB /* placeholderHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFF31750EFC1002B29DB /* placeholderHead@2x.png */; };
-		347800431750EFC1002B29DB /* Icon in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFF51750EFC1002B29DB /* Icon */; };
+		347800431750EFC1002B29DB /* Icon
+ in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFF51750EFC1002B29DB /* Icon
+ */; };
 		347800441750EFC1002B29DB /* LinkedInAppv10.psd in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFF61750EFC1002B29DB /* LinkedInAppv10.psd */; };
 		347800451750EFC1002B29DB /* LinkedInAppv7 (1).psd in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFF71750EFC1002B29DB /* LinkedInAppv7 (1).psd */; };
 		347800461750EFC1002B29DB /* LinkedInAppv8 (1).psd in Resources */ = {isa = PBXBuildFile; fileRef = 3478FFF81750EFC1002B29DB /* LinkedInAppv8 (1).psd */; };
@@ -308,7 +311,6 @@
 		347800501750EFC1002B29DB /* quizin_headerbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 347800031750EFC1002B29DB /* quizin_headerbar.png */; };
 		347800511750EFC1002B29DB /* quizin_headerbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 347800041750EFC1002B29DB /* quizin_headerbar@2x.png */; };
 		3478FF9F173EE237002B29DB /* High-level diagram.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3478FF9E173EE237002B29DB /* High-level diagram.pdf */; };
-		3478FFA4173EE7CD002B29DB /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFA3173EE7CD002B29DB /* AsyncImageView.m */; };
 		3478FFA8173FD747002B29DB /* QIProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFA7173FD747002B29DB /* QIProgressView.m */; };
 		3478FFAC1747C19D002B29DB /* QIMatchingQuizViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFAB1747C19D002B29DB /* QIMatchingQuizViewController.m */; };
 		3478FFAF1747C1C7002B29DB /* QIMatchingQuizView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3478FFAE1747C1C7002B29DB /* QIMatchingQuizView.m */; };
@@ -412,6 +414,8 @@
 		203AB01418300B730053541C /* QISearchFacetBucket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QISearchFacetBucket.m; sourceTree = "<group>"; };
 		203AB01618300C460053541C /* QISearchFacet+Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QISearchFacet+Factory.h"; sourceTree = "<group>"; };
 		203AB01718300C460053541C /* QISearchFacet+Factory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QISearchFacet+Factory.m"; sourceTree = "<group>"; };
+		2043383218DE471E001801B6 /* LIAuthenticatedRequestSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIAuthenticatedRequestSerializer.h; sourceTree = "<group>"; };
+		2043383318DE471E001801B6 /* LIAuthenticatedRequestSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIAuthenticatedRequestSerializer.m; sourceTree = "<group>"; };
 		205504DF1780BED200F7F90F /* QIQuiz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuiz.h; sourceTree = "<group>"; };
 		205504E01780BED200F7F90F /* QIQuiz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIQuiz.m; sourceTree = "<group>"; };
 		205504E21780BEF900F7F90F /* QIQuizQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuizQuestion.h; sourceTree = "<group>"; };
@@ -749,8 +753,6 @@
 		347800031750EFC1002B29DB /* quizin_headerbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quizin_headerbar.png; sourceTree = "<group>"; };
 		347800041750EFC1002B29DB /* quizin_headerbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quizin_headerbar@2x.png"; sourceTree = "<group>"; };
 		3478FF9E173EE237002B29DB /* High-level diagram.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "High-level diagram.pdf"; sourceTree = "<group>"; };
-		3478FFA2173EE7CD002B29DB /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
-		3478FFA3173EE7CD002B29DB /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
 		3478FFA6173FD747002B29DB /* QIProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIProgressView.h; sourceTree = "<group>"; };
 		3478FFA7173FD747002B29DB /* QIProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIProgressView.m; sourceTree = "<group>"; };
 		3478FFAA1747C19D002B29DB /* QIMatchingQuizViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIMatchingQuizViewController.h; sourceTree = "<group>"; };
@@ -788,7 +790,9 @@
 		3478FFEF1750EFC1002B29DB /* multiplechoice_reference@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "multiplechoice_reference@2x.png"; sourceTree = "<group>"; };
 		3478FFF21750EFC1002B29DB /* placeholderHead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholderHead.png; sourceTree = "<group>"; };
 		3478FFF31750EFC1002B29DB /* placeholderHead@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholderHead@2x.png"; sourceTree = "<group>"; };
-		3478FFF51750EFC1002B29DB /* Icon */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Icon"; sourceTree = "<group>"; };
+		3478FFF51750EFC1002B29DB /* Icon
+ */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Icon
+"; sourceTree = "<group>"; };
 		3478FFF61750EFC1002B29DB /* LinkedInAppv10.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = LinkedInAppv10.psd; sourceTree = "<group>"; };
 		3478FFF71750EFC1002B29DB /* LinkedInAppv7 (1).psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LinkedInAppv7 (1).psd"; sourceTree = "<group>"; };
 		3478FFF81750EFC1002B29DB /* LinkedInAppv8 (1).psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LinkedInAppv8 (1).psd"; sourceTree = "<group>"; };
@@ -1054,6 +1058,8 @@
 				20876202181D77340089C165 /* QILIPagedSearch.m */,
 				2085A65118D609D5000BAB4A /* QILICompanies.h */,
 				2085A65218D609D5000BAB4A /* QILICompanies.m */,
+				2043383218DE471E001801B6 /* LIAuthenticatedRequestSerializer.h */,
+				2043383318DE471E001801B6 /* LIAuthenticatedRequestSerializer.m */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -1534,18 +1540,8 @@
 				20E0202517A5BEBA00CB9D43 /* QIShuffleSet.m */,
 				34E977491764FA5500086673 /* QuizBuilder */,
 				3429135D1753AC580056ACCD /* FontProvider */,
-				3478FFA1173EE7CD002B29DB /* AsyncImageView */,
 			);
 			path = "Helper Functions";
-			sourceTree = "<group>";
-		};
-		3478FFA1173EE7CD002B29DB /* AsyncImageView */ = {
-			isa = PBXGroup;
-			children = (
-				3478FFA2173EE7CD002B29DB /* AsyncImageView.h */,
-				3478FFA3173EE7CD002B29DB /* AsyncImageView.m */,
-			);
-			path = AsyncImageView;
 			sourceTree = "<group>";
 		};
 		3478FFA5173FD6BF002B29DB /* ProgressView */ = {
@@ -1636,7 +1632,8 @@
 		3478FFF41750EFC1002B29DB /* PSDs */ = {
 			isa = PBXGroup;
 			children = (
-				3478FFF51750EFC1002B29DB /* Icon */,
+				3478FFF51750EFC1002B29DB /* Icon
+ */,
 				3478FFF61750EFC1002B29DB /* LinkedInAppv10.psd */,
 				3478FFF71750EFC1002B29DB /* LinkedInAppv7 (1).psd */,
 				3478FFF81750EFC1002B29DB /* LinkedInAppv8 (1).psd */,
@@ -2122,7 +2119,8 @@
 				347800411750EFC1002B29DB /* placeholderHead.png in Resources */,
 				3473045E189423D10063B090 /* hobnob_stretch_icon@2x.png in Resources */,
 				347800421750EFC1002B29DB /* placeholderHead@2x.png in Resources */,
-				347800431750EFC1002B29DB /* Icon in Resources */,
+				347800431750EFC1002B29DB /* Icon
+ in Resources */,
 				347800441750EFC1002B29DB /* LinkedInAppv10.psd in Resources */,
 				347800451750EFC1002B29DB /* LinkedInAppv7 (1).psd in Resources */,
 				347800461750EFC1002B29DB /* LinkedInAppv8 (1).psd in Resources */,
@@ -2412,7 +2410,6 @@
 				888679A4172DCE2800DCE3D0 /* QIQuizView.m in Sources */,
 				888679A8172DD5B000DCE3D0 /* QIMultipleChoiceQuizViewController.m in Sources */,
 				888679AB172DD5DA00DCE3D0 /* QIMultipleChoiceQuizView.m in Sources */,
-				3478FFA4173EE7CD002B29DB /* AsyncImageView.m in Sources */,
 				3478FFA8173FD747002B29DB /* QIProgressView.m in Sources */,
 				3478FFAC1747C19D002B29DB /* QIMatchingQuizViewController.m in Sources */,
 				3478FFAF1747C1C7002B29DB /* QIMatchingQuizView.m in Sources */,
@@ -2448,6 +2445,7 @@
 				344B62B5179F790D00EE85A9 /* QICalendarTableHeaderView.m in Sources */,
 				344B62B6179F790D00EE85A9 /* QIGroupSelectionCellView.m in Sources */,
 				344B62B7179F790D00EE85A9 /* QIGroupSelectionData.m in Sources */,
+				2043383418DE471E001801B6 /* LIAuthenticatedRequestSerializer.m in Sources */,
 				344B62B8179F790D00EE85A9 /* QIGroupSelectionTableFooterView.m in Sources */,
 				344B62B9179F790D00EE85A9 /* QIGroupSelectionTableHeaderView.m in Sources */,
 				344B62BA179F790D00EE85A9 /* QIGroupSelectionView.m in Sources */,

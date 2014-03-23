@@ -1,7 +1,6 @@
 
 #import "QIStatsCellView.h"
 #import "QIFontProvider.h"
-#import "AsyncImageView.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface QIStatsCellView ()
@@ -10,8 +9,8 @@
 @property (nonatomic, strong) UILabel *rightLabel;
 @property (nonatomic, strong) UILabel *wrongLabel;
 @property (nonatomic, strong) UIImageView *trendImage;
-@property (nonatomic, strong) UIView *keyKnown; 
-@property (nonatomic, strong) AsyncImageView *profileImageView;
+@property (nonatomic, strong) UIView *keyKnown;
+@property (nonatomic, strong) UIImageView *profileImageView;
 @property (nonatomic, strong) NSMutableArray *cellViewConstraints;
 
 @end
@@ -84,8 +83,9 @@
 }
 
 #pragma mark Update
--(void)updateProfileImage{
-  [self.profileImageView setImageURL:self.profileImageURL];
+-(void)updateProfileImage {
+  // TODO: (Rene) Replace this with AFNetworking image fetch.
+//  [self.profileImageView setImageURL:self.profileImageURL];
 }
 
 - (void)updateConnectionNameLabel{
@@ -209,15 +209,16 @@
   return label;
 }
 
-- (AsyncImageView *)newProfileImageView{
-  AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
+// TODO: (Rene) Replace this with AFNetworking image fetch.
+- (UIImageView *)newProfileImageView{
+  UIImageView *profileImageView = [[UIImageView alloc] init];
   [profileImageView.layer setCornerRadius:4.0f];
   [profileImageView setClipsToBounds:YES];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   [profileImageView setContentMode:UIViewContentModeScaleAspectFit];
-  [profileImageView setShowActivityIndicator:YES];
-  [profileImageView setCrossfadeDuration:0.3f];
-  [profileImageView setCrossfadeImages:YES];
+//  [profileImageView setShowActivityIndicator:YES];
+//  [profileImageView setCrossfadeDuration:0.3f];
+//  [profileImageView setCrossfadeImages:YES];
   return profileImageView;
 }
 

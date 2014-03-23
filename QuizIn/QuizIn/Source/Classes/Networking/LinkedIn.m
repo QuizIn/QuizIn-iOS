@@ -5,6 +5,8 @@
 #import "LIHTTPClient.h"
 #import "AKLinkedInAuthController.h"
 
+#import "AFNetworkingBlockTypes.h"
+
 #import "QIConnectionsStore.h"
 #import "QIPerson.h"
 #import "QILocation.h"
@@ -25,11 +27,6 @@
 #import <AuthKit/AKAccountStore.h>
 
 #import "QILIPagedSearch.h"
-
-typedef void (^AFHTTPRequestOperationSuccess)(AFHTTPRequestOperation *operation,
-                                              id responseObject);
-typedef void (^AFHTTPRequestOperationFailure)(AFHTTPRequestOperation *operation,
-                                              NSError *error);
 
 static QIPerson *authenticatedUser;
 
@@ -114,8 +111,8 @@ static QIPerson *authenticatedUser;
                                                          maxBatchSize:(NSInteger)maxBatchSize
                                                          onCompletion:(LIConnectionsResponse)onCompletion {
   if (numberOfConnectionsToFetch > numberOfConnections) {
-    DDLogWarn(@"User's number of connections: %d is less than requested for batched connections: %d.",
-               numberOfConnections, numberOfConnectionsToFetch);
+    DDLogWarn(@"User's number of connections: %d is less than requested for batched connections: %ld.",
+               numberOfConnections, (long)numberOfConnectionsToFetch);
     numberOfConnectionsToFetch = numberOfConnections;
   }
   

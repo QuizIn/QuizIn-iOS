@@ -36,7 +36,7 @@
   }
   
   
-  AFHTTPRequestOperationSuccess success = ^(AFHTTPRequestOperation *requestOperation,
+  AFHTTPRequestOperationSuccess success = ^(NSURLSessionDataTask *task,
                                             NSDictionary *companiesResultJSON){
     NSLog(@"%@", companiesResultJSON);
     NSArray *companiesJSON = companiesResultJSON[@"values"];
@@ -48,7 +48,7 @@
     onCompletion ? onCompletion([companies copy], nil) : NULL;
   };
   
-  AFHTTPRequestOperationFailure failure = ^(AFHTTPRequestOperation *requestOperation,
+  AFHTTPRequestOperationFailure failure = ^(NSURLSessionDataTask *task,
                                             NSError *error){
     NSLog(@"%@", error);
     onCompletion ? onCompletion(nil, error) : NULL;
@@ -56,7 +56,7 @@
   
   
   LIHTTPClient *client = [LIHTTPClient sharedClient];
-  [client getPath:[resourcePath copy] parameters:@{} success:success failure:failure];
+  [client GET:[resourcePath copy] parameters:@{} success:success failure:failure];
 }
 
 @end

@@ -3,7 +3,7 @@ This application makes use of the following third party libraries:
 
 ## AFNetworking
 
-Copyright (c) 2011 Gowalla (http://gowalla.com/)
+Copyright (c) 2013 AFNetworking (http://afnetworking.com/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -86,7 +86,7 @@ limitations under the License.
 
 ## SBJson
 
-Copyright (C) 2007-2013 Stig Brautaset. All rights reserved.
+Copyright (C) 2007-2014 Stig Brautaset. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:

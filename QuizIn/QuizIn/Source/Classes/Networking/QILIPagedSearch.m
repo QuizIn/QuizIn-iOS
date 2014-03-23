@@ -59,8 +59,8 @@ static NSString * const kSearchResultsPerPage = @"25";
         [QILISearch getPeopleSearchWithFieldSelector:[NSString stringWithFormat:@"people:(%@)", [LinkedIn peopleFieldSelector]]
                                     searchParameters:@{@"start": [NSString stringWithFormat:@"%@", @(i)],
                                                        @"count": kSearchResultsPerPage,
-                                                       @"facet": [@[@"network,F"]
-                                                                  arrayByAddingObjectsFromArray:self.facetValues]}
+                                                       @"facet": [NSSet setWithObjects:@"network,F",
+                                                                  [self.facetValues componentsJoinedByString:@","], nil]}
                                         onCompletion:searchPageOnCompletion];
       }
     } else {
@@ -75,8 +75,8 @@ static NSString * const kSearchResultsPerPage = @"25";
   [QILISearch getPeopleSearchWithFieldSelector:[NSString stringWithFormat:@"people:(%@)", [LinkedIn peopleFieldSelector]]
                               searchParameters:@{@"start": @"0",
                                                  @"count": kSearchResultsPerPage,
-                                                 @"facet": [@[@"network,F"]
-                                                            arrayByAddingObjectsFromArray:self.facetValues]}
+                                                 @"facet": [NSSet setWithObjects:@"network,F",
+                                                            [self.facetValues componentsJoinedByString:@","], nil]}
                                   onCompletion:searchFirstPageOnCompletion];
   
 }

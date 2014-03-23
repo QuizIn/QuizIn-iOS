@@ -1,8 +1,8 @@
-#import "AFHTTPClient.h"
+#import <AFNetworking/AFNetworking.h>
 
 #import "AFNetworkingBlockTypes.h"
 
-@interface LIHTTPClient : AFHTTPClient
+@interface LIHTTPClient : AFHTTPSessionManager
 
 + (instancetype)sharedClient;
 

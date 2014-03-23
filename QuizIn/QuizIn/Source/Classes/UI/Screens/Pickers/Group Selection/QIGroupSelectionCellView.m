@@ -1,7 +1,6 @@
 
 #import "QIGroupSelectionCellView.h"
 #import "QIFontProvider.h"
-#import "AsyncImageView.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define TAG_OFFSET 10
@@ -17,7 +16,7 @@
 @property (nonatomic,strong) UILabel *selectionSubtitleLabel;
 @property (nonatomic,strong) UILabel *numberOfContactsLabel;
 @property (nonatomic,strong) UILabel *morePeopleLabel;
-@property (nonatomic,strong) AsyncImageView *logoImageView;
+@property (nonatomic,strong) UIImageView *logoImageView;
 @property (nonatomic,strong) UIView *imagesView;
 @property (nonatomic,assign) NSInteger numberOfImages;
 @property (nonatomic,strong) NSLayoutConstraint *offsetConstraint;
@@ -130,7 +129,7 @@
   }
   NSArray *displayedImageURLs = [self.imageURLs objectsAtIndexes:indexSet];
   for (NSURL *imageURL in displayedImageURLs){
-    AsyncImageView *profileImageView = [self newProfileImageView:imageURL];
+    UIImageView *profileImageView = [self newProfileImageView:imageURL];
     profileImageView.tag = tag;
     tag++;
     [self.imagesView addSubview:profileImageView];
@@ -163,9 +162,10 @@
 }
 
 -(void)updateLogoImage{
-  if (self.logoURL && ![self.logoURL isKindOfClass:[NSNull class]]) {
-    [self.logoImageView setImageURL:self.logoURL];
-  }
+  // TODO: (Rene) Replace this with AFNetworking async image fetch.
+//  if (self.logoURL && ![self.logoURL isKindOfClass:[NSNull class]]) {
+//    [self.logoImageView setImageURL:self.logoURL];
+//  }
 }
 
 #pragma mark Layout
@@ -374,28 +374,30 @@
   return imagesView;
 }
 
-- (AsyncImageView *)newProfileImageView:(NSURL *)imageURL {
-  AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
+// TODO: (Rene) Replace this with AFNetworking async image fetch.
+- (UIImageView *)newProfileImageView:(NSURL *)imageURL {
+  UIImageView *profileImageView = [[UIImageView alloc] init];
   profileImageView.layer.cornerRadius = 4.0f;
   profileImageView.clipsToBounds = YES;
-  [profileImageView setImageURL:imageURL];
+//  [profileImageView setImageURL:imageURL];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   profileImageView.contentMode = UIViewContentModeScaleAspectFit;
-  profileImageView.showActivityIndicator = YES;
-  profileImageView.crossfadeDuration = 0.3f;
-  profileImageView.crossfadeImages = YES;
+//  profileImageView.showActivityIndicator = YES;
+//  profileImageView.crossfadeDuration = 0.3f;
+//  profileImageView.crossfadeImages = YES;
   return profileImageView;
 }
 
-- (AsyncImageView *)newLogoImageView {
-  AsyncImageView *logoImageView = [[AsyncImageView alloc] init];
+// TODO: (Rene) Replace this with AFNetworking async image fetch.
+- (UIImageView *)newLogoImageView {
+  UIImageView *logoImageView = [[UIImageView alloc] init];
   logoImageView.layer.cornerRadius = 4.0f;
   logoImageView.clipsToBounds = YES;
   [logoImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  logoImageView.contentMode = UIViewContentModeScaleAspectFit;
-  logoImageView.showActivityIndicator = YES;
-  logoImageView.crossfadeDuration = 0.3f;
-  logoImageView.crossfadeImages = YES;
+//  logoImageView.contentMode = UIViewContentModeScaleAspectFit;
+//  logoImageView.showActivityIndicator = YES;
+//  logoImageView.crossfadeDuration = 0.3f;
+//  logoImageView.crossfadeImages = YES;
   return logoImageView;
 }
        

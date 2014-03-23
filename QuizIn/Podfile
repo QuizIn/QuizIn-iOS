@@ -2,7 +2,7 @@ platform :ios, '6.1'
 
 inhibit_all_warnings!
 
-pod 'AFNetworking', '1.3.3'
+pod 'AFNetworking', '2.2.1'
 pod 'CocoaLumberjack', '1.8.0'
 pod 'AuthKit', :git => 'https://github.com/RCacheaux/AuthKit.git'
 pod 'gtm-oauth2', '0.0.1'

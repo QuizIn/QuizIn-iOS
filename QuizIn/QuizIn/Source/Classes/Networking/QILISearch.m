@@ -25,7 +25,7 @@
   [queryParameters addEntriesFromDictionary:searchParameters];
   
   // Success block.
-  AFHTTPRequestOperationSuccess success = ^(AFHTTPRequestOperation *requestOperation,
+  AFHTTPRequestOperationSuccess success = ^(NSURLSessionDataTask *task,
                                             NSDictionary *JSON){
     NSDictionary *peopleResultJSON = JSON[@"people"];
     QILISearchResultData *result = [QILISearchResultData new];
@@ -36,24 +36,17 @@
     onCompletion ? onCompletion(result, nil) : NULL;
   };
   // Failure block.
-  AFHTTPRequestOperationFailure failure = ^(AFHTTPRequestOperation *requestOperation,
+  AFHTTPRequestOperationFailure failure = ^(NSURLSessionDataTask *task,
                                             NSError *error){
     
     onCompletion ? onCompletion(nil, error) : NULL;
     // TODO(Rene): Check for unauth responses globally.
-    DDLogInfo(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
+    DDLogInfo(@"LinkedIn: ERROR, HTTP Error: %@, for task, %@", error, task);
     [[AKLinkedInAuthController sharedController]
      unauthenticateAccount:[[AKAccountStore sharedStore] authenticatedAccount]];
   };
   
-  NSMutableURLRequest *urlRequest = [httpClient requestWithMethod:@"GET"
-                                                      path:resourcePath
-                                                parameters:queryParameters];
-  
-  AFHTTPRequestOperation *operation = [httpClient HTTPRequestOperationWithRequest:urlRequest
-                                                                          success:success
-                                                                          failure:failure];
-  [httpClient enqueueHTTPRequestOperation:operation];
+  [httpClient GET:resourcePath parameters:queryParameters success:success failure:failure];
 }
 
 + (void)getPeopleSearchFacets:(NSArray *)facets
@@ -72,7 +65,7 @@
   [queryParameters addEntriesFromDictionary:searchParameters];
   
   // Success block.
-  AFHTTPRequestOperationSuccess success = ^(AFHTTPRequestOperation *requestOperation,
+  AFHTTPRequestOperationSuccess success = ^(NSURLSessionDataTask *task,
                                             NSDictionary *JSON){
     NSMutableArray *facets = [NSMutableArray array];
     NSDictionary *facetsResultJSON = JSON[@"facets"];
@@ -83,24 +76,16 @@
     onCompletion ? onCompletion([facets copy], nil) : NULL;
   };
   // Failure block.
-  AFHTTPRequestOperationFailure failure = ^(AFHTTPRequestOperation *requestOperation,
+  AFHTTPRequestOperationFailure failure = ^(NSURLSessionDataTask *task,
                                             NSError *error){
-    
     onCompletion ? onCompletion(nil, error) : NULL;
     // TODO(Rene): Check for unauth responses globally.
-    DDLogInfo(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
+    DDLogInfo(@"LinkedIn: ERROR, HTTP Error: %@, for task, %@", error, task);
     [[AKLinkedInAuthController sharedController]
      unauthenticateAccount:[[AKAccountStore sharedStore] authenticatedAccount]];
   };
   
-  NSMutableURLRequest *urlRequest = [httpClient requestWithMethod:@"GET"
-                                                      path:resourcePath
-                                                parameters:queryParameters];
-  
-  AFHTTPRequestOperation *operation = [httpClient HTTPRequestOperationWithRequest:urlRequest
-                                                                          success:success
-                                                                          failure:failure];
-  [httpClient enqueueHTTPRequestOperation:operation];
+  [httpClient GET:resourcePath parameters:queryParameters success:success failure:failure];
 }
 
 @end

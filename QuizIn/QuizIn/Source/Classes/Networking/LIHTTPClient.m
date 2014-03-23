@@ -1,84 +1,8 @@
 #import "LIHTTPClient.h"
 
-#import <AuthKit/AKAccount.h>
-#import <AFNetworking/AFJSONRequestOperation.h>
-
-#import "AKGTMOAuth2Account.h"
-#import "AKOAuth2AccountCredential.h"
-#import "QIAccountStore.h"
-
-@interface NSDictionary (LIQueryStringInspection)
-- (BOOL)li_containsArray;
-@end
-
-@implementation NSDictionary (LIQueryStringInspection)
-- (BOOL)li_containsArray {
-  for (id key in self) {
-    if ([self[key] isKindOfClass:[NSArray class]]) {
-      return YES;
-    }
-  }
-  return NO;
-}
-@end
+#import "LIAuthenticatedRequestSerializer.h"
 
 static NSString * const kAFLinkedInAPIBaseURLString = @"https://api.linkedin.com/v1/";
-
-extern NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value);
-
-NSArray * LIAFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
-  NSMutableArray *mutableQueryStringComponents = [NSMutableArray array];
-  if ([value isKindOfClass:[NSDictionary class]]) {
-    NSDictionary *dictionary = value;
-    NSSortDescriptor *sortDescriptor =
-        [NSSortDescriptor sortDescriptorWithKey:@"description"
-                                      ascending:YES
-                                       selector:@selector(caseInsensitiveCompare:)];
-    for (id nestedKey in [dictionary.allKeys sortedArrayUsingDescriptors:@[sortDescriptor]]) {
-      id nestedValue = dictionary[nestedKey];
-      if (nestedValue) {
-        if ([nestedValue isKindOfClass:[NSArray class]]) {
-          [mutableQueryStringComponents addObjectsFromArray:LIAFQueryStringPairsFromKeyAndValue((key ? [NSString stringWithFormat:@"%@[%@]", key, nestedKey] : nestedKey), nestedValue)];
-        } else {
-          [mutableQueryStringComponents addObjectsFromArray:AFQueryStringPairsFromKeyAndValue((key ? [NSString stringWithFormat:@"%@[%@]", key, nestedKey] : nestedKey), nestedValue)];
-        }
-      }
-    }
-    return mutableQueryStringComponents;
-  } else if ([value isKindOfClass:[NSArray class]]) {
-    NSArray *array = value;
-    for (id nestedValue in array) {
-      [mutableQueryStringComponents addObjectsFromArray:LIAFQueryStringPairsFromKeyAndValue(key, nestedValue)];
-    }
-    return mutableQueryStringComponents;
-  }
-  
-  return AFQueryStringPairsFromKeyAndValue(key, value);
-}
-
-NSArray * LIAFQueryStringPairsFromDictionary(NSDictionary *dictionary) {
-  return LIAFQueryStringPairsFromKeyAndValue(nil, dictionary);
-}
-
-NSString * LIAFQueryStringFromParametersWithEncoding(NSDictionary *parameters, NSStringEncoding stringEncoding) {
-  NSMutableArray *mutablePairs = [NSMutableArray array];
-  for (id pair in LIAFQueryStringPairsFromDictionary(parameters)) {
-    CFStringRef encodedString;
-    
-    SEL encodedStringSel = @selector(URLEncodedStringValueWithEncoding:);
-    NSInvocation *inv =
-        [NSInvocation invocationWithMethodSignature:[pair methodSignatureForSelector:encodedStringSel]];
-    [inv setSelector:encodedStringSel];
-    [inv setTarget:pair];
-    //arguments 0 and 1 are self and _cmd respectively, automatically set by NSInvocation
-    [inv setArgument:&stringEncoding atIndex:2];
-    [inv invoke];
-    [inv getReturnValue:&encodedString];
-    
-    [mutablePairs addObject:(__bridge id)(encodedString)];
-  }
-  return [mutablePairs componentsJoinedByString:@"&"];
-}
 
 @implementation LIHTTPClient
 
@@ -88,55 +12,26 @@ NSString * LIAFQueryStringFromParametersWithEncoding(NSDictionary *parameters, N
   dispatch_once(&onceToken, ^{
     _sharedClient =
         [[LIHTTPClient alloc]
-         initWithBaseURL:[NSURL URLWithString:kAFLinkedInAPIBaseURLString]];
+         initWithBaseURL:[NSURL URLWithString:kAFLinkedInAPIBaseURLString] sessionConfiguration:nil];
   });
   return _sharedClient;
 }
 
-- (id)initWithBaseURL:(NSURL *)url {
-  self = [super initWithBaseURL:url];
-  if (!self) {
-    return nil;
+- (instancetype)initWithBaseURL:(NSURL *)url sessionConfiguration:(NSURLSessionConfiguration *)configuration {
+  self = [super initWithBaseURL:url sessionConfiguration:configuration];
+  if (self) {
+    self.requestSerializer = [LIAuthenticatedRequestSerializer serializer];
+    self.responseSerializer = [AFJSONResponseSerializer serializer];
   }
-  [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
-	[self setDefaultHeader:@"Accept" value:@"application/json"];
-  [self setDefaultHeader:@"x-li-format" value:@"json"];
   return self;
 }
 
-- (NSMutableURLRequest *)requestWithMethod:(NSString *)method
-                                      path:(NSString *)path
-                                parameters:(NSDictionary *)parameters {
-  // Add OAuth Access Token to URL.
-  NSMutableDictionary *linkedInParameters =
-      [NSMutableDictionary dictionaryWithDictionary:parameters];
-  AKGTMOAuth2Account *masterAccount =
-      (AKGTMOAuth2Account *)[[QIAccountStore sharedStore] authenticatedAccount];
-  [linkedInParameters setObject:masterAccount.OAuth2Credential.accessToken
-                        forKey:@"oauth2_access_token"];
-  
-  // Get URL request.
-  NSMutableURLRequest *urlRequest = [super requestWithMethod:method
-                                                        path:path
-                                                  parameters:[linkedInParameters copy]];
-  
-  // Handle repeating query string parameters.
-  if (linkedInParameters && [linkedInParameters li_containsArray]) {
-    if ([method isEqualToString:@"GET"] ||
-        [method isEqualToString:@"HEAD"] ||
-        [method isEqualToString:@"DELETE"]) {
-      NSURL *url = [NSURL URLWithString:path relativeToURL:self.baseURL];
-      NSString *queryStringFormat =
-          [path rangeOfString:@"?"].location == NSNotFound ?@"?%@" : @"&%@";
-      NSString *queryParameters =
-          LIAFQueryStringFromParametersWithEncoding([linkedInParameters copy],self.stringEncoding);
-      NSString *urlString =
-          [[url absoluteString] stringByAppendingFormat:queryStringFormat, queryParameters];
-      urlRequest.URL = [NSURL URLWithString:urlString];
-    }
-  }
-  
-  return urlRequest;
+- (NSURLSessionDataTask *)GET:(NSString *)URLString
+                   parameters:(NSDictionary *)parameters
+                      success:(void (^)(NSURLSessionDataTask *, id))success
+                      failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
+  NSLog(@"%@", parameters);
+  return [super GET:URLString parameters:parameters success:success failure:failure];
 }
 
 @end

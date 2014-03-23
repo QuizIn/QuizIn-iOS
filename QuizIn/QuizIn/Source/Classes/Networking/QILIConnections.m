@@ -64,25 +64,22 @@
   NSDictionary *queryParameters = [parameters queryParameterDictionary];
   
   // Success block.
-  AFHTTPRequestOperationSuccess success = ^(AFHTTPRequestOperation *requestOperation,
+  AFHTTPRequestOperationSuccess success = ^(NSURLSessionDataTask *task,
                                             NSDictionary *JSON){
     NSArray *connectionsJSON = JSON[@"values"];
     onCompletion ? onCompletion(connectionsJSON, nil) : NULL;
   };
   // Failure block.
-  AFHTTPRequestOperationFailure failure = ^(AFHTTPRequestOperation *requestOperation,
+  AFHTTPRequestOperationFailure failure = ^(NSURLSessionDataTask *task,
                                             NSError *error){
     onCompletion ? onCompletion(nil, error) : NULL;
     // TODO(Rene): Check for unauth responses globally.
-    DDLogInfo(@"LinkedIn: ERROR, HTTP Error: %@, for operation, %@", error,requestOperation);
+    DDLogInfo(@"LinkedIn: ERROR, HTTP Error: %@, for task, %@", error, task);
     [[AKLinkedInAuthController sharedController]
         unauthenticateAccount:[[AKAccountStore sharedStore] authenticatedAccount]];
   };
 
-  [httpClient getPath:[resourcePath copy]
-           parameters:queryParameters
-              success:success
-              failure:failure];
+  [httpClient GET:[resourcePath copy] parameters:queryParameters success:success failure:failure];
 }
 
 @end

@@ -1,5 +1,4 @@
 #import "QIMatchingQuizView.h"
-#import "AsyncImageView.h"
 #import "QIFontProvider.h"
 #import "QIStatsData.h"
 
@@ -402,7 +401,7 @@
   for (NSURL *questionImageURL in self.questionImageURLs) {
     UIButton *questionButton = [self newQuestionButton];
     [questionButtons addObject:questionButton];
-    AsyncImageView *questionImage = [self newQuestionButtonImageWithURL:questionImageURL];
+    UIImageView *questionImage = [self newQuestionButtonImageWithURL:questionImageURL];
     [questionButtonImages addObject:questionImage];
   }
   
@@ -684,14 +683,15 @@
   return questionButton;
 }
 
-- (AsyncImageView *)newQuestionButtonImageWithURL:(NSURL *)imageURL{
-  AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
+// TODO: (Rene) Replace this with AFNetworking image fetch.
+- (UIImageView *)newQuestionButtonImageWithURL:(NSURL *)imageURL{
+  UIImageView *profileImageView = [[UIImageView alloc] init];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   profileImageView.contentMode = UIViewContentModeScaleAspectFit;
-  profileImageView.showActivityIndicator = YES;
-  profileImageView.crossfadeDuration = 0.3f;
-  profileImageView.crossfadeImages = YES;
-  profileImageView.imageURL = imageURL;
+//  profileImageView.showActivityIndicator = YES;
+//  profileImageView.crossfadeDuration = 0.3f;
+//  profileImageView.crossfadeImages = YES;
+//  profileImageView.imageURL = imageURL;
   return profileImageView;
 }
 

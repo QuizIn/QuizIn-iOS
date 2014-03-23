@@ -1,5 +1,4 @@
 #import "QISettingsView.h"
-#import "AsyncImageView.h"
 #import "QIFontProvider.h"
 
 @interface QISettingsView ()
@@ -8,7 +7,7 @@
 @property (nonatomic, strong) UIView *businessCardView;
 @property (nonatomic, strong) UILabel *loggedInLabel;
 @property (nonatomic, strong) UIImageView *businessCardBackground;
-@property (nonatomic, strong) AsyncImageView *profileImageView;
+@property (nonatomic, strong) UIImageView *profileImageView;
 @property (nonatomic, strong) UILabel *cardFirstName;
 @property (nonatomic, strong) UILabel *cardLastName;
 @property (nonatomic, strong) UILabel *cardTitle;
@@ -74,7 +73,8 @@
 }
 
 - (void)updateProfileImage{
-  self.profileImageView.imageURL = self.profileImageURL;
+  // TODO: (Rene) Replace this with AFNetworking image fetch.
+//  self.profileImageView.imageURL = self.profileImageURL;
 }
 
 
@@ -285,13 +285,14 @@
   return businessCardBackground;
 }
 
-- (AsyncImageView *)newProfileImageView {
-  AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
+// TODO: (Rene) Replace this with AFNetworking image fetch.
+- (UIImageView *)newProfileImageView {
+  UIImageView *profileImageView = [[UIImageView alloc] init];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   profileImageView.contentMode = UIViewContentModeScaleAspectFit;
-  profileImageView.showActivityIndicator = YES;
-  profileImageView.crossfadeDuration = 0.3f;
-  profileImageView.crossfadeImages = YES;
+//  profileImageView.showActivityIndicator = YES;
+//  profileImageView.crossfadeDuration = 0.3f;
+//  profileImageView.crossfadeImages = YES;
   profileImageView.image = [UIImage imageNamed:@"placeholderHead"];
   return profileImageView;
 }

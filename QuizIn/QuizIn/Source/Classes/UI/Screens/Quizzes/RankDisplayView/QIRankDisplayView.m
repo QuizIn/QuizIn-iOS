@@ -2,7 +2,6 @@
 #import "QIFontProvider.h"
 #import "QIRankDefinition.h"
 #import "QIStatsData.h"
-#import "AsyncImageView.h"
 
 @interface QIRankDisplayView ()
 
@@ -11,7 +10,7 @@
 @property (nonatomic, strong) UILabel *nameLabel; 
 @property (nonatomic, strong) UIImageView *backgroundImage;
 @property (nonatomic, strong) UIImageView *rankBadgeImage;
-@property (nonatomic, strong) AsyncImageView *profileImageView;
+@property (nonatomic, strong) UIImageView *profileImageView;
 @property (nonatomic, strong) NSMutableArray *rankDisplayViewConstraints;
 
 @end
@@ -86,8 +85,9 @@
   }
 }
 
-- (void)updateProfileImageView{
-  [self.profileImageView setImageURL:self.profileImageURL];
+- (void)updateProfileImageView {
+  // TODO: (Rene) Use AFNetworking to replace AsyncImageView.
+//  [self.profileImageView setImageURL:self.profileImageURL];
 }
 
 - (void)updateProfileNameLabel{
@@ -238,8 +238,9 @@
   return imageView;
 }
 
--(AsyncImageView *)newProfileImageView{
-  AsyncImageView *imageView = [[AsyncImageView alloc] init];
+// TODO: (Rene) Use AFNetworking to replace AsyncImageView.
+-(UIImageView *)newProfileImageView{
+  UIImageView *imageView = [[UIImageView alloc] init];
   [imageView setContentMode:UIViewContentModeScaleAspectFill];
   [imageView setBackgroundColor:[UIColor blackColor]]; 
   [imageView setTranslatesAutoresizingMaskIntoConstraints:NO];

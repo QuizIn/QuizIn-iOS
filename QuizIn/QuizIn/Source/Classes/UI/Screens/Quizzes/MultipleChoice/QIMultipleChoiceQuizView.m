@@ -1,5 +1,4 @@
 #import "QIMultipleChoiceQuizView.h"
-#import "AsyncImageView.h"
 #import "QIFontProvider.h"
 #import "QIStatsData.h"
 
@@ -11,7 +10,7 @@
 @property (nonatomic, strong) UIImageView *dividerTop;
 @property (nonatomic, strong) UIImageView *dividerBottom;
 @property (nonatomic, strong) UIImageView *profileImageBackground;
-@property (nonatomic, strong) AsyncImageView *profileImageView;
+@property (nonatomic, strong) UIImageView *profileImageView;
 @property (nonatomic, strong) UILabel *questionLabel;
 @property (nonatomic, strong) NSArray *answerButtons;
 @property (nonatomic, strong) NSMutableArray *progressViewConstraints;
@@ -393,7 +392,8 @@
 }
 
 -(void)updateProfileImage{
-  self.profileImageView.imageURL = self.profileImageURL;
+  // TODO: (Rene) Replace this with AFNetworking image fetch.
+//  self.profileImageView.imageURL = self.profileImageURL;
 }
 
 - (void)updateAnswerButtons {
@@ -447,13 +447,14 @@
   return profileBackground;
 }
 
-- (AsyncImageView *)newProfileImageView {
-  AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
+// TODO: (Rene) Replace this with AFNetworking image fetch.
+- (UIImageView *)newProfileImageView {
+  UIImageView *profileImageView = [[UIImageView alloc] init];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   profileImageView.contentMode = UIViewContentModeScaleAspectFit;
-  profileImageView.showActivityIndicator = YES;
-  profileImageView.crossfadeDuration = 0.3f;
-  profileImageView.crossfadeImages = YES;
+//  profileImageView.showActivityIndicator = YES;
+//  profileImageView.crossfadeDuration = 0.3f;
+//  profileImageView.crossfadeImages = YES;
   return profileImageView;
 }
 

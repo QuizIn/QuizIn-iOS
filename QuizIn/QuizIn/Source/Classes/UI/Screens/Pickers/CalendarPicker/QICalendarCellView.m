@@ -1,7 +1,6 @@
 
 #import "QICalendarCellView.h"
 #import "QIFontProvider.h"
-#import "AsyncImageView.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define TAG_OFFSET 10
@@ -110,7 +109,7 @@
   }
   NSArray *displayedImageURLs = [self.imageURLs objectsAtIndexes:indexSet];
   for (NSURL *imageURL in displayedImageURLs){
-    AsyncImageView *profileImageView = [self newProfileImageView:imageURL];
+    UIImageView *profileImageView = [self newProfileImageView:imageURL];
     profileImageView.tag = tag;
     tag++;
     [self.imagesView addSubview:profileImageView];
@@ -334,16 +333,17 @@
   return imagesView;
 }
 
-- (AsyncImageView *)newProfileImageView:(NSURL *)imageURL {
-  AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
+// TODO: (Rene) Replace this with AFNetworking image fetch.
+- (UIImageView *)newProfileImageView:(NSURL *)imageURL {
+  UIImageView *profileImageView = [[UIImageView alloc] init];
   profileImageView.layer.cornerRadius = 4.0f;
   profileImageView.clipsToBounds = YES;
-  [profileImageView setImageURL:imageURL];
+//  [profileImageView setImageURL:imageURL];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   profileImageView.contentMode = UIViewContentModeScaleAspectFit;
-  profileImageView.showActivityIndicator = YES;
-  profileImageView.crossfadeDuration = 0.3f;
-  profileImageView.crossfadeImages = YES;
+//  profileImageView.showActivityIndicator = YES;
+//  profileImageView.crossfadeDuration = 0.3f;
+//  profileImageView.crossfadeImages = YES;
   return profileImageView;
 }
        

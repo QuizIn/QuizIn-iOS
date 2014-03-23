@@ -1,5 +1,4 @@
 #import "QIBusinessCardQuizView.h"
-#import "AsyncImageView.h"
 #import "QIStatsData.h"
 #import "QIFontProvider.h"
 
@@ -10,7 +9,7 @@
 @property (nonatomic, strong) UIView *businessCardView;
 @property (nonatomic, strong) UIImageView *businessCardBackground;
 @property (nonatomic, strong) UIImageView *divider;
-@property (nonatomic, strong) AsyncImageView *profileImageView;
+@property (nonatomic, strong) UIImageView *profileImageView;
 @property (nonatomic, strong) UIView *answerSuperView;
 @property (nonatomic, strong) UILabel *cardFirstName;
 @property (nonatomic, strong) UILabel *cardLastName;
@@ -532,8 +531,9 @@
 
 
 #pragma mark Data Display
+// TODO: (Rene) Replace this with AFNetworking image fetch.
 -(void)updateQuestionImage{
-  self.profileImageView.imageURL = self.questionImageURL;
+//  self.profileImageView.imageURL = self.questionImageURL;
 }
 
 -(void)updateProgress{
@@ -668,13 +668,14 @@
   return businessCardBackground;
 }
 
-- (AsyncImageView *)newProfileImageView {
-  AsyncImageView *profileImageView = [[AsyncImageView alloc] init];
+// TODO: (Rene) Replace this with AFNetworking image fetch.
+- (UIImageView *)newProfileImageView {
+  UIImageView *profileImageView = [[UIImageView alloc] init];
   [profileImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
   profileImageView.contentMode = UIViewContentModeScaleAspectFit;
-  profileImageView.showActivityIndicator = YES;
-  profileImageView.crossfadeDuration = 0.3f;
-  profileImageView.crossfadeImages = YES;
+//  profileImageView.showActivityIndicator = YES;
+//  profileImageView.crossfadeDuration = 0.3f;
+//  profileImageView.crossfadeImages = YES;
   return profileImageView;
 }
 
