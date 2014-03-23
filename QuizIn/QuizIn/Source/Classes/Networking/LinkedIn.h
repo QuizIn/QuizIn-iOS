@@ -50,4 +50,5 @@ typedef void (^LIGetPeopleResponse)(NSArray *people, NSError *error);
 
 + (void)companiesWithIDs:(NSArray *)companyIDs onCompletion:(LICompaniesResponse)onCompletion;
 
+
 @end

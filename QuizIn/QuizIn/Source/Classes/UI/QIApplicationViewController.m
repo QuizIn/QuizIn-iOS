@@ -13,6 +13,7 @@
 
 // TODO(rcacheaux):  Remove Temp Stuff.
 #import "LinkedIn.h"
+#import "QICompany.h"
 #import "QIConnectionsStore.h"
 #import "QIQuizFactory.h"
 #import "QIQuiz.h"
@@ -110,6 +111,7 @@
     }
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
   }];
+  
 }
 
 - (void)authControllerAccount:(AKAccount *)account

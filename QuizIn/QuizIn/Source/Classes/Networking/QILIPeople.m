@@ -68,6 +68,7 @@
     person.positions = [positions copy];
     onCompletion ? onCompletion(person, nil) : NULL;
   };
+  
   // Failure block.
   AFHTTPRequestOperationFailure failure = ^(NSURLSessionDataTask *task,
                                             NSError *error){
