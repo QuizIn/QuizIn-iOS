@@ -100,7 +100,10 @@
        return;
      }
      dispatch_async(dispatch_get_main_queue(), ^{
-       // TODO: (Rene) Crossfade in?
+       CATransition *crossFade = [CATransition animation];
+       crossFade.type = kCATransitionFade;
+       crossFade.duration = 0.3;
+       [weakSelf.profileImageView.layer addAnimation:crossFade forKey:nil];
        weakSelf.profileImageView.image = image;
      });
    }

@@ -104,10 +104,12 @@
        return;
      }
      dispatch_async(dispatch_get_main_queue(), ^{
-       // TODO: (Rene) Crossfade in.
+       // TODO: (Rene) Activity indicator.
        //  profileImageView.showActivityIndicator = YES;
-       //  profileImageView.crossfadeDuration = 0.3f;
-       //  profileImageView.crossfadeImages = YES;
+       CATransition *crossFade = [CATransition animation];
+       crossFade.type = kCATransitionFade;
+       crossFade.duration = 0.3;
+       [weakSelf.profileImageView.layer addAnimation:crossFade forKey:nil];
        weakSelf.profileImageView.image = image;
      });
    }
