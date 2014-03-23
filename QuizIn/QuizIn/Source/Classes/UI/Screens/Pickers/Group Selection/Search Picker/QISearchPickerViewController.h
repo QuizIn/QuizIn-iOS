@@ -3,7 +3,7 @@
 #import "QISearchPickerView.h"
 #import "QISearchPickerTableViewCell.h"
 
-@interface QISearchPickerViewController : UIViewController <UISearchBarDelegate>
+@interface QISearchPickerViewController : UIViewController
 
 - (QISearchPickerView *)searchView;
 
