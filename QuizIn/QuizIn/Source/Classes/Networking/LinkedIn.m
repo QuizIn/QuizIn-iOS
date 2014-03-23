@@ -231,7 +231,6 @@ static QIPerson *authenticatedUser;
 
 // TODO: Consolidate the following four methods, they contain the same logic.
 + (void)topFirstDegreeConnectionCompaniesForAuthentedUserWithOnCompletion:(LICompaniesResponse)onCompletion {
-  
   [QILISearch
    getPeopleSearchFacets:@[@"current-company"]
    withSearchParameters:@{@"facet": @"network,F"}
@@ -334,6 +333,33 @@ static QIPerson *authenticatedUser;
      }
 
   }];
+}
+
++ (void)searchForCompaniesWithName:(NSString *)companyName withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:(LICompaniesResponse)onCompletion {
+  [QILISearch
+   getPeopleSearchFacets:@[@"current-company"]
+   withSearchParameters:@{@"facet": @"network,F",
+                          @"company-name": companyName}
+   onCompletion:^(NSArray *facets, NSError *error) {
+     if (!error) {
+       NSArray *companyNames = @[];
+       for (QISearchFacet *facet in facets) {
+         if ([facet.code isEqualToString:@"current-company"]) {
+           NSMutableArray *companies = [NSMutableArray arrayWithCapacity:[facet.buckets count]];
+           for (QISearchFacetBucket *bucket in facet.buckets) {
+             QICompany *company = [QICompany new];
+             company.companyID = bucket.code;
+             company.name = bucket.name;
+             [companies addObject:company];
+           }
+           companyNames = [companies copy];
+         }
+       }
+       onCompletion? onCompletion(companyNames, nil) : NULL;
+     } else {
+       onCompletion? onCompletion(nil, error) : NULL;
+     }
+   }];
 }
 
 + (void)peopleWithIDs:(NSArray *)personIDs onCompletion:(LIGetPeopleResponse)onCompletion {

@@ -1,69 +1,29 @@
-
 #import "QISearchPickerViewController.h"
 
-@interface QISearchPickerViewController ()
+#import "QILayoutGuideProvider.h"
 
-@property (nonatomic, strong) UITableView *tableView;
+@interface QISearchPickerViewController ()<UITableViewDataSource, UITableViewDelegate, QILayoutGuideProvider>
 
 @end
 
 @implementation QISearchPickerViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-      _tableView = [self newSearchTable];
-    }
-    return self;
+-(void)loadView{
+  self.view = [[QISearchPickerView alloc] initWithFrame:CGRectZero layoutGuideProvider:self];
 }
 
--(void)loadView{
-  [self setView:[[QISearchPickerView alloc] initWithFrame:[[UIScreen mainScreen] bounds]]];
+- (void)viewDidLoad {
+  [super viewDidLoad];
   [self.searchView.searchBar setDelegate:self];
   [self.searchView.searchBar becomeFirstResponder];
   [self.searchView.exitButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-  [self.searchView setTableView:self.tableView];
-  [self.searchView addSubview:self.tableView]; 
-}
-
-- (void)viewDidLoad
-{
-  [super viewDidLoad];
-}
-
-- (void)didReceiveMemoryWarning
-{
-  [super didReceiveMemoryWarning];
-}
-
-- (void)dismissSearch{
-  [self dismissViewControllerAnimated:NO completion:nil];
+  
+  self.searchView.tableView.delegate = self;
+  self.searchView.tableView.dataSource = self;
 }
 
 - (QISearchPickerView *)searchView{
   return (QISearchPickerView *)self.view;
-}
-
-- (void)dismiss{
-  [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark Factory Methods
-
--(UITableView *)newSearchTable{
-  UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-  [tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [tableView setBackgroundColor:[UIColor clearColor]];
-  [tableView setBackgroundView:nil];
-  [tableView setOpaque:NO];
-  [tableView setSeparatorColor:[UIColor grayColor]];
-  [tableView setShowsVerticalScrollIndicator:NO];
-  [tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-  tableView.rowHeight = 40;
-  tableView.dataSource = self;
-  tableView.delegate = self;
-  return tableView;
 }
 
 #pragma mark TableView Delegate Functions

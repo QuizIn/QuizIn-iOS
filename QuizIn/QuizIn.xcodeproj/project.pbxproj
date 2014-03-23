@@ -416,6 +416,7 @@
 		2045B05718DE82C20064C1D6 /* UIImageView+QIAFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+QIAFNetworking.h"; sourceTree = "<group>"; };
 		2045B05818DE82C20064C1D6 /* UIImageView+QIAFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+QIAFNetworking.m"; sourceTree = "<group>"; };
 		2045B05B18DE85200064C1D6 /* QIMemoryManagementMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QIMemoryManagementMacros.h; sourceTree = "<group>"; };
+		2045B05D18DF62D90064C1D6 /* QILayoutGuideProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QILayoutGuideProvider.h; sourceTree = "<group>"; };
 		205504DF1780BED200F7F90F /* QIQuiz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuiz.h; sourceTree = "<group>"; };
 		205504E01780BED200F7F90F /* QIQuiz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIQuiz.m; sourceTree = "<group>"; };
 		205504E21780BEF900F7F90F /* QIQuizQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIQuizQuestion.h; sourceTree = "<group>"; };
@@ -951,6 +952,14 @@
 				2045B05B18DE85200064C1D6 /* QIMemoryManagementMacros.h */,
 			);
 			path = Macros;
+			sourceTree = "<group>";
+		};
+		2045B05C18DF62C20064C1D6 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				2045B05D18DF62D90064C1D6 /* QILayoutGuideProvider.h */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		205504DE1780BEBC00F7F90F /* Model */ = {
@@ -1834,6 +1843,7 @@
 		880870F416FBD32E00D09848 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				2045B05C18DF62C20064C1D6 /* Shared */,
 				88867972172D572F00DCE3D0 /* Drawer */,
 				88867961172D521C00DCE3D0 /* Screens */,
 				880870F916FBD3A800D09848 /* QIApplicationViewController.h */,
