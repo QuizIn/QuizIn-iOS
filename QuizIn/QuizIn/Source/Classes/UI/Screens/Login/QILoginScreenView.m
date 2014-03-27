@@ -1,5 +1,6 @@
 
 #import "QILoginScreenView.h"
+#import "QIFontProvider.h"
 
 @interface QILoginScreenView ()
 
@@ -10,6 +11,10 @@
 @end
 
 @implementation QILoginScreenView
+
++ (BOOL)requiresConstraintBasedLayout {
+  return YES;
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -63,8 +68,8 @@
                                             metrics:nil
                                               views:loginViews];
     NSArray *vScrollViewContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-[_previewScrollView]"
-                                            options:NSLayoutFormatAlignAllLeft
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-[_previewScrollView][_loginButton(==47)]-|"
+                                            options:NSLayoutFormatAlignAllCenterX
                                             metrics:nil
                                               views:loginViews];
     
@@ -75,8 +80,10 @@
     
     //Constrain the login button
     //[self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_loginButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-   // [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_loginButton attribute:NSLayoutAttributeBaseline relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBaseline multiplier:1.0f constant:-15.0f]];
-    
+    //[self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_loginButton attribute:NSLayoutAttributeBaseline relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBaseline multiplier:1.0f constant:-15.0f]];
+    //[self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_loginButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:262.0f]];
+    //[self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_loginButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:47.0f]];
+
     [self addConstraints:self.viewConstraints]; 
 
   }
@@ -92,7 +99,9 @@
 - (UIButton *)newLoginButton{
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
   [button setImage:[UIImage imageNamed:@"login_learn_btn_standard"] forState:UIControlStateNormal];
-  button.frame = CGRectMake(0, 300, 80, 47);
+  [button.titleLabel setFont:[QIFontProvider fontWithSize:12 style:Bold]];
+  [button setTitle:@"Login Through LinkedIn" forState:UIControlStateNormal]; 
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
   return button;
 }
 

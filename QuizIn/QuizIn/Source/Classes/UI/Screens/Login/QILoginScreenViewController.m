@@ -1,5 +1,6 @@
 
 #import "QILoginScreenViewController.h"
+#import "QIStatsViewController.h"
 
 @interface QILoginScreenViewController ()
 
@@ -17,9 +18,9 @@
 }
 
 - (void)loadView{
-  self.view = [[QILoginScreenView alloc] init];
-  
+  self.view = [[QILoginScreenView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 }
+
 - (void)viewDidLoad
 {
   [super viewDidLoad];
@@ -33,7 +34,7 @@
 }
 
 -(void)login{
-  [self.appViewController login];
+ [self.appViewController login];
 }
 
 - (QILoginScreenView *)loginScreenView {
