@@ -15,7 +15,6 @@
 @property (nonatomic,strong) UIImageView *checkMarkImage;
 @property (nonatomic,strong) UILabel *selectionTitleLabel;
 @property (nonatomic,strong) UILabel *selectionSubtitleLabel;
-@property (nonatomic,strong) UILabel *numberOfContactsLabel;
 @property (nonatomic,strong) UILabel *morePeopleLabel;
 @property (nonatomic,strong) UIImageView *logoImageView;
 @property (nonatomic,strong) UIView *imagesView;
@@ -38,7 +37,6 @@
       _frontView = [self newFrontView];
       _backView = [self newBackView];
       _selectionTabImage = [self newSelectionTabImage];
-      _numberOfContactsLabel = [self newNumberOfContactsLabel];
       _selectionTitleLabel = [self newSelectionTitleLabel];
       _selectionSubtitleLabel = [self newSelectionSubtitleLabel];
       _morePeopleLabel = [self newMorePeopleLabel];
@@ -84,11 +82,6 @@
   [self updateSelectionSubtitle];
 }
 
-- (void)setNumberOfContacts:(NSString *)numberOfContacts{
-  _numberOfContacts = numberOfContacts;
-  [self updateNumberOfContacts];
-}
-
 - (void)setImageURLs:(NSArray *)imageURLs{
   if ([imageURLs isEqualToArray:_imageURLs]) {
     return;
@@ -108,7 +101,6 @@
   [self updateImages];
   [self.frontView addSubview:self.selectionTabImage];
   [self.frontView addSubview:self.logoImageView];
-  [self.frontView addSubview:self.numberOfContactsLabel];
   [self.frontView addSubview:self.selectionTitleLabel];
   [self.frontView addSubview:self.selectionSubtitleLabel];
   [self.frontView addSubview:self.imagesView];
@@ -146,10 +138,6 @@
 
 -(void)updateSelectionSubtitle{
   self.selectionSubtitleLabel.text = self.selectionSubtitle;
-}
-
--(void)updateNumberOfContacts{
-  self.numberOfContactsLabel.text = self.numberOfContacts;
 }
 
 -(void)updateMorePeopleLabel{
@@ -237,7 +225,7 @@
     [self.backView addConstraints:self.frontViewSelfConstraints];
   
    //Constrain FrontView
-    NSDictionary *cellBackgroundViews = NSDictionaryOfVariableBindings(_selectionTabImage,_selectionSubtitleLabel,_selectionTitleLabel,_logoImageView,_imagesView,_numberOfContactsLabel,_morePeopleLabel);
+    NSDictionary *cellBackgroundViews = NSDictionaryOfVariableBindings(_selectionTabImage,_selectionSubtitleLabel,_selectionTitleLabel,_logoImageView,_imagesView,_morePeopleLabel);
     
     NSArray *hBackgroundConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_selectionTabImage]|"
@@ -249,21 +237,17 @@
                                             options:0
                                             metrics:nil
                                               views:cellBackgroundViews];
-    NSArray *hNumberOfContactsConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-4-[_numberOfContactsLabel(==44)]"
-                                            options:0
-                                            metrics:nil
-                                              views:cellBackgroundViews];
     NSArray *hLogoConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-4-[_logoImageView(==44)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_logoImageView(==100)]"
                                             options:0
                                             metrics:nil
                                               views:cellBackgroundViews];
-    NSArray *vLeftViewConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-2-[_logoImageView]-5-[_numberOfContactsLabel]-(>=5)-|"
+    NSArray *vLogoConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_logoImageView]-10-|"
                                             options:0
                                             metrics:nil
                                               views:cellBackgroundViews];
+    
     NSArray *vItemsConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_selectionTitleLabel(==12)][_selectionSubtitleLabel(==12)][_imagesView(==38)]"
                                             options:NSLayoutFormatAlignAllLeft
@@ -291,9 +275,8 @@
     self.frontViewConstraints = [NSMutableArray array];
     [self.frontViewConstraints addObjectsFromArray:hBackgroundConstraints];
     [self.frontViewConstraints addObjectsFromArray:vBackgroundConstraints];
-    [self.frontViewConstraints addObjectsFromArray:hNumberOfContactsConstraints];
     [self.frontViewConstraints addObjectsFromArray:hLogoConstraints];
-    [self.frontViewConstraints addObjectsFromArray:vLeftViewConstraints];
+    [self.frontViewConstraints addObjectsFromArray:vLogoConstraints];
     [self.frontViewConstraints addObjectsFromArray:vItemsConstraints];
     [self.frontViewConstraints addObjectsFromArray:hTitleConstraints];
     [self.frontViewConstraints addObjectsFromArray:hMorePeopleConstraints];
@@ -341,17 +324,6 @@
   [check setContentMode:UIViewContentModeScaleAspectFill];
   [check setTranslatesAutoresizingMaskIntoConstraints:NO];
   return check;
-}
-
--(UILabel *)newNumberOfContactsLabel{
-  UILabel *contacts = [[UILabel alloc] init];
-  contacts.textAlignment = NSTextAlignmentCenter;
-  contacts.backgroundColor = [UIColor clearColor];
-  contacts.font = [QIFontProvider fontWithSize:12.0f style:Bold];
-  contacts.adjustsFontSizeToFitWidth = YES;
-  contacts.textColor = [UIColor colorWithWhite:0.33f alpha:1.0f];
-  [contacts setTranslatesAutoresizingMaskIntoConstraints:NO];
-  return contacts;
 }
 
 -(UILabel *)newSelectionTitleLabel{
