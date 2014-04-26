@@ -61,30 +61,4 @@
   NSLog(@"Selected Search Result"); 
 }
 
-#pragma mark Search Bar Delegate Functions
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-  if (searchBar != self.searchView.searchBar) {
-    return;
-  }
-  searchBar.alpha = 0.0f;
-  QI_DECLARE_WEAK_SELF(weakSelf);
-  [LinkedIn
-   searchForCompaniesWithName:searchBar.text
-   withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:^(NSArray *companies, NSError *error) {
-     weakSelf.searchView.searchBar.alpha = 1.0f;
-     if (!companies || [companies count] == 0) {
-       return;
-     }
-     NSMutableArray *searchResults = [NSMutableArray arrayWithCapacity:[companies count]];
-     for (QICompany *company in companies) {
-       [searchResults addObject:company.name];
-     }
-     weakSelf.results = [searchResults copy];
-     dispatch_async(dispatch_get_main_queue(), ^{
-       [weakSelf.searchView.tableView reloadData];
-     });
-   }];
-}
-
 @end

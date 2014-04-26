@@ -1,4 +1,5 @@
 #import "QIIndustrySelectionViewController.h"
+#import "QIIndustrySearchPickerViewController.h"
 
 #import "LinkedIn.h"
 #import "QIIndustry.h"
@@ -63,5 +64,13 @@
      }
    }];
 }
+
+- (void)showSearchView{
+    QIIndustrySearchPickerViewController *searchController = [[QIIndustrySearchPickerViewController alloc] init];
+    [searchController setModalPresentationStyle:UIModalPresentationFullScreen];
+    [searchController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    [self presentViewController:searchController animated:YES completion:nil];
+}
+
 
 @end

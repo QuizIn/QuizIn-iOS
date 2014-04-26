@@ -53,12 +53,6 @@
 }
 
 #pragma mark Actions
-- (void)showSearchView{
-  QISearchPickerViewController *searchController = [[QISearchPickerViewController alloc] init];
-  [searchController setModalPresentationStyle:UIModalPresentationFullScreen];
-  [searchController setModalTransitionStyle:UIModalTransitionStyleCoverVertical]; 
-  [self presentViewController:searchController animated:YES completion:nil];
-}
 
 - (void)backButtonPressed{
   [self dismissViewControllerAnimated:YES completion:nil];

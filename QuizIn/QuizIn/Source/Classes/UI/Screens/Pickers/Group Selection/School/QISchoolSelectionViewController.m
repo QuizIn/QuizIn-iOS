@@ -1,4 +1,5 @@
 #import "QISchoolSelectionViewController.h"
+#import "QISchoolSearchPickerViewController.h"
 
 #import "LinkedIn.h"
 #import "QISchool.h"
@@ -60,5 +61,13 @@
      }
    }];
 }
+
+- (void)showSearchView{
+    QISchoolSearchPickerViewController *searchController = [[QISchoolSearchPickerViewController alloc] init];
+    [searchController setModalPresentationStyle:UIModalPresentationFullScreen];
+    [searchController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    [self presentViewController:searchController animated:YES completion:nil];
+}
+
 
 @end

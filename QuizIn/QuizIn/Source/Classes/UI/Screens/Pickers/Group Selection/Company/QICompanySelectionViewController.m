@@ -1,4 +1,5 @@
 #import "QICompanySelectionViewController.h"
+#import "QICompanySearchPickerViewController.h"
 
 #import "LinkedIn.h"
 #import "QICompany.h"
@@ -77,6 +78,13 @@
          });
        }
   }];
+}
+
+- (void)showSearchView{
+    QICompanySearchPickerViewController *searchController = [[QICompanySearchPickerViewController alloc] init];
+    [searchController setModalPresentationStyle:UIModalPresentationFullScreen];
+    [searchController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    [self presentViewController:searchController animated:YES completion:nil];
 }
 
 @end

@@ -134,6 +134,7 @@
   [searchBar setTranslatesAutoresizingMaskIntoConstraints:NO];
   [searchBar setTintColor:[UIColor colorWithWhite:.2f alpha:1.0f]];
   [searchBar setSpellCheckingType:UITextSpellCheckingTypeNo];
+    [searchBar setBackgroundColor:[UIColor clearColor]]; 
   for(UIView *subView in searchBar.subviews){
     if([subView isKindOfClass: [UITextField class]])
       [(UITextField *)subView setKeyboardAppearance: UIKeyboardAppearanceAlert];

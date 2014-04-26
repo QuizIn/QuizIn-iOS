@@ -1,4 +1,5 @@
 #import "QILocationSelectionViewController.h"
+#import "QILocationSearchPickerViewController.h"
 
 #import "LinkedIn.h"
 #import "QILocation.h"
@@ -60,5 +61,13 @@
      }
    }];
 }
+
+- (void)showSearchView{
+    QILocationSearchPickerViewController *searchController = [[QILocationSearchPickerViewController alloc] init];
+    [searchController setModalPresentationStyle:UIModalPresentationFullScreen];
+    [searchController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    [self presentViewController:searchController animated:YES completion:nil];
+}
+
 
 @end

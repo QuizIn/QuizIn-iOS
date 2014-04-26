@@ -358,6 +358,10 @@
 		34E9774C1764FAC900086673 /* QI_QuizBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E9774B1764FAC900086673 /* QI_QuizBuilder.m */; };
 		34F01A36172DB2F60056A76A /* QIBusinessCardQuizView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */; };
 		34F01A37172DB2F60056A76A /* QIBusinessCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */; };
+		436CD48C190C54AF004A0393 /* QICompanySearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD48B190C54AF004A0393 /* QICompanySearchPickerViewController.m */; };
+		436CD48F190C5722004A0393 /* QIIndustrySearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD48E190C5722004A0393 /* QIIndustrySearchPickerViewController.m */; };
+		436CD492190C587C004A0393 /* QILocationSearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD491190C587C004A0393 /* QILocationSearchPickerViewController.m */; };
+		436CD495190C5947004A0393 /* QISchoolSearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD494190C5947004A0393 /* QISchoolSearchPickerViewController.m */; };
 		880870E216FBD31800D09848 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 880870DF16FBD31800D09848 /* InfoPlist.strings */; };
 		880870EF16FBD32200D09848 /* QuizIn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 880870EA16FBD32200D09848 /* QuizIn.xcdatamodeld */; };
 		880870F716FBD32E00D09848 /* QIAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 880870F316FBD32E00D09848 /* QIAppDelegate.m */; };
@@ -857,6 +861,14 @@
 		34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardQuizView.m; sourceTree = "<group>"; };
 		34F01A34172DB2F60056A76A /* QIBusinessCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardViewController.h; sourceTree = "<group>"; };
 		34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardViewController.m; sourceTree = "<group>"; };
+		436CD48A190C54AF004A0393 /* QICompanySearchPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICompanySearchPickerViewController.h; sourceTree = "<group>"; };
+		436CD48B190C54AF004A0393 /* QICompanySearchPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICompanySearchPickerViewController.m; sourceTree = "<group>"; };
+		436CD48D190C5722004A0393 /* QIIndustrySearchPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIIndustrySearchPickerViewController.h; sourceTree = "<group>"; };
+		436CD48E190C5722004A0393 /* QIIndustrySearchPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIIndustrySearchPickerViewController.m; sourceTree = "<group>"; };
+		436CD490190C587C004A0393 /* QILocationSearchPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QILocationSearchPickerViewController.h; sourceTree = "<group>"; };
+		436CD491190C587C004A0393 /* QILocationSearchPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QILocationSearchPickerViewController.m; sourceTree = "<group>"; };
+		436CD493190C5947004A0393 /* QISchoolSearchPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QISchoolSearchPickerViewController.h; sourceTree = "<group>"; };
+		436CD494190C5947004A0393 /* QISchoolSearchPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QISchoolSearchPickerViewController.m; sourceTree = "<group>"; };
 		634CC7A981E449658DD30D1E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F88557B297046AD9AF083B1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		880870E016FBD31800D09848 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1024,6 +1036,8 @@
 			children = (
 				20B02B7A185E407400FBB498 /* QICompanySelectionViewController.h */,
 				20B02B7B185E407400FBB498 /* QICompanySelectionViewController.m */,
+				436CD48A190C54AF004A0393 /* QICompanySearchPickerViewController.h */,
+				436CD48B190C54AF004A0393 /* QICompanySearchPickerViewController.m */,
 			);
 			path = Company;
 			sourceTree = "<group>";
@@ -1033,6 +1047,8 @@
 			children = (
 				20B02B7D185E415C00FBB498 /* QIIndustrySelectionViewController.h */,
 				20B02B7E185E415C00FBB498 /* QIIndustrySelectionViewController.m */,
+				436CD48D190C5722004A0393 /* QIIndustrySearchPickerViewController.h */,
+				436CD48E190C5722004A0393 /* QIIndustrySearchPickerViewController.m */,
 			);
 			path = Industry;
 			sourceTree = "<group>";
@@ -1042,6 +1058,8 @@
 			children = (
 				20B02B80185E43C300FBB498 /* QILocationSelectionViewController.h */,
 				20B02B81185E43C300FBB498 /* QILocationSelectionViewController.m */,
+				436CD490190C587C004A0393 /* QILocationSearchPickerViewController.h */,
+				436CD491190C587C004A0393 /* QILocationSearchPickerViewController.m */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -1051,6 +1069,8 @@
 			children = (
 				20B02B83185E448E00FBB498 /* QISchoolSelectionViewController.h */,
 				20B02B84185E448E00FBB498 /* QISchoolSelectionViewController.m */,
+				436CD493190C5947004A0393 /* QISchoolSearchPickerViewController.h */,
+				436CD494190C5947004A0393 /* QISchoolSearchPickerViewController.m */,
 			);
 			path = School;
 			sourceTree = "<group>";
@@ -2419,6 +2439,7 @@
 				8886798F172D6AF800DCE3D0 /* AKOAuth2Account.m in Sources */,
 				88867990172D6AF800DCE3D0 /* AKOAuth2AccountCredential.m in Sources */,
 				88867991172D6AF800DCE3D0 /* QIAccountStore.m in Sources */,
+				436CD492190C587C004A0393 /* QILocationSearchPickerViewController.m in Sources */,
 				88867992172D6AF800DCE3D0 /* AKGoogleAuthController.m in Sources */,
 				88867993172D6AF800DCE3D0 /* AKLinkedInAuthController.m in Sources */,
 				34F01A36172DB2F60056A76A /* QIBusinessCardQuizView.m in Sources */,
@@ -2426,6 +2447,7 @@
 				888679A1172DCDA700DCE3D0 /* QIQuizViewController.m in Sources */,
 				888679A4172DCE2800DCE3D0 /* QIQuizView.m in Sources */,
 				888679A8172DD5B000DCE3D0 /* QIMultipleChoiceQuizViewController.m in Sources */,
+				436CD495190C5947004A0393 /* QISchoolSearchPickerViewController.m in Sources */,
 				888679AB172DD5DA00DCE3D0 /* QIMultipleChoiceQuizView.m in Sources */,
 				3478FFA8173FD747002B29DB /* QIProgressView.m in Sources */,
 				3478FFAC1747C19D002B29DB /* QIMatchingQuizViewController.m in Sources */,
@@ -2438,6 +2460,7 @@
 				205504E41780BEF900F7F90F /* QIQuizQuestion.m in Sources */,
 				347F49511870E09600815578 /* QISettingsViewController.m in Sources */,
 				205504E71780BF3300F7F90F /* QIMultipleChoiceQuestion.m in Sources */,
+				436CD48C190C54AF004A0393 /* QICompanySearchPickerViewController.m in Sources */,
 				205504EA1780BF4800F7F90F /* QIBusinessCardQuestion.m in Sources */,
 				205504ED1780BF5B00F7F90F /* QIMatchingQuestion.m in Sources */,
 				205504F01780C06500F7F90F /* QIPerson.m in Sources */,
@@ -2484,6 +2507,7 @@
 				20E0203217A5BED800CB9D43 /* LinkedIn.m in Sources */,
 				203AB01818300C460053541C /* QISearchFacet+Factory.m in Sources */,
 				20E0203317A5BED800CB9D43 /* QILIConnections.m in Sources */,
+				436CD48F190C5722004A0393 /* QIIndustrySearchPickerViewController.m in Sources */,
 				2045B05918DE82C20064C1D6 /* UIImageView+QIAFNetworking.m in Sources */,
 				20E0203417A5BED800CB9D43 /* QILIPeople.m in Sources */,
 				20E0203717A5CAC300CB9D43 /* QIQuizQuestionViewController.m in Sources */,

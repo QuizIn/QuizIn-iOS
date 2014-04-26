@@ -362,6 +362,33 @@ static QIPerson *authenticatedUser;
    }];
 }
 
++ (void)searchForIndustryWithKeyword:(NSString *)industryKeyword withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:(LICompaniesResponse)onCompletion {
+    [QILISearch
+     getPeopleSearchFacets:@[@"industry"]
+     withSearchParameters:@{@"facet": @"network,F",
+                            @"keywords": industryKeyword}
+     onCompletion:^(NSArray *facets, NSError *error) {
+         if (!error) {
+             NSArray *industryNames = @[];
+             for (QISearchFacet *facet in facets) {
+                 if ([facet.code isEqualToString:@"industry"]) {
+                     NSMutableArray *industries = [NSMutableArray arrayWithCapacity:[facet.buckets count]];
+                     for (QISearchFacetBucket *bucket in facet.buckets) {
+                         QIIndustry *industry = [QIIndustry new];
+                         industry.code = bucket.code;
+                         industry.name = bucket.name;
+                         [industries addObject:industry];
+                     }
+                     industryNames = [industries copy];
+                 }
+             }
+             onCompletion? onCompletion(industryNames, nil) : NULL;
+         } else {
+             onCompletion? onCompletion(nil, error) : NULL;
+         }
+     }];
+}
+
 + (void)peopleWithIDs:(NSArray *)personIDs onCompletion:(LIGetPeopleResponse)onCompletion {
   NSInteger numberOfPeople = [personIDs count];
   __block NSInteger returnCount = 0;
