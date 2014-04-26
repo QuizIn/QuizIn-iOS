@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSMutableArray *viewConstraints;
 @property (nonatomic) float openCellLastTX;
 @property (nonatomic, strong) NSIndexPath *openCellIndexPath;
+@property (nonatomic, strong) UIActivityIndicatorView *activityView;
 
 @end
 
@@ -41,6 +42,7 @@
       _viewBackground = [self newViewBackground];
       _quizButton = [self newQuizButton];
       _backButton = [self newBackButton];
+      _activityView = [self newActivityView];
       
       [self constructViewHierarchy];
     }
@@ -53,6 +55,9 @@
     return;
   }
   _selectionContent = [selectionContent mutableCopy];
+  if ([selectionContent count]>0){
+    [self.activityView stopAnimating];
+  }
   [self.tableView reloadData];
 }
 
@@ -73,6 +78,7 @@
   [self addSubview:self.bottomSlit];
   [self addSubview:self.quizButton];
   [self addSubview:self.backButton];
+  [self addSubview:self.activityView];
   [self.tableView setTableFooterView:self.footerView];
 }
 #pragma Data Display
@@ -111,13 +117,20 @@
  
     
     //Constrain Main View Elements
-    NSDictionary *mainViews = NSDictionaryOfVariableBindings(_viewLabel, _topSlit,_tableView,_bottomSlit,_quizButton,_backButton);
+    NSDictionary *mainViews = NSDictionaryOfVariableBindings(_viewLabel, _topSlit,_tableView,_bottomSlit,_quizButton,_backButton,_activityView);
     
     NSArray *vMainViewsConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-30-[_viewLabel(==20)]-3-[_topSlit(==8)]-(-5)-[_tableView]-(-5)-[_bottomSlit(==8)]-[_quizButton(==54)]-6-|"
                                             options:0
                                             metrics:0
                                               views:mainViews];
+    
+    NSArray *vActivityViewsConstraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_topSlit]-60-[_activityView]"
+                                            options:NSLayoutFormatAlignAllCenterX
+                                            metrics:0
+                                              views:mainViews];
+    
     NSArray *hLabelConstraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[_backButton]-(>=8)-[_viewLabel]-8-|"
                                             options:NSLayoutFormatAlignAllBaseline
@@ -147,6 +160,7 @@
     [self.viewConstraints addObjectsFromArray:hTableViewConstraints];
     [self.viewConstraints addObjectsFromArray:hBottomSlitConstraints];
     [self.viewConstraints addObjectsFromArray:vMainViewsConstraints];
+    [self.viewConstraints addObjectsFromArray:vActivityViewsConstraints];
     [self.viewConstraints addObjectsFromArray:@[hButtonConstraint]];
     
     [self addConstraints:self.viewConstraints];
@@ -172,6 +186,15 @@
   tableView.dataSource = self;
   tableView.delegate = self; 
   return tableView;
+}
+
+- (UIActivityIndicatorView *)newActivityView{
+  UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  [activity setHidesWhenStopped:YES];
+  [activity setAlpha:.8f];
+  [activity startAnimating];
+  [activity setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return activity;
 }
 
 -(UIImageView *)newTopSlit{
