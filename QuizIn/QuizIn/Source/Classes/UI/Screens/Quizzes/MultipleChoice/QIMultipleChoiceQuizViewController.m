@@ -42,6 +42,9 @@
   [self.multipleChoiceView.rankDisplayView.exitButton addTarget:self.multipleChoiceView
                                                          action:@selector(hideRankDisplay)
                                                forControlEvents:UIControlEventTouchUpInside];
+  [self.multipleChoiceView.overlayMask addTarget:self.multipleChoiceView
+                                          action:@selector(hideRankDisplay)
+                                forControlEvents:UIControlEventTouchUpInside];
   
 }
 

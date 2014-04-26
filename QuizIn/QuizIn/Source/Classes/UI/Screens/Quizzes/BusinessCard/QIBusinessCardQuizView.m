@@ -6,7 +6,6 @@
 @interface QIBusinessCardQuizView ()
 
 @property (nonatomic, strong) UIImageView *viewBackground;
-@property (nonatomic, strong) UIView *overlayMask; 
 @property (nonatomic, strong) UIView *businessCardView;
 @property (nonatomic, strong) UIImageView *businessCardBackground;
 @property (nonatomic, strong) UIImageView *divider;
@@ -784,12 +783,12 @@
   return view;
 }
 
-- (UIView *)newOverlayMask{
-  UIView *view = [[UIView alloc] init];
-  [view setHidden:YES];
-  [view setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:.8f]];
-  [view setTranslatesAutoresizingMaskIntoConstraints:NO];
-  return view;
+- (UIButton *)newOverlayMask{
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button setHidden:YES];
+  [button setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:.8f]];
+  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return button;
 }
 
 @end

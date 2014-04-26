@@ -19,6 +19,8 @@
 @property(nonatomic, strong) QIPerson *answerPerson;
 @property(nonatomic, strong) NSString *loggedInUserID;
 @property(nonatomic, weak) id<QIQuizQuestionViewInteractor> interactor;
+@property (nonatomic, strong) UIButton *overlayMask;
+
 
 -(void)hideRankDisplay;
 

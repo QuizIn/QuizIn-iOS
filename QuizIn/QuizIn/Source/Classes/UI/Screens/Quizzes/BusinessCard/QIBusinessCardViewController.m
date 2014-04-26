@@ -50,7 +50,10 @@
                                                        forControlEvents:UIControlEventTouchUpInside];
   [self.businessCardQuizView.rankDisplayView.exitButton addTarget:self.businessCardQuizView
                                                            action:@selector(hideRankDisplay)
-                                                 forControlEvents:UIControlEventTouchUpInside]; 
+                                                 forControlEvents:UIControlEventTouchUpInside];
+  [self.businessCardQuizView.overlayMask addTarget:self.businessCardQuizView
+                                            action:@selector(hideRankDisplay)
+                                  forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark Action Sheet Functions

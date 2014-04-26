@@ -53,6 +53,9 @@
   [self.matchingQuizView.rankDisplayView.exitButton addTarget:self.matchingQuizView
                                                        action:@selector(hideRankDisplay)
                                              forControlEvents:UIControlEventTouchUpInside];
+  [self.matchingQuizView.overlayMask addTarget:self.matchingQuizView
+                                                       action:@selector(hideRankDisplay)
+                                             forControlEvents:UIControlEventTouchUpInside];
 }
 #pragma mark Action Sheet Functions
 - (void)showActionSheet:(id)sender{

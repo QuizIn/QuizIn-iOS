@@ -8,6 +8,7 @@
 @property (nonatomic, strong) QIRankDisplayView *rankDisplayView;
 @property (nonatomic, strong) NSString *userID;
 @property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIButton *overlayMask;
 
 -(void)hideRankDisplay;
 @end

@@ -57,4 +57,9 @@
      }];
 }
 
+-(void)dismiss{
+  [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 @end

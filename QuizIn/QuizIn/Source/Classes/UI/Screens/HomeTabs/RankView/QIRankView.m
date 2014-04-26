@@ -5,7 +5,6 @@
 
 @property (nonatomic, strong) UIImageView *viewBackground;
 @property (nonatomic, strong) UIImageView *rankSign; 
-@property (nonatomic, strong) UIButton *overlayMask;
 
 @property (nonatomic, strong) NSMutableArray *rankButtons;
 @property (nonatomic, strong) NSArray *rankDelineations;

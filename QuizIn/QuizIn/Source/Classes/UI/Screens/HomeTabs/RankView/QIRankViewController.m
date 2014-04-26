@@ -22,6 +22,7 @@
   QIStatsData *stats = [[QIStatsData alloc] initWithLoggedInUserID:self.userID];
   [self.rankView setRank:[NSString stringWithFormat:@"%d",[stats getCurrentRank]]];
   [self.rankView.rankDisplayView.exitButton addTarget:self.rankView action:@selector(hideRankDisplay) forControlEvents:UIControlEventTouchUpInside];
+  [self.rankView.overlayMask addTarget:self.rankView action:@selector(hideRankDisplay) forControlEvents:UIControlEventTouchUpInside];
   [self setLoggedInUser:[LinkedIn authenticatedUser]];
   [self.rankView.rankDisplayView setProfileImageURL:[NSURL URLWithString:self.loggedInUser.pictureURL]];
   [self.rankView.rankDisplayView setProfileName:self.loggedInUser.formattedName];
