@@ -2622,8 +2622,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7F88557B297046AD9AF083B1 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rick Kuhlman (F5BEM35ST8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rick Kuhlman (F5BEM35ST8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuizIn/Source/QuizIn-Prefix.pch";
 				INFOPLIST_FILE = "QuizIn/Supporting Files/QuizIn-Info.plist";
@@ -2638,8 +2638,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7F88557B297046AD9AF083B1 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Rick Kuhlman (F5BEM35ST8)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rick Kuhlman (F5BEM35ST8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuizIn/Source/QuizIn-Prefix.pch";
 				INFOPLIST_FILE = "QuizIn/Supporting Files/QuizIn-Info.plist";
