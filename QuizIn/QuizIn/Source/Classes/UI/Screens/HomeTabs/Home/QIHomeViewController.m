@@ -12,12 +12,14 @@
 #import "QIStoreData.h"
 #import "QIHomeView.h"
 #import "QIQuizFactory.h"
+#import "QIConnectionsStore.h"
+#import "QIPerson.h"
 
 //todo kill these
 #import "QIQuizFinishViewController.h"
 #import "QILoginScreenViewController.h" 
 
-#define MAX_TIMED_IMAGES 4
+#define MAX_TIMED_IMAGES 30
 
 typedef NS_ENUM(NSInteger, QIFilterType) {
   QIFilterTypeNone,
@@ -28,9 +30,10 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 };
 
 @interface QIHomeViewController ()
-@property(nonatomic, strong, readonly) QIHomeView *homeView;
-@property(nonatomic, strong) NSTimer *timer;
-@property(nonatomic, assign) NSInteger timedImageCount;
+@property (nonatomic, strong, readonly) QIHomeView *homeView;
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, assign) NSInteger timedImageCount;
+@property (nonatomic, strong) NSMutableArray *randomPicURLs;
 @end
 
 @implementation QIHomeViewController
@@ -46,14 +49,26 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 - (void)loadView {
   self.view = [[QIHomeView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   
-  /*[LinkedIn numberOfConnectionsForAuthenticatedUserOnCompletion:^(NSInteger numberOfConnections, NSError *error) {
+  [LinkedIn numberOfConnectionsForAuthenticatedUserOnCompletion:^(NSInteger numberOfConnections, NSError *error) {
     if (error == nil) {
-      NSLog(@"Number of Connections: %d", numberOfConnections);
       self.homeView.numberOfConnections = numberOfConnections;
     } else {
       NSLog(@"Error: %@", error);
     }
-  }];*/
+  }];
+  
+  self.randomPicURLs = [NSMutableArray array];
+  [LinkedIn randomConnectionsForAuthenticatedUserWithNumberOfConnectionsToFetch:30 onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
+    if (error == nil){
+      NSSet *personIDs = connectionsStore.personIDsWithProfilePics;
+      for (NSString *personID in personIDs ){
+        QIPerson *person = connectionsStore.people[personID];
+        NSURL *personPicURL = [NSURL URLWithString:person.pictureURL];
+        [self.randomPicURLs addObject:personPicURL];
+      }
+    }
+  }];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -75,7 +90,6 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
   self.timedImageCount = 0;
   
   [self.homeView setImageURLs:[self getFourRandomURLs]];
- /// [self.homeView setImageURLs:@[[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_80_80/p/1/000/080/035/28eea75.jpg"],[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_80_80/p/1/000/080/035/28eea75.jpg"],[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_80_80/p/1/000/080/035/28eea75.jpg"],[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_80_80/p/1/000/080/035/28eea75.jpg"]]];
   
   [self.homeView.connectionsQuizButton addTarget:self
                                           action:@selector(startConnectionsQuiz:)
@@ -192,17 +206,18 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 
 - (NSArray *)getFourRandomURLs{
   
-  //TODO Fix this to not be test data
-  NSArray *set = @[[NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_60_60/p/3/000/2b1/283/2147fda.jpg"],
-                  [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_60_60/p/3/000/066/207/0190cd3.jpg"],
-                  [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_60_60/p/1/000/2a9/318/3d37ffa.jpg"],
-                  [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_60_60/p/2/000/193/24d/3b15220.jpg"],
-                  [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_60_60/p/1/000/05a/1f3/1118b2a.jpg"],
-                  [NSURL URLWithString:@"http://m.c.lnkd.licdn.com/mpr/mpr/shrink_60_60/p/4/000/174/143/2dacb5e.jpg"]];
-  NSMutableArray *testArray = [NSMutableArray array];
-  for (int i=0; i<4; i++) {
-    int randomIndex = arc4random_uniform(5);
-    [testArray addObject:[set objectAtIndex:randomIndex]];
+  NSString *path = [[NSBundle mainBundle] pathForResource:@"placeholderHead" ofType:@"png"];
+  NSURL *url = [NSURL fileURLWithPath:path];
+  
+  NSMutableArray *testArray = [NSMutableArray arrayWithObjects:
+                               url,url,url,url, nil];
+  
+  NSArray *set = self.randomPicURLs;
+  if ([set count]>0){
+    for (int i=0; i<4; i++) {
+      int randomIndex = arc4random_uniform([set count]);
+      [testArray replaceObjectAtIndex:i withObject:[set objectAtIndex:randomIndex]];
+    }
   }
 
   return [testArray copy];

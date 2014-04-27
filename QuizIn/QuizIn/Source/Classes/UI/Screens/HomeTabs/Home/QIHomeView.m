@@ -279,7 +279,7 @@
                                 nil];
     
     NSArray *hImagesConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_profileImage0(==50)]-5-[_profileImage1(==_profileImage0)]-5-[_profileImage2(==_profileImage1)]-5-[_profileImage3(==_profileImage2)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_profileImage0(==50)]-10-[_profileImage1(==_profileImage0)]-10-[_profileImage2(==_profileImage1)]-10-[_profileImage3(==_profileImage2)]"
                                             options:NSLayoutFormatAlignAllCenterY
                                             metrics:nil
                                               views:imageViews];
