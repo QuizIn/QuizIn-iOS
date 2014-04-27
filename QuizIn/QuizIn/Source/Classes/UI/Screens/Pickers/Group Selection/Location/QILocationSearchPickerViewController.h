@@ -1,8 +1,7 @@
 
 #import "QISearchPickerViewController.h"
 #import "LinkedIn.h"
-//temp
-#import "QICompany.h"
+#import "QILocation.h"
 
 
 @interface QILocationSearchPickerViewController : QISearchPickerViewController

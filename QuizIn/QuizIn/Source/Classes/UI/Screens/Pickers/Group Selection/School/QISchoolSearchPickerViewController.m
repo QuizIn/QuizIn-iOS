@@ -40,15 +40,15 @@
     //TODO rkuhlman search for school instead
     
     [LinkedIn
-     searchForCompaniesWithName:searchBar.text
-     withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:^(NSArray *companies, NSError *error) {
+     searchForSchoolsWithName:searchBar.text
+     withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:^(NSArray *schools, NSError *error) {
          weakSelf.searchView.searchBar.alpha = 1.0f;
-         if (!companies || [companies count] == 0) {
+         if (!schools || [schools count] == 0) {
              return;
          }
-         NSMutableArray *searchResults = [NSMutableArray arrayWithCapacity:[companies count]];
-         for (QICompany *company in companies) {
-             [searchResults addObject:company.name];
+         NSMutableArray *searchResults = [NSMutableArray arrayWithCapacity:[schools count]];
+         for (QISchool *school in schools) {
+             [searchResults addObject:school.name];
          }
          weakSelf.results = [searchResults copy];
          dispatch_async(dispatch_get_main_queue(), ^{

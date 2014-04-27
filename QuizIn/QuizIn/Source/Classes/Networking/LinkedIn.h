@@ -48,7 +48,11 @@ typedef void (^LIGetPeopleResponse)(NSArray *people, NSError *error);
 
 + (void)searchForCompaniesWithName:(NSString *)companyName withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:(LICompaniesResponse)onCompletion;
 
-+ (void)searchForIndustryWithKeyword:(NSString *)industryKeyword withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:(LICompaniesResponse)onCompletion;
++ (void)searchForIndustryWithKeyword:(NSString *)industryKeyword withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:(LIIndustriesResponse)onCompletion;
+
++ (void)searchForSchoolsWithName:(NSString *)schoolName withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:(LISchoolsResponse)onCompletion;
+
++ (void)searchForLocationsWithKeywords:(NSString *)locationName withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:(LILocationsResponse)onCompletion;
 
 + (void)peopleWithIDs:(NSArray *)personIDs onCompletion:(LIGetPeopleResponse)onCompletion;
 

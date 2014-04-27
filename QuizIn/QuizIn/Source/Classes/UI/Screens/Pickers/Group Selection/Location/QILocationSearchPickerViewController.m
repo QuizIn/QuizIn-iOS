@@ -40,15 +40,15 @@
     //TODO rkuhlman search for location instead
     
     [LinkedIn
-     searchForCompaniesWithName:searchBar.text
-     withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:^(NSArray *companies, NSError *error) {
+     searchForLocationsWithKeywords:searchBar.text
+     withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:^(NSArray *locations, NSError *error) {
          weakSelf.searchView.searchBar.alpha = 1.0f;
-         if (!companies || [companies count] == 0) {
+         if (!locations || [locations count] == 0) {
              return;
          }
-         NSMutableArray *searchResults = [NSMutableArray arrayWithCapacity:[companies count]];
-         for (QICompany *company in companies) {
-             [searchResults addObject:company.name];
+         NSMutableArray *searchResults = [NSMutableArray arrayWithCapacity:[locations count]];
+         for (QILocation *location in locations) {
+             [searchResults addObject:location.name];
          }
          weakSelf.results = [searchResults copy];
          dispatch_async(dispatch_get_main_queue(), ^{

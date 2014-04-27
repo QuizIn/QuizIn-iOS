@@ -362,7 +362,7 @@ static QIPerson *authenticatedUser;
    }];
 }
 
-+ (void)searchForIndustryWithKeyword:(NSString *)industryKeyword withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:(LICompaniesResponse)onCompletion {
++ (void)searchForIndustryWithKeyword:(NSString *)industryKeyword withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:(LIIndustriesResponse)onCompletion {
     [QILISearch
      getPeopleSearchFacets:@[@"industry"]
      withSearchParameters:@{@"facet": @"network,F",
@@ -388,6 +388,62 @@ static QIPerson *authenticatedUser;
          }
      }];
 }
+
++ (void)searchForSchoolsWithName:(NSString *)schoolName withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:(LISchoolsResponse)onCompletion {
+  [QILISearch
+   getPeopleSearchFacets:@[@"school"]
+   withSearchParameters:@{@"facet": @"network,F",
+                          @"school-name": schoolName}
+   onCompletion:^(NSArray *facets, NSError *error) {
+     if (!error) {
+       NSArray *schoolNames = @[];
+       for (QISearchFacet *facet in facets) {
+         if ([facet.code isEqualToString:@"school"]) {
+           NSMutableArray *schools = [NSMutableArray arrayWithCapacity:[facet.buckets count]];
+           for (QISearchFacetBucket *bucket in facet.buckets) {
+             QISchool *school = [QISchool new];
+             school.code = bucket.code;
+             school.name = bucket.name;
+             [schools addObject:school];
+           }
+           schoolNames = [schools copy];
+         }
+       }
+       onCompletion? onCompletion(schoolNames, nil) : NULL;
+     } else {
+       onCompletion? onCompletion(nil, error) : NULL;
+     }
+   }];
+}
+
+
++ (void)searchForLocationsWithKeywords:(NSString *)locationName withinFirstDegreeConnectionsForAuthenticatedUserWithOnCompletion:(LILocationsResponse)onCompletion {
+  [QILISearch
+   getPeopleSearchFacets:@[@"location"]
+   withSearchParameters:@{@"facet": @"network,F",
+                          @"keywords": locationName}
+   onCompletion:^(NSArray *facets, NSError *error) {
+     if (!error) {
+       NSArray *locationNames = @[];
+       for (QISearchFacet *facet in facets) {
+         if ([facet.code isEqualToString:@"location"]) {
+           NSMutableArray *locations = [NSMutableArray arrayWithCapacity:[facet.buckets count]];
+           for (QISearchFacetBucket *bucket in facet.buckets) {
+             QILocation *location = [QILocation new];
+             location.countryCode = bucket.code;
+             location.name = bucket.name;
+             [locations addObject:location];
+           }
+           locationNames = [locations copy];
+         }
+       }
+       onCompletion? onCompletion(locationNames, nil) : NULL;
+     } else {
+       onCompletion? onCompletion(nil, error) : NULL;
+     }
+   }];
+}
+
 
 + (void)peopleWithIDs:(NSArray *)personIDs onCompletion:(LIGetPeopleResponse)onCompletion {
   NSInteger numberOfPeople = [personIDs count];

@@ -2,8 +2,7 @@
 
 #import "QISearchPickerViewController.h"
 #import "LinkedIn.h"
-//temp
-#import "QICompany.h"
+#import "QIschool.h"
 
 
 @interface QISchoolSearchPickerViewController : QISearchPickerViewController
