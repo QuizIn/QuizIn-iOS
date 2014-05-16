@@ -3,6 +3,7 @@
 #import "AKLinkedInAuthController.h"
 #import "QIHomeViewController.h"
 #import "QILoginScreenViewController.h"
+#import "QIReachabilityManager.h"
 
 //Tab Bar Views
 #import "QIHomeViewController.h"
@@ -70,14 +71,24 @@
   [super didReceiveMemoryWarning];
 }
 
--(void)login{
-  [self presentViewController:self.loginViewController animated:YES completion:nil];
-  [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+-(void)login {
+  
+  if ([QIReachabilityManager isReachable]) {
+    [self presentViewController:self.loginViewController animated:YES completion:nil];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+    }
+  else{
+    [self connectionAlert];
+  }
 }
 
 - (void)logout {
   [self.authController unauthenticateAccount:self.loggedInAccount];
-  
+}
+
+- (void)connectionAlert{
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Internet Connection" message:@"You must have a connection to the internet to login." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  [alert show];
 }
 
 #pragma mark Layout

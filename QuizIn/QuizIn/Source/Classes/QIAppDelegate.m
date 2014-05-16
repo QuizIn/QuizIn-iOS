@@ -1,4 +1,5 @@
 #import "QIAppDelegate.h"
+#import "QIReachabilityManager.h"
 
 #import <CocoaLumberjack/DDASLLogger.h>
 #import <CocoaLumberjack/DDTTYLogger.h>
@@ -15,6 +16,7 @@ int ddLogLevel;
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [self setUpCocoaLumberjackLoggers];
+  [QIReachabilityManager sharedManager];
   
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   QIApplicationViewController *applicationViewController = [QIApplicationViewController new];

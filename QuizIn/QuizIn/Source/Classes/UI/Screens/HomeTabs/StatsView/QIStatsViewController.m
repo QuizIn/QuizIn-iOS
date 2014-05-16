@@ -3,6 +3,7 @@
 #import "QIStoreViewController.h"
 #import "QIQuizFactory.h"
 #import "QIQuizViewController.h"
+#import "QIReachabilityManager.h"
 
 @interface QIStatsViewController ()
 
@@ -101,29 +102,40 @@
 }
 
 - (void)takeRefreshQuiz{
-  QIIAPHelper *store = [QIIAPHelper sharedInstance];
-  
-  QIQuizQuestionType questionType;
-  if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"]){
-    questionType = (QIQuizQuestionTypeBusinessCard|
-                    QIQuizQuestionTypeMatching|
-                    QIQuizQuestionTypeMultipleChoice);
+  if ([QIReachabilityManager isReachable]) {
+    QIIAPHelper *store = [QIIAPHelper sharedInstance];
+    
+    QIQuizQuestionType questionType;
+    if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"]){
+      questionType = (QIQuizQuestionTypeBusinessCard|
+                      QIQuizQuestionTypeMatching|
+                      QIQuizQuestionTypeMultipleChoice);
+    }
+    else {
+      questionType = (QIQuizQuestionTypeMultipleChoice);
+    }
+    
+    NSArray *refreshPersonIDs = [self.data getRefreshPeopleIDsWithLimit:40];
+    [QIQuizFactory quizWithPersonIDs:refreshPersonIDs
+                       questionTypes:questionType
+                     completionBlock:^(QIQuiz *quiz, NSError *error) {
+                       if (error == nil) {
+                         dispatch_async(dispatch_get_main_queue(), ^{
+                           QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];
+                           [self presentViewController:quizViewController animated:YES completion:nil];
+                         });
+                       }
+                     }];
+
   }
-  else {
-    questionType = (QIQuizQuestionTypeMultipleChoice);
+  else{
+    [self connectionAlert]; 
   }
-  
-  NSArray *refreshPersonIDs = [self.data getRefreshPeopleIDsWithLimit:40];
-  [QIQuizFactory quizWithPersonIDs:refreshPersonIDs
-                     questionTypes:questionType
-                   completionBlock:^(QIQuiz *quiz, NSError *error) {
-                     if (error == nil) {
-                       dispatch_async(dispatch_get_main_queue(), ^{
-                         QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];
-                         [self presentViewController:quizViewController animated:YES completion:nil];
-                       });
-                     }
-                   }];
+}
+
+- (void)connectionAlert{
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Internet Connection" message:@"You must have a connection to the internet to login." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  [alert show];
 }
 
 #pragma mark UIAlertViewDelegate Functions

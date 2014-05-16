@@ -362,6 +362,8 @@
 		436CD48F190C5722004A0393 /* QIIndustrySearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD48E190C5722004A0393 /* QIIndustrySearchPickerViewController.m */; };
 		436CD492190C587C004A0393 /* QILocationSearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD491190C587C004A0393 /* QILocationSearchPickerViewController.m */; };
 		436CD495190C5947004A0393 /* QISchoolSearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD494190C5947004A0393 /* QISchoolSearchPickerViewController.m */; };
+		43BAC344192657D900632388 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BAC343192657D900632388 /* Reachability.m */; };
+		43BAC34719266CC800632388 /* QIReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BAC34619266CC800632388 /* QIReachabilityManager.m */; };
 		880870E216FBD31800D09848 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 880870DF16FBD31800D09848 /* InfoPlist.strings */; };
 		880870EF16FBD32200D09848 /* QuizIn.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 880870EA16FBD32200D09848 /* QuizIn.xcdatamodeld */; };
 		880870F716FBD32E00D09848 /* QIAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 880870F316FBD32E00D09848 /* QIAppDelegate.m */; };
@@ -869,6 +871,10 @@
 		436CD491190C587C004A0393 /* QILocationSearchPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QILocationSearchPickerViewController.m; sourceTree = "<group>"; };
 		436CD493190C5947004A0393 /* QISchoolSearchPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QISchoolSearchPickerViewController.h; sourceTree = "<group>"; };
 		436CD494190C5947004A0393 /* QISchoolSearchPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QISchoolSearchPickerViewController.m; sourceTree = "<group>"; };
+		43BAC342192657D900632388 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		43BAC343192657D900632388 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		43BAC34519266CC800632388 /* QIReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIReachabilityManager.h; sourceTree = "<group>"; };
+		43BAC34619266CC800632388 /* QIReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIReachabilityManager.m; sourceTree = "<group>"; };
 		634CC7A981E449658DD30D1E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F88557B297046AD9AF083B1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		880870E016FBD31800D09848 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1078,6 +1084,10 @@
 		20E0202817A5BED800CB9D43 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				43BAC342192657D900632388 /* Reachability.h */,
+				43BAC343192657D900632388 /* Reachability.m */,
+				43BAC34519266CC800632388 /* QIReachabilityManager.h */,
+				43BAC34619266CC800632388 /* QIReachabilityManager.m */,
 				20E0202917A5BED800CB9D43 /* LIHTTPClient.h */,
 				20E0202A17A5BED800CB9D43 /* LIHTTPClient.m */,
 				20E0202B17A5BED800CB9D43 /* LinkedIn.h */,
@@ -2433,6 +2443,7 @@
 				880870FB16FBD3A800D09848 /* QIApplicationViewController.m in Sources */,
 				88867975172D572F00DCE3D0 /* QIDrawerController.m in Sources */,
 				20B02B7F185E415C00FBB498 /* QIIndustrySelectionViewController.m in Sources */,
+				43BAC34719266CC800632388 /* QIReachabilityManager.m in Sources */,
 				88867978172D574C00DCE3D0 /* QIDrawerView.m in Sources */,
 				8886798D172D6AF800DCE3D0 /* AKGTMOAuth2Account.m in Sources */,
 				8886798E172D6AF800DCE3D0 /* AKGTMOAuth2AuthController.m in Sources */,
@@ -2534,6 +2545,7 @@
 				20A78E0F180B3EDC0037F8E3 /* QIPosition+Factory.m in Sources */,
 				347F49541870E0AA00815578 /* QISettingsView.m in Sources */,
 				20A78E10180B3EDC0037F8E3 /* QIQuizFactory.m in Sources */,
+				43BAC344192657D900632388 /* Reachability.m in Sources */,
 				3402C746181D903F004F3B1D /* QIQuizFinishViewController.m in Sources */,
 				3402C749181D9065004F3B1D /* QIQuizFinishView.m in Sources */,
 				34B19B661837C69400266FAF /* QIStoreTableFooterView.m in Sources */,

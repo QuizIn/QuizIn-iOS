@@ -14,6 +14,8 @@
 #import "QIQuizFactory.h"
 #import "QIConnectionsStore.h"
 #import "QIPerson.h"
+#import "QIReachabilityManager.h"
+
 
 //todo kill these
 #import "QIQuizFinishViewController.h"
@@ -48,7 +50,6 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 
 - (void)loadView {
   self.view = [[QIHomeView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  
   [LinkedIn numberOfConnectionsForAuthenticatedUserOnCompletion:^(NSInteger numberOfConnections, NSError *error) {
     if (error == nil) {
       self.homeView.numberOfConnections = numberOfConnections;
@@ -68,11 +69,10 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
       }
     }
   }];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-  [self.view updateConstraintsIfNeeded]; 
+  [self.view updateConstraintsIfNeeded];
   self.timer = [NSTimer scheduledTimerWithTimeInterval:3.0
                                                 target:self
                                               selector:@selector(timedImageChange)
@@ -135,27 +135,32 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 #pragma mark Actions
 
 - (void)startConnectionsQuiz:(id)sender {
-  QIIAPHelper *store = [QIIAPHelper sharedInstance];
-  QIQuizQuestionType questionType;
-  if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"]){
-    questionType = (QIQuizQuestionTypeBusinessCard|
-                    QIQuizQuestionTypeMatching|
-                    QIQuizQuestionTypeMultipleChoice);
+  if ([QIReachabilityManager isReachable]){
+    QIIAPHelper *store = [QIIAPHelper sharedInstance];
+    QIQuizQuestionType questionType;
+    if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"]){
+      questionType = (QIQuizQuestionTypeBusinessCard|
+                      QIQuizQuestionTypeMatching|
+                      QIQuizQuestionTypeMultipleChoice);
+    }
+    else {
+      questionType = (QIQuizQuestionTypeMultipleChoice);
+    }
+    
+    [QIQuizFactory
+     quizFromRandomConnectionsWithQuestionTypes:questionType
+     completionBlock:^(QIQuiz *quiz, NSError *error) {
+       if (error == nil) {
+         dispatch_async(dispatch_get_main_queue(), ^{
+           QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];
+           [self presentViewController:quizViewController animated:YES completion:nil];
+         });
+       }
+     }];
   }
   else {
-    questionType = (QIQuizQuestionTypeMultipleChoice);
+    [self connectionAlert]; 
   }
-  
-  [QIQuizFactory
-   quizFromRandomConnectionsWithQuestionTypes:questionType
-   completionBlock:^(QIQuiz *quiz, NSError *error) {
-    if (error == nil) {
-      dispatch_async(dispatch_get_main_queue(), ^{
-        QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];
-        [self presentViewController:quizViewController animated:YES completion:nil];
-      });
-    }
-  }];
 }
 
 - (void)goToStore:(UIButton *)sender{
@@ -163,19 +168,25 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 }
 
 - (void)groupPicker:(UIButton *)sender{
-  QIFilterType type = QIFilterTypeNone;
-  if (sender == self.homeView.companyQuizBeginButton) {
-    type = QIFilterTypeCompany;
-  } else if (sender == self.homeView.industryQuizBeginButton) {
-    type = QIFilterTypeIndustry;
-  } else if (sender == self.homeView.localeQuizBeginButton) {
-    type = QIFilterTypeLocation;
-  } else if (sender == self.homeView.groupQuizBeginButton) {
-    type = QIFilterTypeSchool;
+  if ([QIReachabilityManager isReachable]) {
+    QIFilterType type = QIFilterTypeNone;
+    if (sender == self.homeView.companyQuizBeginButton) {
+      type = QIFilterTypeCompany;
+    } else if (sender == self.homeView.industryQuizBeginButton) {
+      type = QIFilterTypeIndustry;
+    } else if (sender == self.homeView.localeQuizBeginButton) {
+      type = QIFilterTypeLocation;
+    } else if (sender == self.homeView.groupQuizBeginButton) {
+      type = QIFilterTypeSchool;
+    }
+    
+    QIGroupSelectionViewController *groupSelectionViewController = [self newGroupSelectionViewControllerForType:type];
+    [self presentViewController:groupSelectionViewController animated:YES completion:nil];
+  }
+  else {
+    [self connectionAlert];
   }
   
-  QIGroupSelectionViewController *groupSelectionViewController = [self newGroupSelectionViewControllerForType:type];
-  [self presentViewController:groupSelectionViewController animated:YES completion:nil];
 }
 
 //Todo Test Quiz Finish View
@@ -186,6 +197,11 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 - (void)showLoginScreen{
   QILoginScreenViewController *loginScreenViewController = [[QILoginScreenViewController alloc] init];
   [self presentViewController:loginScreenViewController animated:YES completion:nil];
+}
+
+- (void)connectionAlert{
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Internet Connection" message:@"You must have a connection to the internet to login." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  [alert show];
 }
 
 
