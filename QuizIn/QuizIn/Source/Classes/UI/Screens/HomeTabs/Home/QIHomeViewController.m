@@ -49,26 +49,31 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 }
 
 - (void)loadView {
-  self.view = [[QIHomeView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  [LinkedIn numberOfConnectionsForAuthenticatedUserOnCompletion:^(NSInteger numberOfConnections, NSError *error) {
-    if (error == nil) {
-      self.homeView.numberOfConnections = numberOfConnections;
-    } else {
-      NSLog(@"Error: %@", error);
-    }
-  }];
-  
-  self.randomPicURLs = [NSMutableArray array];
-  [LinkedIn randomConnectionsForAuthenticatedUserWithNumberOfConnectionsToFetch:30 onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
-    if (error == nil){
-      NSSet *personIDs = connectionsStore.personIDsWithProfilePics;
-      for (NSString *personID in personIDs ){
-        QIPerson *person = connectionsStore.people[personID];
-        NSURL *personPicURL = [NSURL URLWithString:person.pictureURL];
-        [self.randomPicURLs addObject:personPicURL];
+  if ([QIReachabilityManager isReachable]){
+    self.view = [[QIHomeView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [LinkedIn numberOfConnectionsForAuthenticatedUserOnCompletion:^(NSInteger numberOfConnections, NSError *error) {
+      if (error == nil) {
+        self.homeView.numberOfConnections = numberOfConnections;
+      } else {
+        NSLog(@"Error: %@", error);
       }
-    }
-  }];
+    }];
+    
+    self.randomPicURLs = [NSMutableArray array];
+    [LinkedIn randomConnectionsForAuthenticatedUserWithNumberOfConnectionsToFetch:30 onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
+      if (error == nil){
+        NSSet *personIDs = connectionsStore.personIDsWithProfilePics;
+        for (NSString *personID in personIDs ){
+          QIPerson *person = connectionsStore.people[personID];
+          NSURL *personPicURL = [NSURL URLWithString:person.pictureURL];
+          [self.randomPicURLs addObject:personPicURL];
+        }
+      }
+    }];
+  }
+  else {
+    [self connectionAlert]; 
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated{
