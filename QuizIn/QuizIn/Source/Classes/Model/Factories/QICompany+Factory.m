@@ -23,6 +23,9 @@
   if (companyJSON[@"industry"]) {
     company.industry = companyJSON[@"industry"];
   }
+  else{
+    company.industry = @"No Industry Specified"; 
+  }
   
   if (companyJSON[@"companyType"]) {
     company.type = companyJSON[@"companyType"][@"name"];

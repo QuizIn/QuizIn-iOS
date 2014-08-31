@@ -49,8 +49,7 @@
   [self.statsView.summaryView.pieChartView reloadData];
   
   if (self.statsView.totalCorrectAnswers + self.statsView.totalIncorrectAnswers == 0){
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Stats Yet" message:@"Build up knowledge data by Hobnob'n with your contacts." delegate:self cancelButtonTitle:@"Home" otherButtonTitles:nil];
-    [alert show];
+    [self noStatsAlert];
   }
 }
 
@@ -116,29 +115,44 @@
     }
     
     NSArray *refreshPersonIDs = [self.data getRefreshPeopleIDsWithLimit:40];
-    [QIQuizFactory quizWithPersonIDs:refreshPersonIDs
-                       questionTypes:questionType
-                     completionBlock:^(QIQuiz *quiz, NSError *error) {
-                       if (error == nil) {
-                         dispatch_async(dispatch_get_main_queue(), ^{
-                           QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];
-                           [self presentViewController:quizViewController animated:YES completion:nil];
-                         });
-                       }
-                     }];
+    if ([refreshPersonIDs count] >= 10){
+      [QIQuizFactory quizWithPersonIDs:refreshPersonIDs
+                         questionTypes:questionType
+                       completionBlock:^(QIQuiz *quiz, NSError *error) {
+                         if (error == nil) {
+                           dispatch_async(dispatch_get_main_queue(), ^{
+                             QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];
+                             [self presentViewController:quizViewController animated:YES completion:nil];
+                           });
+                         }
+                       }];
+    }
+    else {
+      [self notEnoughRefreshConnectionsAlert]; 
+    }
 
   }
   else{
-    [self connectionAlert]; 
+    [self reachabilityAlert];
   }
 }
 
-- (void)connectionAlert{
+#pragma mark Alert Functions
+- (void)reachabilityAlert{
   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Internet Connection" message:@"You must have a connection to the internet to login." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
   [alert show];
 }
 
-#pragma mark UIAlertViewDelegate Functions
+- (void)noStatsAlert {
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Stats Yet" message:@"Build up knowledge data by Hobnob'n with your contacts." delegate:self cancelButtonTitle:@"Home" otherButtonTitles:nil];
+  [alert show];
+}
+
+- (void)notEnoughRefreshConnectionsAlert{
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Play More Regular Quizzes" message:@"You need at least 10 people in the \"Needs Refresh\" Category" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  [alert show];
+}
+
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
   [self.parentTabBarController setSelectedIndex:0];
 }
