@@ -312,6 +312,8 @@
   
   [button setContentMode:UIViewContentModeScaleAspectFill];
   [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+  //Todo rkuhlman when we implement sharing unhide these.
+  [button setHidden:YES]; 
   return button;
 }
 
