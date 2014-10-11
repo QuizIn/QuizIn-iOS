@@ -48,7 +48,8 @@
          }
          NSMutableArray *searchResults = [NSMutableArray arrayWithCapacity:[locations count]];
          for (QILocation *location in locations) {
-             [searchResults addObject:location.name];
+           [searchResults addObject:@{@"ID":    location.countryCode,
+                                      @"name":  location.name}];
          }
          weakSelf.results = [searchResults copy];
          dispatch_async(dispatch_get_main_queue(), ^{

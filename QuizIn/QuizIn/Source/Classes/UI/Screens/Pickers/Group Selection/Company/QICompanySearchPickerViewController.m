@@ -47,7 +47,8 @@
          }
          NSMutableArray *searchResults = [NSMutableArray arrayWithCapacity:[companies count]];
          for (QICompany *company in companies) {
-             [searchResults addObject:company.name];
+           [searchResults addObject:@{@"ID":    company.companyID,
+                                      @"name":  company.name}];
          }
          weakSelf.results = [searchResults copy];
          dispatch_async(dispatch_get_main_queue(), ^{

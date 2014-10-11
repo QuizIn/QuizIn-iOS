@@ -47,7 +47,8 @@
          }
          NSMutableArray *searchResults = [NSMutableArray arrayWithCapacity:[industries count]];
          for (QIIndustry *industry in industries) {
-             [searchResults addObject:industry.name];
+           [searchResults addObject:@{@"ID":    industry.code,
+                                      @"name":  industry.name}];
          }
          weakSelf.results = [searchResults copy];
          dispatch_async(dispatch_get_main_queue(), ^{

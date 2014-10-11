@@ -53,13 +53,13 @@
   if (cell == nil){
     cell = [[QISearchPickerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
   }
-  cell.textLabel.text = self.results[indexPath.row];
+  cell.textLabel.text = [[self.results objectAtIndex:indexPath.row] objectForKey:@"name"];
   return cell;  
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-  NSString *companyString = [self.results objectAtIndex:indexPath.row];
-  [self.delegate addItemFromSearchView:companyString];
+  [self.delegate addItemFromSearchView:@{@"ID":    [[self.results objectAtIndex:indexPath.row] objectForKey:@"ID"],
+                                         @"name":  [[self.results objectAtIndex:indexPath.row] objectForKey:@"name"]}];
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 

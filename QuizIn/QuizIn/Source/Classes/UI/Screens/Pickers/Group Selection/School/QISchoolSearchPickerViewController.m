@@ -48,7 +48,8 @@
          }
          NSMutableArray *searchResults = [NSMutableArray arrayWithCapacity:[schools count]];
          for (QISchool *school in schools) {
-             [searchResults addObject:school.name];
+           [searchResults addObject:@{@"ID":    school.code,
+                                      @"name":  school.name}];
          }
          weakSelf.results = [searchResults copy];
          dispatch_async(dispatch_get_main_queue(), ^{

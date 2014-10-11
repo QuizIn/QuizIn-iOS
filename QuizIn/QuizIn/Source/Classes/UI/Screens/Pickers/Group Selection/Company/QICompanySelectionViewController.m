@@ -39,7 +39,7 @@
         
         NSMutableArray *companySelectionContent = [NSMutableArray arrayWithCapacity:[companies count]];
         for (QICompany *company in companies) {
-          NSMutableDictionary *companySelection = [@{@"contacts": @"0",
+          NSMutableDictionary *companySelection = [@{@"IDs": company.companyID,
                                                      @"title": company.name,
                                                      @"subtitle": company.industry,
                                                      @"images": @[],
@@ -61,7 +61,7 @@
   NSMutableArray *selectedCompanyCodes = [NSMutableArray array];
   for (NSDictionary *companyDict in self.groupSelectionView.selectionContent) {
     if ([companyDict[@"selected"] isEqual:@YES]) {
-      [selectedCompanyCodes addObject:companyDict[@"contacts"]];
+      [selectedCompanyCodes addObject:companyDict[@"IDs"]];
     }
   }
   
@@ -88,13 +88,13 @@
   [self presentViewController:searchController animated:YES completion:nil];
 }
 
-- (void)addItemFromSearchView:(NSString *)searchItem{
+- (void)addItemFromSearchView:(NSDictionary *)searchItem{
   NSMutableArray *selectionContentTemp = self.groupSelectionView.selectionContent;
-  [selectionContentTemp addObject:[@{@"contacts": @"0",
-                                     @"title": searchItem,
-                                     @"subtitle": @"test",
-                                     @"images": @[],
-                                     @"logo": [NSURL URLWithString:@"https://avatars0.githubusercontent.com/u/1337932?v=2&s=40"],
+  [selectionContentTemp addObject:[@{@"IDs":      [searchItem objectForKey:@"ID"],
+                                     @"title":    [searchItem objectForKey:@"name"],
+                                     @"subtitle": [searchItem objectForKey:@"ID"],
+                                     @"images":   @[],
+                                     @"logo":     [NSURL URLWithString:@"https://avatars0.githubusercontent.com/u/1337932?v=2&s=40"],
                                      @"selected": @YES} mutableCopy]];
   [self.groupSelectionView setSelectionContent:selectionContentTemp];
   

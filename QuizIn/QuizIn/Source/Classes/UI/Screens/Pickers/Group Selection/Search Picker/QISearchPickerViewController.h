@@ -6,7 +6,7 @@
 
 @protocol QISearchPickerViewControllerDelegate <NSObject>
 @required
-- (void) addItemFromSearchView:(NSString *)searchItem;
+- (void) addItemFromSearchView:(NSDictionary *)searchedItem;
 @end
 
 
