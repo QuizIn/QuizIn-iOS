@@ -58,7 +58,9 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-  NSLog(@"Selected Search Result"); 
+  NSString *companyString = [self.results objectAtIndex:indexPath.row];
+  [self.delegate addItemFromSearchView:companyString];
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

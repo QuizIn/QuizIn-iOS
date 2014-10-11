@@ -1,5 +1,5 @@
 #import "QIGroupSelectionViewController.h"
 
-@interface QICompanySelectionViewController : QIGroupSelectionViewController
+@interface QICompanySelectionViewController : QIGroupSelectionViewController <QISearchPickerViewControllerDelegate>
 
 @end

@@ -81,10 +81,24 @@
 }
 
 - (void)showSearchView{
-    QICompanySearchPickerViewController *searchController = [[QICompanySearchPickerViewController alloc] init];
-    [searchController setModalPresentationStyle:UIModalPresentationFullScreen];
-    [searchController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
-    [self presentViewController:searchController animated:YES completion:nil];
+  QICompanySearchPickerViewController *searchController = [[QICompanySearchPickerViewController alloc] init];
+  searchController.delegate = self;
+  [searchController setModalPresentationStyle:UIModalPresentationFullScreen];
+  [searchController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+  [self presentViewController:searchController animated:YES completion:nil];
+}
+
+- (void)addItemFromSearchView:(NSString *)searchItem{
+  NSMutableArray *selectionContentTemp = self.groupSelectionView.selectionContent;
+  [selectionContentTemp addObject:[@{@"contacts": @"0",
+                                     @"title": searchItem,
+                                     @"subtitle": @"test",
+                                     @"images": @[],
+                                     @"logo": [NSURL URLWithString:@"https://avatars0.githubusercontent.com/u/1337932?v=2&s=40"],
+                                     @"selected": @YES} mutableCopy]];
+  [self.groupSelectionView setSelectionContent:selectionContentTemp];
+  
+
 }
 
 @end
