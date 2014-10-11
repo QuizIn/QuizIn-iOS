@@ -279,7 +279,7 @@
                                 nil];
     
     NSArray *hImagesConstraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_profileImage0(==50)]-10-[_profileImage1(==_profileImage0)]-10-[_profileImage2(==_profileImage1)]-10-[_profileImage3(==_profileImage2)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_profileImage0(==50)]-10-[_profileImage1(==_profileImage0)]-10-[_profileImage2(==_profileImage1)]-10-[_profileImage3(==_profileImage2)]"
                                             options:NSLayoutFormatAlignAllCenterY
                                             metrics:nil
                                               views:imageViews];
@@ -287,6 +287,7 @@
     
     for (int i = 0; i<[_profileImages count]; i++) {
       [self.constraintsForImages addObject:[NSLayoutConstraint constraintWithItem:[_profileImages objectAtIndex:i] attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:[_profileImages objectAtIndex:i] attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f]];
+      [self.constraintsForImages addObject:[NSLayoutConstraint constraintWithItem:[_profileImages objectAtIndex:i] attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_connectionsQuizImagePreviewCollection attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
     }
     
     [self.connectionsQuizImagePreviewCollection addConstraints:self.constraintsForImages];

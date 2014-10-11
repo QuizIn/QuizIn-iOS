@@ -31,8 +31,8 @@
 
 #pragma mark Properties
 
-- (void)setDescription:(NSString *)description{
-  _description = description;
+- (void)setDescriptionString:(NSString *)descriptionString{
+  _descriptionString = descriptionString;
   [self updateDescription];
 }
 
@@ -113,7 +113,7 @@
 #pragma mark Data Layout
 
 - (void)updateDescription{
-  self.descriptionLabel.text = self.description; 
+  self.descriptionLabel.text = self.descriptionString;
 }
 
 - (void)updateIconImage{
