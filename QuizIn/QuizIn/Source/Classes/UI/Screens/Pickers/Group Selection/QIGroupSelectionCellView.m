@@ -313,7 +313,7 @@
 }
 
 -(UIImageView *)newSelectionTabImage{
-  UIImageView *tab = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"calendar_meetingtab"] resizableImageWithCapInsets:UIEdgeInsetsMake(20,55, 20, 19) ]];
+  UIImageView *tab = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"calendar_meetingtab_small"] resizableImageWithCapInsets:UIEdgeInsetsMake(20,55, 20, 19) ]];
   [tab setContentMode:UIViewContentModeScaleToFill];
   [tab setTranslatesAutoresizingMaskIntoConstraints:NO];
   return tab;

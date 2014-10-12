@@ -362,6 +362,8 @@
 		436CD48F190C5722004A0393 /* QIIndustrySearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD48E190C5722004A0393 /* QIIndustrySearchPickerViewController.m */; };
 		436CD492190C587C004A0393 /* QILocationSearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD491190C587C004A0393 /* QILocationSearchPickerViewController.m */; };
 		436CD495190C5947004A0393 /* QISchoolSearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD494190C5947004A0393 /* QISchoolSearchPickerViewController.m */; };
+		4384CBA619EB32EC0060DF77 /* calendar_meetingtab_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 4384CBA419EB32EC0060DF77 /* calendar_meetingtab_small.png */; };
+		4384CBA719EB32EC0060DF77 /* calendar_meetingtab_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4384CBA519EB32EC0060DF77 /* calendar_meetingtab_small@2x.png */; };
 		43BAC344192657D900632388 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BAC343192657D900632388 /* Reachability.m */; };
 		43BAC34719266CC800632388 /* QIReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BAC34619266CC800632388 /* QIReachabilityManager.m */; };
 		880870E216FBD31800D09848 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 880870DF16FBD31800D09848 /* InfoPlist.strings */; };
@@ -871,6 +873,8 @@
 		436CD491190C587C004A0393 /* QILocationSearchPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QILocationSearchPickerViewController.m; sourceTree = "<group>"; };
 		436CD493190C5947004A0393 /* QISchoolSearchPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QISchoolSearchPickerViewController.h; sourceTree = "<group>"; };
 		436CD494190C5947004A0393 /* QISchoolSearchPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QISchoolSearchPickerViewController.m; sourceTree = "<group>"; };
+		4384CBA419EB32EC0060DF77 /* calendar_meetingtab_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_meetingtab_small.png; sourceTree = "<group>"; };
+		4384CBA519EB32EC0060DF77 /* calendar_meetingtab_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_meetingtab_small@2x.png"; sourceTree = "<group>"; };
 		43BAC342192657D900632388 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		43BAC343192657D900632388 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		43BAC34519266CC800632388 /* QIReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIReachabilityManager.h; sourceTree = "<group>"; };
@@ -1762,6 +1766,8 @@
 		348901AE1786F7860004F604 /* Group Selection */ = {
 			isa = PBXGroup;
 			children = (
+				4384CBA419EB32EC0060DF77 /* calendar_meetingtab_small.png */,
+				4384CBA519EB32EC0060DF77 /* calendar_meetingtab_small@2x.png */,
 				344B62CE17A35CC700EE85A9 /* calendar_checkmark.png */,
 				344B62CF17A35CC700EE85A9 /* calendar_checkmark@2x.png */,
 				348901AF1786F78C0004F604 /* calendar_datebar1.png */,
@@ -2091,7 +2097,7 @@
 			name = QuizInTests;
 			productName = QuizInTests;
 			productReference = 881EAFC116FBD08B0041AD55 /* QuizInTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -2282,6 +2288,7 @@
 				3412987517B7C6F900678A55 /* connectionsquiz_lock_btn@2x.png in Resources */,
 				3412987617B7C6F900678A55 /* connectionsquiz_paperstack.png in Resources */,
 				3412987717B7C6F900678A55 /* connectionsquiz_paperstack@2x.png in Resources */,
+				4384CBA619EB32EC0060DF77 /* calendar_meetingtab_small.png in Resources */,
 				3412987817B7C6F900678A55 /* connectionsquiz_quizoptions_btn.png in Resources */,
 				3412987917B7C6F900678A55 /* connectionsquiz_quizoptions_btn@2x.png in Resources */,
 				3412987A17B7C6F900678A55 /* connectionsquiz_reference.png in Resources */,
@@ -2300,6 +2307,7 @@
 				3412989717B84B4400678A55 /* store_buyall_btn@2x.png in Resources */,
 				3412989817B84B4400678A55 /* store_preview_btn.png in Resources */,
 				3473046F18A822260063B090 /* hobnob_done_btn@2x.png in Resources */,
+				4384CBA719EB32EC0060DF77 /* calendar_meetingtab_small@2x.png in Resources */,
 				34730467189582620063B090 /* login_learn_btn_standard.png in Resources */,
 				3412989917B84B4400678A55 /* store_preview_btn@2x.png in Resources */,
 				3412989E17B84B4400678A55 /* store_reference.png in Resources */,

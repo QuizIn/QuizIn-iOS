@@ -54,10 +54,13 @@
   if ([selectionContent isEqualToArray:_selectionContent]) {
     return;
   }
-  _selectionContent = [selectionContent mutableCopy];
+  NSMutableArray *selectionContentTemp= [NSMutableArray array];
   if ([selectionContent count]>0){
     [self.activityView stopAnimating];
+    selectionContentTemp = [self removeDuplicateSelectionContent:selectionContent];
   }
+  
+  _selectionContent = [selectionContentTemp mutableCopy];
   [self.tableView reloadData];
 }
 
@@ -86,6 +89,22 @@
 -(void)updateViewLabel{
     self.viewLabel.text = self.selectionViewLabelString;
 }
+
+- (NSMutableArray *)removeDuplicateSelectionContent: (NSMutableArray *)possiblyDuplicated{
+  
+  NSMutableArray * itemsFiltered = [[NSMutableArray alloc] init];
+  NSMutableArray * itemIDEncountered = [[NSMutableArray alloc] init];
+  NSString * name;
+  for (NSDictionary *item in [possiblyDuplicated reverseObjectEnumerator]){
+    name = [item objectForKey:@"title"];
+    if ([itemIDEncountered indexOfObject: name] == NSNotFound) {
+      [itemIDEncountered addObject:name];
+      [itemsFiltered addObject:item];   //And add the group to the list, as this is the first time it's encountered
+    }
+  }
+  return [[[itemsFiltered reverseObjectEnumerator] allObjects] mutableCopy];
+}
+
 #pragma mark Layout
 
 - (void)layoutSubviews {
@@ -181,7 +200,8 @@
   [tableView setBackgroundColor:[UIColor colorWithRed:.34f green:.45f blue:.64f alpha:.5f]];
   [tableView setSeparatorColor:[UIColor colorWithWhite:.8f alpha:1.0f]];
   [tableView setShowsVerticalScrollIndicator:NO];
-  tableView.rowHeight = 94;
+  tableView.separatorColor = [UIColor clearColor];
+  tableView.rowHeight = 43;
   tableView.sectionHeaderHeight = 25;
   tableView.dataSource = self;
   tableView.delegate = self; 
@@ -270,10 +290,10 @@
   }
   [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
   [cell.backView setBackgroundColor:[UIColor colorWithRed:.34f green:.45f blue:.64f alpha:1.0f]];
-  [cell setImageURLs:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"images"]];
+  //[cell setImageURLs:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"images"]];
   [cell setSelectionTitle:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"title"]];
-  [cell setSelectionSubtitle:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"subtitle"]];
-  [cell setLogoURL:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"logo"]];
+  //[cell setSelectionSubtitle:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"subtitle"]];
+  //[cell setLogoURL:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"logo"]];
   [cell setNumberOfContacts:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"contacts"]];
   
   BOOL selected = [[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"selected"] boolValue];

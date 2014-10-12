@@ -89,7 +89,7 @@
 }
 
 - (void)addItemFromSearchView:(NSDictionary *)searchItem{
-  NSMutableArray *selectionContentTemp = self.groupSelectionView.selectionContent;
+  NSMutableArray *selectionContentTemp = [self.groupSelectionView.selectionContent mutableCopy];
   [selectionContentTemp addObject:[@{@"IDs":      [searchItem objectForKey:@"ID"],
                                      @"title":    [searchItem objectForKey:@"name"],
                                      @"subtitle": [searchItem objectForKey:@"ID"],

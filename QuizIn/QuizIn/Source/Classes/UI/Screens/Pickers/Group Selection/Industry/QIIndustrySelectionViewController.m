@@ -66,11 +66,26 @@
 }
 
 - (void)showSearchView{
-    QIIndustrySearchPickerViewController *searchController = [[QIIndustrySearchPickerViewController alloc] init];
-    [searchController setModalPresentationStyle:UIModalPresentationFullScreen];
-    [searchController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
-    [self presentViewController:searchController animated:YES completion:nil];
+  QIIndustrySearchPickerViewController *searchController = [[QIIndustrySearchPickerViewController alloc] init];
+  searchController.delegate = self;
+  [searchController setModalPresentationStyle:UIModalPresentationFullScreen];
+  [searchController setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+  [self presentViewController:searchController animated:YES completion:nil];
 }
+
+- (void)addItemFromSearchView:(NSDictionary *)searchItem{
+  NSMutableArray *selectionContentTemp = self.groupSelectionView.selectionContent;
+  [selectionContentTemp addObject:[@{@"IDs":      [searchItem objectForKey:@"ID"],
+                                     @"title":    [searchItem objectForKey:@"name"],
+                                     @"subtitle": [searchItem objectForKey:@"ID"],
+                                     @"images":   @[],
+                                     @"logo":     [NSNull null],
+                                     @"selected": @YES} mutableCopy]];
+  [self.groupSelectionView setSelectionContent:selectionContentTemp];
+  
+  
+}
+
 
 
 @end
