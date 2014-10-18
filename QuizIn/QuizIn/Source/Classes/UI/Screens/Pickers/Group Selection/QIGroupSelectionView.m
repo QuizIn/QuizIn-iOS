@@ -6,7 +6,7 @@
 #define FAST_ANIMATION_DURATION 0.35
 #define SLOW_ANIMATION_DURATION 0.75
 #define PAN_CLOSED_X 0
-#define PAN_OPEN_X -45
+#define PAN_OPEN_X -28
 
 @interface QIGroupSelectionView ()
 
@@ -294,7 +294,7 @@
   [cell setSelectionTitle:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"title"]];
   //[cell setSelectionSubtitle:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"subtitle"]];
   //[cell setLogoURL:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"logo"]];
-  [cell setNumberOfContacts:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"contacts"]];
+  //[cell setNumberOfContacts:[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"contacts"]];
   
   BOOL selected = [[[self.selectionContent objectAtIndex:indexPath.row] objectForKey:@"selected"] boolValue];
   if (selected){

@@ -172,7 +172,7 @@
 
 + (QIQuiz *)quizWithConnections:(QIConnectionsStore *)connections
                   questionTypes:(QIQuizQuestionType)questionTypes; {
-  NSAssert([connections.people count] >= 10, @"Must have at least 10 people to make Quiz");
+  NSAssert([connections.people count] >= 4, @"Must have at least 10 people to make Quiz");
   // TODO(Rene): Remove this requirement, simply include less multiple choice what's my name questions.
   NSAssert([connections.personIDsWithProfilePics count] >= 10,
            @"Must have at least 10 people with profile pics to make Quiz");
