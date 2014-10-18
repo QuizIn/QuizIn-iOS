@@ -142,18 +142,17 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 - (void)startConnectionsQuiz:(id)sender {
   if ([QIReachabilityManager isReachable]){
     QIIAPHelper *store = [QIIAPHelper sharedInstance];
-    QIQuizQuestionType questionType;
+    
+    QIQuizQuestionAllowedTypes questionTypes;
     if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"]){
-      questionType = (QIQuizQuestionTypeBusinessCard|
-                      QIQuizQuestionTypeMatching|
-                      QIQuizQuestionTypeMultipleChoice);
+      questionTypes = QIQuizQuestionAllowAll;
     }
     else {
-      questionType = (QIQuizQuestionTypeMultipleChoice);
+      questionTypes = QIQuizQuestionAllowMultipleChoice;
     }
     
     [QIQuizFactory
-     quizFromRandomConnectionsWithQuestionTypes:questionType
+     quizFromRandomConnectionsWithQuestionTypes:questionTypes
      completionBlock:^(QIQuiz *quiz, NSError *error) {
        if (error == nil) {
          dispatch_async(dispatch_get_main_queue(), ^{

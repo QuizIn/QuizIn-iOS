@@ -5,6 +5,7 @@
 #import "QIIndustry.h"
 #import "QIQuizFactory.h"
 #import "QIQuizQuestion.h"
+#import "QIIAPHelper.h"
 
 @interface QIIndustrySelectionViewController ()
 
@@ -50,10 +51,18 @@
     }
   }
   
+  QIIAPHelper *store = [QIIAPHelper sharedInstance];
+  
+  QIQuizQuestionAllowedTypes questionTypes;
+  if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"]){
+    questionTypes= QIQuizQuestionAllowAll;
+  }
+  else {
+    questionTypes= QIQuizQuestionAllowMultipleChoice;
+  }
+
   [QIQuizFactory
-   newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionTypeBusinessCard|
-                                        QIQuizQuestionTypeMatching|
-                                        QIQuizQuestionTypeMultipleChoice)
+   newFirstDegreeQuizWithQuestionTypes:questionTypes
    forIndustries:selectedIndustryCodes
    completionBlock:^(QIQuiz *quiz, NSError *error) {
      if (error == nil) {

@@ -4,6 +4,7 @@
 #import "LinkedIn.h"
 #import "QISchool.h"
 #import "QIQuizFactory.h"
+#import "QIIAPHelper.h"
 
 @interface QISchoolSelectionViewController ()
 
@@ -47,10 +48,19 @@
     }
   }
   
+  
+  QIIAPHelper *store = [QIIAPHelper sharedInstance];
+  
+  QIQuizQuestionAllowedTypes questionTypes;
+  if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"]){
+    questionTypes = QIQuizQuestionAllowAll;
+  }
+  else {
+    questionTypes = QIQuizQuestionAllowMultipleChoice;
+  }
+  
   [QIQuizFactory
-   newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionTypeBusinessCard|
-                                        QIQuizQuestionTypeMatching|
-                                        QIQuizQuestionTypeMultipleChoice)
+   newFirstDegreeQuizWithQuestionTypes:questionTypes
    forSchools:selectedSchoolCodes
    completionBlock:^(QIQuiz *quiz, NSError *error) {
      if (error == nil) {

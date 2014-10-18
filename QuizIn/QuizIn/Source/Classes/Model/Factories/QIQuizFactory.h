@@ -10,23 +10,23 @@
 // TODO: WARNING! Will make multiple API calls to Linked In each time this method is called.
 //  Store the info comming back from Linked In to prevent hitting throttle limits.
 + (void)quizWithPersonIDs:(NSArray *)personIDs
-            questionTypes:(QIQuizQuestionType)questionTypes
+            questionTypes:(QIQuizQuestionAllowedTypes)questionTypes
           completionBlock:(void (^)(QIQuiz *, NSError *))completionBlock;
-+ (void)quizFromRandomConnectionsWithQuestionTypes:(QIQuizQuestionType)questionTypes
++ (void)quizFromRandomConnectionsWithQuestionTypes:(QIQuizQuestionAllowedTypes)questionTypes
                                    completionBlock:(void (^)(QIQuiz *, NSError *))completionBlock;
-+ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionAllowedTypes)questionTypes
                               forIndustries:(NSArray *)industryCodes
                             completionBlock:(void (^)(QIQuiz *quiz, NSError*error))completionBlock;
-+ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionAllowedTypes)questionTypes
                         forCurrentCompanies:(NSArray *)companyCodes
                             completionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock;
-+ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionAllowedTypes)questionTypes
                                  forSchools:(NSArray *)schoolCodes
                             completionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock;
-+ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionAllowedTypes)questionTypes
                                forLocations:(NSArray *)locationCodes
                             completionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock;
 + (QIQuiz *)quizWithConnections:(QIConnectionsStore *)connections
-                  questionTypes:(QIQuizQuestionType)questionTypes;
+                  questionTypes:(QIQuizQuestionAllowedTypes)questionTypes;
 
 @end

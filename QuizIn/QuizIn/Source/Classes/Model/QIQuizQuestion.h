@@ -7,12 +7,18 @@ typedef NS_ENUM(NSInteger, QIQuizQuestionType) {
   QIQuizQuestionTypeBusinessCard    = (1 << 2),
 };
 
+typedef NS_ENUM(NSInteger, QIQuizQuestionAllowedTypes) {
+  QIQuizQuestionAllowMultipleChoice   = 0,
+  QIQuizQuestionAllowAll              = 1,
+};
+
+
 @class QIConnectionsStore;
 
 @interface QIQuizQuestion : NSObject
 
 + (instancetype)newRandomQuestionForPersonID:(NSString *)personID
                             connectionsStore:(QIConnectionsStore *)connections
-                               questionTypes:(QIQuizQuestionType)types;
+                               questionTypes:(QIQuizQuestionAllowedTypes)types;
 
 @end

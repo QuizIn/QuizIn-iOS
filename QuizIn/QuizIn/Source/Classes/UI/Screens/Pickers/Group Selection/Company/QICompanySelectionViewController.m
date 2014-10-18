@@ -5,6 +5,7 @@
 #import "QICompany.h"
 #import "QIQuizFactory.h"
 #import "QIQuizViewController.h"
+#import "QIIAPHelper.h"
 
 @interface QICompanySelectionViewController ()
 
@@ -65,10 +66,18 @@
     }
   }
   
+  QIIAPHelper *store = [QIIAPHelper sharedInstance];
+  
+  QIQuizQuestionAllowedTypes questionTypes;
+  if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"]){
+    questionTypes = QIQuizQuestionAllowAll;
+  }
+  else {
+    questionTypes = QIQuizQuestionAllowMultipleChoice;
+  }
+
   [QIQuizFactory
-   newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionTypeBusinessCard|
-                                        QIQuizQuestionTypeMatching|
-                                        QIQuizQuestionTypeMultipleChoice)
+   newFirstDegreeQuizWithQuestionTypes:questionTypes
    forCurrentCompanies:selectedCompanyCodes
    completionBlock:^(QIQuiz *quiz, NSError *error) {
        if (error == nil) {

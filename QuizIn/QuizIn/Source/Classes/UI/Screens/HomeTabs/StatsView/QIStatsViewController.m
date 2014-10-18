@@ -104,18 +104,16 @@
   if ([QIReachabilityManager isReachable]) {
     QIIAPHelper *store = [QIIAPHelper sharedInstance];
     
-    QIQuizQuestionType questionType;
+    QIQuizQuestionAllowedTypes questionType;
     if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"]){
-      questionType = (QIQuizQuestionTypeBusinessCard|
-                      QIQuizQuestionTypeMatching|
-                      QIQuizQuestionTypeMultipleChoice);
+      questionType = QIQuizQuestionAllowAll;
     }
     else {
-      questionType = (QIQuizQuestionTypeMultipleChoice);
+      questionType = QIQuizQuestionAllowMultipleChoice;
     }
     
     NSArray *refreshPersonIDs = [self.data getRefreshPeopleIDsWithLimit:40];
-    if ([refreshPersonIDs count] >= 10){
+    if ([refreshPersonIDs count] >= 4){
       [QIQuizFactory quizWithPersonIDs:refreshPersonIDs
                          questionTypes:questionType
                        completionBlock:^(QIQuiz *quiz, NSError *error) {
@@ -149,7 +147,7 @@
 }
 
 - (void)notEnoughRefreshConnectionsAlert{
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Play More Regular Quizzes" message:@"You need at least 10 people in the \"Needs Refresh\" Category" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Play More Regular Quizzes" message:@"You need at least 4 people in the \"Needs Refresh\" Category" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
   [alert show];
 }
 

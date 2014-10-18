@@ -72,7 +72,7 @@
 //facets:(code,buckets:(code,name,count)) //  // current-company //@"facets": @"location",
 
 + (void)quizWithPersonIDs:(NSArray *)personIDs
-            questionTypes:(QIQuizQuestionType)questionTypes
+            questionTypes:(QIQuizQuestionAllowedTypes)questionTypes
           completionBlock:(void (^)(QIQuiz *, NSError *))completionBlock {
   [LinkedIn peopleWithIDs:personIDs onCompletion:^(NSArray *people, NSError *error) {
     if (people && [people count] > 0) {
@@ -85,7 +85,7 @@
   }];
 }
 
-+ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionAllowedTypes)questionTypes
                               forIndustries:(NSArray *)industryCodes
                             completionBlock:(void (^)(QIQuiz *quiz, NSError*error))completionBlock {
   [LinkedIn allFirstDegreeConnectionsForAuthenticatedUserInIndustries:[industryCodes copy] onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
@@ -101,7 +101,7 @@
   }];
 }
 
-+ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionAllowedTypes)questionTypes
                         forCurrentCompanies:(NSArray *)companyCodes
                             completionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {
   [LinkedIn
@@ -119,7 +119,7 @@
   }];
 }
 
-+ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionAllowedTypes)questionTypes
                                  forSchools:(NSArray *)schoolCodes
                             completionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {
   [LinkedIn
@@ -137,7 +137,7 @@
    }];
 }
 
-+ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionType)questionTypes
++ (void)newFirstDegreeQuizWithQuestionTypes:(QIQuizQuestionAllowedTypes)questionTypes
                                forLocations:(NSArray *)locationCodes
                             completionBlock:(void (^)(QIQuiz *quiz, NSError *error))completionBlock {
   [LinkedIn
@@ -155,7 +155,7 @@
    }];
 }
 
-+ (void)quizFromRandomConnectionsWithQuestionTypes:(QIQuizQuestionType)questionTypes
++ (void)quizFromRandomConnectionsWithQuestionTypes:(QIQuizQuestionAllowedTypes)questionTypes
                                    completionBlock:(void (^)(QIQuiz *, NSError *))completionBlock {
   [LinkedIn randomConnectionsForAuthenticatedUserWithNumberOfConnectionsToFetch:40 onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
     QIQuiz *quiz = [self quizWithConnections:connectionsStore questionTypes:questionTypes];
@@ -171,7 +171,7 @@
 }
 
 + (QIQuiz *)quizWithConnections:(QIConnectionsStore *)connections
-                  questionTypes:(QIQuizQuestionType)questionTypes; {
+                  questionTypes:(QIQuizQuestionAllowedTypes)questionTypes; {
   NSAssert([connections.people count] >= 4, @"Must have at least 10 people to make Quiz");
   // TODO(Rene): Remove this requirement, simply include less multiple choice what's my name questions.
   NSAssert([connections.personIDsWithProfilePics count] >= 10,
