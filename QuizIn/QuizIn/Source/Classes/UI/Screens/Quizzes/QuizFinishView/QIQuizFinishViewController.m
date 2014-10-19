@@ -2,6 +2,10 @@
 #import "QIPerson.h"
 #import "LinkedIn.h"
 
+#import "QIQuizFactory.h"
+#import "QIIAPHelper.h"
+#import "QIQuizViewController.h"
+
 @interface QIQuizFinishViewController ()
 
 @property (nonatomic,strong) QIPerson *loggedInUser;
@@ -27,10 +31,6 @@
   [self.quizFinishView.doneButton addTarget:self
                                          action:@selector(dismiss)
                                forControlEvents:UIControlEventTouchUpInside];
-  
-  [self.quizFinishView.goAgainButton addTarget:self
-                                     action:@selector(goAgain)
-                           forControlEvents:UIControlEventTouchUpInside];
 }
 
 
@@ -44,10 +44,6 @@
   [self dismissViewControllerAnimated:YES completion:nil]; 
 }
 
-- (void)goAgain{
-  NSLog(@"Quiz Again");
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -58,5 +54,11 @@
   return (QIQuizFinishView *)self.view;
 }
 
+- (QIQuizViewController *)newQuizViewControllerWithQuiz:(QIQuiz *)quiz {
+  QIQuizViewController *quizViewController = [[QIQuizViewController alloc] initWithQuiz:quiz];
+  quizViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+  quizViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+  return quizViewController;
+}
 
 @end

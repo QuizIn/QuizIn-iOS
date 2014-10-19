@@ -3,7 +3,6 @@
 @interface QIQuizFinishView : UIView
 
 @property (nonatomic, strong) UIButton *doneButton;
-@property (nonatomic, strong) UIButton *goAgainButton;
 @property (nonatomic, strong) NSURL *profileImageURL;
 
 @property (nonatomic, assign) NSInteger correctAnswers;

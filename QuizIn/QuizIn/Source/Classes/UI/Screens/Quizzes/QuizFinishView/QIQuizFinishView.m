@@ -28,7 +28,6 @@
       _result = [self newResultLabel];
       _tagline = [self newTaglineLabel];
       _doneButton = [self newDoneButton];
-      _goAgainButton = [self newGoAgainButton];
       _correctAnswers = 1;
       _totalQuestions = 1;
       
@@ -46,7 +45,6 @@
   [self addSubview:self.result];
   [self addSubview:self.tagline];
   [self addSubview:self.doneButton];
-  [self addSubview:self.goAgainButton];
 }
 
 #pragma mark Properties
@@ -126,7 +124,7 @@
     
     self.viewConstraints = [NSMutableArray array];
     //Constrain Background Image
-    NSDictionary *finishViews = NSDictionaryOfVariableBindings(_viewBackground, _cardImage, _profileImageView, _title, _result, _tagline, _doneButton, _goAgainButton);
+    NSDictionary *finishViews = NSDictionaryOfVariableBindings(_viewBackground, _cardImage, _profileImageView, _title, _result, _tagline, _doneButton);
     
     NSArray *hBackgroundContraints =
     [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_viewBackground]|"
@@ -155,7 +153,7 @@
                                               views:finishViews];
 
     NSArray *hShareButton =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-78-[_doneButton(==78)]-7-[_goAgainButton(==78)]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-78-[_doneButton(==78)]"
                                             options:NSLayoutFormatAlignAllBottom
                                             metrics:nil
                                               views:finishViews];
@@ -262,13 +260,6 @@
   [label setTextAlignment:NSTextAlignmentCenter];
   [label setText:@"Flawless!"];
   return label;
-}
-
-- (UIButton *)newGoAgainButton {
-  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setImage:[UIImage imageNamed:@"hobnob_goagain_btn"] forState:UIControlStateNormal];
-  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
-  return button;
 }
 
 - (UIButton *)newDoneButton {
