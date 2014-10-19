@@ -25,7 +25,7 @@
       
       NSMutableArray *locationSelectionContent = [NSMutableArray arrayWithCapacity:[locations count]];
       for (QILocation *location in locations) {
-        NSMutableDictionary *locationSelection = [@{@"contacts": location.countryCode,
+        NSMutableDictionary *locationSelection = [@{@"IDs": location.countryCode,
                                                     @"title": location.name,
                                                     @"subtitle": @"",
                                                     @"images": @[],
@@ -44,7 +44,7 @@
   NSMutableArray *selectedLocationCodes = [NSMutableArray array];
   for (NSDictionary *locationDict in self.groupSelectionView.selectionContent) {
     if ([locationDict[@"selected"] isEqual:@YES]) {
-      [selectedLocationCodes addObject:locationDict[@"contacts"]];
+      [selectedLocationCodes addObject:locationDict[@"IDs"]];
     }
   }
   

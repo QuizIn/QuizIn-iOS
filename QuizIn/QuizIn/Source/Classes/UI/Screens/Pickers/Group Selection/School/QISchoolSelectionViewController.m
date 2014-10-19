@@ -25,7 +25,7 @@
       
       NSMutableArray *schoolSelectionContent = [NSMutableArray arrayWithCapacity:[schools count]];
       for (QISchool *school in schools) {
-        NSMutableDictionary *schoolSelection = [@{@"contacts": school.code,
+        NSMutableDictionary *schoolSelection = [@{@"IDs": school.code,
                                                   @"title": school.name,
                                                   @"subtitle": @"",
                                                   @"images": @[],
@@ -44,7 +44,7 @@
   NSMutableArray *selectedSchoolCodes = [NSMutableArray array];
   for (NSDictionary *schoolDict in self.groupSelectionView.selectionContent) {
     if ([schoolDict[@"selected"] isEqual:@YES]) {
-      [selectedSchoolCodes addObject:schoolDict[@"contacts"]];
+      [selectedSchoolCodes addObject:schoolDict[@"IDs"]];
     }
   }
   

@@ -26,7 +26,7 @@
        
        NSMutableArray *industrySelectionContent = [NSMutableArray arrayWithCapacity:[industries count]];
        for (QIIndustry *industry in industries) {
-         NSMutableDictionary *industrySelection = [@{@"contacts": industry.code,
+         NSMutableDictionary *industrySelection = [@{@"IDs": industry.code,
                                                      @"title": industry.name,
                                                      @"subtitle": @"",
                                                      @"images": @[],
@@ -47,7 +47,7 @@
   NSMutableArray *selectedIndustryCodes = [NSMutableArray array];
   for (NSDictionary *industryDict in self.groupSelectionView.selectionContent) {
     if ([industryDict[@"selected"] isEqual:@YES]) {
-      [selectedIndustryCodes addObject:industryDict[@"contacts"]];
+      [selectedIndustryCodes addObject:industryDict[@"IDs"]];
     }
   }
   
