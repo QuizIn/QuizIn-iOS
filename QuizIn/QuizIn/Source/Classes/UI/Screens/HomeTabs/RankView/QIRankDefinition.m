@@ -7,16 +7,16 @@
 
 + (NSArray *)getRankDelineations{
   return  [NSArray arrayWithObjects:
-            [NSNumber numberWithInt:1],
-            [NSNumber numberWithInt:3],
-            [NSNumber numberWithInt:6],
-            [NSNumber numberWithInt:9],
-            [NSNumber numberWithInt:12],
-            [NSNumber numberWithInt:15],
-            [NSNumber numberWithInt:17],
-            [NSNumber numberWithInt:23],
-            [NSNumber numberWithInt:25],
-            [NSNumber numberWithInt:27], nil];
+            [NSNumber numberWithInt:5],
+            [NSNumber numberWithInt:20],
+            [NSNumber numberWithInt:50],
+            [NSNumber numberWithInt:100],
+            [NSNumber numberWithInt:200],
+            [NSNumber numberWithInt:350],
+            [NSNumber numberWithInt:600],
+            [NSNumber numberWithInt:1000],
+            [NSNumber numberWithInt:1600],
+            [NSNumber numberWithInt:3000], nil];
 }
 
 + (UIImage *)getRankBadgeForRank:(int)rank{
