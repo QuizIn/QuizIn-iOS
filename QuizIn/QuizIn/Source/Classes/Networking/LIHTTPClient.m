@@ -30,7 +30,7 @@ static NSString * const kAFLinkedInAPIBaseURLString = @"https://api.linkedin.com
                    parameters:(NSDictionary *)parameters
                       success:(void (^)(NSURLSessionDataTask *, id))success
                       failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
-  NSLog(@"%@", parameters);
+  //NSLog(@"%@", parameters);
   return [super GET:URLString parameters:parameters success:success failure:failure];
 }
 

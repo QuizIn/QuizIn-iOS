@@ -4,6 +4,7 @@
 #import "QIHomeViewController.h"
 #import "QILoginScreenViewController.h"
 #import "QIReachabilityManager.h"
+#import <gtm-oauth2/GTMOAuth2ViewControllerTouch.h>
 
 //Tab Bar Views
 #import "QIHomeViewController.h"
@@ -26,6 +27,7 @@
 @property (nonatomic, strong) QIPerson *loggedInUser;
 @property (nonatomic, strong) AKAccount *loggedInAccount;
 @property (nonatomic, strong) UINavigationController *mainNav;
+@property (nonatomic, strong) QILoginScreenViewController *loginScreenController;
 @property (nonatomic) BOOL isWaitingForLogin;
 @end
 
@@ -58,6 +60,7 @@
   
   QILoginScreenViewController *landingViewController = [QILoginScreenViewController new];
   landingViewController.appViewController = self;
+  self.loginScreenController = landingViewController;
   [self.mainNav pushViewController:landingViewController animated:NO];
   
   self.isWaitingForLogin = YES;
@@ -67,14 +70,15 @@
   }
 }
 
+
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
 }
 
 -(void)login {
-  
+  [self.authController beginAuthenticationAttempt];
   if ([QIReachabilityManager isReachable]) {
-    [self presentViewController:self.loginViewController animated:YES completion:nil];
+    [self.mainNav pushViewController:self.loginViewController animated:YES];
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     }
   else{
@@ -108,6 +112,7 @@
 
 - (void)authControllerAccount:(AKAccount *)account
               didAuthenticate:(id<AKAuthControl>)authController {
+  self.loginScreenController.loginScreenView.thinkingIndicator = YES;
   self.loggedInAccount = account;
   [LinkedIn updateAuthenticatedUserWithOnCompletion:^(QIPerson *authenticatedUser, NSError *error) {
     [QIIAPHelper sharedInstance]; 
@@ -127,11 +132,11 @@
 
 - (void)authControllerAccount:(AKAccount *)account
             didUnauthenticate:(id<AKAuthControl>)authController {
-  
-    [LinkedIn updateAuthenticatedUserWithOnCompletion:nil];
-    self.isWaitingForLogin = NO;
-    [self.mainNav popViewControllerAnimated:YES];
-    [self.authController beginAuthenticationAttempt];
+  self.loginScreenController.loginScreenView.thinkingIndicator = NO;
+  [LinkedIn updateAuthenticatedUserWithOnCompletion:nil];
+  self.isWaitingForLogin = NO;
+  [self.mainNav popViewControllerAnimated:YES];
+  [self.authController beginAuthenticationAttempt];
 }
 
 #pragma mark Factory Methods

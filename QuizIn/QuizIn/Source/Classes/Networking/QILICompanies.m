@@ -38,7 +38,7 @@
   
   AFHTTPRequestOperationSuccess success = ^(NSURLSessionDataTask *task,
                                             NSDictionary *companiesResultJSON){
-    NSLog(@"%@", companiesResultJSON);
+    //NSLog(@"%@", companiesResultJSON);
     NSArray *companiesJSON = companiesResultJSON[@"values"];
     NSMutableArray *companies = [NSMutableArray arrayWithCapacity:[companiesJSON count]];
     for (NSDictionary *companyJSON in companiesJSON) {

@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@interface QIApplicationViewController : UIViewController
+@interface QIApplicationViewController : UIViewController <UINavigationControllerDelegate>
 
 - (void)logout;
 - (void)login; 

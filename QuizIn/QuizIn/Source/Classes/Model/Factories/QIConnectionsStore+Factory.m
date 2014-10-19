@@ -13,7 +13,7 @@
 @implementation QIConnectionsStore (Factory)
 
 + (QIConnectionsStore *)storeWithJSON:(NSArray *)peopleJSON {
-  DDLogInfo(@"LinkedIn: Connections, %@", peopleJSON);
+  //DDLogInfo(@"LinkedIn: Connections, %@", peopleJSON);
     
   QIConnectionsStore *connectionsStore = [QIConnectionsStore new];
   NSMutableDictionary *people = [NSMutableDictionary dictionaryWithCapacity:[peopleJSON count]];

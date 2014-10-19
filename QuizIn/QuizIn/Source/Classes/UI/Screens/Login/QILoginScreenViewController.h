@@ -6,6 +6,6 @@
 @interface QILoginScreenViewController : UIViewController
 
 @property (nonatomic, strong, readonly) QILoginScreenView *loginScreenView;
-@property (nonatomic, weak) QIApplicationViewController *appViewController; 
+@property (nonatomic, weak) QIApplicationViewController *appViewController;
 
 @end

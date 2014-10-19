@@ -6,7 +6,10 @@
 
 @property (nonatomic, strong) UIImageView *viewBackground;
 @property (nonatomic, strong) NSMutableArray *viewConstraints;
-@property (nonatomic, strong) UIScrollView *previewScrollView; 
+@property (nonatomic, strong) NSMutableArray *overlayConstraints;
+@property (nonatomic, strong) UIScrollView *previewScrollView;
+@property (nonatomic, strong) UIActivityIndicatorView *activityView;
+@property (nonatomic, strong) UIView *overlayMask;
 
 @end
 
@@ -23,16 +26,25 @@
       _viewBackground = [self newViewBackground];
       _loginButton = [self newLoginButton];
       _previewScrollView = [self newPreviewScrollView]; 
-      
+      _activityView = [self newActivityView];
+      _overlayMask = [self newOverlayMask];
       [self constructViewHierarchy]; 
     }
     return self;
+}
+
+#pragma mark Properties
+- (void)setThinkingIndicator:(BOOL *)thinkingIndicator{
+  _thinkingIndicator = thinkingIndicator;
+  [self updateActivityView];
 }
 #pragma mark View Hierarchy
 - (void)constructViewHierarchy{
   [self addSubview:self.viewBackground];
   [self addSubview:self.loginButton];
-  [self addSubview:self.previewScrollView]; 
+  [self addSubview:self.previewScrollView];
+  [self addSubview:self.overlayMask];
+  [self.overlayMask addSubview:self.activityView];
 }
 
 #pragma mark Layout
@@ -42,8 +54,9 @@
   if (!self.viewConstraints) {
     
     self.viewConstraints = [NSMutableArray array];
+    self.overlayConstraints = [NSMutableArray array];
     
-    NSDictionary *loginViews = NSDictionaryOfVariableBindings(_viewBackground, _loginButton, _previewScrollView);
+    NSDictionary *loginViews = NSDictionaryOfVariableBindings(_viewBackground, _loginButton, _previewScrollView, _overlayMask);
     
     
     //Constrain the background image
@@ -60,7 +73,7 @@
     
     [self.viewConstraints addObjectsFromArray:hBackgroundContraints];
     [self.viewConstraints addObjectsFromArray:vBackgroundContraints];
-    
+
     //Constrain the scroll View
     NSArray *hScrollViewContraints =
     [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|-[_previewScrollView]-|"
@@ -83,9 +96,36 @@
     [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_loginButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:262.0f]];
     [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_loginButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:47.0f]];
 
-    [self addConstraints:self.viewConstraints]; 
+
+    
+    //Constrain the overlay Mask
+    NSArray *hOverlayContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"H:|[_overlayMask]|"
+                                            options:NSLayoutFormatAlignAllTop
+                                            metrics:nil
+                                              views:loginViews];
+    NSArray *vOverlayContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|[_overlayMask]|"
+                                            options:NSLayoutFormatAlignAllLeft
+                                            metrics:nil
+                                              views:loginViews];
+    
+    [self.viewConstraints addObjectsFromArray:hOverlayContraints];
+    [self.viewConstraints addObjectsFromArray:vOverlayContraints];
+    
+    [self addConstraints:self.viewConstraints];
+    
+    [self.overlayConstraints addObject:[NSLayoutConstraint constraintWithItem:_activityView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.overlayMask attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+    [self.overlayConstraints addObject:[NSLayoutConstraint constraintWithItem:_activityView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.overlayMask attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+    
+    [self.overlayMask addConstraints:self.overlayConstraints]; 
+ 
 
   }
+}
+#pragma mark Actions
+- (void)updateActivityView{
+  [self.overlayMask setHidden:!self.thinkingIndicator];
 }
 
 #pragma mark Factory Methods
@@ -117,6 +157,21 @@
   [previewView setAlwaysBounceVertical:NO];
   [previewView setAlwaysBounceHorizontal:YES];
   return previewView;
+}
+
+- (UIView *)newOverlayMask{
+  UIView *overlay = [[UIView alloc] init];
+  [overlay setHidden:YES];
+  [overlay setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:.8f]];
+  [overlay setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return overlay;
+}
+- (UIActivityIndicatorView *)newActivityView{
+  UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+  [activity setAlpha:.8f];
+  [activity startAnimating];
+  [activity setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return activity;
 }
 
 @end
