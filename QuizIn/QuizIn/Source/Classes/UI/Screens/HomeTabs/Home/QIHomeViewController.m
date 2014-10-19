@@ -77,6 +77,7 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+  [super viewWillAppear:NO];
   [self.view updateConstraintsIfNeeded];
   self.timer = [NSTimer scheduledTimerWithTimeInterval:3.0
                                                 target:self
@@ -87,6 +88,7 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
+  [super viewWillDisappear:NO];
   [self.homeView.scrollView setContentOffset:CGPointMake(0, 0)]; 
 }
 
@@ -194,16 +196,6 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
     [self connectionAlert];
   }
   
-}
-
-//Todo Test Quiz Finish View
-- (void)showQuizFinish{
-  QIQuizFinishViewController *finishViewController = [[QIQuizFinishViewController alloc] init];
-  [self presentViewController:finishViewController animated:YES completion:nil];
-}
-- (void)showLoginScreen{
-  QILoginScreenViewController *loginScreenViewController = [[QILoginScreenViewController alloc] init];
-  [self presentViewController:loginScreenViewController animated:YES completion:nil];
 }
 
 - (void)connectionAlert{
