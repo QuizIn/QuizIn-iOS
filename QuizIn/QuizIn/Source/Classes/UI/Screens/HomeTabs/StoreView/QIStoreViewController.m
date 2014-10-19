@@ -45,15 +45,18 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+  [super viewWillAppear:NO];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productFailed:) name:IAPHelperProductFailedNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
+  [super viewDidAppear:NO];
   [self reloadView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:NO]; 
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
