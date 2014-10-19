@@ -160,6 +160,9 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
            [self presentViewController:quizViewController animated:YES completion:nil];
          });
        }
+       else {
+         [self peopleAlert];
+       }
      }];
   }
   else {
@@ -204,10 +207,14 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 }
 
 - (void)connectionAlert{
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Internet Connection" message:@"You must have a connection to the internet to login." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Dand Ole Internet" message:@"You gotta have a good connection to the internet to login." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
   [alert show];
 }
 
+- (void)peopleAlert{
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"More Peeps Needed" message:@"You gotta have at least 4 connections to create a quiz - any less and you should just peep their profiles." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  [alert show];
+}
 
 #pragma mark Data
 - (void) showHideLockButtons{

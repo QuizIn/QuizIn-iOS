@@ -75,18 +75,21 @@
   else {
     questionTypes = QIQuizQuestionAllowMultipleChoice;
   }
-
+  
   [QIQuizFactory
    newFirstDegreeQuizWithQuestionTypes:questionTypes
    forCurrentCompanies:selectedCompanyCodes
    completionBlock:^(QIQuiz *quiz, NSError *error) {
-       if (error == nil) {
-         dispatch_async(dispatch_get_main_queue(), ^{
-           QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];
-           [self presentViewController:quizViewController animated:YES completion:nil];
-         });
-       }
-  }];
+     if (error == nil) {
+       dispatch_async(dispatch_get_main_queue(), ^{
+         QIQuizViewController *quizViewController = [self newQuizViewControllerWithQuiz:quiz];
+         [self presentViewController:quizViewController animated:YES completion:nil];
+       });
+     }
+     else{
+       [self peopleAlert];
+     }
+   }];
 }
 
 - (void)showSearchView{
@@ -109,5 +112,11 @@
   
 
 }
+
+- (void)peopleAlert{
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"More Peeps Needed" message:@"You gotta have at least 4 connections to create a quiz - any less and you should just peep their profiles." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  [alert show];
+}
+
 
 @end

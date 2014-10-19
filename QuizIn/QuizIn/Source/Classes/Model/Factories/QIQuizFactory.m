@@ -164,7 +164,7 @@
     } else {
       DDLogError(@"Could not create quiz from random connections.");
       // TODO(Rene): Setup errors to use one domain and define error codes.
-      NSError *error = [NSError errorWithDomain:@"com.quizin.errors" code:-3 userInfo:nil];
+      error = [NSError errorWithDomain:@"com.quizin.errors" code:-3 userInfo:nil];
       completionBlock ? completionBlock(nil, error) : NULL;
     }
   }];
@@ -172,11 +172,13 @@
 
 + (QIQuiz *)quizWithConnections:(QIConnectionsStore *)connections
                   questionTypes:(QIQuizQuestionAllowedTypes)questionTypes; {
-  NSAssert([connections.people count] >= 4, @"Must have at least 10 people to make Quiz");
+  //NSAssert([connections.people count] >= 4, @"Must have at least 4 people to make Quiz");
   // TODO(Rene): Remove this requirement, simply include less multiple choice what's my name questions.
-  NSAssert([connections.personIDsWithProfilePics count] >= 10,
-           @"Must have at least 10 people with profile pics to make Quiz");
-  
+  //NSAssert([connections.personIDsWithProfilePics count] >= 4,
+           //@"Must have at least 4 people with profile pics to make Quiz");
+  if ([connections.personIDsWithProfilePics count] <= 4){
+    return nil; 
+  }
   NSMutableArray *questions = [NSMutableArray arrayWithCapacity:10];
   NSMutableSet *connectionsInQuiz = [NSMutableSet setWithCapacity:10];
   // TODO(Rene): Do we need a minimum of connections with profile pics?
@@ -200,16 +202,22 @@
   NSInteger randomConnectionIndex = 0;
   NSString *personID = nil;
   NSInteger tries = 0;
-  do {
-    tries++;
+  if ([connections count]< 10){
     randomConnectionIndex = arc4random_uniform([connections count]);
     personID = connections[randomConnectionIndex];
-    if (tries > 10) {
-      DDLogError(@"Couldn't find %d random connections.", 10);
-      // TODO(Rene): Handle this better.
-      return nil;
-    }
-  } while ([connectionsInQuiz containsObject:personID] == YES);
+  }
+  else {
+    do {
+      tries++;
+      randomConnectionIndex = arc4random_uniform([connections count]);
+      personID = connections[randomConnectionIndex];
+      if (tries > 10) {
+        DDLogError(@"Couldn't find %d random connections.", 10);
+        // TODO(Rene): Handle this better.
+        return nil;
+      }
+    } while ([connectionsInQuiz containsObject:personID] == YES);
+  }
   [connectionsInQuiz addObject:personID];
   return personID;
 }

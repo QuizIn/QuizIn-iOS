@@ -11,8 +11,8 @@
   QIMatchingQuestion *question = [QIMatchingQuestion new];
   NSMutableArray *matchingQuizPeople = [NSMutableArray arrayWithCapacity:4];
   // TODO(Rene): Handle if have less than 4 people with profile pic.
-  NSAssert([connections.personIDsWithProfilePics count] >= 4,
-           @"Must have at least 4 people with profile pics to make a matching question");
+  //NSAssert([connections.personIDsWithProfilePics count] >= 4,
+           //@"Must have at least 4 people with profile pics to make a matching question");
   
   QIShuffleSet *peopleWithPicsSuffle = [QIShuffleSet new];
   for (NSString *personID in connections.personIDsWithProfilePics) {

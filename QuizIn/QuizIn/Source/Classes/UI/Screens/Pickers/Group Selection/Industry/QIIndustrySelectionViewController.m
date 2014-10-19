@@ -71,6 +71,9 @@
          [self presentViewController:(UIViewController *)quizViewController animated:YES completion:nil];
        });
      }
+     else {
+       [self peopleAlert]; 
+     }
    }];
 }
 
@@ -83,7 +86,7 @@
 }
 
 - (void)addItemFromSearchView:(NSDictionary *)searchItem{
-  NSMutableArray *selectionContentTemp = self.groupSelectionView.selectionContent;
+  NSMutableArray *selectionContentTemp = [self.groupSelectionView.selectionContent mutableCopy];
   [selectionContentTemp addObject:[@{@"IDs":      [searchItem objectForKey:@"ID"],
                                      @"title":    [searchItem objectForKey:@"name"],
                                      @"subtitle": [searchItem objectForKey:@"ID"],
@@ -95,6 +98,10 @@
   
 }
 
+- (void)peopleAlert{
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"More Peeps Needed" message:@"You gotta have at least 4 connections to create a quiz - any less and you should just peep their profiles." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  [alert show];
+}
 
 
 @end
