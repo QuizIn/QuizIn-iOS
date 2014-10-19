@@ -5,6 +5,6 @@
 @interface QILoginScreenView : UIView <UIScrollViewDelegate>
 
 @property (nonatomic, strong, readonly) UIButton *loginButton;
-@property (nonatomic, assign) BOOL *thinkingIndicator;
+@property (nonatomic, assign) BOOL thinkingIndicator;
 
 @end

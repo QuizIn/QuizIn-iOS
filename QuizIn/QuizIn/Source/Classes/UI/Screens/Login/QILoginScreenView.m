@@ -34,7 +34,7 @@
 }
 
 #pragma mark Properties
-- (void)setThinkingIndicator:(BOOL *)thinkingIndicator{
+- (void)setThinkingIndicator:(BOOL)thinkingIndicator{
   _thinkingIndicator = thinkingIndicator;
   [self updateActivityView];
 }
@@ -81,7 +81,7 @@
                                             metrics:nil
                                               views:loginViews];
     NSArray *vScrollViewContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-[_previewScrollView][_loginButton(==47)]-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:  @"V:|-[_previewScrollView][_loginButton(==47)]-20-|"
                                             options:NSLayoutFormatAlignAllCenterX
                                             metrics:nil
                                               views:loginViews];
