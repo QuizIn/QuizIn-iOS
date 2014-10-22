@@ -9,7 +9,7 @@
   person.lastName = personJSON[@"lastName"];
   person.formattedName = personJSON[@"formattedName"];
   person.industry = personJSON[@"industry"];
-  person.pictureURL = personJSON[@"pictureUrl"];
+  person.pictureURL = personJSON[@"pictureUrls"][@"values"][0];
   person.publicProfileURL = personJSON[@"publicProfileUrl"];
   if (personJSON[@"numConnections"] != nil) {
     person.numberOfConnections = [personJSON[@"numConnections"] integerValue];

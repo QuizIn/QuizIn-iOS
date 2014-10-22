@@ -72,7 +72,7 @@ static QIPerson *authenticatedUser;
 }
 
 + (NSString *)peopleFieldSelector {
-  return @"id,first-name,last-name,formatted-name,positions,location,industry,picture-url,public-profile-url";
+  return @"id,first-name,last-name,formatted-name,positions,location,industry,picture-urls::(original),public-profile-url";
 }
 
 + (NSString *)companyFieldSelector {
