@@ -152,11 +152,6 @@
                                             metrics:nil
                                               views:finishViews];
 
-    NSArray *hShareButton =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-78-[_doneButton(==78)]"
-                                            options:NSLayoutFormatAlignAllBottom
-                                            metrics:nil
-                                              views:finishViews];
     NSArray *vAll =
     [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-50-[_title(==30)]-30-[_cardImage]-30-[_doneButton(==22)]"
                                             options:0
@@ -186,7 +181,8 @@
                                             metrics:nil
                                               views:finishViews];
     
-    [self.viewConstraints addObjectsFromArray:hShareButton];
+    [self.viewConstraints addObject:[NSLayoutConstraint constraintWithItem:_doneButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
+    
     [self.viewConstraints addObjectsFromArray:hBackground];
     [self.viewConstraints addObjectsFromArray:vAll];
     [self.viewConstraints addObjectsFromArray:hLockedLabelStatus];
