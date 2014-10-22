@@ -4,6 +4,6 @@
 
 @interface QIStorePreviewViewController : UIViewController
 
-@property (nonatomic, strong) QIStorePreviewView *previewView; 
+@property (nonatomic, strong) QIStorePreviewView *previewView;
 
 @end

@@ -10,7 +10,7 @@
 
 @interface QIStorePreviewView : UIView <UIScrollViewDelegate>
 
-@property (nonatomic, strong) UIButton *buyButton;
 @property (nonatomic, strong) UIButton *exitButton;
+@property (nonatomic, assign) NSInteger previewTag;
 
 @end

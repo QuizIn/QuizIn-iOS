@@ -31,7 +31,7 @@
 }
 
 - (void)dismissPreview{
-  [self dismissViewControllerAnimated:NO completion:nil]; 
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
    
 - (QIStorePreviewView *)previewView{

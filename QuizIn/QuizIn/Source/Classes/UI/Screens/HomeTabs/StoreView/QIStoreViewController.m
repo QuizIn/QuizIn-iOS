@@ -84,25 +84,19 @@
 #pragma mark Actions
 
 - (void)buyAll{
-  NSLog(@"Buy All");
   SKProduct *product = [[QIStoreData getBuyAllProductWithProducts:self.products] objectAtIndex:0];
   [self.storeView.spinningOverlay setHidden:NO];
   [[QIIAPHelper sharedInstance] buyProduct:product];
 }
 
 - (void)preview:(UIButton *)button{
-  NSInteger section = floor(button.tag/SECTION_INDEX_SPAN);
-  NSInteger row = fmodf(button.tag,SECTION_INDEX_SPAN); 
-  NSLog(@"Preview: Tag-%d  Section-%d  Row-%d",button.tag, section, row);
   QIStorePreviewViewController *previewController = [[QIStorePreviewViewController alloc] init];
+  previewController.previewView.previewTag = button.tag;
   [self presentViewController:previewController  animated:YES completion:nil];
 }
 
 - (void)buy:(UIButton *)button{
-  NSInteger section = floor(button.tag/SECTION_INDEX_SPAN);
-  NSInteger row = fmodf(button.tag,SECTION_INDEX_SPAN);
-  NSLog(@"Buy: Tag-%d  Section-%d  Row-%d",button.tag, section, row);
-  SKProduct *product = [[[[self.storeData objectAtIndex:section] objectForKey:@"item"] objectAtIndex:row] objectForKey:@"product"];
+  SKProduct *product = [[[[self.storeData objectAtIndex:button.tag] objectForKey:@"item"] objectAtIndex:0] objectForKey:@"product"];
   [self.storeView.spinningOverlay setHidden:NO];
   [[QIIAPHelper sharedInstance] buyProduct:product]; 
 }
@@ -189,8 +183,9 @@
   [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
   [cell setBackgroundView:nil];
   [cell setBackgroundColor:[UIColor clearColor]];
-  [cell.previewButton setTag:indexPath.section*SECTION_INDEX_SPAN +indexPath.row];
-  [cell.buyButton setTag:indexPath.section*SECTION_INDEX_SPAN+indexPath.row];
+  [cell.previewButton setTag:indexPath.section];
+  [cell.iconImageView setTag:indexPath.section];
+  [cell.buyButton setTag:indexPath.section];
   [cell.previewButton addTarget:self action:@selector(preview:) forControlEvents:UIControlEventTouchUpInside];
   [cell.iconImageView addTarget:self action:@selector(preview:) forControlEvents:UIControlEventTouchUpInside];
   [cell.buyButton addTarget:self action:@selector(buy:) forControlEvents:UIControlEventTouchUpInside];

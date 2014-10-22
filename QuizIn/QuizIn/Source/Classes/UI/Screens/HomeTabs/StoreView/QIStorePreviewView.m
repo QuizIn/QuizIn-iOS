@@ -4,8 +4,8 @@
 @interface QIStorePreviewView ()
 
 @property (nonatomic, strong) UIImageView *viewBackground;
-@property (nonatomic, strong) UIScrollView *previewScrollView;
 @property (nonatomic, strong) NSMutableArray *constraints;
+@property (nonatomic, strong) UIImageView *previewImageView;
 
 @end
 @implementation QIStorePreviewView
@@ -21,20 +21,25 @@
       [self setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:.5f]];
       
       _viewBackground = [self newViewBackground];
-      _previewScrollView = [self newPreviewScrollView]; 
-      _buyButton = [self newBuyButton];
-      _exitButton = [self newExitButton]; 
+      _exitButton = [self newExitButton];
+      _previewImageView = [self newPreviewImageView];
       
       [self constructViewHierarchy];
     }
     return self;
 }
 
+#pragma mark Properties
+- (void)setPreviewTag:(NSInteger)previewTag{
+  _previewTag = previewTag;
+  [self updatePreviewImage];
+}
+
 #pragma mark View Hierarchy
 - (void) constructViewHierarchy{
   [self addSubview:self.viewBackground];
-  [self addSubview:self.buyButton];
-  [self addSubview:self.exitButton]; 
+  [self addSubview:self.exitButton];
+  [self addSubview:self.previewImageView];
 }
 
 #pragma mark Layout
@@ -46,7 +51,7 @@
 - (void)updateConstraints {
   [super updateConstraints];
   if (!self.constraints) {
-    NSDictionary *backgroundImageConstraintView = NSDictionaryOfVariableBindings(_viewBackground, _buyButton, _exitButton);
+    NSDictionary *backgroundImageConstraintView = NSDictionaryOfVariableBindings(_viewBackground, _exitButton, _previewImageView);
     
     NSArray *hBackgroundContraints =
     [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_viewBackground]|"
@@ -58,23 +63,18 @@
                                             options:0
                                             metrics:nil
                                               views:backgroundImageConstraintView];
-    NSArray *hButtonContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_buyButton]-40-|"
-                                            options:0
-                                            metrics:nil
-                                              views:backgroundImageConstraintView];
-    NSArray *vButtonContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_buyButton]-40-|"
-                                            options:0
-                                            metrics:nil
-                                              views:backgroundImageConstraintView];
     NSArray *hExitButtonContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_exitButton]-10-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:[_exitButton(==28)]-10-|"
                                             options:0
                                             metrics:nil
                                               views:backgroundImageConstraintView];
     NSArray *vExitButtonContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-30-[_exitButton]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-30-[_exitButton(==20)]-30-[_previewImageView]"
+                                            options:0
+                                            metrics:nil
+                                              views:backgroundImageConstraintView];
+    NSArray *hPreviewImageContraints =
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_previewImageView]-20-|"
                                             options:0
                                             metrics:nil
                                               views:backgroundImageConstraintView];
@@ -82,14 +82,31 @@
     self.constraints = [NSMutableArray array];
     [self.constraints addObjectsFromArray:hBackgroundContraints];
     [self.constraints addObjectsFromArray:vBackgroundContraints];
-    [self.constraints addObjectsFromArray:hButtonContraints];
-    [self.constraints addObjectsFromArray:vButtonContraints];
     [self.constraints addObjectsFromArray:hExitButtonContraints];
     [self.constraints addObjectsFromArray:vExitButtonContraints];
+    [self.constraints addObjectsFromArray:hPreviewImageContraints];
     [self addConstraints:self.constraints];
   }
 }
-
+#pragma mark Actions
+- (void)updatePreviewImage{
+  NSString *imageName;
+  switch (self.previewTag) {
+    case 0:
+      imageName = @"FilterPreview";
+      break;
+    case 1:
+      imageName = @"QuestionTypesPreview";
+      break;
+    case 2:
+      imageName = @"NeedsRefreshPreview";
+      break;
+      
+    default:
+      break;
+  }
+  [self.previewImageView setImage:[UIImage imageNamed:imageName]];
+}
 
 #pragma mark Factory Methods
 - (UIImageView *)newViewBackground{
@@ -98,35 +115,19 @@
   return background;
 }
 
-- (UIScrollView *)newPreviewScrollView{
-  UIScrollView *scrollView = [[UIScrollView alloc] init];
-  [scrollView setDelegate:self];
-  [scrollView setBackgroundColor:[UIColor colorWithWhite:.2f alpha:1.0f]];
-  [scrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
-  [scrollView setPagingEnabled:YES];
-  [scrollView setShowsHorizontalScrollIndicator:NO];
-  [scrollView setShowsVerticalScrollIndicator:NO];
-  [scrollView setBouncesZoom:NO];
-  [scrollView setBounces:YES];
-  [scrollView setDirectionalLockEnabled:YES];
-  [scrollView setAlwaysBounceVertical:NO];
-  [scrollView setAlwaysBounceHorizontal:YES];
-  return scrollView;
-}
-
-- (UIButton *)newBuyButton {
-  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  [button setImage:[UIImage imageNamed:@"store_purchasel_btn"] forState:UIControlStateNormal];
-  [button setTranslatesAutoresizingMaskIntoConstraints:NO];
-  return button;
-}
-
 - (UIButton *)newExitButton {
   UIButton *exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
   [exitButton setImage:[UIImage imageNamed:@"quizin_exit_btn"] forState:UIControlStateNormal];
   [exitButton setAlpha:0.8f];
   [exitButton setTranslatesAutoresizingMaskIntoConstraints:NO];
   return exitButton;
+}
+
+- (UIImageView *)newPreviewImageView {
+  UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"FilterPreview"]];
+  [image setContentMode:UIViewContentModeScaleAspectFit];
+  [image setTranslatesAutoresizingMaskIntoConstraints:NO];
+  return image;
 }
 
 @end

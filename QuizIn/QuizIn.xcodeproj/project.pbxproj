@@ -364,6 +364,9 @@
 		436CD495190C5947004A0393 /* QISchoolSearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD494190C5947004A0393 /* QISchoolSearchPickerViewController.m */; };
 		4384CBA619EB32EC0060DF77 /* calendar_meetingtab_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 4384CBA419EB32EC0060DF77 /* calendar_meetingtab_small.png */; };
 		4384CBA719EB32EC0060DF77 /* calendar_meetingtab_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4384CBA519EB32EC0060DF77 /* calendar_meetingtab_small@2x.png */; };
+		43936E0719F4C16A00276665 /* FilterPreview.png in Resources */ = {isa = PBXBuildFile; fileRef = 43936E0419F4C16A00276665 /* FilterPreview.png */; };
+		43936E0819F4C16A00276665 /* NeedsRefreshPreview.png in Resources */ = {isa = PBXBuildFile; fileRef = 43936E0519F4C16A00276665 /* NeedsRefreshPreview.png */; };
+		43936E0919F4C16A00276665 /* QuestionTypesPreview.png in Resources */ = {isa = PBXBuildFile; fileRef = 43936E0619F4C16A00276665 /* QuestionTypesPreview.png */; };
 		43BAC344192657D900632388 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BAC343192657D900632388 /* Reachability.m */; };
 		43BAC34719266CC800632388 /* QIReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BAC34619266CC800632388 /* QIReachabilityManager.m */; };
 		880870E216FBD31800D09848 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 880870DF16FBD31800D09848 /* InfoPlist.strings */; };
@@ -875,6 +878,9 @@
 		436CD494190C5947004A0393 /* QISchoolSearchPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QISchoolSearchPickerViewController.m; sourceTree = "<group>"; };
 		4384CBA419EB32EC0060DF77 /* calendar_meetingtab_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calendar_meetingtab_small.png; sourceTree = "<group>"; };
 		4384CBA519EB32EC0060DF77 /* calendar_meetingtab_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calendar_meetingtab_small@2x.png"; sourceTree = "<group>"; };
+		43936E0419F4C16A00276665 /* FilterPreview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FilterPreview.png; sourceTree = "<group>"; };
+		43936E0519F4C16A00276665 /* NeedsRefreshPreview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NeedsRefreshPreview.png; sourceTree = "<group>"; };
+		43936E0619F4C16A00276665 /* QuestionTypesPreview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QuestionTypesPreview.png; sourceTree = "<group>"; };
 		43BAC342192657D900632388 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		43BAC343192657D900632388 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		43BAC34519266CC800632388 /* QIReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIReachabilityManager.h; sourceTree = "<group>"; };
@@ -1299,6 +1305,9 @@
 		3412988917B84B4200678A55 /* Store */ = {
 			isa = PBXGroup;
 			children = (
+				43936E0419F4C16A00276665 /* FilterPreview.png */,
+				43936E0519F4C16A00276665 /* NeedsRefreshPreview.png */,
+				43936E0619F4C16A00276665 /* QuestionTypesPreview.png */,
 				3449710E1883554500871A3F /* store_card_questiontypes.png */,
 				3449710F1883554500871A3F /* store_card_questiontypes@2x.png */,
 				344971101883554500871A3F /* store_card_quizfilters.png */,
@@ -2297,6 +2306,8 @@
 				3412987C17B7C6F900678A55 /* connectionsquiz_takequiz_locked_btn.png in Resources */,
 				3412987D17B7C6F900678A55 /* connectionsquiz_takequiz_locked_btn@2x.png in Resources */,
 				3412987E17B7C6F900678A55 /* connectionsquiz_takequiz_unlocked_btn.png in Resources */,
+				43936E0919F4C16A00276665 /* QuestionTypesPreview.png in Resources */,
+				43936E0719F4C16A00276665 /* FilterPreview.png in Resources */,
 				3412987F17B7C6F900678A55 /* connectionsquiz_takequiz_unlocked_btn@2x.png in Resources */,
 				3412988017B7C6F900678A55 /* connectionsquiz_topleft_card.png in Resources */,
 				3412988117B7C6F900678A55 /* connectionsquiz_topleft_card@2x.png in Resources */,
@@ -2367,6 +2378,7 @@
 				340D3DDA17F652D1004F5522 /* hobnob_ranking_popup_facebook_btn.png in Resources */,
 				340D3DDB17F652D1004F5522 /* hobnob_ranking_popup_facebook_btn@2x.png in Resources */,
 				340D3DDC17F652D2004F5522 /* hobnob_ranking_popup_linkedin_btn.png in Resources */,
+				43936E0819F4C16A00276665 /* NeedsRefreshPreview.png in Resources */,
 				340D3DDD17F652D2004F5522 /* hobnob_ranking_popup_linkedin_btn@2x.png in Resources */,
 				340D3DDE17F652D2004F5522 /* hobnob_ranking_popup_reference.png in Resources */,
 				340D3DDF17F652D2004F5522 /* hobnob_ranking_popup_reference@2x.png in Resources */,
