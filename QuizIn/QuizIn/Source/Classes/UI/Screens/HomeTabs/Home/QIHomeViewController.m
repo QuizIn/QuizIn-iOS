@@ -146,7 +146,7 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
     QIIAPHelper *store = [QIIAPHelper sharedInstance];
     
     QIQuizQuestionAllowedTypes questionTypes;
-    if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"]){
+    if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"] || [store productPurchased:@"com.kuhlmanation.hobnob.p_kit"]){
       questionTypes = QIQuizQuestionAllowAll;
     }
     else {
@@ -211,7 +211,7 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 #pragma mark Data
 - (void) showHideLockButtons{
   QIIAPHelper *store = [QIIAPHelper sharedInstance];
-  BOOL filterPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_pack"];
+  BOOL filterPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.f_pack"] || [store productPurchased:@"com.kuhlmanation.hobnob.p_kit"];
   [self.homeView.companyQuizLockButton setHidden:filterPurchased];
   [self.homeView.companyQuizBeginButton setHidden:!filterPurchased];
   [self.homeView.localeQuizLockButton setHidden:filterPurchased];

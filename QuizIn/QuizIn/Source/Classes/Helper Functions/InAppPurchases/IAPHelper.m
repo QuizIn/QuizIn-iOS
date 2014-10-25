@@ -58,7 +58,9 @@ NSString *const IAPHelperProductFailedNotification = @"IAPHelperProductFailedNot
           skProduct.localizedTitle,
           skProduct.price.floatValue);
   }
-  _completionHandler(YES, skProducts);
+  if (_completionHandler){
+    _completionHandler(YES, skProducts);
+  }
   _completionHandler = nil;
 }
 

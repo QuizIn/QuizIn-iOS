@@ -15,6 +15,7 @@
 @property (nonatomic, strong) QIStoreView *storeView; 
 @property (nonatomic, strong) NSArray *storeData;
 @property (nonatomic, strong) NSArray *products;
+@property (nonatomic, assign) BOOL allPurchased;
 
 @end
 
@@ -124,6 +125,8 @@
       if (success) {
         _products = products;
         _storeData = [QIStoreData getStoreDataWithProducts:_products];
+        QIIAPHelper *store = [QIIAPHelper sharedInstance];
+        _allPurchased = [store productPurchased:@"com.kuhlmanation.hobnob.p_kit"];
         
         NSDictionary *item = [QIStoreData storeItemWithProduct:[[QIStoreData getBuyAllProductWithProducts:products] objectAtIndex:0]];
         [self.storeView.headerView.buyAllButton setHidden:NO];
@@ -164,7 +167,7 @@
   QIStoreSectionHeaderView *headerView = [[QIStoreSectionHeaderView alloc] init];
   [headerView setSectionTitle:[[self.storeData objectAtIndex:section] objectForKey:@"type"]];
   [headerView setPrice:[[[[self.storeData objectAtIndex:section] objectForKey:@"item"] objectAtIndex:0] objectForKey:@"itemPrice"]];
-  [headerView setPurchased:[[[[[self.storeData objectAtIndex:section] objectForKey:@"item"] objectAtIndex:0] objectForKey:@"itemPurchased"] boolValue]];
+  [headerView setPurchased:[[[[[self.storeData objectAtIndex:section] objectForKey:@"item"] objectAtIndex:0] objectForKey:@"itemPurchased"] boolValue] || self.allPurchased];
   return headerView;
 }
 
@@ -191,7 +194,7 @@
   [cell.buyButton addTarget:self action:@selector(buy:) forControlEvents:UIControlEventTouchUpInside];
   [cell setDescriptionString:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemShortDescription"]];
   [cell setIconImage:[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemIcon"]];
-  [cell setPurchased:[[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemPurchased"] boolValue]];
+  [cell setPurchased:[[[[[self.storeData objectAtIndex:indexPath.section] objectForKey:@"item"] objectAtIndex:indexPath.row] objectForKey:@"itemPurchased"] boolValue] || self.allPurchased];
   return cell;
 }
 

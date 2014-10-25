@@ -89,7 +89,7 @@
 
 - (void) showHideRefreshLockButton{
   QIIAPHelper *store = [QIIAPHelper sharedInstance];
-  BOOL refreshPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.r_pack"];
+  BOOL refreshPurchased = [store productPurchased: @"com.kuhlmanation.hobnob.r_pack"] || [store productPurchased:@"com.kuhlmanation.hobnob.p_kit"];
   [self.statsView.summaryView.leastQuizLockButton setHidden:refreshPurchased];
   [self.statsView.summaryView.leastQuizButton setHidden:!refreshPurchased];
 }
@@ -105,7 +105,7 @@
     QIIAPHelper *store = [QIIAPHelper sharedInstance];
     
     QIQuizQuestionAllowedTypes questionType;
-    if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"]){
+    if ([store productPurchased: @"com.kuhlmanation.hobnob.q_pack"] || [store productPurchased:@"com.kuhlmanation.hobnob.p_kit"]){
       questionType = QIQuizQuestionAllowAll;
     }
     else {
