@@ -76,7 +76,10 @@ NSString *const IAPHelperProductFailedNotification = @"IAPHelperProductFailedNot
 
 - (BOOL)productPurchased:(NSString *)productIdentifier{
   return [_purchasedProductIdentifiers containsObject:productIdentifier];
-  //return YES;
+}
+
+- (BOOL)anythingPurchased{
+  return [_purchasedProductIdentifiers count] > 0; 
 }
 
 - (void)buyProduct:(SKProduct *)product{

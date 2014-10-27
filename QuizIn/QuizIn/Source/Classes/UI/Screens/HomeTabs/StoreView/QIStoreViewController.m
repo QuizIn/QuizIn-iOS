@@ -128,12 +128,11 @@
         QIIAPHelper *store = [QIIAPHelper sharedInstance];
         _allPurchased = [store productPurchased:@"com.kuhlmanation.hobnob.p_kit"];
         
-        NSDictionary *item = [QIStoreData storeItemWithProduct:[[QIStoreData getBuyAllProductWithProducts:products] objectAtIndex:0]];
         [self.storeView.headerView.buyAllButton setHidden:NO];
         [self.storeView.headerView.bestOfferLabel setHidden:NO];
         [self.storeView.headerView.buyAllPriceLabel setHidden:NO];
         [self.storeView.tableView setHidden:NO];
-        [self.storeView.headerView setAllPurchased:[[item objectForKey:@"itemPurchased"] boolValue]];
+        [self.storeView.headerView setAllPurchased:[store anythingPurchased]];
         [self.storeView.storeStatusLabel setHidden:YES];
         [self.storeView.refreshButton setHidden:YES];
         [self.storeView.activity stopAnimating];
