@@ -60,16 +60,6 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
     }];
     
     self.randomPicURLs = [NSMutableArray array];
-    [LinkedIn randomConnectionsForAuthenticatedUserWithNumberOfConnectionsToFetch:30 onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
-      if (error == nil){
-        NSSet *personIDs = connectionsStore.personIDsWithProfilePics;
-        for (NSString *personID in personIDs ){
-          QIPerson *person = connectionsStore.people[personID];
-          NSURL *personPicURL = [NSURL URLWithString:person.pictureURL];
-          [self.randomPicURLs addObject:personPicURL];
-        }
-      }
-    }];
   }
   else {
     [self connectionAlert]; 
@@ -133,6 +123,24 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
   [self.homeView.groupQuizBeginButton addTarget:self
                                          action:@selector(groupPicker:)
                                  forControlEvents:UIControlEventTouchUpInside];
+  
+  [LinkedIn randomConnectionsForAuthenticatedUserWithNumberOfConnectionsToFetch:30 onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
+    if (error == nil){
+      NSSet *personIDs = connectionsStore.personIDsWithProfilePics;
+      for (NSString *personID in personIDs ){
+        QIPerson *person = connectionsStore.people[personID];
+        NSURL *personPicURL = [NSURL URLWithString:person.pictureURL];
+        [self.randomPicURLs addObject:personPicURL];
+      }
+    }
+    else {
+      if (self.applicationViewController) {
+        [self.applicationViewController logout];
+        return;
+      }
+      NSAssert(NO, @"Warning: Settings view controller does not have a reference to the application view controller; can't logout.");
+    }
+  }];
 }
 
 - (void)didReceiveMemoryWarning {

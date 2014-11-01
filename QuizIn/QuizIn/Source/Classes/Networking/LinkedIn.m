@@ -95,11 +95,12 @@ static QIPerson *authenticatedUser;
       DDLogWarn(@"User's number of connections: %d is less than requested for random connections: %d.",
                 numberOfConnections, numberOfConnectionsToFetch);
     }
-    
-    [self batchedConnectionsForAuthenticatedUserWithNumberOfConnections:numberOfConnections
-                                             numberOfConnectionsToFetch:maxNumberOfConnectionsToFetch
-                                                           maxBatchSize:10
-                                                           onCompletion:onCompletion];
+    if (numberOfConnections > 0){
+      [self batchedConnectionsForAuthenticatedUserWithNumberOfConnections:numberOfConnections
+                                               numberOfConnectionsToFetch:maxNumberOfConnectionsToFetch
+                                                             maxBatchSize:10
+                                                             onCompletion:onCompletion];
+    }
   };
   
   // Send request.

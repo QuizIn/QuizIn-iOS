@@ -169,6 +169,7 @@
 
 - (QIHomeViewController *)newHomeViewController {
   QIHomeViewController *homeViewController = [[QIHomeViewController alloc] init];
+  //[homeViewController setApplicationViewController:self];
   [homeViewController setTitle:@"Home"];
   [homeViewController setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Start" image:[UIImage imageNamed:@"connectionsquiz_home_btn"] tag:0]];
   [homeViewController setUserID:self.loggedInUser.personID];
