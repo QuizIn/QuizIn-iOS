@@ -69,12 +69,12 @@
                                             metrics:nil
                                               views:backgroundImageConstraintView];
     NSArray *vExitButtonContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-30-[_exitButton(==20)]-30-[_previewImageView]"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-30-[_exitButton(==20)]-10-[_previewImageView]"
                                             options:0
                                             metrics:nil
                                               views:backgroundImageConstraintView];
     NSArray *hPreviewImageContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_previewImageView]-20-|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-5-[_previewImageView]-5-|"
                                             options:0
                                             metrics:nil
                                               views:backgroundImageConstraintView];
@@ -93,13 +93,13 @@
   NSString *imageName;
   switch (self.previewTag) {
     case 0:
-      imageName = @"FilterPreview";
+      imageName = @"hobnob_filterquizPreview";
       break;
     case 1:
       imageName = @"QuestionTypesPreview";
       break;
     case 2:
-      imageName = @"NeedsRefreshPreview";
+      imageName = @"hobnob_refreshquiz";
       break;
       
     default:
@@ -124,7 +124,7 @@
 }
 
 - (UIImageView *)newPreviewImageView {
-  UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"FilterPreview"]];
+  UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hobnob_filterquizPreview"]];
   [image setContentMode:UIViewContentModeScaleAspectFit];
   [image setTranslatesAutoresizingMaskIntoConstraints:NO];
   return image;
