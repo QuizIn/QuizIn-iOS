@@ -116,16 +116,16 @@
   self.loggedInAccount = account;
   [LinkedIn updateAuthenticatedUserWithOnCompletion:^(QIPerson *authenticatedUser, NSError *error) {
     [QIIAPHelper sharedInstance]; 
-    self.tabViewController = [self newTabBarController];
-    [self.mainNav pushViewController:self.tabViewController animated:NO];
-    
     // TODO(rcacheaux): Check if exists.
     self.loggedInUser = [LinkedIn authenticatedUser];
+    self.tabViewController = [self newTabBarController];
+    [self.mainNav pushViewController:self.tabViewController animated:NO];
     self.isWaitingForLogin = NO;
     if (self.presentedViewController) {
       [self dismissViewControllerAnimated:YES completion:nil];
     }
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+    
   }];
   
 }

@@ -49,9 +49,11 @@
     _ranks = [QIRankDefinition getRankDelineations];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     //todo rkuhlman offline usage
-    _userID = @"12345";//
+    if (_userID == (id)[NSNull null] || _userID.length == 0 ){
+      _userID = @"12345";
+    }
     if (![prefs objectForKey:_userID]){
-      [self setUpStats]; 
+      [self setUpStats];
     }
   }
   return self;
