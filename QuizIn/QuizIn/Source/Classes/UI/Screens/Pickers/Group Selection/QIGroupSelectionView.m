@@ -189,7 +189,7 @@
 #pragma mark Strings
 
 -(NSString *)backButtonTitle{
-  return @"< Cancel";
+  return @"< Back";
 }
 
 #pragma mark Factory Methods

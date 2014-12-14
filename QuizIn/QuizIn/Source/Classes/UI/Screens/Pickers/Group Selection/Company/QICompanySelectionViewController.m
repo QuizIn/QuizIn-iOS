@@ -26,6 +26,34 @@
       NSLog(@"LINKEDIN ERROR: %@", error.description);
     }
     else{
+      NSMutableArray *companySelectionContent = [NSMutableArray arrayWithCapacity:[companies count]];
+      for (QICompany *company in companies) {
+        NSMutableDictionary *companySelection = [@{@"IDs": company.companyID,
+                                                   @"title": company.name,
+                                                   @"subtitle": @"industry",
+                                                   @"images": @[],
+                                                   @"logo": @"url",
+                                                   @"selected": @NO} mutableCopy];
+        [companySelectionContent addObject:companySelection];
+      }
+      [self.groupSelectionView setSelectionContent:[companySelectionContent copy]];
+
+      }
+  }];
+  
+}
+
+/*- (void)viewDidLoad {
+  [super viewDidLoad];
+  
+  [self.groupSelectionView setSelectionViewLabelString:@"Filter By Companies"];
+  
+  [LinkedIn topFirstDegreeConnectionCompaniesForAuthentedUserWithOnCompletion:^(NSArray *companies,
+                                                                                NSError *error) {
+    if (error && [companies count]==0){
+      NSLog(@"LINKEDIN ERROR: %@", error.description);
+    }
+    else{
       self.companyIDs = [NSMutableArray arrayWithCapacity:[companies count]];
       for (QICompany *company in companies){
         [self.companyIDs addObject:company.companyID];
@@ -54,7 +82,7 @@
     }];
   }];
   
-}
+}*/
 
 - (void)startQuiz:(id)sender {
   [super startQuiz:sender];
