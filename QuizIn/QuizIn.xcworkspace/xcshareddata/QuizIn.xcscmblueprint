@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "A5C2114BB1BFE07ECACD53379B908CBABD179F65",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "6CCF640E6FCB2E265D84922F459D486AC9A160B3" : 0,
+    "A5C2114BB1BFE07ECACD53379B908CBABD179F65" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "95B04D2C-638C-487B-91E9-32DEA5B3A70B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "6CCF640E6FCB2E265D84922F459D486AC9A160B3" : "AuthKit",
+    "A5C2114BB1BFE07ECACD53379B908CBABD179F65" : "QuizIn-iOS"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "QuizIn",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "QuizIn\/QuizIn.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/RCacheaux\/AuthKit.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6CCF640E6FCB2E265D84922F459D486AC9A160B3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/RCacheaux\/QuizIn-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A5C2114BB1BFE07ECACD53379B908CBABD179F65"
+    }
+  ]
+}
