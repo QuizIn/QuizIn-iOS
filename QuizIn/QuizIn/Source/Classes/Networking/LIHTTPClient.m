@@ -34,6 +34,4 @@ static NSString * const kAFLinkedInAPIBaseURLString = @"https://api.linkedin.com
   return [super GET:URLString parameters:parameters success:success failure:failure];
 }
 
-
-
 @end

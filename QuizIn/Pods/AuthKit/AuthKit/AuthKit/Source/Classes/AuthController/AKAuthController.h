@@ -6,7 +6,7 @@
 
 @interface AKAuthController : NSObject<AKAuthControl>
 
-@property(nonatomic, weak) id<AKAuthHandler> authHandler;
+@property(nonatomic, strong) id<AKAuthHandler> authHandler;
 
 + (instancetype)sharedController;
 

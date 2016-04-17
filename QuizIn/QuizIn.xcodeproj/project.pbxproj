@@ -358,6 +358,7 @@
 		34E9774C1764FAC900086673 /* QI_QuizBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E9774B1764FAC900086673 /* QI_QuizBuilder.m */; };
 		34F01A36172DB2F60056A76A /* QIBusinessCardQuizView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */; };
 		34F01A37172DB2F60056A76A /* QIBusinessCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */; };
+		436792F41CC3B88B00014679 /* linkedin-sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 436792F31CC3B88B00014679 /* linkedin-sdk.framework */; };
 		436CD48C190C54AF004A0393 /* QICompanySearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD48B190C54AF004A0393 /* QICompanySearchPickerViewController.m */; };
 		436CD48F190C5722004A0393 /* QIIndustrySearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD48E190C5722004A0393 /* QIIndustrySearchPickerViewController.m */; };
 		436CD492190C587C004A0393 /* QILocationSearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD491190C587C004A0393 /* QILocationSearchPickerViewController.m */; };
@@ -894,6 +895,7 @@
 		34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardQuizView.m; sourceTree = "<group>"; };
 		34F01A34172DB2F60056A76A /* QIBusinessCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardViewController.h; sourceTree = "<group>"; };
 		34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardViewController.m; sourceTree = "<group>"; };
+		436792F31CC3B88B00014679 /* linkedin-sdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "linkedin-sdk.framework"; path = "LinkedInFramework/linkedin-sdk.framework"; sourceTree = "<group>"; };
 		436CD48A190C54AF004A0393 /* QICompanySearchPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICompanySearchPickerViewController.h; sourceTree = "<group>"; };
 		436CD48B190C54AF004A0393 /* QICompanySearchPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICompanySearchPickerViewController.m; sourceTree = "<group>"; };
 		436CD48D190C5722004A0393 /* QIIndustrySearchPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIIndustrySearchPickerViewController.h; sourceTree = "<group>"; };
@@ -999,6 +1001,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				436792F41CC3B88B00014679 /* linkedin-sdk.framework in Frameworks */,
 				340D3D3817D4F0B5004F5522 /* StoreKit.framework in Frameworks */,
 				34890121177A76D10004F604 /* EventKit.framework in Frameworks */,
 				88867999172D6D6C00DCE3D0 /* MobileCoreServices.framework in Frameworks */,
@@ -2005,6 +2008,7 @@
 		881EAF9216FBD08B0041AD55 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				436792F31CC3B88B00014679 /* linkedin-sdk.framework */,
 				340D3D3717D4F0B5004F5522 /* StoreKit.framework */,
 				34890120177A76D10004F604 /* EventKit.framework */,
 				88867998172D6D6C00DCE3D0 /* MobileCoreServices.framework */,
@@ -2201,7 +2205,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = QI;
-				LastTestingUpgradeCheck = 0720;
+				LastTestingUpgradeCheck = 0730;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Kuhlmanation LLC";
 				TargetAttributes = {
@@ -2751,7 +2755,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -2778,7 +2782,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -2795,6 +2799,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LinkedInFramework",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuizIn/Source/QuizIn-Prefix.pch";
 				INFOPLIST_FILE = "QuizIn/Supporting Files/QuizIn-Info.plist";
@@ -2813,6 +2821,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/LinkedInFramework",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuizIn/Source/QuizIn-Prefix.pch";
 				INFOPLIST_FILE = "QuizIn/Supporting Files/QuizIn-Info.plist";
