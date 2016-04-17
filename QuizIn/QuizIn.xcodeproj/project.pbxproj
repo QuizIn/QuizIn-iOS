@@ -2205,7 +2205,11 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = QI;
+<<<<<<< HEAD
 				LastTestingUpgradeCheck = 0730;
+=======
+				LastTestingUpgradeCheck = 0600;
+>>>>>>> parent of bbe545e... Merge pull request #119 from QuizIn/redo-login
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Kuhlmanation LLC";
 				TargetAttributes = {
