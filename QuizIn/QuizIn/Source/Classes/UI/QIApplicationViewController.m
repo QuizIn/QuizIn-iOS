@@ -5,6 +5,7 @@
 #import "QILoginScreenViewController.h"
 #import "QIReachabilityManager.h"
 #import <gtm-oauth2/GTMOAuth2ViewControllerTouch.h>
+#import <linkedin-sdk/LISDK.h>
 
 //Tab Bar Views
 #import "QIHomeViewController.h"
@@ -36,8 +37,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    _authController = [self newLinkedInAuthController];
-    _isWaitingForLogin = NO;
+    //_authController = [self newLinkedInAuthController];
+    //_isWaitingForLogin = NO;
     
     // rtodo make factory
     _mainNav = [UINavigationController new];
@@ -63,11 +64,13 @@
   self.loginScreenController = landingViewController;
   [self.mainNav pushViewController:landingViewController animated:NO];
   
-  self.isWaitingForLogin = YES;
-  [self.authController beginAuthenticationAttempt];
+  /*
+  //self.isWaitingForLogin = YES;
+  /[self.authController beginAuthenticationAttempt];
   while (self.isWaitingForLogin) {
     [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
   }
+   */
 }
 
 
@@ -76,10 +79,33 @@
 }
 
 -(void)login {
-  [self.authController beginAuthenticationAttempt];
+  //[self.authController beginAuthenticationAttempt];
   if ([QIReachabilityManager isReachable]) {
-    [self.mainNav pushViewController:self.loginViewController animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+    NSLog(@"%s","sync pressed2");
+    [LISDKSessionManager createSessionWithAuth:[NSArray arrayWithObjects:LISDK_BASIC_PROFILE_PERMISSION, LISDK_EMAILADDRESS_PERMISSION, nil]
+                                         state:@"some state"
+                        showGoToAppStoreDialog:YES
+                                  successBlock:^(NSString *returnState) {
+                                    
+                                    NSLog(@"%s","success called!");
+                                    LISDKSession *session = [[LISDKSessionManager sharedInstance] session];
+                                    NSLog(@"value=%@ isvalid=%@",[session value],[session isValid] ? @"YES" : @"NO");
+                                    NSMutableString *text = [[NSMutableString alloc] initWithString:[session.accessToken description]];
+                                    [text appendString:[NSString stringWithFormat:@",state=\"%@\"",returnState]];
+                                    NSLog(@"Response label text %@",text);
+                                    //[self.mainNav pushViewController:self.loginViewController animated:YES];
+                                    self.tabViewController = [self newTabBarController];
+                                    [self.mainNav pushViewController:self.tabViewController animated:NO];
+                                    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+                                    
+                                  }
+                                    errorBlock:^(NSError *error) {
+                                      NSLog(@"%s %@","error called! ", [error description]);
+                                    }
+     ];
+    NSLog(@"%s","sync pressed3");
+
+
     }
   else{
     [self connectionAlert];
@@ -87,7 +113,8 @@
 }
 
 - (void)logout {
-  [self.authController unauthenticateAccount:self.loggedInAccount];
+  [LISDKSessionManager clearSession];
+  //[self.authController unauthenticateAccount:self.loggedInAccount];
 }
 
 - (void)connectionAlert{
@@ -102,7 +129,7 @@
   self.tabViewController.view.frame = self.view.bounds;
   self.loginViewController.view.frame = self.view.bounds;
 }
-
+/*
 #pragma mark AKAuthHandler
 
 - (void)presentAKLoginViewController:(UIViewController *)viewController {
@@ -146,6 +173,7 @@
   authController.authHandler = self;
   return authController;
 }
+*/
 
 - (UITabBarController *)newTabBarController{
   UITabBarController *tabController = [[UITabBarController alloc] init];

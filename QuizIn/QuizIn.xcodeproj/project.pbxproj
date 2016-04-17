@@ -358,7 +358,6 @@
 		34E9774C1764FAC900086673 /* QI_QuizBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E9774B1764FAC900086673 /* QI_QuizBuilder.m */; };
 		34F01A36172DB2F60056A76A /* QIBusinessCardQuizView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */; };
 		34F01A37172DB2F60056A76A /* QIBusinessCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */; };
-		436792F41CC3B88B00014679 /* linkedin-sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 436792F31CC3B88B00014679 /* linkedin-sdk.framework */; };
 		436CD48C190C54AF004A0393 /* QICompanySearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD48B190C54AF004A0393 /* QICompanySearchPickerViewController.m */; };
 		436CD48F190C5722004A0393 /* QIIndustrySearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD48E190C5722004A0393 /* QIIndustrySearchPickerViewController.m */; };
 		436CD492190C587C004A0393 /* QILocationSearchPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CD491190C587C004A0393 /* QILocationSearchPickerViewController.m */; };
@@ -394,6 +393,7 @@
 		4392868A1A3E099E00B68286 /* hobnob_refreshquiz.png in Resources */ = {isa = PBXBuildFile; fileRef = 439286881A3E099E00B68286 /* hobnob_refreshquiz.png */; };
 		4392868B1A3E099E00B68286 /* hobnob_refreshquiz@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 439286891A3E099E00B68286 /* hobnob_refreshquiz@2x.png */; };
 		4392868D1A3E189900B68286 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4392868C1A3E189900B68286 /* Images.xcassets */; };
+		439CF6A31CC40DE9009ED846 /* linkedin-sdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 439CF6A21CC40DE9009ED846 /* linkedin-sdk.framework */; };
 		43BAC344192657D900632388 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BAC343192657D900632388 /* Reachability.m */; };
 		43BAC34719266CC800632388 /* QIReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 43BAC34619266CC800632388 /* QIReachabilityManager.m */; };
 		880870E216FBD31800D09848 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 880870DF16FBD31800D09848 /* InfoPlist.strings */; };
@@ -895,7 +895,6 @@
 		34F01A33172DB2F60056A76A /* QIBusinessCardQuizView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardQuizView.m; sourceTree = "<group>"; };
 		34F01A34172DB2F60056A76A /* QIBusinessCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIBusinessCardViewController.h; sourceTree = "<group>"; };
 		34F01A35172DB2F60056A76A /* QIBusinessCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIBusinessCardViewController.m; sourceTree = "<group>"; };
-		436792F31CC3B88B00014679 /* linkedin-sdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "linkedin-sdk.framework"; path = "LinkedInFramework/linkedin-sdk.framework"; sourceTree = "<group>"; };
 		436CD48A190C54AF004A0393 /* QICompanySearchPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QICompanySearchPickerViewController.h; sourceTree = "<group>"; };
 		436CD48B190C54AF004A0393 /* QICompanySearchPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QICompanySearchPickerViewController.m; sourceTree = "<group>"; };
 		436CD48D190C5722004A0393 /* QIIndustrySearchPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIIndustrySearchPickerViewController.h; sourceTree = "<group>"; };
@@ -935,12 +934,12 @@
 		439286881A3E099E00B68286 /* hobnob_refreshquiz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hobnob_refreshquiz.png; sourceTree = "<group>"; };
 		439286891A3E099E00B68286 /* hobnob_refreshquiz@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hobnob_refreshquiz@2x.png"; sourceTree = "<group>"; };
 		4392868C1A3E189900B68286 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		439CF6A21CC40DE9009ED846 /* linkedin-sdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "linkedin-sdk.framework"; path = "QuizIn/Additional Frameworks/linkedin-sdk.framework"; sourceTree = "<group>"; };
 		43BAC342192657D900632388 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		43BAC343192657D900632388 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		43BAC34519266CC800632388 /* QIReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIReachabilityManager.h; sourceTree = "<group>"; };
 		43BAC34619266CC800632388 /* QIReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIReachabilityManager.m; sourceTree = "<group>"; };
 		634CC7A981E449658DD30D1E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7F88557B297046AD9AF083B1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		880870E016FBD31800D09848 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		880870E116FBD31800D09848 /* QuizIn-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "QuizIn-Info.plist"; sourceTree = "<group>"; };
 		880870EB16FBD32200D09848 /* QuizIn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QuizIn.xcdatamodel; sourceTree = "<group>"; };
@@ -993,7 +992,9 @@
 		888679A7172DD5B000DCE3D0 /* QIMultipleChoiceQuizViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIMultipleChoiceQuizViewController.m; sourceTree = "<group>"; };
 		888679A9172DD5DA00DCE3D0 /* QIMultipleChoiceQuizView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QIMultipleChoiceQuizView.h; sourceTree = "<group>"; };
 		888679AA172DD5DA00DCE3D0 /* QIMultipleChoiceQuizView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QIMultipleChoiceQuizView.m; sourceTree = "<group>"; };
+		935F306E73F8A3C178DAEF2D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		9FBC9C5A17163062009BA34C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E87753F69EC9C1EE7284924C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1001,7 +1002,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				436792F41CC3B88B00014679 /* linkedin-sdk.framework in Frameworks */,
+				439CF6A31CC40DE9009ED846 /* linkedin-sdk.framework in Frameworks */,
 				340D3D3817D4F0B5004F5522 /* StoreKit.framework in Frameworks */,
 				34890121177A76D10004F604 /* EventKit.framework in Frameworks */,
 				88867999172D6D6C00DCE3D0 /* MobileCoreServices.framework in Frameworks */,
@@ -1991,7 +1992,7 @@
 				881EAF9B16FBD08B0041AD55 /* QuizIn */,
 				881EAFC916FBD08B0041AD55 /* QuizInTests */,
 				881EAF9216FBD08B0041AD55 /* Frameworks */,
-				7F88557B297046AD9AF083B1 /* Pods.xcconfig */,
+				F89A4A7D7D0A63B231655292 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2008,7 +2009,7 @@
 		881EAF9216FBD08B0041AD55 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				436792F31CC3B88B00014679 /* linkedin-sdk.framework */,
+				439CF6A21CC40DE9009ED846 /* linkedin-sdk.framework */,
 				340D3D3717D4F0B5004F5522 /* StoreKit.framework */,
 				34890120177A76D10004F604 /* EventKit.framework */,
 				88867998172D6D6C00DCE3D0 /* MobileCoreServices.framework */,
@@ -2158,6 +2159,15 @@
 			path = MultipleChoice;
 			sourceTree = "<group>";
 		};
+		F89A4A7D7D0A63B231655292 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E87753F69EC9C1EE7284924C /* Pods.debug.xcconfig */,
+				935F306E73F8A3C178DAEF2D /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2169,6 +2179,7 @@
 				881EAF8D16FBD08B0041AD55 /* Frameworks */,
 				881EAF8E16FBD08B0041AD55 /* Resources */,
 				9AE3D130F87149FAAC03A5F6 /* Copy Pods Resources */,
+				291951E13796F0B4940FB682 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2205,11 +2216,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = QI;
-<<<<<<< HEAD
 				LastTestingUpgradeCheck = 0730;
-=======
-				LastTestingUpgradeCheck = 0600;
->>>>>>> parent of bbe545e... Merge pull request #119 from QuizIn/redo-login
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Kuhlmanation LLC";
 				TargetAttributes = {
@@ -2542,6 +2549,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		291951E13796F0B4940FB682 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		881EAFBF16FBD08B0041AD55 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2567,7 +2589,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2797,7 +2819,7 @@
 		};
 		881EAFD516FBD08B0041AD55 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7F88557B297046AD9AF083B1 /* Pods.xcconfig */;
+			baseConfigurationReference = E87753F69EC9C1EE7284924C /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -2806,6 +2828,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/LinkedInFramework",
+					"$(PROJECT_DIR)/QuizIn/Additional",
+					Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuizIn/Source/QuizIn-Prefix.pch";
@@ -2819,7 +2843,7 @@
 		};
 		881EAFD616FBD08B0041AD55 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7F88557B297046AD9AF083B1 /* Pods.xcconfig */;
+			baseConfigurationReference = 935F306E73F8A3C178DAEF2D /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -2828,6 +2852,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/LinkedInFramework",
+					"$(PROJECT_DIR)/QuizIn/Additional",
+					Frameworks,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "QuizIn/Source/QuizIn-Prefix.pch";

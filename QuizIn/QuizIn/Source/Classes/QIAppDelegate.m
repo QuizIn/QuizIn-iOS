@@ -8,6 +8,8 @@
 
 #import "LinkedIn.h"
 #import "QIIAPHelper.h"
+#import <linkedin-sdk/LISDK.h>
+
 
 int ddLogLevel;
 
@@ -24,6 +26,13 @@ int ddLogLevel;
 
   [self.window makeKeyAndVisible];
 
+  return YES;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+  if ([LISDKCallbackHandler shouldHandleUrl:url]) {
+    return [LISDKCallbackHandler application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+  }
   return YES;
 }
 

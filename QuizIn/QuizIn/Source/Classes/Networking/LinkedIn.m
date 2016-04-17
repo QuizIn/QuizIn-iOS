@@ -1,6 +1,6 @@
 #import "LinkedIn.h"
 
-#import <AuthKit/AKAccountStore.h>
+//#import <AuthKit/AKAccountStore.h>
 
 #import "LIHTTPClient.h"
 #import "AKLinkedInAuthController.h"

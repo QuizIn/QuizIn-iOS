@@ -13,15 +13,30 @@
  * limitations under the License.
  */
 
+// GTMHTTPFetcher relies on NSURLConnection, which is unavailable for apps built with minimum
+// targets of iOS 9 and OS X 10.11.
 //
-//  GTMHTTPFetcher.m
-//
+// This fetcher class is deprecated under the OS X 10.12/iOS 10 SDKs unless targeting
+// OS X 10.8 or iOS 6.
+#if (!TARGET_OS_IPHONE && defined(MAC_OS_X_VERSION_10_12)     \
+    && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_12 \
+    && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_9)
+#error GTMHTTPFetcher is deprecated; use GTMSessionFetcher instead
+#endif
+
+#if (TARGET_OS_IPHONE && defined(__IPHONE_10_0)         \
+    && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0 \
+    && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_7_0)
+#error GTMHTTPFetcher is deprecated; use GTMSessionFetcher instead
+#endif
 
 #import "GTMHTTPFetcher.h"
 
 #if GTM_BACKGROUND_FETCHING
 #import <UIKit/UIKit.h>
 #endif
+
+#import <sys/utsname.h>
 
 static id <GTMCookieStorageProtocol> gGTMFetcherStaticCookieStorage = nil;
 static Class gGTMFetcherConnectionClass = nil;
@@ -37,6 +52,10 @@ NSString *const kGTMHTTPFetcherStatusDomain      = @"com.google.HTTPStatus";
 NSString *const kGTMHTTPFetcherErrorChallengeKey = @"challenge";
 NSString *const kGTMHTTPFetcherStatusDataKey     = @"data";  // data returned with a kGTMHTTPFetcherStatusDomain error
 
+NSString *const kGTMHTTPFetcherCompletionInvokedNotification = @"kGTMHTTPFetcherCompletionInvokedNotification";
+NSString *const kGTMHTTPFetcherCompletionDataKey = @"data";
+NSString *const kGTMHTTPFetcherCompletionErrorKey = @"error";
+
 // The default max retry interview is 10 minutes for uploads (POST/PUT/PATCH),
 // 1 minute for downloads.
 static const NSTimeInterval kUnsetMaxRetryInterval = -1;
@@ -44,6 +63,9 @@ static const NSTimeInterval kDefaultMaxDownloadRetryInterval = 60.0;
 static const NSTimeInterval kDefaultMaxUploadRetryInterval = 60.0 * 10.;
 
 // delegateQueue callback parameters
+static NSString *const kCallbackTarget = @"target";
+static NSString *const kCallbackSelector = @"sel";
+static NSString *const kCallbackBlock = @"block";
 static NSString *const kCallbackData = @"data";
 static NSString *const kCallbackError = @"error";
 
@@ -56,9 +78,7 @@ static NSString *const kCallbackError = @"error";
 @property (copy) NSString *temporaryDownloadPath;
 @property (retain) id <GTMCookieStorageProtocol> cookieStorage;
 @property (readwrite, retain) NSData *downloadedData;
-#if NS_BLOCKS_AVAILABLE
 @property (copy) void (^completionBlock)(NSData *, NSError *);
-#endif
 
 - (BOOL)beginFetchMayDelay:(BOOL)mayDelay
               mayAuthorize:(BOOL)mayAuthorize;
@@ -84,6 +104,11 @@ static NSString *const kCallbackError = @"error";
 
 - (void)invokeFetchCallbacksWithData:(NSData *)data
                                error:(NSError *)error;
+- (void)invokeFetchCallbacksWithTarget:(id)target
+                              selector:(SEL)sel
+                                 block:(id)block
+                                  data:(NSData *)data
+                                 error:(NSError *)error;
 - (void)invokeFetchCallback:(SEL)sel
                      target:(id)target
                        data:(NSData *)data
@@ -132,6 +157,15 @@ static NSString *const kCallbackError = @"error";
     if (cookieStorageClass) {
       gGTMFetcherStaticCookieStorage = [[cookieStorageClass alloc] init];
     }
+
+#if DEBUG
+#if (!TARGET_OS_IPHONE && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_9) \
+    || (TARGET_OS_IPHONE && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_7_0)
+    NSLog(@"GTMHTTPFetcher is deprecated and should be updated to GTMSessionFetcher"
+          @" (inside bundle %@)",
+          [NSBundle bundleForClass:self].bundlePath.lastPathComponent);
+#endif
+#endif
   }
 }
 
@@ -197,16 +231,14 @@ static NSString *const kCallbackError = @"error";
   [downloadFileHandle_ release];
   [credential_ release];
   [proxyCredential_ release];
-  [postData_ release];
+  [bodyData_ release];
   [postStream_ release];
   [loggedStreamData_ release];
   [response_ release];
-#if NS_BLOCKS_AVAILABLE
   [completionBlock_ release];
   [receivedDataBlock_ release];
   [sentDataBlock_ release];
   [retryBlock_ release];
-#endif
   [userData_ release];
   [properties_ release];
   [delegateQueue_ release];
@@ -262,14 +294,78 @@ static NSString *const kCallbackError = @"error";
     goto CannotBeginFetch;
   }
 
-  if (request_ == nil || [request_ URL] == nil) {
+  NSURL *requestURL = [request_ URL];
+  if (request_ == nil || requestURL == nil) {
     NSAssert(request_ != nil, @"beginFetchWithDelegate requires a request with a URL");
     goto CannotBeginFetch;
   }
 
+#if !GTM_ALLOW_INSECURE_REQUESTS
+  if (requestURL != nil) {
+    // Allow https only for requests, unless overridden by the client.
+    //
+    // Non-https requests may too easily be snooped, so we disallow them by default.
+    //
+    // file: and data: schemes are usually safe if they are hardcoded in the client or provided
+    // by a trusted source, but since it's fairly rare to need them, it's safest to make clients
+    // explicitly whitelist them.
+    NSString *requestScheme = [requestURL scheme];
+    BOOL isSecure = ([requestScheme caseInsensitiveCompare:@"https"] == NSOrderedSame);
+    if (!isSecure) {
+      BOOL allowRequest = NO;
+      NSString *host = [requestURL host];
+      BOOL isLocalhost = ([host caseInsensitiveCompare:@"localhost"] == NSOrderedSame
+                          || [host isEqual:@"::1"]
+                          || [host isEqual:@"127.0.0.1"]);
+      if (isLocalhost) {
+        if (allowLocalhostRequest_) {
+          allowRequest = YES;
+        } else {
+          // To fetch from localhost, the fetcher must specifically have the allowLocalhostRequest
+          // property set.
+#if DEBUG
+          NSAssert(NO, @"Fetch request for localhost but fetcher allowLocalhostRequest"
+                       @" is not set: %@", requestURL);
+#else
+          NSLog(@"Localhost fetch disallowed for %@", requestURL);
+#endif
+        }
+      } else {
+        // Not localhost; check schemes.
+        for (NSString *allowedScheme in allowedInsecureSchemes_) {
+          if ([requestScheme caseInsensitiveCompare:allowedScheme] == NSOrderedSame) {
+            allowRequest = YES;
+            break;
+          }
+        }
+        if (!allowRequest) {
+          // To make a request other than https:, the client must specify an array for the
+          // allowedInsecureSchemes property.
+#if DEBUG
+          NSAssert(NO, @"Insecure fetch request has a scheme (%@)"
+                       @" not found in fetcher allowedInsecureSchemes (%@): %@",
+                       requestScheme, allowedInsecureSchemes_, requestURL);
+#else
+          NSLog(@"Fetch disallowed for %@", requestURL);
+#endif
+        }
+      }
+      if (!allowRequest) {
+        error = [NSError errorWithDomain:kGTMHTTPFetcherErrorDomain
+                                    code:kGTMHTTPFetcherErrorInsecureRequest
+                                userInfo:nil];
+        goto CannotBeginFetch;
+      }
+    }  // !isSecure
+  }  // requestURL != nil
+#endif  // GTM_ALLOW_INSECURE_REQUESTS
+
   self.downloadedData = nil;
   downloadedLength_ = 0;
 
+  if (servicePriority_ == NSIntegerMin) {
+    mayDelay = NO;
+  }
   if (mayDelay && service_) {
     BOOL shouldFetchNow = [service_ fetcherShouldBeginFetching:self];
     if (!shouldFetchNow) {
@@ -285,14 +381,14 @@ static NSString *const kCallbackError = @"error";
   BOOL isEffectiveHTTPGet = (effectiveHTTPMethod == nil
                              || [effectiveHTTPMethod isEqual:@"GET"]);
 
-  if (postData_ || postStream_) {
+  if (bodyData_ || postStream_) {
     if (isEffectiveHTTPGet) {
       [request_ setHTTPMethod:@"POST"];
       isEffectiveHTTPGet = NO;
     }
 
-    if (postData_) {
-      [request_ setHTTPBody:postData_];
+    if (bodyData_) {
+      [request_ setHTTPBody:bodyData_];
     } else {
       if ([self respondsToSelector:@selector(setupStreamLogging)]) {
         [self performSelector:@selector(setupStreamLogging)];
@@ -354,6 +450,15 @@ static NSString *const kCallbackError = @"error";
     // NSURLConnection has no setDelegateQueue: on iOS 4 and Mac OS X 10.5.
     delegateQueue = nil;
     self.delegateQueue = nil;
+  } else if (delegateQueue == nil && runLoopModes_ == nil && ![NSThread isMainThread]) {
+    // Neither a delegate queue nor runLoopModes were supplied, and we're not on the
+    // main thread, so assume the user really wants callbacks and provide a queue.
+    //
+    // We don't have a way to verify that this thread has a run loop spinning, but
+    // it's fairly rare that a background thread does have one.  A client that
+    // does want to rely on spinning a run loop should specify run loop modes.
+    delegateQueue = [NSOperationQueue mainQueue];
+    self.delegateQueue = delegateQueue;
   }
 
 #if DEBUG && TARGET_OS_IPHONE
@@ -431,6 +536,13 @@ static NSString *const kCallbackError = @"error";
   if (!initialRequestDate_) {
     initialRequestDate_ = [[NSDate alloc] init];
   }
+
+#if DEBUG
+  // For testing only, look for a property indicating the fetch should immediately fail.
+  if ([self propertyForKey:@"_CannotBeginFetch"] != nil) {
+    goto CannotBeginFetch;
+  }
+#endif
 
   // Once connection_ is non-nil we can send the start notification
   isStopNotificationNeeded_ = YES;
@@ -550,7 +662,6 @@ CannotBeginFetch:
   }
 }
 
-#if NS_BLOCKS_AVAILABLE
 - (BOOL)beginFetchWithCompletionHandler:(void (^)(NSData *data, NSError *error))handler {
   self.completionBlock = handler;
 
@@ -560,7 +671,6 @@ CannotBeginFetch:
   return [self beginFetchWithDelegate:[self delegate]
                     didFinishSelector:nil];
 }
-#endif
 
 - (NSString *)createTempDownloadFilePathForPath:(NSString *)targetPath {
   NSString *tempDir = nil;
@@ -667,12 +777,10 @@ CannotBeginFetch:
   [delegateQueue_ autorelease];
   delegateQueue_ = nil;
 
-#if NS_BLOCKS_AVAILABLE
   self.completionBlock = nil;
   self.sentDataBlock = nil;
   self.receivedDataBlock = nil;
   self.retryBlock = nil;
-#endif
 }
 
 // Cancel the fetch of the URL that's currently in progress.
@@ -767,9 +875,7 @@ CannotBeginFetch:
   BOOL isMainThread = [NSThread isMainThread];
 
   while ((!hasConnectionEnded_
-#if NS_BLOCKS_AVAILABLE
           || completionBlock_ != nil
-#endif
           || delegate_ != nil)
          && [giveUpDate timeIntervalSinceNow] > 0) {
 
@@ -962,9 +1068,7 @@ didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
   // To avoid deadlocks, this should not be called inside of @synchronized(self)
   id target;
   SEL sel;
-#if NS_BLOCKS_AVAILABLE
   void (^block)(NSData *, NSError *);
-#endif
 
   // If -stopFetching is called in another thread directly after this @synchronized stanza finishes
   // on this thread, then target and block could be released before being used in this method. So
@@ -972,11 +1076,20 @@ didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
   @synchronized(self) {
     target = [[delegate_ retain] autorelease];
     sel = finishedSel_;
-#if NS_BLOCKS_AVAILABLE
     block = [[completionBlock_ retain] autorelease];
-#endif
   }
+  [self invokeFetchCallbacksWithTarget:target
+                              selector:sel
+                                 block:block
+                                  data:data
+                                 error:error];
+}
 
+- (void)invokeFetchCallbacksWithTarget:(id)target
+                              selector:(SEL)sel
+                                 block:(id)block
+                                  data:(NSData *)data
+                                 error:(NSError *)error {
   [[self retain] autorelease];  // In case the callback releases us
 
   [self invokeFetchCallback:sel
@@ -984,11 +1097,28 @@ didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
                        data:data
                       error:error];
 
-#if NS_BLOCKS_AVAILABLE
   if (block) {
-    block(data, error);
+    ((void (^)(NSData *, NSError *))block)(data, error);
   }
-#endif
+
+  // Post a notification, primarily to allow code to collect responses for
+  // testing.
+  //
+  // The observing code is not likely on the fetcher's callback
+  // queue, so this posts explicitly to the main queue.
+  dispatch_async(dispatch_get_main_queue(), ^{
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+    if (data) {
+      [userInfo setObject:data forKey:kGTMHTTPFetcherCompletionDataKey];
+    }
+    if (error) {
+      [userInfo setObject:error forKey:kGTMHTTPFetcherCompletionErrorKey];
+    }
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:kGTMHTTPFetcherCompletionInvokedNotification
+                      object:self
+                    userInfo:userInfo];
+  });
 }
 
 - (void)invokeFetchCallback:(SEL)sel
@@ -1022,6 +1152,20 @@ didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
   NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
   [dict setValue:data forKey:kCallbackData];
   [dict setValue:error forKey:kCallbackError];
+
+  // If -stopFetching is called in another thread directly after this @synchronized stanza finishes
+  // on this thread, then target and block could be released before being used in this method. So
+  // retain each until this method is done with them.
+  @synchronized(self) {
+    id target = delegate_;
+    NSString *sel = finishedSel_ ? NSStringFromSelector(finishedSel_) : nil;
+    void (^block)(NSData *, NSError *) = completionBlock_;
+
+    [dict setValue:target forKey:kCallbackTarget];
+    [dict setValue:sel forKey:kCallbackSelector];
+    [dict setValue:block forKey:kCallbackBlock];
+  }
+
   NSInvocationOperation *op =
     [[[NSInvocationOperation alloc] initWithTarget:self
                                           selector:@selector(invokeOnQueueWithDictionary:)
@@ -1030,12 +1174,20 @@ didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
 }
 
 - (void)invokeOnQueueWithDictionary:(NSDictionary *)dict {
+  id target = [dict objectForKey:kCallbackTarget];
+  NSString *selStr = [dict objectForKey:kCallbackSelector];
+  SEL sel = selStr ? NSSelectorFromString(selStr) : NULL;
+  id block = [dict objectForKey:kCallbackBlock];
+
   NSData *data = [dict objectForKey:kCallbackData];
   NSError *error = [dict objectForKey:kCallbackError];
 
-  [self invokeFetchCallbacksWithData:data error:error];
+  [self invokeFetchCallbacksWithTarget:target
+                              selector:sel
+                                 block:block
+                                  data:data
+                                 error:error];
 }
-
 
 - (void)invokeSentDataCallback:(SEL)sel
                         target:(id)target
@@ -1086,11 +1238,9 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
                totalBytesWritten:totalBytesWritten
        totalBytesExpectedToWrite:totalBytesExpectedToWrite];
 
-#if NS_BLOCKS_AVAILABLE
     if (sentDataBlock_) {
       sentDataBlock_(bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
     }
-#endif
   }
 }
 
@@ -1140,11 +1290,9 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
                       withObject:downloadedData_];
     }
 
-#if NS_BLOCKS_AVAILABLE
     if (receivedDataBlock_) {
       receivedDataBlock_(downloadedData_);
     }
-#endif
   }  // @synchronized(self)
 }
 
@@ -1454,11 +1602,9 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
                                    target:delegate_
                                 willRetry:willRetry
                                     error:error];
-#if NS_BLOCKS_AVAILABLE
     if (retryBlock_) {
       willRetry = retryBlock_(willRetry, error);
     }
-#endif
   }
   return willRetry;
 }
@@ -1615,9 +1761,11 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
          properties;
 
 @synthesize mutableRequest = request_,
+            allowedInsecureSchemes = allowedInsecureSchemes_,
+            allowLocalhostRequest = allowLocalhostRequest_,
             credential = credential_,
             proxyCredential = proxyCredential_,
-            postData = postData_,
+            bodyData = bodyData_,
             postStream = postStream_,
             delegate = delegate_,
             authorizer = authorizer_,
@@ -1641,12 +1789,10 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
             log = log_,
             cookieStorage = cookieStorage_;
 
-#if NS_BLOCKS_AVAILABLE
 @synthesize completionBlock = completionBlock_,
             sentDataBlock = sentDataBlock_,
             receivedDataBlock = receivedDataBlock_,
             retryBlock = retryBlock_;
-#endif
 
 @synthesize shouldFetchInBackground = shouldFetchInBackground_;
 
@@ -1726,7 +1872,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 
 - (id)userData {
   @synchronized(self) {
-    return userData_;
+    return [[userData_ retain] autorelease];
   }
 }
 
@@ -1749,7 +1895,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 
 - (NSMutableDictionary *)properties {
   @synchronized(self) {
-    return properties_;
+    return [[properties_ retain] autorelease];
   }
 }
 
@@ -1764,7 +1910,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 
 - (id)propertyForKey:(NSString *)key {
   @synchronized(self) {
-    return [properties_ objectForKey:key];
+    return [[[properties_ objectForKey:key] retain] autorelease];
   }
 }
 
@@ -1776,6 +1922,20 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
       [properties_ addEntriesFromDictionary:dict];
     }
   }
+}
+
+- (NSData *)postData {
+#if DEBUG
+  NSLog(@"*** GTMHTTPFetcher: postData is deprecated; use bodyData property instead ***");
+#endif
+  return self.bodyData;
+}
+
+- (void)setPostData:(NSData *)data {
+#if DEBUG
+  NSLog(@"*** GTMHTTPFetcher: postData is deprecated; use bodyData property instead ***");
+#endif
+  self.bodyData = data;
 }
 
 - (void)setCommentWithFormat:(id)format, ... {
@@ -1806,6 +1966,10 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 
 #if STRIP_GTM_FETCH_LOGGING
 + (void)setLoggingEnabled:(BOOL)flag {
+}
+
++ (BOOL)isLoggingEnabled {
+  return NO;
 }
 #endif // STRIP_GTM_FETCH_LOGGING
 
@@ -1869,8 +2033,12 @@ NSString *GTMCleanedUserAgentString(NSString *str) {
 
   NSMutableString *result = [NSMutableString stringWithString:str];
 
-  // Replace spaces with underscores
+  // Replace spaces and commas with underscores
   [result replaceOccurrencesOfString:@" "
+                          withString:@"_"
+                             options:0
+                               range:NSMakeRange(0, [result length])];
+  [result replaceOccurrencesOfString:@","
                           withString:@"_"
                              options:0
                                range:NSMakeRange(0, [result length])];
@@ -1879,7 +2047,7 @@ NSString *GTMCleanedUserAgentString(NSString *str) {
   static NSCharacterSet *charsToDelete = nil;
   if (charsToDelete == nil) {
     // Make a set of unwanted characters
-    NSString *const kSeparators = @"()<>@,;:\\\"/[]?={}";
+    NSString *const kSeparators = @"()<>@;:\\\"/[]?={}";
 
     NSMutableCharacterSet *mutableChars;
     mutableChars = [[[NSCharacterSet whitespaceAndNewlineCharacterSet] mutableCopy] autorelease];
@@ -1923,13 +2091,26 @@ NSString *GTMSystemVersionString(void) {
     // Avoid the slowness of calling currentDevice repeatedly on the iPhone
     UIDevice* currentDevice = [UIDevice currentDevice];
 
-    NSString *rawModel = [currentDevice model];
-    NSString *model = GTMCleanedUserAgentString(rawModel);
-
+    NSString *model = [currentDevice model];
+    NSString *cleanedModel = GTMCleanedUserAgentString(model);
     NSString *systemVersion = [currentDevice systemVersion];
 
-    savedSystemString = [[NSString alloc] initWithFormat:@"%@/%@",
-                         model, systemVersion]; // "iPod_Touch/2.2"
+#if TARGET_IPHONE_SIMULATOR
+    NSString *hardwareModel = @"sim";
+#else
+    NSString *hardwareModel;
+    struct utsname unameRecord;
+    if (uname(&unameRecord) == 0) {
+      NSString *machineName = [NSString stringWithCString:unameRecord.machine
+                                                 encoding:NSUTF8StringEncoding];
+      hardwareModel = GTMCleanedUserAgentString(machineName);
+    } else {
+      hardwareModel = @"unk";
+    }
+#endif
+    savedSystemString = [[NSString alloc] initWithFormat:@"%@/%@ hw/%@",
+                         cleanedModel, systemVersion, hardwareModel];
+    // Example:  iPod_Touch/2.2 hw/iPod1_1
   }
   systemString = savedSystemString;
 

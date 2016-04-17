@@ -17,7 +17,9 @@
 #import "QIReachabilityManager.h"
 
 
+
 //todo kill these
+#import <linkedin-sdk/LISDK.h>
 #import "QIQuizFinishViewController.h"
 #import "QILoginScreenViewController.h" 
 
@@ -51,6 +53,31 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
 - (void)loadView {
   if ([QIReachabilityManager isReachable]){
     self.view = [[QIHomeView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    /*
+    [[LISDKAPIHelper sharedInstance] apiRequest:@"https://www.linkedin.com/v1/people/~"
+                                         method:@"GET"
+                                           body:@""
+                                        success:^(LISDKAPIResponse *response) {
+                                          NSLog(@"success called %@", response.data);
+
+                                        }
+                                          error:^(LISDKAPIError *apiError) {
+                                            NSLog(@"error called %@", apiError.description);
+                                          
+                                            dispatch_sync(dispatch_get_main_queue(), ^{
+                                              LISDKAPIResponse *response = [apiError errorResponse];
+                                              NSString *errorText;
+                                              if (response) {
+                                                errorText = response.data;
+                                              }
+                                              else {
+                                                errorText = apiError.description;
+                                              }
+                                            });
+                                          }];
+
+    */
+    
     [LinkedIn numberOfConnectionsForAuthenticatedUserOnCompletion:^(NSInteger numberOfConnections, NSError *error) {
       if (error == nil) {
         self.homeView.numberOfConnections = numberOfConnections;
@@ -123,7 +150,7 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
   [self.homeView.groupQuizBeginButton addTarget:self
                                          action:@selector(groupPicker:)
                                  forControlEvents:UIControlEventTouchUpInside];
-  
+  /*
   [LinkedIn randomConnectionsForAuthenticatedUserWithNumberOfConnectionsToFetch:30 onCompletion:^(QIConnectionsStore *connectionsStore, NSError *error) {
     if (error == nil){
       NSSet *personIDs = connectionsStore.personIDsWithProfilePics;
@@ -141,6 +168,7 @@ typedef NS_ENUM(NSInteger, QIFilterType) {
       NSAssert(NO, @"Warning: Settings view controller does not have a reference to the application view controller; can't logout.");
     }
   }];
+   */
 }
 
 - (void)didReceiveMemoryWarning {

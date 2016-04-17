@@ -25,7 +25,7 @@
 // needed for chunked upload as a single fetch operation.
 //
 // Protocol document:
-//   http://code.google.com/p/gears/wiki/ResumableHttpRequestsProposal
+//   https://developers.google.com/gdata/docs/resumable_upload
 //
 // To the client, the only fetcher that exists is this class; the subsidiary
 // fetchers needed for uploading chunks are not visible (though the most recent
@@ -57,16 +57,8 @@
   NSUInteger initialBodySent_;
 
   NSURL *locationURL_;
-#if NS_BLOCKS_AVAILABLE
   void (^locationChangeBlock_)(NSURL *);
-#elif !__LP64__
-  // placeholders: for 32-bit builds, keep the size of the object's ivar section
-  // the same with and without blocks
-#ifndef __clang_analyzer__
-  id locationChangePlaceholder_;
-#endif
-#endif
-  
+
   // uploadData_ or uploadFileHandle_ may be set, but not both
   NSData *uploadData_;
   NSFileHandle *uploadFileHandle_;
@@ -114,12 +106,10 @@
 @property (assign) NSUInteger chunkSize;
 @property (assign) NSUInteger currentOffset;
 
-#if NS_BLOCKS_AVAILABLE
 // When the upload location changes, the optional locationChangeBlock will be
 // called. It will be called with nil once upload succeeds or can no longer
 // be attempted.
 @property (copy) void (^locationChangeBlock)(NSURL *locationURL);
-#endif
 
 // the fetcher for the current data chunk, if any
 @property (retain) GTMHTTPFetcher *chunkFetcher;

@@ -1,11 +1,11 @@
 PODS:
   - AFNetworking (2.2.1):
-    - AFNetworking/NSURLConnection
-    - AFNetworking/NSURLSession
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-    - AFNetworking/UIKit
+    - AFNetworking/NSURLConnection (= 2.2.1)
+    - AFNetworking/NSURLSession (= 2.2.1)
+    - AFNetworking/Reachability (= 2.2.1)
+    - AFNetworking/Security (= 2.2.1)
+    - AFNetworking/Serialization (= 2.2.1)
+    - AFNetworking/UIKit (= 2.2.1)
   - AFNetworking/NSURLConnection (2.2.1):
     - AFNetworking/Reachability
     - AFNetworking/Security
@@ -20,18 +20,18 @@ PODS:
     - AFNetworking/NSURLSession
   - AuthKit (0.0.1)
   - CocoaLumberjack (1.8.0):
-    - CocoaLumberjack/Extensions
+    - CocoaLumberjack/Extensions (= 1.8.0)
   - CocoaLumberjack/Core (1.8.0)
   - CocoaLumberjack/Extensions (1.8.0):
     - CocoaLumberjack/Core
   - FLKAutoLayout (0.1.1)
   - gtm-oauth2 (0.0.1):
-    - gtm-oauth2/Core
+    - gtm-oauth2/Core (= 0.0.1)
     - GTMHTTPFetcher
     - SBJson
   - gtm-oauth2/Core (0.0.1):
-    - gtm-oauth2/Core/Mac
-    - gtm-oauth2/Core/Touch
+    - gtm-oauth2/Core/Mac (= 0.0.1)
+    - gtm-oauth2/Core/Touch (= 0.0.1)
     - GTMHTTPFetcher
     - SBJson
   - gtm-oauth2/Core/Mac (0.0.1):
@@ -40,8 +40,26 @@ PODS:
   - gtm-oauth2/Core/Touch (0.0.1):
     - GTMHTTPFetcher
     - SBJson
-  - GTMHTTPFetcher (0.1.0)
-  - SBJson (4.0.0)
+  - GTMHTTPFetcher (2.0.0):
+    - GTMHTTPFetcher/Fetcher (= 2.0.0)
+    - GTMHTTPFetcher/Logging (= 2.0.0)
+    - GTMHTTPFetcher/LogViewController (= 2.0.0)
+    - GTMHTTPFetcher/MIME (= 2.0.0)
+    - GTMHTTPFetcher/ResumableUpload (= 2.0.0)
+    - GTMHTTPFetcher/Service (= 2.0.0)
+  - GTMHTTPFetcher/Fetcher (2.0.0)
+  - GTMHTTPFetcher/Logging (2.0.0):
+    - GTMHTTPFetcher/Fetcher (= 2.0.0)
+  - GTMHTTPFetcher/LogViewController (2.0.0):
+    - GTMHTTPFetcher/Logging (= 2.0.0)
+  - GTMHTTPFetcher/MIME (2.0.0):
+    - GTMHTTPFetcher/Fetcher (= 2.0.0)
+  - GTMHTTPFetcher/ResumableUpload (2.0.0):
+    - GTMHTTPFetcher/Fetcher (= 2.0.0)
+    - GTMHTTPFetcher/Service (= 2.0.0)
+  - GTMHTTPFetcher/Service (2.0.0):
+    - GTMHTTPFetcher/Fetcher (= 2.0.0)
+  - SBJson (4.0.2)
 
 DEPENDENCIES:
   - AFNetworking (= 2.2.1)
@@ -54,13 +72,18 @@ EXTERNAL SOURCES:
   AuthKit:
     :git: https://github.com/RCacheaux/AuthKit.git
 
-SPEC CHECKSUMS:
-  AFNetworking: 0121f4b69be3fa58d1ab317866e036e12ac9651d
-  AuthKit: fc15e656eba449c52ae99fb18dc3e4db5e5c6c1e
-  CocoaLumberjack: 6ed94046d2ca7fde03a73b3d01b8cfc56574b314
-  FLKAutoLayout: fc04b932009174d4118ef4bda9dc8fedf1369efc
-  gtm-oauth2: af6d1ff3d4b14b35d3709f7f4bf2be8b43e45e62
-  GTMHTTPFetcher: 1ec07b08bc1df7bf37ad32b3c2adefa020a4b644
-  SBJson: f3c686806e8e36ab89e020189ac582ba26ec4220
+CHECKOUT OPTIONS:
+  AuthKit:
+    :commit: 4efdf69b1014028c70060d9317f1bf7ad8b89b83
+    :git: https://github.com/RCacheaux/AuthKit.git
 
-COCOAPODS: 0.29.0
+SPEC CHECKSUMS:
+  AFNetworking: 59a0b8e9ecd4e194d64b4967232cd2cc83490113
+  AuthKit: 8fec6c117ef6b5aaf27f1af7299f41712f5db357
+  CocoaLumberjack: c444cbc2ddc4cfba8d345d5ab92ecefb009f7e07
+  FLKAutoLayout: 95b12c5cd9652100235140b68652f063f7437851
+  gtm-oauth2: 4e88985e012a3a4cee5679b062ae10ec8ff18c83
+  GTMHTTPFetcher: a14e4ce88b3387be1cf569c24f316c3a7faeb43c
+  SBJson: c18691cc18375b14664ff0fec841f8c4faef1934
+
+COCOAPODS: 0.39.0

@@ -18,7 +18,7 @@
 //
 
 // This is essentially a wrapper around NSURLConnection for POSTs and GETs.
-// If setPostData: is called, then POST is assumed.
+// If setBodyData: is called, then POST is assumed.
 //
 // When would you use this instead of NSURLConnection?
 //
@@ -47,7 +47,7 @@
 //  GTMHTTPFetcher* myFetcher = [GTMHTTPFetcher fetcherWithRequest:request];
 //
 //  // optional upload body data
-//  [myFetcher setPostData:[postString dataUsingEncoding:NSUTF8StringEncoding]];
+//  [myFetcher setBodyData:[postString dataUsingEncoding:NSUTF8StringEncoding]];
 //
 //  [myFetcher beginFetchWithDelegate:self
 //                  didFinishSelector:@selector(myFetcher:finishedWithData:error:)];
@@ -260,8 +260,57 @@
 #endif
 
 #if TARGET_OS_IPHONE && (__IPHONE_OS_VERSION_MAX_ALLOWED >= 40000)
-  #define GTM_BACKGROUND_FETCHING 1
+  #ifndef GTM_BACKGROUND_FETCHING
+    #define GTM_BACKGROUND_FETCHING 1
+  #endif
 #endif
+
+#ifndef GTM_ALLOW_INSECURE_REQUESTS
+  // For builds prior to the iOS 8/10.10 SDKs, default to ignoring insecure requests for backwards
+  // compatibility unless the project has smartly set GTM_ALLOW_INSECURE_REQUESTS explicitly.
+  #if (!TARGET_OS_IPHONE && defined(MAC_OS_X_VERSION_10_10) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_10) \
+      || (TARGET_OS_IPHONE && defined(__IPHONE_8_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0)
+    #define GTM_ALLOW_INSECURE_REQUESTS 0
+  #else
+    #define GTM_ALLOW_INSECURE_REQUESTS 1
+  #endif
+#endif
+
+#if (!TARGET_OS_IPHONE && defined(MAC_OS_X_VERSION_10_11) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_11) \
+  || (TARGET_OS_IPHONE && defined(__IPHONE_9_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0)
+  #ifndef GTM_USE_SESSION_FETCHER
+    #define GTM_USE_SESSION_FETCHER 1
+  #endif
+#endif
+
+#if !defined(GTMBridgeFetcher)
+  // These bridge macros should be identical in GTMHTTPFetcher.h and GTMSessionFetcher.h
+  #if GTM_USE_SESSION_FETCHER
+    // Macros to new fetcher class.
+    #define GTMBridgeFetcher GTMSessionFetcher
+    #define GTMBridgeFetcherService GTMSessionFetcherService
+    #define GTMBridgeFetcherServiceProtocol GTMSessionFetcherServiceProtocol
+    #define GTMBridgeAssertValidSelector GTMSessionFetcherAssertValidSelector
+    #define GTMBridgeCookieStorage GTMSessionCookieStorage
+    #define GTMBridgeCleanedUserAgentString GTMFetcherCleanedUserAgentString
+    #define GTMBridgeSystemVersionString GTMFetcherSystemVersionString
+    #define GTMBridgeApplicationIdentifier GTMFetcherApplicationIdentifier
+    #define kGTMBridgeFetcherStatusDomain kGTMSessionFetcherStatusDomain
+    #define kGTMBridgeFetcherStatusBadRequest kGTMSessionFetcherStatusBadRequest
+  #else
+    // Macros to old fetcher class.
+    #define GTMBridgeFetcher GTMHTTPFetcher
+    #define GTMBridgeFetcherService GTMHTTPFetcherService
+    #define GTMBridgeFetcherServiceProtocol GTMHTTPFetcherServiceProtocol
+    #define GTMBridgeAssertValidSelector GTMAssertSelectorNilOrImplementedWithArgs
+    #define GTMBridgeCookieStorage GTMCookieStorage
+    #define GTMBridgeCleanedUserAgentString GTMCleanedUserAgentString
+    #define GTMBridgeSystemVersionString GTMSystemVersionString
+    #define GTMBridgeApplicationIdentifier GTMApplicationIdentifier
+    #define kGTMBridgeFetcherStatusDomain kGTMHTTPFetcherStatusDomain
+    #define kGTMBridgeFetcherStatusBadRequest kGTMHTTPFetcherStatusBadRequest
+  #endif  // GTM_USE_SESSION_FETCHER
+#endif  // !defined(GTMBridgeFetcher)
 
 #ifdef __cplusplus
 extern "C" {
@@ -275,7 +324,15 @@ extern NSString *const kGTMHTTPFetcherStoppedNotification;
 extern NSString *const kGTMHTTPFetcherRetryDelayStartedNotification;
 extern NSString *const kGTMHTTPFetcherRetryDelayStoppedNotification;
 
+// fetch callback was invoked. This notification is sent on the main thread,
+// and may be sent after the fetcher's waitForCompletionWithTimeout: method
+// has returned.
+extern NSString *const kGTMHTTPFetcherCompletionInvokedNotification;
+extern NSString *const kGTMHTTPFetcherCompletionDataKey;
+extern NSString *const kGTMHTTPFetcherCompletionErrorKey;
+
 // callback constants
+
 extern NSString *const kGTMHTTPFetcherErrorDomain;
 extern NSString *const kGTMHTTPFetcherStatusDomain;
 extern NSString *const kGTMHTTPFetcherErrorChallengeKey;
@@ -290,6 +347,7 @@ enum {
   kGTMHTTPFetcherErrorAuthenticationChallengeFailed = -2,
   kGTMHTTPFetcherErrorChunkUploadFailed = -3,
   kGTMHTTPFetcherErrorFileHandleException = -4,
+  kGTMHTTPFetcherErrorInsecureRequest = -5,
   kGTMHTTPFetcherErrorBackgroundExpiration = -6,
 
   // The code kGTMHTTPFetcherErrorAuthorizationFailed (-5) has been removed;
@@ -324,7 +382,7 @@ void GTMAssertSelectorNilOrImplementedWithArgs(id obj, SEL sel, ...);
 // the full user-agent string.
 NSString *GTMCleanedUserAgentString(NSString *str);
 
-// Make an identifier like "MacOSX/10.7.1" or "iPod_Touch/4.1"
+// Make an identifier like "MacOSX/10.7.1" or "iPod_Touch/4.1 hw/iPod1_1"
 NSString *GTMSystemVersionString(void);
 
 // Make a generic name and version for the current application, like
@@ -368,6 +426,10 @@ NSString *GTMApplicationIdentifier(NSBundle *bundle);
 - (void)removeCachedDataForRequest:(NSURLRequest *)request;
 @end
 
+#if GTM_USE_SESSION_FETCHER
+@protocol GTMSessionFetcherServiceProtocol;
+#endif
+
 @protocol GTMHTTPFetcherServiceProtocol <NSObject>
 // This protocol allows us to call into the service without requiring
 // GTMHTTPFetcherService sources in this project
@@ -379,8 +441,15 @@ NSString *GTMApplicationIdentifier(NSBundle *bundle);
 
 - (GTMHTTPFetcher *)fetcherWithRequest:(NSURLRequest *)request;
 - (BOOL)isDelayingFetcher:(GTMHTTPFetcher *)fetcher;
+
+@optional
+// Unimplemented in GTMHTTPFetcherService, but checked by GTMOAuth2Authentication.
+- (dispatch_queue_t)callbackQueue;
+
 @end
 
+#if !defined(GTM_FETCHER_AUTHORIZATION_PROTOCOL)
+#define GTM_FETCHER_AUTHORIZATION_PROTOCOL 1
 @protocol GTMFetcherAuthorizationProtocol <NSObject>
 @required
 // This protocol allows us to call the authorizer without requiring its sources
@@ -409,16 +478,20 @@ NSString *GTMApplicationIdentifier(NSBundle *bundle);
 // transmission of the bearer token unencrypted.
 @property (assign) BOOL shouldAuthorizeAllRequests;
 
-#if NS_BLOCKS_AVAILABLE
 - (void)authorizeRequest:(NSMutableURLRequest *)request
        completionHandler:(void (^)(NSError *error))handler;
-#endif
 
-@property (assign) id <GTMHTTPFetcherServiceProtocol> fetcherService; // WEAK
+#if GTM_USE_SESSION_FETCHER
+@property (assign) id<GTMSessionFetcherServiceProtocol> fetcherService; // WEAK
+#else
+@property (assign) id<GTMHTTPFetcherServiceProtocol> fetcherService; // WEAK
+#endif
 
 - (BOOL)primeForRefresh;
 
 @end
+#endif  // !defined(GTM_FETCHER_AUTHORIZATION_PROTOCOL)
+
 
 // GTMHTTPFetcher objects are used for async retrieval of an http get or post
 //
@@ -432,9 +505,11 @@ NSString *GTMApplicationIdentifier(NSBundle *bundle);
   NSString *temporaryDownloadPath_;
   NSFileHandle *downloadFileHandle_;
   unsigned long long downloadedLength_;
+  NSArray *allowedInsecureSchemes_;
+  BOOL allowLocalhostRequest_;
   NSURLCredential *credential_;     // username & password
   NSURLCredential *proxyCredential_; // credential supplied to proxy servers
-  NSData *postData_;
+  NSData *bodyData_;
   NSInputStream *postStream_;
   NSMutableData *loggedStreamData_;
   NSURLResponse *response_;         // set in connection:didReceiveResponse:
@@ -442,19 +517,12 @@ NSString *GTMApplicationIdentifier(NSBundle *bundle);
   SEL finishedSel_;                 // should by implemented by delegate
   SEL sentDataSel_;                 // optional, set with setSentDataSelector
   SEL receivedDataSel_;             // optional, set with setReceivedDataSelector
-#if NS_BLOCKS_AVAILABLE
+
   void (^completionBlock_)(NSData *, NSError *);
   void (^receivedDataBlock_)(NSData *);
   void (^sentDataBlock_)(NSInteger, NSInteger, NSInteger);
   BOOL (^retryBlock_)(BOOL, NSError *);
-#elif !__LP64__
-  // placeholders: for 32-bit builds, keep the size of the object's ivar section
-  // the same with and without blocks
-  id completionPlaceholder_;
-  id receivedDataPlaceholder_;
-  id sentDataPlaceholder_;
-  id retryPlaceholder_;
-#endif
+
   BOOL hasConnectionEnded_;         // set if the connection need not be cancelled
   BOOL isCancellingChallenge_;      // set only when cancelling an auth challenge
   BOOL isStopNotificationNeeded_;   // set when start notification has been sent
@@ -520,6 +588,24 @@ NSString *GTMApplicationIdentifier(NSBundle *bundle);
 // The underlying request is mutable and may be modified by the caller
 @property (retain) NSMutableURLRequest *mutableRequest;
 
+// By default, the fetcher allows only secure (https) schemes unless this
+// property is set, or the GTM_ALLOW_INSECURE_REQUESTS build flag is set.
+//
+// For example, during debugging when fetching from a development server that lacks SSL support,
+// this may be set to @[ @"http" ], or when the fetcher is used to retrieve local files,
+// this may be set to @[ @"file" ].
+//
+// This should be left as nil for release builds to avoid creating the opportunity for
+// leaking private user behavior and data.  If a server is providing insecure URLs
+// for fetching by the client app, report the problem as server security & privacy bug.
+@property(copy) NSArray *allowedInsecureSchemes;
+
+// By default, the fetcher prohibits localhost requests unless this property is set,
+// or the GTM_ALLOW_INSECURE_REQUESTS build flag is set.
+//
+// For localhost requests, the URL scheme is not checked  when this property is set.
+@property(assign) BOOL allowLocalhostRequest;
+
 // Setting the credential is optional; it is used if the connection receives
 // an authentication challenge
 @property (retain) NSURLCredential *credential;
@@ -529,7 +615,7 @@ NSString *GTMApplicationIdentifier(NSBundle *bundle);
 @property (retain) NSURLCredential *proxyCredential;
 
 // If post data or stream is not set, then a GET retrieval method is assumed
-@property (retain) NSData *postData;
+@property (retain) NSData *bodyData;
 @property (retain) NSInputStream *postStream;
 
 // The default cookie storage method is kGTMHTTPFetcherCookieStorageMethodStatic
@@ -600,7 +686,6 @@ NSString *GTMApplicationIdentifier(NSBundle *bundle);
 // the complete NSData received.
 @property (assign) SEL receivedDataSelector;
 
-#if NS_BLOCKS_AVAILABLE
 // The full interface to the block is provided rather than just a typedef for
 // its parameter list in order to get more useful code completion in the Xcode
 // editor
@@ -609,7 +694,6 @@ NSString *GTMApplicationIdentifier(NSBundle *bundle);
 // The dataReceived argument will be nil when downloading to a path or to
 // a file handle
 @property (copy) void (^receivedDataBlock)(NSData *dataReceivedSoFar);
-#endif
 
 // retrying; see comments at the top of the file.  Calling
 // setRetryEnabled(YES) resets the min and max retry intervals.
@@ -622,9 +706,7 @@ NSString *GTMApplicationIdentifier(NSBundle *bundle);
 // and return YES to cause a retry.  See comments at the top of this file.
 @property (assign) SEL retrySelector;
 
-#if NS_BLOCKS_AVAILABLE
 @property (copy) BOOL (^retryBlock)(BOOL suggestedWillRetry, NSError *error);
-#endif
 
 // Retry intervals must be strictly less than maxRetryInterval, else
 // they will be limited to maxRetryInterval and no further retries will
@@ -668,10 +750,7 @@ NSString *GTMApplicationIdentifier(NSBundle *bundle);
 - (BOOL)beginFetchWithDelegate:(id)delegate
              didFinishSelector:(SEL)finishedSEL;
 
-#if NS_BLOCKS_AVAILABLE
 - (BOOL)beginFetchWithCompletionHandler:(void (^)(NSData *data, NSError *error))handler;
-#endif
-
 
 // Returns YES if this is in the process of fetching a URL
 - (BOOL)isFetching;
@@ -737,7 +816,9 @@ NSString *GTMApplicationIdentifier(NSBundle *bundle);
 
 // Callbacks can be invoked on an operation queue rather than via the run loop,
 // starting on 10.7 and iOS 6.  If a delegate queue is supplied. the run loop
-// modes are ignored.
+// modes are ignored. If no delegateQueue is supplied, and run loop modes are
+// not supplied, and the fetcher is started off of the main thread, then a
+// delegateQueue of [NSOperationQueue mainQueue] is assumed.
 @property (retain) NSOperationQueue *delegateQueue;
 
 // Using the fetcher while a modal dialog is displayed requires setting the
@@ -749,6 +830,9 @@ NSString *GTMApplicationIdentifier(NSBundle *bundle);
 // NSURLConnection.
 + (Class)connectionClass;
 + (void)setConnectionClass:(Class)theClass;
+
+// Backwards compatibility only; use bodyData property instead.
+@property (retain) NSData *postData;
 
 // Spin the run loop, discarding events, until the fetch has completed
 //
@@ -762,6 +846,7 @@ NSString *GTMApplicationIdentifier(NSBundle *bundle);
 // if logging is stripped, provide a stub for the main method
 // for controlling logging
 + (void)setLoggingEnabled:(BOOL)flag;
++ (BOOL)isLoggingEnabled;
 #endif // STRIP_GTM_FETCH_LOGGING
 
 @end

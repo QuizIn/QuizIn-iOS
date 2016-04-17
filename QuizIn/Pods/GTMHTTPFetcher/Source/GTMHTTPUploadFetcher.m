@@ -191,9 +191,7 @@ totalBytesExpectedToSend:(NSInteger)totalBytesExpected;
 
   [chunkFetcher_ release];
   [locationURL_ release];
-#if NS_BLOCKS_AVAILABLE
   [locationChangeBlock_ release];
-#endif
   [uploadData_ release];
   [uploadFileHandle_ release];
   [uploadMIMEType_ release];
@@ -252,7 +250,7 @@ totalBytesExpectedToSend:(NSInteger)totalBytesExpected;
   // to us during uploads
   needsManualProgress_ = ![GTMHTTPFetcher doesSupportSentDataCallback];
 
-  initialBodyLength_ = [[self postData] length];
+  initialBodyLength_ = [[self bodyData] length];
 
   if (isRestartedUpload_) {
     if (![self isPaused]) {
@@ -271,7 +269,6 @@ totalBytesExpectedToSend:(NSInteger)totalBytesExpected;
                      didFinishSelector:NULL];
 }
 
-#if NS_BLOCKS_AVAILABLE
 - (BOOL)beginFetchWithCompletionHandler:(void (^)(NSData *data, NSError *error))handler {
   // we don't want to call into the delegate's completion block immediately
   // after the finish of the initial connection (the delegate is called only
@@ -301,7 +298,6 @@ totalBytesExpectedToSend:(NSInteger)totalBytesExpected;
   }];
   return flag;
 }
-#endif
 
 - (void)connection:(NSURLConnection *)connection
    didSendBodyData:(NSInteger)bytesWritten
@@ -345,13 +341,11 @@ totalBytesExpectedToSend:totalBytesExpectedToWrite];
                         error:error];
   }
 
-#if NS_BLOCKS_AVAILABLE
   if (completionBlock_) {
     completionBlock_(data, error);
   }
 
   [self setLocationChangeBlock:nil];
-#endif
 
   [self releaseCallbacks];
 }
@@ -558,6 +552,8 @@ totalBytesExpectedToSend:totalBytesExpectedToWrite];
   chunkFetcher = [GTMHTTPFetcher fetcherWithRequest:chunkRequest];
   [chunkFetcher setDelegateQueue:[self delegateQueue]];
   [chunkFetcher setRunLoopModes:[self runLoopModes]];
+  [chunkFetcher setAllowedInsecureSchemes:[self allowedInsecureSchemes]];
+  [chunkFetcher setAllowLocalhostRequest:[self allowLocalhostRequest]];
 
   // if the upload fetcher has a comment, use the same comment for chunks
   NSString *baseComment = [self comment];
@@ -569,7 +565,7 @@ totalBytesExpectedToSend:totalBytesExpectedToWrite];
   [chunkFetcher setProperties:props];
 
   // post the appropriate subset of the full data
-  [chunkFetcher setPostData:chunkData];
+  [chunkFetcher setBodyData:chunkData];
 
   // copy other fetcher settings to the new fetcher
   [chunkFetcher setRetryEnabled:[self isRetryEnabled]];
@@ -650,11 +646,11 @@ totalBytesExpectedToSend:0];
     }
   } else {
     // the final chunk has uploaded successfully
-  #if DEBUG
+  #if DEBUG && !defined(NS_BLOCK_ASSERTIONS)
     NSInteger status = [chunkFetcher statusCode];
     NSAssert1(status == 200 || status == 201,
               @"unexpected chunks status %d", (int)status);
-  #endif
+  #endif  // DEBUG && !defined(NS_BLOCK_ASSERTIONS)
 
     // take the chunk fetcher's data as our own
     self.downloadedData = data;
@@ -720,10 +716,6 @@ totalBytesExpectedToSend:0];
   // we no longer need to be able to cancel this chunkFetcher
   [self destroyChunkFetcher];
 
-  // We may in the future handle Retry-After and ETag headers per
-  // http://code.google.com/p/gears/wiki/ResumableHttpRequestsProposal
-  // but they are not currently sent by the upload server
-
   [self uploadNextChunkWithOffset:newOffset
                 fetcherProperties:props];
 }
@@ -747,11 +739,9 @@ totalBytesExpectedToSend:0];
                                     error:error];
   }
 
-#if NS_BLOCKS_AVAILABLE
   if (retryBlock_) {
     willRetry = retryBlock_(willRetry, error);
   }
-#endif
 
   if (willRetry) {
     // change the request being retried into a query to the server to
@@ -764,7 +754,7 @@ totalBytesExpectedToSend:0];
 
     [chunkRequest setValue:rangeStr forHTTPHeaderField:@"Content-Range"];
     [chunkRequest setValue:@"0" forHTTPHeaderField:@"Content-Length"];
-    [chunkFetcher setPostData:[NSData data]];
+    [chunkFetcher setBodyData:[NSData data]];
 
     // we don't know what our actual offset is anymore, but the server
     // will tell us
@@ -806,11 +796,9 @@ totalBytesExpectedToSend:(NSInteger)totalBytesExpected {
        totalBytesExpectedToWrite:totalBytesExpected];
   }
 
-#if NS_BLOCKS_AVAILABLE
   if (sentDataBlock_) {
     sentDataBlock_(bytesSent, totalBytesSent, totalBytesExpected);
   }
-#endif
 }
 
 #pragma mark -
@@ -855,11 +843,8 @@ totalBytesExpectedToSend:(NSInteger)totalBytesExpected {
             uploadMIMEType = uploadMIMEType_,
             chunkSize = chunkSize_,
             currentOffset = currentOffset_,
-            chunkFetcher = chunkFetcher_;
-
-#if NS_BLOCKS_AVAILABLE
-@synthesize locationChangeBlock = locationChangeBlock_;
-#endif
+            chunkFetcher = chunkFetcher_,
+            locationChangeBlock = locationChangeBlock_;
 
 @dynamic activeFetcher;
 @dynamic responseHeaders;
@@ -899,12 +884,7 @@ totalBytesExpectedToSend:(NSInteger)totalBytesExpected {
 
 - (SEL)sentDataSelector {
   // overrides the superclass
-#if NS_BLOCKS_AVAILABLE
-  BOOL hasSentDataBlock = (sentDataBlock_ != NULL);
-#else
-  BOOL hasSentDataBlock = NO;
-#endif
-  if ((delegateSentDataSEL_ || hasSentDataBlock) && !needsManualProgress_) {
+  if ((delegateSentDataSEL_ || sentDataBlock_) && !needsManualProgress_) {
     return @selector(uploadFetcher:didSendBytes:totalBytesSent:totalBytesExpectedToSend:);
   } else {
     return NULL;
@@ -933,11 +913,9 @@ totalBytesExpectedToSend:(NSInteger)totalBytesExpected {
     [locationURL_ release];
     locationURL_ = [url retain];
 
-#if NS_BLOCKS_AVAILABLE
     if (locationChangeBlock_) {
       locationChangeBlock_(url);
     }
-#endif
   }
 }
 @end
